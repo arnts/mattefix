@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mattefix – Hjelpesider for matte</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  .container { max-width: 600px; width: 100%; text-align: center; }
+  h1 { font-size: 2.5rem; color: #2563eb; margin-bottom: 0.3rem; }
+  .subtitle { color: #64748b; margin-bottom: 2.5rem; font-size: 1.1rem; }
+  .topic-grid { display: flex; flex-direction: column; gap: 0.8rem; }
+  .topic-link {
+    display: block;
+    padding: 1.2rem 1.5rem;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #1e293b;
+    font-size: 1.15rem;
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    transition: all 0.2s;
+    text-align: left;
+  }
+  .topic-link:hover {
+    border-color: #2563eb;
+    box-shadow: 0 4px 12px rgba(37,99,235,0.15);
+    transform: translateY(-1px);
+  }
+  .topic-link .desc {
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-top: 0.2rem;
+  }
+  footer {
+    margin-top: 3rem;
+    font-size: 0.85rem;
+    color: #94a3b8;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Mattefix</h1>
+  <p class="subtitle">Hjelpesider for matematikk – 1T</p>
+  <div class="topic-grid">
+    <a href="trigonometri.html" class="topic-link">
+      Trigonometri
+      <div class="desc">sin, cos, tan, arealsetningen, sinussetningen, cosinussetningen, GeoGebra-guide og quiz</div>
+    </a>
+  </div>
+  <footer>Flere emner kommer snart.</footer>
+</div>
+</body>
+</html>

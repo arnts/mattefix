@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trigonometri – Hjelpeside</title>
+<style>
+  :root {
+    --blue: #2563eb;
+    --red: #dc2626;
+    --green: #16a34a;
+    --orange: #ea580c;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 2rem 1rem;
+  }
+  .container { max-width: 960px; margin: 0 auto; }
+  h1 {
+    text-align: center;
+    font-size: 2.2rem;
+    margin-bottom: 0.3rem;
+    color: var(--blue);
+  }
+  .subtitle {
+    text-align: center;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    font-size: 1.05rem;
+  }
+  .card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .card h2 {
+    font-size: 1.35rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--blue);
+    color: var(--blue);
+  }
+  .card h3 {
+    font-size: 1.1rem;
+    margin: 1rem 0 0.5rem;
+    color: var(--text);
+  }
+
+  /* Verditabell */
+  .value-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    font-size: 1.1rem;
+  }
+  .value-table th, .value-table td {
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--border);
+  }
+  .value-table thead th {
+    background: var(--blue);
+    color: #fff;
+    font-weight: 600;
+  }
+  .value-table tbody tr:nth-child(even) { background: #f1f5f9; }
+  .value-table tbody td:first-child { font-weight: 600; }
+  .fraction { font-size: 1rem; }
+
+  /* Grafer */
+  .graph-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+  }
+  @media (max-width: 700px) {
+    .graph-grid { grid-template-columns: 1fr; }
+  }
+  .graph-box { text-align: center; }
+  .graph-box canvas {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    width: 100%;
+    height: auto;
+  }
+  .graph-label {
+    font-weight: 600;
+    margin-top: 0.4rem;
+    font-size: 1rem;
+  }
+
+  /* Formler */
+  .formula-box {
+    background: #eff6ff;
+    border-left: 4px solid var(--blue);
+    padding: 1rem 1.2rem;
+    border-radius: 0 8px 8px 0;
+    margin: 0.8rem 0;
+    font-size: 1.15rem;
+    text-align: center;
+  }
+  .formula-box.red {
+    background: #fef2f2;
+    border-left-color: var(--red);
+  }
+  .formula-box.green {
+    background: #f0fdf4;
+    border-left-color: var(--green);
+  }
+  .formula-box.orange {
+    background: #fff7ed;
+    border-left-color: var(--orange);
+  }
+  p { margin: 0.5rem 0; }
+
+  /* Enhetssirkel */
+  .unit-circle-wrap {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .unit-circle-wrap .text { flex: 1; min-width: 250px; }
+  .unit-circle-wrap svg { flex-shrink: 0; }
+
+  /* Trekant-diagrammer */
+  .diagram-row {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .diagram-row .text { flex: 1; min-width: 250px; }
+
+  ul { padding-left: 1.3rem; }
+  ul li { margin: 0.3rem 0; }
+
+  .highlight { color: var(--blue); font-weight: 600; }
+  .note {
+    background: #fefce8;
+    border: 1px solid #fde68a;
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    margin-top: 0.8rem;
+    font-size: 0.95rem;
+  }
+
+  .toc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  .toc a {
+    background: var(--blue);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+  }
+  .toc a:hover { opacity: 0.8; }
+
+  /* Quiz-knapp i toc */
+  .toc .quiz-btn {
+    background: var(--orange);
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+  }
+
+  /* ===== QUIZ OVERLAY ===== */
+  .quiz-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15,23,42,0.6);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+  }
+  .quiz-overlay.open { display: flex; }
+
+  .quiz-modal {
+    background: var(--card);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 560px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 2rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    position: relative;
+    animation: slideUp 0.3s ease;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .quiz-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--muted);
+    line-height: 1;
+  }
+  .quiz-close:hover { color: var(--text); }
+
+  .quiz-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  .quiz-header h2 {
+    color: var(--orange);
+    font-size: 1.5rem;
+    margin-bottom: 0.3rem;
+  }
+  .quiz-progress {
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .quiz-progress-bar {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    margin-top: 0.5rem;
+    overflow: hidden;
+  }
+  .quiz-progress-fill {
+    height: 100%;
+    background: var(--orange);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+
+  .quiz-question {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  .quiz-options { display: flex; flex-direction: column; gap: 0.6rem; }
+  .quiz-option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0.85rem 1.1rem;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    background: var(--bg);
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    font-family: inherit;
+    color: var(--text);
+  }
+  .quiz-option:hover:not(:disabled) {
+    border-color: var(--blue);
+    background: #eff6ff;
+  }
+  .quiz-option:disabled { cursor: default; }
+  .quiz-option.correct {
+    border-color: var(--green);
+    background: #f0fdf4;
+    font-weight: 600;
+  }
+  .quiz-option.wrong {
+    border-color: var(--red);
+    background: #fef2f2;
+    opacity: 0.7;
+  }
+
+  .quiz-feedback {
+    margin-top: 1rem;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.is-correct {
+    background: #f0fdf4;
+    border: 1px solid #86efac;
+    color: #166534;
+  }
+  .quiz-feedback.is-wrong {
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    color: #991b1b;
+  }
+
+  .quiz-next {
+    display: none;
+    margin: 1.2rem auto 0;
+    padding: 0.7rem 2rem;
+    background: var(--blue);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: opacity 0.2s;
+  }
+  .quiz-next:hover { opacity: 0.85; }
+  .quiz-next.show { display: block; }
+
+  /* Resultat */
+  .quiz-result { text-align: center; }
+  .quiz-score {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--blue);
+    margin: 0.5rem 0;
+  }
+  .quiz-score-label { color: var(--muted); font-size: 1rem; }
+  .quiz-grade {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0.8rem 0;
+  }
+  .quiz-restart {
+    margin-top: 1rem;
+    padding: 0.7rem 2rem;
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .quiz-restart:hover { opacity: 0.85; }
+
+  /* Steg-for-steg */
+  .steps { counter-reset: step; margin: 1rem 0; }
+  .step {
+    position: relative;
+    padding: 0.8rem 1rem 0.8rem 3.2rem;
+    margin-bottom: 0.6rem;
+    background: var(--bg);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  .step::before {
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    left: 0.8rem;
+    top: 0.75rem;
+    width: 1.7rem;
+    height: 1.7rem;
+    background: var(--blue);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+  .step strong { color: var(--blue); }
+  .step .calc {
+    display: block;
+    margin-top: 0.3rem;
+    font-family: 'Courier New', monospace;
+    background: #f1f5f9;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.95rem;
+  }
+
+  /* Eksempel-tabs */
+  .example-tabs {
+    display: flex;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+  .example-tab {
+    padding: 0.5rem 1.2rem;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text);
+    transition: all 0.2s;
+  }
+  .example-tab:hover { border-color: var(--blue); }
+  .example-tab.active {
+    background: var(--blue);
+    color: #fff;
+    border-color: var(--blue);
+  }
+  .example-content { display: none; }
+  .example-content.active { display: block; }
+
+  /* Kalkulator-tips */
+  .calc-tip {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    padding: 0.8rem 1rem;
+    background: var(--bg);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin-bottom: 0.6rem;
+  }
+  .calc-tip .icon {
+    font-size: 1.4rem;
+    flex-shrink: 0;
+    width: 2rem;
+    text-align: center;
+  }
+  .calc-tip code {
+    background: #e2e8f0;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+
+  /* Interaktiv enhetssirkel */
+  .interactive-uc {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .uc-canvas-wrap {
+    position: relative;
+    flex-shrink: 0;
+  }
+  #ucCanvas { cursor: crosshair; border-radius: 12px; border: 1px solid var(--border); }
+  .uc-values {
+    flex: 1;
+    min-width: 200px;
+  }
+  .uc-val {
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 0.6rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  .uc-val span { font-size: 1.4rem; float: right; }
+  .uc-angle { background: #fff7ed; color: var(--orange); }
+  .uc-cos { background: #fef2f2; color: var(--red); }
+  .uc-sin { background: #eff6ff; color: var(--blue); }
+  .uc-tan { background: #f0fdf4; color: var(--green); }
+  .uc-hint { font-size: 0.9rem; color: var(--muted); margin-top: 0.5rem; }
+  .uc-shortcuts {
+    display: flex;
+    gap: 0.4rem;
+    margin-top: 0.6rem;
+    flex-wrap: wrap;
+  }
+  .uc-shortcuts button {
+    padding: 0.45rem 1rem;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--text);
+    transition: all 0.15s;
+  }
+  .uc-shortcuts button:hover {
+    border-color: var(--orange);
+    background: #fff7ed;
+    color: var(--orange);
+  }
+  .uc-shortcuts button.active {
+    background: var(--orange);
+    color: #fff;
+    border-color: var(--orange);
+  }
+
+  /* GeoGebra-guide */
+  .gb-cmd-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    margin: 0.8rem 0;
+  }
+  .gb-cmd-table th, .gb-cmd-table td {
+    padding: 0.55rem 0.8rem;
+    border: 1px solid var(--border);
+    text-align: left;
+  }
+  .gb-cmd-table thead th {
+    background: var(--blue);
+    color: #fff;
+    font-weight: 600;
+  }
+  .gb-cmd-table tbody tr:nth-child(even) { background: #f1f5f9; }
+  .gb-cmd-table code {
+    background: #e2e8f0;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+  .gb-example {
+    background: #1e293b;
+    color: #e2e8f0;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin: 0.8rem 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    overflow-x: auto;
+  }
+  .gb-example .comment { color: #94a3b8; }
+  .gb-example .result { color: #86efac; }
+  .gb-section {
+    margin-top: 1.2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+  .gb-section:first-of-type { margin-top: 0.5rem; border-top: none; padding-top: 0; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Trigonometri</h1>
+<p class="subtitle">Kompakt hjelpeside – cos, sin, tan og de viktigste setningene</p>
+
+<div class="toc">
+  <a href="#definisjoner">Definisjoner</a>
+  <a href="#verdier">Viktige verdier</a>
+  <a href="#grafer">Grafer</a>
+  <a href="#interaktiv-uc">Interaktiv enhetssirkel</a>
+  <a href="#enhetssirkelen">Enhetssirkelen</a>
+  <a href="#supplementvinkler">Supplementvinkler</a>
+  <a href="#formlikhet">Formlikhet</a>
+  <a href="#arealsetningen">Arealsetningen</a>
+  <a href="#sinussetningen">Sinussetningen</a>
+  <a href="#cosinussetningen">Cosinussetningen</a>
+  <a href="#regneksempler">Regneksempler</a>
+  <a href="#kalkulator">Kalkulator-tips</a>
+  <a href="#geogebra">GeoGebra-guide</a>
+  <button class="toc a quiz-btn" onclick="openQuiz()">Test deg selv!</button>
+</div>
+
+<!-- ===== QUIZ OVERLAY ===== -->
+<div class="quiz-overlay" id="quizOverlay">
+  <div class="quiz-modal">
+    <button class="quiz-close" onclick="closeQuiz()">&times;</button>
+    <div class="quiz-header">
+      <h2>Trigonometri-quiz</h2>
+      <div class="quiz-progress">Sporsmal <span id="qNum">1</span> av <span id="qTotal">10</span></div>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="qBar" style="width:10%"></div></div>
+    </div>
+    <div id="quizBody">
+      <div class="quiz-question" id="qText"></div>
+      <div class="quiz-options" id="qOptions"></div>
+      <div class="quiz-feedback" id="qFeedback"></div>
+      <button class="quiz-next" id="qNext" onclick="nextQuestion()">Neste</button>
+    </div>
+    <div id="quizResult" class="quiz-result" style="display:none;">
+      <div class="quiz-score-label">Resultat</div>
+      <div class="quiz-score" id="rScore"></div>
+      <div class="quiz-grade" id="rGrade"></div>
+      <button class="quiz-restart" onclick="startQuiz()">Prøv igjen</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ DEFINISJONER ============ -->
+<div class="card" id="definisjoner">
+  <h2>Hva er sin, cos og tan?</h2>
+  <div class="diagram-row">
+    <svg viewBox="0 0 220 170" width="220" style="flex-shrink:0;">
+      <polygon points="20,150 200,150 200,30" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+      <rect x="188" y="138" width="12" height="12" fill="none" stroke="#2563eb" stroke-width="1.5"/>
+      <!-- vinkel u -->
+      <path d="M50,150 A30,30 0 0,0 38,130" fill="none" stroke="#ea580c" stroke-width="2"/>
+      <text x="52" y="138" fill="#ea580c" font-size="16" font-weight="600">u</text>
+      <!-- sider -->
+      <text x="100" y="168" fill="#1e293b" font-size="14" font-weight="600">hosliggende</text>
+      <text x="203" y="100" fill="#dc2626" font-size="14" font-weight="600">motstående</text>
+      <text x="85" y="82" fill="#16a34a" font-size="14" font-weight="600">hypotenus</text>
+    </svg>
+    <div class="text">
+      <p>I en <strong>rettvinklet trekant</strong> med vinkel <em>u</em>:</p>
+      <div class="formula-box">
+        sin(u) = motstående / hypotenus
+      </div>
+      <div class="formula-box green">
+        cos(u) = hosliggende / hypotenus
+      </div>
+      <div class="formula-box orange">
+        tan(u) = motstående / hosliggende = sin(u) / cos(u)
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ VERDITABELL ============ -->
+<div class="card" id="verdier">
+  <h2>Viktige verdier</h2>
+  <table class="value-table">
+    <thead>
+      <tr><th>Grader</th><th>cos</th><th>sin</th><th>tan</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>0°</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>30°</td>
+        <td><span class="fraction">√3 / 2</span></td>
+        <td><span class="fraction">1 / 2</span></td>
+        <td><span class="fraction">1 / √3</span></td>
+      </tr>
+      <tr>
+        <td>45°</td>
+        <td><span class="fraction">√2 / 2</span></td>
+        <td><span class="fraction">√2 / 2</span></td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>60°</td>
+        <td><span class="fraction">1 / 2</span></td>
+        <td><span class="fraction">√3 / 2</span></td>
+        <td>√3</td>
+      </tr>
+      <tr>
+        <td>90°</td>
+        <td>0</td>
+        <td>1</td>
+        <td>ikke definert</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <strong>Huskeregel:</strong> cos-verdiene går «nedover» (1 → 0) mens sin-verdiene går «oppover» (0 → 1) fra 0° til 90°. De er «speilvendt» av hverandre.
+  </div>
+</div>
+
+<!-- ============ GRAFER ============ -->
+<div class="card" id="grafer">
+  <h2>Grafer for sin, cos og tan</h2>
+  <div class="graph-grid">
+    <div class="graph-box">
+      <canvas id="sinGraph" width="300" height="220"></canvas>
+      <div class="graph-label" style="color:#2563eb;">y = sin(x)</div>
+    </div>
+    <div class="graph-box">
+      <canvas id="cosGraph" width="300" height="220"></canvas>
+      <div class="graph-label" style="color:#dc2626;">y = cos(x)</div>
+    </div>
+    <div class="graph-box">
+      <canvas id="tanGraph" width="300" height="220"></canvas>
+      <div class="graph-label" style="color:#16a34a;">y = tan(x)</div>
+    </div>
+  </div>
+  <div class="note" style="margin-top:1rem;">
+    <strong>Periode:</strong> sin og cos gjentar seg hver 360° (2π). tan gjentar seg hver 180° (π).<br>
+    <strong>Sammenheng:</strong> sin²(x) + cos²(x) = 1 &nbsp;(alltid!)
+  </div>
+</div>
+
+<!-- ============ INTERAKTIV ENHETSSIRKEL ============ -->
+<div class="card" id="interaktiv-uc">
+  <h2>Interaktiv enhetssirkel</h2>
+  <p>Dra prikken rundt sirkelen og se hvordan sin, cos og tan endrer seg!</p>
+  <div class="interactive-uc">
+    <div class="uc-canvas-wrap">
+      <canvas id="ucCanvas" width="320" height="320"></canvas>
+    </div>
+    <div class="uc-values">
+      <div class="uc-val uc-angle">Vinkel: <span id="ucAngle">45°</span></div>
+      <div class="uc-val uc-cos">cos: <span id="ucCos">0.707</span></div>
+      <div class="uc-val uc-sin">sin: <span id="ucSin">0.707</span></div>
+      <div class="uc-val uc-tan">tan: <span id="ucTan">1.000</span></div>
+      <p class="uc-hint">Klikk eller dra rundt sirkelen, eller bruk knappene:</p>
+      <div class="uc-shortcuts" id="ucShortcuts">
+        <button onclick="setUcAngle(0)">0°</button>
+        <button onclick="setUcAngle(30)">30°</button>
+        <button onclick="setUcAngle(45)">45°</button>
+        <button onclick="setUcAngle(60)">60°</button>
+        <button onclick="setUcAngle(90)">90°</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ENHETSSIRKELEN ============ -->
+<div class="card" id="enhetssirkelen">
+  <h2>Enhetssirkelen</h2>
+  <div class="unit-circle-wrap">
+    <svg viewBox="-150 -150 300 300" width="280">
+      <!-- rutenett -->
+      <line x1="-130" y1="0" x2="130" y2="0" stroke="#cbd5e1" stroke-width="1"/>
+      <line x1="0" y1="-130" x2="0" y2="130" stroke="#cbd5e1" stroke-width="1"/>
+      <!-- sirkel -->
+      <circle cx="0" cy="0" r="100" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+      <!-- vinkel 60° -->
+      <line x1="0" y1="0" x2="50" y2="-86.6" stroke="#ea580c" stroke-width="2.5"/>
+      <circle cx="50" cy="-86.6" r="4" fill="#ea580c"/>
+      <!-- cos-linje -->
+      <line x1="0" y1="0" x2="50" y2="0" stroke="#dc2626" stroke-width="2" stroke-dasharray="6,3"/>
+      <!-- sin-linje -->
+      <line x1="50" y1="0" x2="50" y2="-86.6" stroke="#2563eb" stroke-width="2" stroke-dasharray="6,3"/>
+      <!-- bue -->
+      <path d="M25,0 A25,25 0 0,0 12.5,-21.65" fill="none" stroke="#ea580c" stroke-width="1.8"/>
+      <text x="28" y="-8" fill="#ea580c" font-size="13" font-weight="600">60°</text>
+      <!-- labels -->
+      <text x="15" y="16" fill="#dc2626" font-size="13" font-weight="600">cos = ½</text>
+      <text x="55" y="-40" fill="#2563eb" font-size="13" font-weight="600">sin = √3/2</text>
+      <text x="55" y="-88" fill="#ea580c" font-size="12">(cos 60°, sin 60°)</text>
+      <!-- akser -->
+      <text x="110" y="15" fill="#64748b" font-size="12">1</text>
+      <text x="-120" y="15" fill="#64748b" font-size="12">-1</text>
+      <text x="5" y="-108" fill="#64748b" font-size="12">1</text>
+      <text x="5" y="118" fill="#64748b" font-size="12">-1</text>
+    </svg>
+    <div class="text">
+      <p>Enhetssirkelen er en sirkel med <strong>radius 1</strong> og sentrum i origo.</p>
+      <p>For en vinkel <em>u</em> fra positiv x-akse:</p>
+      <ul>
+        <li><strong>x-koordinaten</strong> til punktet på sirkelen = <span class="highlight">cos(u)</span></li>
+        <li><strong>y-koordinaten</strong> til punktet på sirkelen = <span class="highlight">sin(u)</span></li>
+      </ul>
+      <p>Derfor gjelder alltid: <strong>cos²(u) + sin²(u) = 1</strong></p>
+      <p>Enhetssirkelen lar oss utvide sin og cos til <em>alle</em> vinkler (også over 90° og negative vinkler).</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SUPPLEMENTVINKLER ============ -->
+<div class="card" id="supplementvinkler">
+  <h2>Supplementvinkler</h2>
+  <p>To vinkler er <strong>supplementvinkler</strong> dersom de til sammen er <strong>180°</strong>.</p>
+  <div class="formula-box">
+    u + v = 180° &nbsp; ⇒ &nbsp; v = 180° − u
+  </div>
+  <p>Viktige sammenhenger for supplementvinkler:</p>
+  <div class="formula-box green">
+    sin(180° − u) = sin(u)
+  </div>
+  <div class="formula-box red">
+    cos(180° − u) = −cos(u)
+  </div>
+  <p>Det betyr at <strong>sinus</strong> har <em>samme</em> verdi for supplementvinkler, mens <strong>cosinus</strong> skifter fortegn.</p>
+  <div class="note">
+    <strong>Eksempel:</strong> sin(30°) = sin(150°) = 0.5, men cos(30°) = √3/2 og cos(150°) = −√3/2.
+  </div>
+</div>
+
+<!-- ============ FORMLIKHET ============ -->
+<div class="card" id="formlikhet">
+  <h2>Formlikhet</h2>
+  <div class="diagram-row">
+    <svg viewBox="0 0 280 130" width="280" style="flex-shrink:0;">
+      <!-- liten trekant -->
+      <polygon points="20,110 90,110 90,40" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+      <text x="48" y="125" fill="#2563eb" font-size="12">a</text>
+      <text x="93" y="80" fill="#2563eb" font-size="12">b</text>
+      <text x="42" y="70" fill="#2563eb" font-size="12">c</text>
+      <!-- stor trekant -->
+      <polygon points="140,110 260,110 260,20" fill="#fef9c3" stroke="#ea580c" stroke-width="2"/>
+      <text x="190" y="125" fill="#ea580c" font-size="12">A</text>
+      <text x="264" y="70" fill="#ea580c" font-size="12">B</text>
+      <text x="185" y="58" fill="#ea580c" font-size="12">C</text>
+    </svg>
+    <div class="text">
+      <p>To trekanter er <strong>formlike</strong> dersom de har <strong>samme vinkler</strong>. Da er forholdet mellom tilsvarende sider likt:</p>
+      <div class="formula-box">
+        a / A = b / B = c / C
+      </div>
+      <ul>
+        <li>Sidene er <em>proporsjonale</em> – trekantene har samme «form» men kan ha ulik størrelse.</li>
+        <li>Det holder å vise at <strong>to vinkler</strong> er like (den tredje følger automatisk).</li>
+      </ul>
+      <div class="note">
+        <strong>Kobling til trigonometri:</strong> Fordi formlike trekanter har samme sideforhold, gir en gitt vinkel alltid samme sin-, cos- og tan-verdi – uavhengig av trekantens størrelse!
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ AREALSETNINGEN ============ -->
+<div class="card" id="arealsetningen">
+  <h2>Arealsetningen</h2>
+  <div class="diagram-row">
+    <svg viewBox="0 0 200 150" width="200" style="flex-shrink:0;">
+      <polygon points="20,130 180,130 120,20" fill="#dbeafe" stroke="#2563eb" stroke-width="2.5"/>
+      <!-- h -->
+      <line x1="120" y1="20" x2="120" y2="130" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="5,3"/>
+      <text x="125" y="80" fill="#dc2626" font-size="14" font-weight="600">h</text>
+      <!-- sider -->
+      <text x="90" y="148" fill="#1e293b" font-size="14" font-weight="600">a</text>
+      <text x="55" y="70" fill="#1e293b" font-size="14" font-weight="600">b</text>
+      <!-- vinkel -->
+      <path d="M50,130 A30,30 0 0,0 42,110" fill="none" stroke="#ea580c" stroke-width="2"/>
+      <text x="48" y="118" fill="#ea580c" font-size="14" font-weight="600">C</text>
+    </svg>
+    <div class="text">
+      <p>Arealet til en trekant med to sider <em>a</em> og <em>b</em> og vinkelen <em>C</em> mellom dem:</p>
+      <div class="formula-box red">
+        Areal = ½ · a · b · sin(C)
+      </div>
+      <p><strong>Hvorfor?</strong> Høyden er h = b · sin(C). Setter vi dette inn i den vanlige arealformelen (½ · grunnlinje · høyde), får vi arealsetningen.</p>
+      <div class="note">
+        Brukes når du kjenner <strong>to sider og vinkelen mellom dem</strong> (SVS).
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SINUSSETNINGEN ============ -->
+<div class="card" id="sinussetningen">
+  <h2>Sinussetningen</h2>
+  <div class="diagram-row">
+    <svg viewBox="0 0 200 150" width="200" style="flex-shrink:0;">
+      <polygon points="20,130 180,130 100,20" fill="#f0fdf4" stroke="#16a34a" stroke-width="2.5"/>
+      <text x="90" y="148" fill="#1e293b" font-size="14" font-weight="600">c</text>
+      <text x="45" y="70" fill="#1e293b" font-size="14" font-weight="600">b</text>
+      <text x="148" y="70" fill="#1e293b" font-size="14" font-weight="600">a</text>
+      <!-- vinkler -->
+      <text x="35" y="123" fill="#ea580c" font-size="14" font-weight="600">C</text>
+      <text x="160" y="123" fill="#2563eb" font-size="14" font-weight="600">B</text>
+      <text x="95" y="17" fill="#16a34a" font-size="14" font-weight="600">A</text>
+    </svg>
+    <div class="text">
+      <p>I <em>enhver</em> trekant gjelder:</p>
+      <div class="formula-box green">
+        a / sin(A) = b / sin(B) = c / sin(C)
+      </div>
+      <p>Hver side delt på sinus til sin <strong>motstående vinkel</strong> gir samme tall.</p>
+      <div class="note">
+        Brukes når du kjenner <strong>en side og to vinkler</strong> (VSV), eller <strong>to sider og en motstående vinkel</strong>.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ COSINUSSETNINGEN ============ -->
+<div class="card" id="cosinussetningen">
+  <h2>Cosinussetningen</h2>
+  <div class="diagram-row">
+    <svg viewBox="0 0 200 150" width="200" style="flex-shrink:0;">
+      <polygon points="20,130 180,130 100,20" fill="#fff7ed" stroke="#ea580c" stroke-width="2.5"/>
+      <text x="90" y="148" fill="#1e293b" font-size="14" font-weight="600">c</text>
+      <text x="45" y="70" fill="#1e293b" font-size="14" font-weight="600">b</text>
+      <text x="148" y="70" fill="#1e293b" font-size="14" font-weight="600">a</text>
+      <text x="35" y="123" fill="#ea580c" font-size="14" font-weight="600">C</text>
+    </svg>
+    <div class="text">
+      <p>Generalisering av Pytagoras' setning for <em>alle</em> trekanter:</p>
+      <div class="formula-box orange">
+        c² = a² + b² − 2ab · cos(C)
+      </div>
+      <p>Når C = 90° → cos(90°) = 0, og vi får tilbake <strong>Pytagoras</strong>: c² = a² + b².</p>
+      <div class="note">
+        Brukes når du kjenner <strong>tre sider</strong> (SSS) eller <strong>to sider og vinkelen mellom dem</strong> (SVS).
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SAMMENDRAG ============ -->
+<div class="card">
+  <h2>Når bruker du hva?</h2>
+  <table class="value-table" style="font-size:0.95rem;">
+    <thead><tr><th>Du vet</th><th>Bruk</th></tr></thead>
+    <tbody>
+      <tr><td>To sider + vinkel mellom (SVS)</td><td>Arealsetningen (areal) / Cosinussetningen (finne tredje side)</td></tr>
+      <tr><td>To sider + motstående vinkel</td><td>Sinussetningen</td></tr>
+      <tr><td>Én side + to vinkler (VSV)</td><td>Sinussetningen</td></tr>
+      <tr><td>Tre sider (SSS)</td><td>Cosinussetningen (finne vinkler)</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============ REGNEKSEMPLER ============ -->
+<div class="card" id="regneksempler">
+  <h2>Regneksempler steg for steg</h2>
+  <div class="example-tabs">
+    <button class="example-tab active" onclick="showExample(0, this)">Finn en side (sin)</button>
+    <button class="example-tab" onclick="showExample(1, this)">Areal med arealsetningen</button>
+    <button class="example-tab" onclick="showExample(2, this)">Finn side med cosinussetningen</button>
+    <button class="example-tab" onclick="showExample(3, this)">Finn vinkel med sinussetningen</button>
+  </div>
+
+  <!-- Eksempel 1: Finn side med sin -->
+  <div class="example-content active" id="ex0">
+    <h3>En rettvinklet trekant har hypotenus 10 og vinkel u = 30°. Finn motstående side.</h3>
+    <div class="steps">
+      <div class="step">
+        <strong>Velg riktig formel.</strong> Vi kjenner hypotenusen og vinkelen, og vil finne motstående side. Da passer <em>sin</em>.
+        <span class="calc">sin(u) = motstående / hypotenus</span>
+      </div>
+      <div class="step">
+        <strong>Sett inn det vi vet.</strong>
+        <span class="calc">sin(30°) = x / 10</span>
+      </div>
+      <div class="step">
+        <strong>Slå opp sin(30°).</strong> Fra tabellen: sin(30°) = 0.5.
+        <span class="calc">0.5 = x / 10</span>
+      </div>
+      <div class="step">
+        <strong>Løs for x.</strong> Gang begge sider med 10.
+        <span class="calc">x = 0.5 · 10 = 5</span>
+      </div>
+      <div class="step">
+        <strong>Svar:</strong> Motstående side er <strong>5</strong>.
+      </div>
+    </div>
+  </div>
+
+  <!-- Eksempel 2: Arealsetningen -->
+  <div class="example-content" id="ex1">
+    <h3>En trekant har a = 8, b = 6 og vinkel C = 60° mellom dem. Finn arealet.</h3>
+    <div class="steps">
+      <div class="step">
+        <strong>Velg riktig formel.</strong> Vi har to sider og vinkelen mellom (SVS) → arealsetningen.
+        <span class="calc">Areal = ½ · a · b · sin(C)</span>
+      </div>
+      <div class="step">
+        <strong>Sett inn verdiene.</strong>
+        <span class="calc">Areal = ½ · 8 · 6 · sin(60°)</span>
+      </div>
+      <div class="step">
+        <strong>Slå opp sin(60°).</strong> Fra tabellen: sin(60°) = √3/2 ≈ 0.866.
+        <span class="calc">Areal = ½ · 8 · 6 · 0.866</span>
+      </div>
+      <div class="step">
+        <strong>Regn ut.</strong>
+        <span class="calc">Areal = 0.5 · 48 · 0.866 = 20.8</span>
+      </div>
+      <div class="step">
+        <strong>Svar:</strong> Arealet er ca. <strong>20.8</strong>.
+      </div>
+    </div>
+  </div>
+
+  <!-- Eksempel 3: Cosinussetningen -->
+  <div class="example-content" id="ex2">
+    <h3>En trekant har a = 5, b = 7 og vinkel C = 45° mellom dem. Finn side c.</h3>
+    <div class="steps">
+      <div class="step">
+        <strong>Velg riktig formel.</strong> To sider + vinkel mellom (SVS) → cosinussetningen.
+        <span class="calc">c² = a² + b² − 2ab · cos(C)</span>
+      </div>
+      <div class="step">
+        <strong>Sett inn verdiene.</strong>
+        <span class="calc">c² = 5² + 7² − 2 · 5 · 7 · cos(45°)</span>
+      </div>
+      <div class="step">
+        <strong>Regn ut ledd for ledd.</strong> cos(45°) = √2/2 ≈ 0.707.
+        <span class="calc">c² = 25 + 49 − 70 · 0.707</span>
+        <span class="calc">c² = 74 − 49.5 = 24.5</span>
+      </div>
+      <div class="step">
+        <strong>Ta kvadratroten.</strong>
+        <span class="calc">c = √24.5 ≈ 4.95</span>
+      </div>
+      <div class="step">
+        <strong>Svar:</strong> Side c er ca. <strong>4.95</strong>.
+      </div>
+    </div>
+  </div>
+
+  <!-- Eksempel 4: Sinussetningen – finn vinkel -->
+  <div class="example-content" id="ex3">
+    <h3>I en trekant er a = 10, vinkel A = 80° og b = 7. Finn vinkel B.</h3>
+    <div class="steps">
+      <div class="step">
+        <strong>Velg riktig formel.</strong> Vi kjenner to sider og en motstående vinkel → sinussetningen.
+        <span class="calc">a / sin(A) = b / sin(B)</span>
+      </div>
+      <div class="step">
+        <strong>Sett inn det vi vet.</strong>
+        <span class="calc">10 / sin(80°) = 7 / sin(B)</span>
+      </div>
+      <div class="step">
+        <strong>Løs for sin(B).</strong> Kryss-multipliser.
+        <span class="calc">sin(B) = 7 · sin(80°) / 10</span>
+      </div>
+      <div class="step">
+        <strong>Regn ut.</strong> sin(80°) ≈ 0.985 (bruk kalkulator).
+        <span class="calc">sin(B) = 7 · 0.985 / 10 = 0.6895</span>
+      </div>
+      <div class="step">
+        <strong>Finn vinkelen.</strong> Bruk invers sinus (sin⁻¹) på kalkulatoren.
+        <span class="calc">B = sin⁻¹(0.6895) ≈ 43.6°</span>
+      </div>
+      <div class="step">
+        <strong>Svar:</strong> Vinkel B er ca. <strong>43.6°</strong>.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ KALKULATOR-TIPS ============ -->
+<div class="card" id="kalkulator">
+  <h2>Kalkulator-tips</h2>
+  <p>Vanlige feil med kalkulatoren – unngå dem på prøven!</p>
+
+  <div class="calc-tip">
+    <div class="icon">1.</div>
+    <div>
+      <strong>Sjekk at kalkulatoren står i GRADER (DEG)</strong><br>
+      Hvis den står i radianer (RAD), får du helt feil svar. I GeoGebra: skriv gradtegnet, f.eks. <code>sin(30°)</code>. På Casio: trykk SHIFT → SETUP → velg «Deg».
+    </div>
+  </div>
+
+  <div class="calc-tip">
+    <div class="icon">2.</div>
+    <div>
+      <strong>Finn en vinkel med invers sinus/cosinus/tangens</strong><br>
+      Dersom du vet at sin(B) = 0.5 og vil finne B:<br>
+      GeoGebra: <code>arcsin(0.5)</code> eller <code>asin(0.5)</code><br>
+      Casio: <code>SHIFT</code> + <code>sin</code> → skriver <code>sin⁻¹(0.5)</code> → gir 30°
+    </div>
+  </div>
+
+  <div class="calc-tip">
+    <div class="icon">3.</div>
+    <div>
+      <strong>Bruk parenteser!</strong><br>
+      Skriv <code>sin(60)</code>, ikke <code>sin 60</code>. Når du regner cosinussetningen, bruk parenteser rundt hele uttrykket: <code>5^2 + 7^2 - 2*5*7*cos(45)</code>.
+    </div>
+  </div>
+
+  <div class="calc-tip">
+    <div class="icon">4.</div>
+    <div>
+      <strong>Ikke rund av for tidlig</strong><br>
+      Bruk kalkulatoren til hele utregningen. Hvis du runder av underveis, kan svaret bli unøyaktig. Rund av <em>helt til slutt</em>.
+    </div>
+  </div>
+
+  <div class="calc-tip">
+    <div class="icon">5.</div>
+    <div>
+      <strong>GeoGebra CAS: Eksakte vs. desimale svar</strong><br>
+      Trykk <code>Enter</code> for eksakt svar (med brøker/røtter). Trykk <code>≈</code> (eller Ctrl+Enter) for desimaltall.
+    </div>
+  </div>
+</div>
+
+<!-- ============ GEOGEBRA-GUIDE ============ -->
+<div class="card" id="geogebra">
+  <h2>GeoGebra-guide for trigonometri</h2>
+  <p>Alt du trenger å kunne i GeoGebra CAS og grafikkfeltet for trig-oppgaver i 1T.</p>
+
+  <!-- Grunnleggende kommandoer -->
+  <div class="gb-section">
+    <h3>Trigonometriske funksjoner i CAS</h3>
+    <table class="gb-cmd-table">
+      <thead><tr><th>Du vil</th><th>Skriv i CAS</th><th>Resultat</th></tr></thead>
+      <tbody>
+        <tr><td>Finne sin(60°)</td><td><code>sin(60°)</code></td><td>√3/2</td></tr>
+        <tr><td>Finne cos(45°)</td><td><code>cos(45°)</code></td><td>√2/2</td></tr>
+        <tr><td>Finne tan(30°)</td><td><code>tan(30°)</code></td><td>√3/3</td></tr>
+        <tr><td>Desimaltall i stedet</td><td><code>sin(60°)</code> + trykk <code>≈</code></td><td>0.866</td></tr>
+        <tr><td>Finne en vinkel fra sin</td><td><code>arcsin(0.5)</code></td><td>30°</td></tr>
+        <tr><td>Finne en vinkel fra cos</td><td><code>arccos(0.5)</code></td><td>60°</td></tr>
+        <tr><td>Finne en vinkel fra tan</td><td><code>arctan(1)</code></td><td>45°</td></tr>
+      </tbody>
+    </table>
+    <div class="note">
+      <strong>Viktig:</strong> Husk gradtegnet <code>°</code> etter tallet! Uten det regner GeoGebra i radianer og du får feil svar. Du skriver ° med <code>Alt+O</code> eller velger det fra symbolmenyen.
+    </div>
+  </div>
+
+  <!-- Løse likninger -->
+  <div class="gb-section">
+    <h3>Løse likninger med Løs</h3>
+    <p>GeoGebra kan løse trig-likninger for deg med <code>Løs</code>-kommandoen:</p>
+    <div class="gb-example">
+      <span class="comment">// Finn vinkel B fra sinussetningen</span><br>
+      Løs(10 / sin(80°) = 7 / sin(x), x)<br>
+      <span class="result">→ x = 43.6°</span><br><br>
+      <span class="comment">// Finn side c fra cosinussetningen</span><br>
+      Løs(c² = 5² + 7² - 2·5·7·cos(45°), c)<br>
+      <span class="result">→ c = 4.95</span><br><br>
+      <span class="comment">// Finn vinkel C når du kjenner tre sider (a=6, b=8, c=10)</span><br>
+      Løs(10² = 6² + 8² - 2·6·8·cos(x), x)<br>
+      <span class="result">→ x = 90°</span>
+    </div>
+  </div>
+
+  <!-- Definere variabler -->
+  <div class="gb-section">
+    <h3>Definere variabler og jobbe steg for steg</h3>
+    <p>Du kan lagre verdier i variabler slik at utregningen blir oversiktlig:</p>
+    <div class="gb-example">
+      <span class="comment">// Definer sidene og vinkelen</span><br>
+      a := 8<br>
+      b := 6<br>
+      C := 60°<br><br>
+      <span class="comment">// Regn ut areal med arealsetningen</span><br>
+      Areal := 1/2 · a · b · sin(C)<br>
+      <span class="result">→ Areal = 12√3 ≈ 20.78</span><br><br>
+      <span class="comment">// Finn tredje side med cosinussetningen</span><br>
+      Løs(c² = a² + b² - 2·a·b·cos(C), c)<br>
+      <span class="result">→ c = 2√13 ≈ 7.21</span>
+    </div>
+    <div class="note">
+      <strong>Tips:</strong> Bruk <code>:=</code> (kolon + likhetstegn) for å lagre verdier. Vanlig <code>=</code> betyr «er lik» (sammenligning), mens <code>:=</code> betyr «sett verdien til».
+    </div>
+  </div>
+
+  <!-- Tegne trekanter -->
+  <div class="gb-section">
+    <h3>Tegne trekanter i grafikkfeltet</h3>
+    <p>Nyttig for å visualisere oppgaver og sjekke svarene dine:</p>
+    <table class="gb-cmd-table">
+      <thead><tr><th>Du vil</th><th>Slik gjør du</th></tr></thead>
+      <tbody>
+        <tr><td>Plassere hjørner</td><td>Klikk «Punkt»-verktøyet og sett tre punkter A, B, C</td></tr>
+        <tr><td>Tegne trekanten</td><td><code>Mangekant(A, B, C)</code> i inntastingsfeltet</td></tr>
+        <tr><td>Måle en side</td><td><code>Avstand(A, B)</code> eller bruk «Avstand»-verktøyet</td></tr>
+        <tr><td>Måle en vinkel</td><td><code>Vinkel(B, A, C)</code> – vinkelen i punkt A</td></tr>
+        <tr><td>Finne arealet</td><td><code>Areal(poly1)</code> der poly1 er trekanten din</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Tegne grafer -->
+  <div class="gb-section">
+    <h3>Tegne trigonometriske grafer</h3>
+    <p>Skriv funksjonen rett i inntastingsfeltet:</p>
+    <div class="gb-example">
+      <span class="comment">// Tegn sinusgraf</span><br>
+      f(x) = sin(x)<br><br>
+      <span class="comment">// Tegn cosinusgraf</span><br>
+      g(x) = cos(x)<br><br>
+      <span class="comment">// Tegn tangentgraf</span><br>
+      h(x) = tan(x)
+    </div>
+    <div class="note">
+      <strong>Tips:</strong> Høyreklikk på x-aksen → «Egenskaper» → sett avstand til 90° for å få fine grader på aksen. Du kan også skrive <code>f(x) = sin(x°)</code> hvis du vil at x-aksen skal vise vanlige tall (0, 90, 180...) i stedet for radianer.
+    </div>
+  </div>
+
+  <!-- Nyttige hurtigtaster -->
+  <div class="gb-section">
+    <h3>Nyttige hurtigtaster</h3>
+    <table class="gb-cmd-table">
+      <thead><tr><th>Tast</th><th>Hva den gjør</th></tr></thead>
+      <tbody>
+        <tr><td><code>Enter</code></td><td>Eksakt svar (brøker, røtter)</td></tr>
+        <tr><td><code>Ctrl + Enter</code> (eller <code>≈</code>)</td><td>Desimaltall</td></tr>
+        <tr><td><code>Alt + O</code></td><td>Gradtegnet °</td></tr>
+        <tr><td><code>^</code></td><td>Opphøyd i (f.eks. <code>5^2</code> = 5²)</td></tr>
+        <tr><td><code>sqrt()</code></td><td>Kvadratrot (f.eks. <code>sqrt(3)</code> = √3)</td></tr>
+        <tr><td><code>Ctrl + Z</code></td><td>Angre</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Vanlige feil -->
+  <div class="gb-section">
+    <h3>Vanlige GeoGebra-feil på prøve</h3>
+    <div class="calc-tip">
+      <div class="icon">1.</div>
+      <div>
+        <strong>Glemte gradtegnet °</strong><br>
+        <code>sin(60)</code> gir 60 <em>radianer</em> ≈ −0.305. Du ville ha <code>sin(60°)</code> = 0.866. Stor forskjell!
+      </div>
+    </div>
+    <div class="calc-tip">
+      <div class="icon">2.</div>
+      <div>
+        <strong>Brukte = i stedet for :=</strong><br>
+        <code>a = 5</code> sjekker om a er 5. <code>a := 5</code> setter a til 5. Bruk <code>:=</code> når du definerer.
+      </div>
+    </div>
+    <div class="calc-tip">
+      <div class="icon">3.</div>
+      <div>
+        <strong>Glemte gangetegn</strong><br>
+        <code>2x</code> fungerer, men <code>2sin(30°)</code> gjør det ikke. Skriv <code>2·sin(30°)</code> eller <code>2*sin(30°)</code>.
+      </div>
+    </div>
+    <div class="calc-tip">
+      <div class="icon">4.</div>
+      <div>
+        <strong>Feil rekkefølge i Vinkel-kommandoen</strong><br>
+        <code>Vinkel(B, A, C)</code> gir vinkelen <em>i punkt A</em>. Punktet i midten er der vinkelen måles.
+      </div>
+    </div>
+    <div class="calc-tip">
+      <div class="icon">5.</div>
+      <div>
+        <strong>Løs ga ikke svar</strong><br>
+        Sjekk at du har ° etter vinkelverdier, at variabelnavnet er riktig, og at du skrev <code>Løs(..., x)</code> med variabelen til slutt.
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<script>
+// ---- Tegn grafer ----
+function drawGraph(canvasId, fn, color, label, yMin, yMax, clamp) {
+  const canvas = document.getElementById(canvasId);
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const pad = { l: 35, r: 10, t: 15, b: 30 };
+  const gw = W - pad.l - pad.r;
+  const gh = H - pad.t - pad.b;
+  const xMin = -10, xMax = 370;
+
+  // bakgrunn
+  ctx.fillStyle = '#f8fafc';
+  ctx.fillRect(0, 0, W, H);
+
+  // hjelpefunksjon: koordinat → piksel
+  const px = x => pad.l + (x - xMin) / (xMax - xMin) * gw;
+  const py = y => pad.t + (yMax - y) / (yMax - yMin) * gh;
+
+  // rutenett
+  ctx.strokeStyle = '#e2e8f0';
+  ctx.lineWidth = 0.8;
+  for (let x = 0; x <= 360; x += 90) {
+    ctx.beginPath(); ctx.moveTo(px(x), pad.t); ctx.lineTo(px(x), H - pad.b); ctx.stroke();
+  }
+  for (let y = Math.ceil(yMin); y <= yMax; y++) {
+    ctx.beginPath(); ctx.moveTo(pad.l, py(y)); ctx.lineTo(W - pad.r, py(y)); ctx.stroke();
+  }
+
+  // akser
+  ctx.strokeStyle = '#94a3b8';
+  ctx.lineWidth = 1.2;
+  ctx.beginPath(); ctx.moveTo(pad.l, py(0)); ctx.lineTo(W - pad.r, py(0)); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(px(0), pad.t); ctx.lineTo(px(0), H - pad.b); ctx.stroke();
+
+  // x-labels
+  ctx.fillStyle = '#64748b';
+  ctx.font = '11px sans-serif';
+  ctx.textAlign = 'center';
+  ['0°','90°','180°','270°','360°'].forEach((lbl, i) => {
+    ctx.fillText(lbl, px(i * 90), H - pad.b + 16);
+  });
+
+  // y-labels
+  ctx.textAlign = 'right';
+  for (let y = Math.ceil(yMin); y <= yMax; y++) {
+    if (y === 0 && !clamp) continue;
+    ctx.fillText(y, pad.l - 5, py(y) + 4);
+  }
+
+  // graf
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 2.5;
+  ctx.beginPath();
+  let started = false;
+  for (let xi = 0; xi <= gw; xi++) {
+    const xDeg = xMin + xi / gw * (xMax - xMin);
+    let yVal = fn(xDeg * Math.PI / 180);
+    if (clamp && (yVal > yMax + 1 || yVal < yMin - 1)) {
+      started = false;
+      continue;
+    }
+    const pxv = pad.l + xi;
+    const pyv = py(yVal);
+    if (!started) { ctx.moveTo(pxv, pyv); started = true; }
+    else ctx.lineTo(pxv, pyv);
+  }
+  ctx.stroke();
+}
+
+drawGraph('sinGraph', Math.sin, '#2563eb', 'sin', -1.3, 1.3, false);
+drawGraph('cosGraph', Math.cos, '#dc2626', 'cos', -1.3, 1.3, false);
+drawGraph('tanGraph', Math.tan, '#16a34a', 'tan', -4, 4, true);
+
+// ===== QUIZ =====
+const allQuestions = [
+  // --- Grunnleggende verdier fra tabellen ---
+  {
+    q: "Hva er sin(0°)?",
+    opts: ["1", "1/2", "0", "√2/2"],
+    ans: 2,
+    tip: "sin(0°) = 0. Sjekk første rad i verditabellen!"
+  },
+  {
+    q: "Hva er cos(0°)?",
+    opts: ["0", "1/2", "√2/2", "1"],
+    ans: 3,
+    tip: "cos(0°) = 1. Cos starter på toppen og synker nedover mot 0."
+  },
+  {
+    q: "Hva er sin(90°)?",
+    opts: ["0", "1/2", "√2/2", "1"],
+    ans: 3,
+    tip: "sin(90°) = 1. Sin går fra 0 opp til 1 mellom 0° og 90°."
+  },
+  {
+    q: "Hva er cos(90°)?",
+    opts: ["1", "1/2", "0", "−1"],
+    ans: 2,
+    tip: "cos(90°) = 0. Cos går fra 1 ned til 0 mellom 0° og 90°."
+  },
+  {
+    q: "Hva er sin(30°)?",
+    opts: ["0", "1/2", "√2/2", "√3/2"],
+    ans: 1,
+    tip: "sin(30°) = 1/2. En av de viktigste verdiene å huske!"
+  },
+  {
+    q: "Hva er cos(60°)?",
+    opts: ["0", "1/2", "√2/2", "√3/2"],
+    ans: 1,
+    tip: "cos(60°) = 1/2. Legg merke til at cos(60°) = sin(30°)!"
+  },
+  {
+    q: "Hva er tan(45°)?",
+    opts: ["0", "1/2", "1", "ikke definert"],
+    ans: 2,
+    tip: "tan(45°) = 1. Fordi sin(45°) og cos(45°) er like store."
+  },
+  {
+    q: "Hva er tan(0°)?",
+    opts: ["0", "1", "−1", "ikke definert"],
+    ans: 0,
+    tip: "tan(0°) = sin(0°)/cos(0°) = 0/1 = 0."
+  },
+
+  // --- Definisjoner (hva betyr sin, cos, tan) ---
+  {
+    q: "I en rettvinklet trekant: hva er sin(u)?",
+    opts: [
+      "hosliggende / hypotenus",
+      "motstående / hypotenus",
+      "motstående / hosliggende",
+      "hypotenus / motstående"
+    ],
+    ans: 1,
+    tip: "sin = motstående side delt på hypotenusen."
+  },
+  {
+    q: "I en rettvinklet trekant: hva er cos(u)?",
+    opts: [
+      "motstående / hypotenus",
+      "motstående / hosliggende",
+      "hosliggende / hypotenus",
+      "hypotenus / hosliggende"
+    ],
+    ans: 2,
+    tip: "cos = hosliggende side delt på hypotenusen."
+  },
+  {
+    q: "Hva er tan(u) uttrykt med sin og cos?",
+    opts: [
+      "cos(u) / sin(u)",
+      "sin(u) · cos(u)",
+      "sin(u) / cos(u)",
+      "sin(u) + cos(u)"
+    ],
+    ans: 2,
+    tip: "tan(u) = sin(u) / cos(u), altså motstående delt på hosliggende."
+  },
+
+  // --- Setninger: kjenn igjen formlene ---
+  {
+    q: "Hva er arealsetningen?",
+    opts: [
+      "A = ½ · a · b · cos(C)",
+      "A = ½ · a · b · sin(C)",
+      "A = a · b · sin(C)",
+      "A = a² + b²"
+    ],
+    ans: 1,
+    tip: "Areal = ½ · a · b · sin(C). Husk halvparten, to sider, og sinus til vinkelen mellom."
+  },
+  {
+    q: "Hva er cosinussetningen?",
+    opts: [
+      "c = a + b − 2ab · cos(C)",
+      "c² = a² + b² + 2ab · cos(C)",
+      "c² = a² + b² − 2ab · cos(C)",
+      "c² = a² − b² + 2ab · cos(C)"
+    ],
+    ans: 2,
+    tip: "c² = a² + b² − 2ab · cos(C). Ligner på Pytagoras, men med et ekstra cos-ledd."
+  },
+  {
+    q: "Hva sier sinussetningen?",
+    opts: [
+      "a / sin(A) = b / sin(B) = c / sin(C)",
+      "sin(A) + sin(B) + sin(C) = 1",
+      "a · sin(A) = b · sin(B)",
+      "sin(A) / a = cos(B) / b"
+    ],
+    ans: 0,
+    tip: "Side delt på sinus til motstående vinkel gir samme tall for alle tre sider."
+  },
+
+  // --- Når bruker du hva? ---
+  {
+    q: "Du kjenner to sider og vinkelen mellom dem. Hvilken setning finner den tredje siden?",
+    opts: ["Sinussetningen", "Arealsetningen", "Cosinussetningen", "Pytagoras"],
+    ans: 2,
+    tip: "To sider + vinkel mellom (SVS) → bruk cosinussetningen."
+  },
+  {
+    q: "Du kjenner to sider og vinkelen mellom dem. Hvordan finner du arealet?",
+    opts: ["Cosinussetningen", "Pytagoras", "Sinussetningen", "Arealsetningen"],
+    ans: 3,
+    tip: "Areal = ½ · a · b · sin(C). Perfekt når du har SVS!"
+  },
+  {
+    q: "Du kjenner én side og to vinkler. Hvilken setning bruker du?",
+    opts: ["Cosinussetningen", "Sinussetningen", "Arealsetningen", "Pytagoras"],
+    ans: 1,
+    tip: "Én side + to vinkler → sinussetningen."
+  },
+  {
+    q: "Du kjenner alle tre sidene. Hvordan finner du en vinkel?",
+    opts: ["Sinussetningen", "Arealsetningen", "Pytagoras", "Cosinussetningen"],
+    ans: 3,
+    tip: "Tre sider (SSS) → cosinussetningen. Løs for cos(C)."
+  },
+
+  // --- Begreper ---
+  {
+    q: "Hva betyr det at to trekanter er formlike?",
+    opts: [
+      "De har likt areal",
+      "De har like lange sider",
+      "De har samme vinkler (og proporsjonale sider)",
+      "De har samme omkrets"
+    ],
+    ans: 2,
+    tip: "Formlike = samme form, men kan ha ulik størrelse. Vinklene er like!"
+  },
+  {
+    q: "Hva er enhetssirkelen?",
+    opts: [
+      "En sirkel med radius 2 i origo",
+      "En sirkel med radius 1 i origo",
+      "En sirkel der omkretsen er 1",
+      "En sirkel der arealet er 1"
+    ],
+    ans: 1,
+    tip: "Enhetssirkelen har radius 1 og sentrum i origo (0, 0)."
+  },
+  {
+    q: "På enhetssirkelen: hva er x-koordinaten til et punkt ved vinkel u?",
+    opts: ["sin(u)", "tan(u)", "cos(u)", "u"],
+    ans: 2,
+    tip: "x = cos(u) og y = sin(u). Det er hele poenget med enhetssirkelen!"
+  },
+  {
+    q: "Hva er supplementvinkler?",
+    opts: [
+      "To vinkler som til sammen er 90°",
+      "To vinkler som til sammen er 180°",
+      "To vinkler som til sammen er 360°",
+      "To like store vinkler"
+    ],
+    ans: 1,
+    tip: "Supplementvinkler summerer til 180°. F.eks. 60° og 120°."
+  },
+  {
+    q: "Cosinussetningen er en utvidelse av hvilken kjent setning?",
+    opts: ["Arealsetningen", "Sinussetningen", "Pytagoras' setning", "Formlikhetssetningen"],
+    ans: 2,
+    tip: "Når vinkelen er 90° blir cos-leddet 0, og da står det c² = a² + b²."
+  },
+  {
+    q: "Hvorfor gir en bestemt vinkel alltid samme sin-verdi, uansett trekantens størrelse?",
+    opts: [
+      "Fordi alle trekanter har likt areal",
+      "Fordi rettvinklede trekanter med samme vinkel er formlike",
+      "Fordi hypotenusen alltid er lik 1",
+      "Fordi sin bare avhenger av gradtallet, ikke av sidene"
+    ],
+    ans: 1,
+    tip: "Formlike trekanter har samme sideforhold – det er derfor trigonometri fungerer!"
+  }
+];
+
+let quizQuestions, currentQ, score;
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function openQuiz() {
+  startQuiz();
+  document.getElementById('quizOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeQuiz() {
+  document.getElementById('quizOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+// Lukk overlay ved klikk utenfor modal
+document.getElementById('quizOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeQuiz();
+});
+
+function startQuiz() {
+  quizQuestions = shuffle([...allQuestions]).slice(0, 10);
+  currentQ = 0;
+  score = 0;
+  document.getElementById('quizBody').style.display = '';
+  document.getElementById('quizResult').style.display = 'none';
+  document.getElementById('qTotal').textContent = quizQuestions.length;
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = quizQuestions[currentQ];
+  document.getElementById('qNum').textContent = currentQ + 1;
+  document.getElementById('qBar').style.width = ((currentQ + 1) / quizQuestions.length * 100) + '%';
+  document.getElementById('qText').textContent = q.q;
+  document.getElementById('qFeedback').className = 'quiz-feedback';
+  document.getElementById('qFeedback').textContent = '';
+  document.getElementById('qNext').className = 'quiz-next';
+
+  const optBox = document.getElementById('qOptions');
+  optBox.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-option';
+    btn.textContent = opt;
+    btn.addEventListener('click', () => pickAnswer(i));
+    optBox.appendChild(btn);
+  });
+}
+
+function pickAnswer(idx) {
+  const q = quizQuestions[currentQ];
+  const btns = document.querySelectorAll('#qOptions .quiz-option');
+  btns.forEach(b => b.disabled = true);
+
+  const fb = document.getElementById('qFeedback');
+
+  if (idx === q.ans) {
+    btns[idx].classList.add('correct');
+    fb.className = 'quiz-feedback show is-correct';
+    fb.textContent = 'Riktig! ' + q.tip;
+    score++;
+  } else {
+    btns[idx].classList.add('wrong');
+    btns[q.ans].classList.add('correct');
+    fb.className = 'quiz-feedback show is-wrong';
+    fb.textContent = 'Feil. ' + q.tip;
+  }
+
+  const nextBtn = document.getElementById('qNext');
+  nextBtn.className = 'quiz-next show';
+  nextBtn.textContent = currentQ < quizQuestions.length - 1 ? 'Neste' : 'Se resultat';
+}
+
+function nextQuestion() {
+  currentQ++;
+  if (currentQ < quizQuestions.length) {
+    showQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function showResult() {
+  document.getElementById('quizBody').style.display = 'none';
+  const res = document.getElementById('quizResult');
+  res.style.display = '';
+  document.getElementById('rScore').textContent = score + ' / ' + quizQuestions.length;
+
+  const pct = score / quizQuestions.length;
+  let grade, color;
+  if (pct === 1)        { grade = 'Perfekt! Du kan trigonometri!'; color = '#16a34a'; }
+  else if (pct >= 0.8)  { grade = 'Veldig bra! Nesten alt riktig.'; color = '#2563eb'; }
+  else if (pct >= 0.6)  { grade = 'Bra jobba! Litt mer øving.'; color = '#ea580c'; }
+  else                  { grade = 'Øv litt mer – du klarer det!'; color = '#dc2626'; }
+
+  const g = document.getElementById('rGrade');
+  g.textContent = grade;
+  g.style.color = color;
+}
+
+// ===== EKSEMPEL-TABS =====
+function showExample(idx, btn) {
+  document.querySelectorAll('.example-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.example-tab').forEach(el => el.classList.remove('active'));
+  document.getElementById('ex' + idx).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ===== INTERAKTIV ENHETSSIRKEL =====
+(function() {
+  const canvas = document.getElementById('ucCanvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const cx = W / 2, cy = H / 2, R = 130;
+  let angleDeg = 45;
+  let dragging = false;
+
+  function toRad(d) { return d * Math.PI / 180; }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // bakgrunn
+    ctx.fillStyle = '#f8fafc';
+    ctx.fillRect(0, 0, W, H);
+
+    // rutenett
+    ctx.strokeStyle = '#e2e8f0';
+    ctx.lineWidth = 0.6;
+    for (let i = -R; i <= R; i += R/4) {
+      ctx.beginPath(); ctx.moveTo(cx + i, cy - R - 10); ctx.lineTo(cx + i, cy + R + 10); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(cx - R - 10, cy + i); ctx.lineTo(cx + R + 10, cy + i); ctx.stroke();
+    }
+
+    // akser
+    ctx.strokeStyle = '#94a3b8';
+    ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.moveTo(cx - R - 15, cy); ctx.lineTo(cx + R + 15, cy); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx, cy - R - 15); ctx.lineTo(cx, cy + R + 15); ctx.stroke();
+
+    // akse-labels
+    ctx.fillStyle = '#64748b';
+    ctx.font = '12px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('1', cx + R + 2, cy + 15);
+    ctx.fillText('-1', cx - R - 2, cy + 15);
+    ctx.textAlign = 'left';
+    ctx.fillText('1', cx + 6, cy - R - 2);
+    ctx.fillText('-1', cx + 6, cy + R + 14);
+
+    // sirkel
+    ctx.strokeStyle = '#2563eb';
+    ctx.lineWidth = 2.2;
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.stroke();
+
+    // beregn punkt
+    const rad = toRad(angleDeg);
+    const px = cx + R * Math.cos(rad);
+    const py = cy - R * Math.sin(rad);
+    const cosV = Math.cos(rad);
+    const sinV = Math.sin(rad);
+
+    // fylt trekant (svak)
+    ctx.fillStyle = 'rgba(37,99,235,0.08)';
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(px, cy);
+    ctx.lineTo(px, py);
+    ctx.closePath();
+    ctx.fill();
+
+    // cos-linje (x-retning)
+    ctx.strokeStyle = '#dc2626';
+    ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(px, cy); ctx.stroke();
+
+    // sin-linje (y-retning)
+    ctx.strokeStyle = '#2563eb';
+    ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(px, cy); ctx.lineTo(px, py); ctx.stroke();
+
+    // radius-linje
+    ctx.strokeStyle = '#ea580c';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(px, py); ctx.stroke();
+
+    // vinkel-bue
+    const arcR = 30;
+    ctx.strokeStyle = '#ea580c';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(cx, cy, arcR, 0, -rad, rad > 0);
+    ctx.stroke();
+
+    // labels på linjene
+    ctx.font = 'bold 13px sans-serif';
+    const midX = (cx + px) / 2;
+    const midY = (cy + py) / 2;
+    ctx.fillStyle = '#dc2626';
+    ctx.textAlign = 'center';
+    ctx.fillText('cos', midX, cy + (sinV >= 0 ? 16 : -6));
+    ctx.fillStyle = '#2563eb';
+    ctx.fillText('sin', px + (cosV >= 0 ? 18 : -18), (cy + py) / 2 + 4);
+
+    // prikk
+    ctx.fillStyle = '#ea580c';
+    ctx.beginPath();
+    ctx.arc(px, py, 7, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#fff';
+    ctx.beginPath();
+    ctx.arc(px, py, 3, 0, Math.PI * 2);
+    ctx.fill();
+
+    // oppdater verdier
+    document.getElementById('ucAngle').textContent = Math.round(angleDeg) + '°';
+    document.getElementById('ucCos').textContent = cosV.toFixed(3);
+    document.getElementById('ucSin').textContent = sinV.toFixed(3);
+    const tanV = Math.cos(rad) !== 0 ? (sinV / cosV) : Infinity;
+    document.getElementById('ucTan').textContent = Math.abs(tanV) > 1000 ? 'udef.' : tanV.toFixed(3);
+  }
+
+  function getAngle(e) {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = W / rect.width;
+    const scaleY = H / rect.height;
+    const mx = (e.clientX - rect.left) * scaleX - cx;
+    const my = -((e.clientY - rect.top) * scaleY - cy);
+    let a = Math.atan2(my, mx) * 180 / Math.PI;
+    if (a < 0) a += 360;
+    // snap til 0, 30, 45, 60, 90, etc. hvis nær
+    const snaps = [0, 30, 45, 60, 90, 120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330, 360];
+    for (const s of snaps) {
+      if (Math.abs(a - s) < 4) { a = s; break; }
+    }
+    if (a === 360) a = 0;
+    return a;
+  }
+
+  function onPointer(e) {
+    e.preventDefault();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = W / rect.width;
+    const scaleY = H / rect.height;
+    const mx = (clientX - rect.left) * scaleX - cx;
+    const my = -((clientY - rect.top) * scaleY - cy);
+    let a = Math.atan2(my, mx) * 180 / Math.PI;
+    if (a < 0) a += 360;
+    const snaps = [0, 30, 45, 60, 90, 120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330, 360];
+    for (const s of snaps) {
+      if (Math.abs(a - s) < 4) { a = s; break; }
+    }
+    if (a === 360) a = 0;
+    angleDeg = a;
+    draw();
+  }
+
+  function updateShortcutButtons() {
+    const btns = document.querySelectorAll('#ucShortcuts button');
+    btns.forEach(b => {
+      b.classList.toggle('active', parseInt(b.textContent) === Math.round(angleDeg));
+    });
+  }
+
+  canvas.addEventListener('mousedown', (e) => { dragging = true; onPointer(e); updateShortcutButtons(); });
+  canvas.addEventListener('mousemove', (e) => { if (dragging) { onPointer(e); updateShortcutButtons(); } });
+  window.addEventListener('mouseup', () => { dragging = false; });
+  canvas.addEventListener('touchstart', (e) => { dragging = true; onPointer(e); updateShortcutButtons(); }, { passive: false });
+  canvas.addEventListener('touchmove', (e) => { if (dragging) { onPointer(e); updateShortcutButtons(); } }, { passive: false });
+  window.addEventListener('touchend', () => { dragging = false; });
+
+  window.setUcAngle = function(deg) {
+    angleDeg = deg;
+    draw();
+    updateShortcutButtons();
+  };
+
+  draw();
+  updateShortcutButtons();
+})();
+</script>
+</body>
+</html>
