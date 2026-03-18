@@ -177,11 +177,18 @@
   /* Quiz-knapp i toc */
   .toc .quiz-btn {
     background: var(--orange);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.9rem;
     font-weight: 700;
     cursor: pointer;
     border: none;
     font-family: inherit;
+    transition: opacity 0.2s;
   }
+  .toc .quiz-btn:hover { opacity: 0.8; }
 
   /* ===== QUIZ OVERLAY ===== */
   .quiz-overlay {
@@ -569,7 +576,7 @@
   <a href="#regneksempler">Regneksempler</a>
   <a href="#kalkulator">Kalkulator-tips</a>
   <a href="#geogebra">GeoGebra-guide</a>
-  <button class="toc a quiz-btn" onclick="openQuiz()">Test deg selv!</button>
+  <button class="quiz-btn" onclick="openQuiz()">Test deg selv!</button>
 </div>
 
 <!-- ===== QUIZ OVERLAY ===== -->
