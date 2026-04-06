@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tall, tallmengder og regning – Hjelpeside</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>π</text></svg>">
+<style>
+  :root {
+    --blue: #2563eb;
+    --red: #dc2626;
+    --green: #16a34a;
+    --orange: #ea580c;
+    --purple: #7c3aed;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 2rem 1rem;
+  }
+  .container { max-width: 960px; margin: 0 auto; }
+  h1 {
+    text-align: center;
+    font-size: 2.2rem;
+    margin-bottom: 0.3rem;
+    color: var(--blue);
+  }
+  .subtitle {
+    text-align: center;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    font-size: 1.05rem;
+  }
+  .card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .card h2 {
+    font-size: 1.35rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--blue);
+    color: var(--blue);
+  }
+  .card h3 {
+    font-size: 1.1rem;
+    margin: 1rem 0 0.5rem;
+    color: var(--text);
+  }
+
+  /* Formler */
+  .formula-box {
+    background: #eff6ff;
+    border-left: 4px solid var(--blue);
+    padding: 1rem 1.2rem;
+    border-radius: 0 8px 8px 0;
+    margin: 0.8rem 0;
+    font-size: 1.15rem;
+    text-align: center;
+  }
+  .formula-box.red {
+    background: #fef2f2;
+    border-left-color: var(--red);
+  }
+  .formula-box.green {
+    background: #f0fdf4;
+    border-left-color: var(--green);
+  }
+  .formula-box.orange {
+    background: #fff7ed;
+    border-left-color: var(--orange);
+  }
+  .formula-box.purple {
+    background: #f5f3ff;
+    border-left-color: var(--purple);
+  }
+  p { margin: 0.5rem 0; }
+
+  ul { padding-left: 1.3rem; }
+  ul li { margin: 0.3rem 0; }
+
+  .highlight { color: var(--blue); font-weight: 600; }
+  .note {
+    background: #fefce8;
+    border: 1px solid #fde68a;
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    margin-top: 0.8rem;
+    font-size: 0.95rem;
+  }
+
+  .toc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  .toc a {
+    background: var(--blue);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+  }
+  .toc a:hover { opacity: 0.8; }
+  .toc .quiz-btn {
+    background: var(--orange);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .toc .quiz-btn:hover { opacity: 0.8; }
+
+  /* Tallmengde-tabell */
+  .set-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 1rem;
+    margin: 0.8rem 0;
+  }
+  .set-table th, .set-table td {
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--border);
+  }
+  .set-table thead th {
+    background: var(--blue);
+    color: #fff;
+    font-weight: 600;
+  }
+  .set-table tbody tr:nth-child(even) { background: #f1f5f9; }
+  .set-table .set-symbol {
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-align: center;
+    width: 50px;
+  }
+
+  /* Regel-boks */
+  .rule-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    margin: 0.8rem 0;
+  }
+  @media (max-width: 600px) {
+    .rule-grid { grid-template-columns: 1fr; }
+  }
+  .rule-item {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    text-align: center;
+  }
+  .rule-item .rule-name {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 0.3rem;
+  }
+  .rule-item .rule-formula {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  .rule-item .rule-example {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-top: 0.3rem;
+  }
+
+  /* Steg-for-steg */
+  .steps { counter-reset: step; margin: 1rem 0; }
+  .step {
+    position: relative;
+    padding: 0.8rem 1rem 0.8rem 3.2rem;
+    margin-bottom: 0.6rem;
+    background: var(--bg);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  .step::before {
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    left: 0.8rem;
+    top: 0.75rem;
+    width: 1.7rem;
+    height: 1.7rem;
+    background: var(--blue);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+  .step strong { color: var(--blue); }
+  .step .calc {
+    display: block;
+    margin-top: 0.3rem;
+    font-family: 'Courier New', monospace;
+    background: #f1f5f9;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.95rem;
+  }
+
+  /* Mengde-diagram SVG */
+  .set-diagram { text-align: center; margin: 1rem 0; }
+
+  /* Brøk-visning */
+  .frac {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle;
+    margin: 0 0.2rem;
+    font-size: 0.95em;
+  }
+  .frac-num { border-bottom: 2px solid var(--text); padding: 0 0.3rem 0.15rem; }
+  .frac-den { padding: 0.15rem 0.3rem 0; }
+
+  /* ===== QUIZ OVERLAY ===== */
+  .quiz-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15,23,42,0.6);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+  }
+  .quiz-overlay.open { display: flex; }
+  .quiz-modal {
+    background: var(--card);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 560px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 2rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    position: relative;
+    animation: slideUp 0.3s ease;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .quiz-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--muted);
+    line-height: 1;
+  }
+  .quiz-close:hover { color: var(--text); }
+  .quiz-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  .quiz-header h2 {
+    color: var(--orange);
+    font-size: 1.5rem;
+    margin-bottom: 0.3rem;
+  }
+  .quiz-progress {
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .quiz-progress-bar {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    margin-top: 0.5rem;
+    overflow: hidden;
+  }
+  .quiz-progress-fill {
+    height: 100%;
+    background: var(--orange);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+  .quiz-question {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+  .quiz-options { display: flex; flex-direction: column; gap: 0.6rem; }
+  .quiz-option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0.85rem 1.1rem;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    background: var(--bg);
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    font-family: inherit;
+    color: var(--text);
+  }
+  .quiz-option:hover:not(:disabled) {
+    border-color: var(--blue);
+    background: #eff6ff;
+  }
+  .quiz-option:disabled { cursor: default; }
+  .quiz-option.correct {
+    border-color: var(--green);
+    background: #f0fdf4;
+    font-weight: 600;
+  }
+  .quiz-option.wrong {
+    border-color: var(--red);
+    background: #fef2f2;
+    opacity: 0.7;
+  }
+  .quiz-feedback {
+    margin-top: 1rem;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.is-correct {
+    background: #f0fdf4;
+    border: 1px solid #86efac;
+    color: #166534;
+  }
+  .quiz-feedback.is-wrong {
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    color: #991b1b;
+  }
+  .quiz-next {
+    display: none;
+    margin: 1.2rem auto 0;
+    padding: 0.7rem 2rem;
+    background: var(--blue);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: opacity 0.2s;
+  }
+  .quiz-next:hover { opacity: 0.85; }
+  .quiz-next.show { display: block; }
+  .quiz-result { text-align: center; }
+  .quiz-score {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--blue);
+    margin: 0.5rem 0;
+  }
+  .quiz-score-label { color: var(--muted); font-size: 1rem; }
+  .quiz-grade {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0.8rem 0;
+  }
+  .quiz-restart {
+    margin-top: 1rem;
+    padding: 0.7rem 2rem;
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .quiz-restart:hover { opacity: 0.85; }
+
+  /* Problemløsning-steg */
+  .problem-steps {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+  @media (max-width: 600px) {
+    .problem-steps { grid-template-columns: 1fr; }
+  }
+  .problem-step {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.2rem;
+    text-align: center;
+  }
+  .problem-step .step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    background: var(--blue);
+    color: #fff;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .problem-step h4 {
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+    color: var(--blue);
+  }
+  .problem-step p {
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  /* Hjem-lenke */
+  .home-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: var(--blue);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .home-link:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<a href="index.html" class="home-link">&larr; Tilbake til forsiden</a>
+
+<h1>Tall, tallmengder og regning</h1>
+<p class="subtitle">Kompakt hjelpeside – VG1 Kapittel 1</p>
+
+<div class="toc">
+  <a href="#tallmengder">Tallmengder</a>
+  <a href="#potenser">Potenser</a>
+  <a href="#regneregler">Regneregler</a>
+  <a href="#rekkefolge">Regnerekkefølge</a>
+  <a href="#brok">Brøk</a>
+  <a href="#prosent">Prosent</a>
+  <a href="#vekstfaktor">Vekstfaktor</a>
+  <a href="#fart">Fart og strekning</a>
+  <a href="#areal-volum">Areal og volum</a>
+  <a href="#pytagoras">Pytagoras</a>
+  <a href="#problemlosning">Problemløsning</a>
+  <a href="#metodevalg">Når bruker du hva?</a>
+  <button class="toc a quiz-btn" onclick="openQuiz()">Test deg selv!</button>
+</div>
+
+<!-- ===== QUIZ OVERLAY ===== -->
+<div class="quiz-overlay" id="quizOverlay">
+  <div class="quiz-modal">
+    <button class="quiz-close" onclick="closeQuiz()">&times;</button>
+    <div class="quiz-header">
+      <h2>Tall og regning – quiz</h2>
+      <div class="quiz-progress">Sporsmal <span id="qNum">1</span> av <span id="qTotal">10</span></div>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="qBar" style="width:10%"></div></div>
+    </div>
+    <div id="quizBody">
+      <div class="quiz-question" id="qText"></div>
+      <div class="quiz-options" id="qOptions"></div>
+      <div class="quiz-feedback" id="qFeedback"></div>
+      <button class="quiz-next" id="qNext" onclick="nextQuestion()">Neste</button>
+    </div>
+    <div id="quizResult" class="quiz-result" style="display:none;">
+      <div class="quiz-score-label">Resultat</div>
+      <div class="quiz-score" id="rScore"></div>
+      <div class="quiz-grade" id="rGrade"></div>
+      <button class="quiz-restart" onclick="startQuiz()">Prøv igjen</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 1.1 TALLMENGDER ============ -->
+<div class="card" id="tallmengder">
+  <h2>1.1 Tall og tallmengder</h2>
+
+  <h3>Mengdeparenteser</h3>
+  <p>Vi bruker <strong>krøllparenteser</strong> { } for å skrive mengder. Elementene i mengden listes opp med komma.</p>
+  <div class="formula-box">
+    A = {1, 2, 3, 4, 5}
+  </div>
+  <p>Vi skriver <strong>a &isin; A</strong> for &laquo;a er element i mengden A&raquo;, og <strong>b &notin; A</strong> for &laquo;b er ikke element i A&raquo;.</p>
+
+  <h3>De viktigste tallmengdene</h3>
+  <div class="set-diagram">
+    <svg viewBox="0 0 480 200" width="480" style="max-width:100%;">
+      <ellipse cx="240" cy="100" rx="230" ry="90" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+      <text x="460" y="30" fill="#2563eb" font-size="18" font-weight="700">R</text>
+      <ellipse cx="220" cy="100" rx="170" ry="70" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+      <text x="385" y="55" fill="#16a34a" font-size="18" font-weight="700">Q</text>
+      <ellipse cx="200" cy="100" rx="110" ry="50" fill="#fefce8" stroke="#ea580c" stroke-width="2"/>
+      <text x="305" y="75" fill="#ea580c" font-size="18" font-weight="700">Z</text>
+      <ellipse cx="185" cy="100" rx="60" ry="32" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+      <text x="240" y="90" fill="#dc2626" font-size="18" font-weight="700">N</text>
+      <text x="165" y="105" fill="#1e293b" font-size="13">1, 2, 3 ...</text>
+      <text x="125" y="140" fill="#1e293b" font-size="12">..., -2, -1, 0</text>
+      <text x="310" y="120" fill="#1e293b" font-size="12">&frac12;, &frac34;, 0.25</text>
+      <text x="400" y="150" fill="#1e293b" font-size="12">&pi;, &radic;2</text>
+    </svg>
+  </div>
+
+  <table class="set-table">
+    <thead>
+      <tr><th>Symbol</th><th>Navn</th><th>Beskrivelse</th><th>Eksempler</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="set-symbol" style="color:var(--red);">N</td>
+        <td><strong>Naturlige tall</strong></td>
+        <td>Positive hele tall (telle-tall)</td>
+        <td>1, 2, 3, 4, 5, ...</td>
+      </tr>
+      <tr>
+        <td class="set-symbol" style="color:var(--orange);">Z</td>
+        <td><strong>Hele tall</strong></td>
+        <td>Naturlige tall + null + negative hele tall</td>
+        <td>..., -3, -2, -1, 0, 1, 2, 3, ...</td>
+      </tr>
+      <tr>
+        <td class="set-symbol" style="color:var(--green);">Q</td>
+        <td><strong>Rasjonale tall</strong></td>
+        <td>Alle tall som kan skrives som en brøk <em>a/b</em> (der b &ne; 0)</td>
+        <td>&frac12;, -&frac34;, 0.25, 3, -7</td>
+      </tr>
+      <tr>
+        <td class="set-symbol" style="color:var(--blue);">R</td>
+        <td><strong>Reelle tall</strong></td>
+        <td>Alle tall på tallinja (rasjonale + irrasjonale)</td>
+        <td>&pi;, &radic;2, e, 0.333..., 7</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <strong>Sammenheng:</strong> N &sub; Z &sub; Q &sub; R. Det betyr at alle naturlige tall er hele tall, alle hele tall er rasjonale, osv. Irrasjonale tall (som &pi; og &radic;2) er reelle, men ikke rasjonale.
+  </div>
+</div>
+
+<!-- ============ POTENSER ============ -->
+<div class="card" id="potenser">
+  <h2>1.1 Eksponenter og potenser</h2>
+  <p>En <strong>potens</strong> er en kompakt måte å skrive gjentatt multiplikasjon:</p>
+  <div class="formula-box">
+    a<sup>n</sup> = a &middot; a &middot; a &middot; ... &middot; a &nbsp; (n faktorer)
+  </div>
+  <p>Her er <strong>a</strong> grunntallet og <strong>n</strong> eksponenten.</p>
+
+  <h3>Viktige potensregler</h3>
+  <div class="rule-grid">
+    <div class="rule-item">
+      <div class="rule-name">Multiplikasjon</div>
+      <div class="rule-formula">a<sup>m</sup> &middot; a<sup>n</sup> = a<sup>m+n</sup></div>
+      <div class="rule-example">2<sup>3</sup> &middot; 2<sup>4</sup> = 2<sup>7</sup> = 128</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Divisjon</div>
+      <div class="rule-formula">a<sup>m</sup> / a<sup>n</sup> = a<sup>m&minus;n</sup></div>
+      <div class="rule-example">5<sup>6</sup> / 5<sup>2</sup> = 5<sup>4</sup> = 625</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Potens av potens</div>
+      <div class="rule-formula">(a<sup>m</sup>)<sup>n</sup> = a<sup>m&middot;n</sup></div>
+      <div class="rule-example">(3<sup>2</sup>)<sup>3</sup> = 3<sup>6</sup> = 729</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Potens av produkt</div>
+      <div class="rule-formula">(a &middot; b)<sup>n</sup> = a<sup>n</sup> &middot; b<sup>n</sup></div>
+      <div class="rule-example">(2 &middot; 3)<sup>3</sup> = 2<sup>3</sup> &middot; 3<sup>3</sup> = 216</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Null-eksponent</div>
+      <div class="rule-formula">a<sup>0</sup> = 1 &nbsp; (a &ne; 0)</div>
+      <div class="rule-example">7<sup>0</sup> = 1, &nbsp; x<sup>0</sup> = 1</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Negativ eksponent</div>
+      <div class="rule-formula">a<sup>&minus;n</sup> = 1 / a<sup>n</sup></div>
+      <div class="rule-example">2<sup>&minus;3</sup> = 1/8 = 0.125</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ REGNEREGLER ============ -->
+<div class="card" id="regneregler">
+  <h2>1.1 Regneregler</h2>
+  <p>Disse reglene gjelder for alle tall (og bokstaver som representerer tall):</p>
+
+  <h3>Med tall</h3>
+  <div class="rule-grid">
+    <div class="rule-item">
+      <div class="rule-name">Kommutativ lov (addisjon)</div>
+      <div class="rule-formula">a + b = b + a</div>
+      <div class="rule-example">3 + 5 = 5 + 3 = 8</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Kommutativ lov (multiplikasjon)</div>
+      <div class="rule-formula">a &middot; b = b &middot; a</div>
+      <div class="rule-example">4 &middot; 7 = 7 &middot; 4 = 28</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Assosiativ lov</div>
+      <div class="rule-formula">(a + b) + c = a + (b + c)</div>
+      <div class="rule-example">(2 + 3) + 4 = 2 + (3 + 4) = 9</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Distributiv lov</div>
+      <div class="rule-formula">a &middot; (b + c) = a&middot;b + a&middot;c</div>
+      <div class="rule-example">3 &middot; (4 + 5) = 12 + 15 = 27</div>
+    </div>
+  </div>
+
+  <h3>Med bokstaver (algebra)</h3>
+  <div class="formula-box green">
+    a(b + c) = ab + ac
+  </div>
+  <p><strong>Eksempel:</strong> 2x(3x + 4) = 6x<sup>2</sup> + 8x</p>
+
+  <div class="formula-box purple">
+    (a + b)<sup>2</sup> = a<sup>2</sup> + 2ab + b<sup>2</sup>
+  </div>
+  <p><strong>Eksempel:</strong> (x + 3)<sup>2</sup> = x<sup>2</sup> + 6x + 9</p>
+
+  <div class="formula-box orange">
+    (a + b)(a &minus; b) = a<sup>2</sup> &minus; b<sup>2</sup>
+  </div>
+  <p><strong>Eksempel:</strong> (x + 5)(x &minus; 5) = x<sup>2</sup> &minus; 25</p>
+</div>
+
+<!-- ============ REGNEREKKEFØLGE ============ -->
+<div class="card" id="rekkefolge">
+  <h2>1.1 Regnerekkefølge</h2>
+  <p>Når et uttrykk har flere operasjoner, regner vi i denne rekkefølgen:</p>
+
+  <div class="steps">
+    <div class="step">
+      <strong>Parenteser</strong> – Regn ut det som står inne i parenteser først.
+      <span class="calc">( ... )</span>
+    </div>
+    <div class="step">
+      <strong>Potenser</strong> – Regn ut eksponenter.
+      <span class="calc">a<sup>n</sup></span>
+    </div>
+    <div class="step">
+      <strong>Multiplikasjon og divisjon</strong> – Fra venstre mot høyre.
+      <span class="calc">&middot; og /</span>
+    </div>
+    <div class="step">
+      <strong>Addisjon og subtraksjon</strong> – Fra venstre mot høyre.
+      <span class="calc">+ og &minus;</span>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>Eksempel:</strong> 2 + 3 &middot; 4<sup>2</sup> &minus; (1 + 5)<br>
+    = 2 + 3 &middot; 16 &minus; 6<br>
+    = 2 + 48 &minus; 6<br>
+    = 44
+  </div>
+</div>
+
+<!-- ============ 1.2 BRØK ============ -->
+<div class="card" id="brok">
+  <h2>1.2 Regning med brøk</h2>
+
+  <h3>Forkorting og utviding</h3>
+  <p><strong>Forkorte:</strong> Del teller og nevner med samme tall.</p>
+  <div class="formula-box">
+    <span class="frac"><span class="frac-num">a &middot; c</span><span class="frac-den">b &middot; c</span></span> = <span class="frac"><span class="frac-num">a</span><span class="frac-den">b</span></span>
+  </div>
+  <p><strong>Eksempel:</strong>
+    <span class="frac"><span class="frac-num">12</span><span class="frac-den">18</span></span>
+    = <span class="frac"><span class="frac-num">12 : 6</span><span class="frac-den">18 : 6</span></span>
+    = <span class="frac"><span class="frac-num">2</span><span class="frac-den">3</span></span>
+  </p>
+
+  <p><strong>Utvide:</strong> Gang teller og nevner med samme tall.</p>
+  <p><strong>Eksempel:</strong>
+    <span class="frac"><span class="frac-num">2</span><span class="frac-den">5</span></span>
+    = <span class="frac"><span class="frac-num">2 &middot; 3</span><span class="frac-den">5 &middot; 3</span></span>
+    = <span class="frac"><span class="frac-num">6</span><span class="frac-den">15</span></span>
+  </p>
+
+  <h3>Addisjon og subtraksjon</h3>
+  <p>Brøkene må ha <strong>felles nevner</strong>:</p>
+  <div class="formula-box green">
+    <span class="frac"><span class="frac-num">a</span><span class="frac-den">c</span></span>
+    + <span class="frac"><span class="frac-num">b</span><span class="frac-den">c</span></span>
+    = <span class="frac"><span class="frac-num">a + b</span><span class="frac-den">c</span></span>
+  </div>
+  <p><strong>Eksempel:</strong>
+    <span class="frac"><span class="frac-num">1</span><span class="frac-den">3</span></span>
+    + <span class="frac"><span class="frac-num">1</span><span class="frac-den">4</span></span>
+    = <span class="frac"><span class="frac-num">4</span><span class="frac-den">12</span></span>
+    + <span class="frac"><span class="frac-num">3</span><span class="frac-den">12</span></span>
+    = <span class="frac"><span class="frac-num">7</span><span class="frac-den">12</span></span>
+  </p>
+
+  <h3>Multiplikasjon av brøk</h3>
+  <div class="formula-box">
+    <span class="frac"><span class="frac-num">a</span><span class="frac-den">b</span></span>
+    &middot;
+    <span class="frac"><span class="frac-num">c</span><span class="frac-den">d</span></span>
+    = <span class="frac"><span class="frac-num">a &middot; c</span><span class="frac-den">b &middot; d</span></span>
+  </div>
+  <p><strong>Eksempel:</strong>
+    <span class="frac"><span class="frac-num">2</span><span class="frac-den">3</span></span>
+    &middot;
+    <span class="frac"><span class="frac-num">5</span><span class="frac-den">7</span></span>
+    = <span class="frac"><span class="frac-num">10</span><span class="frac-den">21</span></span>
+  </p>
+
+  <h3>Divisjon av brøk</h3>
+  <p>Vi <strong>snur den andre brøken og ganger</strong>:</p>
+  <div class="formula-box red">
+    <span class="frac"><span class="frac-num">a</span><span class="frac-den">b</span></span>
+    :
+    <span class="frac"><span class="frac-num">c</span><span class="frac-den">d</span></span>
+    = <span class="frac"><span class="frac-num">a</span><span class="frac-den">b</span></span>
+    &middot;
+    <span class="frac"><span class="frac-num">d</span><span class="frac-den">c</span></span>
+    = <span class="frac"><span class="frac-num">a &middot; d</span><span class="frac-den">b &middot; c</span></span>
+  </div>
+  <p><strong>Eksempel:</strong>
+    <span class="frac"><span class="frac-num">3</span><span class="frac-den">4</span></span>
+    :
+    <span class="frac"><span class="frac-num">2</span><span class="frac-den">5</span></span>
+    = <span class="frac"><span class="frac-num">3</span><span class="frac-den">4</span></span>
+    &middot;
+    <span class="frac"><span class="frac-num">5</span><span class="frac-den">2</span></span>
+    = <span class="frac"><span class="frac-num">15</span><span class="frac-den">8</span></span>
+  </p>
+
+  <h3>Bokstavregning med brøk</h3>
+  <p>Samme regler gjelder med bokstaver:</p>
+  <div class="formula-box purple">
+    <span class="frac"><span class="frac-num">a</span><span class="frac-den">b</span></span>
+    +
+    <span class="frac"><span class="frac-num">c</span><span class="frac-den">d</span></span>
+    = <span class="frac"><span class="frac-num">ad + bc</span><span class="frac-den">bd</span></span>
+  </div>
+  <p><strong>Eksempel:</strong>
+    <span class="frac"><span class="frac-num">2</span><span class="frac-den">x</span></span>
+    +
+    <span class="frac"><span class="frac-num">3</span><span class="frac-den">x + 1</span></span>
+    = <span class="frac"><span class="frac-num">2(x + 1) + 3x</span><span class="frac-den">x(x + 1)</span></span>
+    = <span class="frac"><span class="frac-num">5x + 2</span><span class="frac-den">x(x + 1)</span></span>
+  </p>
+</div>
+
+<!-- ============ 1.3 PROSENTREGNING ============ -->
+<div class="card" id="prosent">
+  <h2>1.3 Prosentregning</h2>
+
+  <h3>Andeler i brøk og prosent</h3>
+  <p><strong>Prosent</strong> betyr &laquo;per hundre&raquo;. Vi regner om mellom brøk, desimaltall og prosent:</p>
+  <div class="formula-box">
+    <span class="frac"><span class="frac-num">a</span><span class="frac-den">b</span></span>
+    &nbsp; &rarr; &nbsp; a : b = desimaltall &nbsp; &rarr; &nbsp; desimaltall &middot; 100 = prosent
+  </div>
+  <p><strong>Eksempel:</strong>
+    <span class="frac"><span class="frac-num">3</span><span class="frac-den">4</span></span>
+    = 0,75 = 75 %
+  </p>
+
+  <h3>Sammenligning av to størrelser</h3>
+  <p>Hvor mange prosent er <em>a</em> av <em>b</em>?</p>
+  <div class="formula-box green">
+    Prosentandel = <span class="frac"><span class="frac-num">a</span><span class="frac-den">b</span></span> &middot; 100 %
+  </div>
+  <p><strong>Eksempel:</strong> 15 av 60 = <span class="frac"><span class="frac-num">15</span><span class="frac-den">60</span></span> &middot; 100 % = 25 %</p>
+
+  <h3>Prosentpoeng</h3>
+  <p><strong>Prosentpoeng</strong> er forskjellen mellom to prosenttall.</p>
+  <div class="note">
+    <strong>Eksempel:</strong> Renta gikk fra 3 % til 5 %. Det er en økning på <strong>2 prosentpoeng</strong>.<br>
+    Men selve renta økte med <span class="frac"><span class="frac-num">2</span><span class="frac-den">3</span></span> &middot; 100 % &asymp; 66,7 % (prosentvis økning).
+  </div>
+
+  <h3>Prosentvis økning og reduksjon</h3>
+  <div class="formula-box orange">
+    Ny verdi = gammel verdi &middot; (1 + p/100) &nbsp; (økning)
+  </div>
+  <div class="formula-box red">
+    Ny verdi = gammel verdi &middot; (1 &minus; p/100) &nbsp; (reduksjon)
+  </div>
+  <p><strong>Eksempel:</strong> En vare koster 800 kr og øker med 15 %:<br>
+    Ny pris = 800 &middot; 1,15 = 920 kr
+  </p>
+</div>
+
+<!-- ============ 1.4 VEKSTFAKTOR ============ -->
+<div class="card" id="vekstfaktor">
+  <h2>1.4 Vekstfaktor</h2>
+
+  <h3>Hva er vekstfaktor?</h3>
+  <p>Vekstfaktoren er tallet vi <strong>ganger med</strong> for å gå fra gammel til ny verdi:</p>
+  <div class="formula-box">
+    Ny verdi = gammel verdi &middot; vekstfaktor
+  </div>
+
+  <h3>Økning og reduksjon</h3>
+  <div class="rule-grid">
+    <div class="rule-item">
+      <div class="rule-name">Økning med p %</div>
+      <div class="rule-formula">Vekstfaktor = 1 + <span class="frac"><span class="frac-num">p</span><span class="frac-den">100</span></span></div>
+      <div class="rule-example">Økning 20 % &rarr; vekstfaktor 1,20</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Reduksjon med p %</div>
+      <div class="rule-formula">Vekstfaktor = 1 &minus; <span class="frac"><span class="frac-num">p</span><span class="frac-den">100</span></span></div>
+      <div class="rule-example">Reduksjon 30 % &rarr; vekstfaktor 0,70</div>
+    </div>
+  </div>
+
+  <h3>Regning med vekstfaktor</h3>
+  <p>Vekstfaktorer kan <strong>ganges sammen</strong> for gjentatte endringer:</p>
+  <div class="formula-box green">
+    Samlet vekstfaktor = v<sub>1</sub> &middot; v<sub>2</sub> &middot; v<sub>3</sub> &middot; ...
+  </div>
+
+  <div class="note">
+    <strong>Eksempel:</strong> En vare øker med 10 % og deretter reduseres med 20 %:<br>
+    Samlet vekstfaktor = 1,10 &middot; 0,80 = 0,88<br>
+    Totalt er varen redusert med 12 % (ikke 10 %).
+  </div>
+
+  <p>For gjentatt vekst med <strong>samme prosent</strong> over <em>n</em> perioder:</p>
+  <div class="formula-box purple">
+    Ny verdi = startverdi &middot; vekstfaktor<sup>n</sup>
+  </div>
+  <p><strong>Eksempel:</strong> Et beløp på 10 000 kr vokser med 5 % per år i 3 år:<br>
+    10 000 &middot; 1,05<sup>3</sup> = 10 000 &middot; 1,157625 = 11 576,25 kr
+  </p>
+</div>
+
+<!-- ============ FART, STREKNING, TID ============ -->
+<div class="card" id="fart">
+  <h2>Strekning, fart og tid</h2>
+
+  <p>Sammenhengen mellom strekning (<strong>s</strong>), fart (<strong>v</strong>) og tid (<strong>t</strong>):</p>
+  <div class="rule-grid" style="grid-template-columns:1fr 1fr 1fr;">
+    <div class="rule-item">
+      <div class="rule-name">Strekning</div>
+      <div class="rule-formula">s = v &middot; t</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Fart</div>
+      <div class="rule-formula">v = <span class="frac"><span class="frac-num">s</span><span class="frac-den">t</span></span></div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Tid</div>
+      <div class="rule-formula">t = <span class="frac"><span class="frac-num">s</span><span class="frac-den">v</span></span></div>
+    </div>
+  </div>
+
+  <h3>Enheter</h3>
+  <div class="rule-grid">
+    <div class="rule-item">
+      <div class="rule-name">m/s (meter per sekund)</div>
+      <div class="rule-formula">SI-enheten for fart</div>
+      <div class="rule-example">Brukes i fysikk og naturfag</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">km/t (kilometer per time)</div>
+      <div class="rule-formula">Vanlig i dagliglivet</div>
+      <div class="rule-example">Fartsgrenser, bilturer</div>
+    </div>
+  </div>
+
+  <h3>Omregning mellom km/t og m/s</h3>
+  <div class="formula-box green">
+    km/t &rarr; m/s: &nbsp; del på 3,6
+  </div>
+  <div class="formula-box orange">
+    m/s &rarr; km/t: &nbsp; gang med 3,6
+  </div>
+  <div class="note">
+    <strong>Hvorfor 3,6?</strong> 1 km = 1000 m og 1 t = 3600 s. Så 1 km/t = 1000/3600 m/s = 1/3,6 m/s.
+  </div>
+
+  <h3>Eksempler</h3>
+  <div class="steps">
+    <div class="step">
+      <strong>Strekning:</strong> En bil kjører i 80 km/t i 2,5 timer. Hvor langt?
+      <span class="calc">s = v &middot; t = 80 &middot; 2,5 = 200 km</span>
+    </div>
+    <div class="step">
+      <strong>Fart:</strong> En syklist sykler 45 km på 3 timer. Hva er farten?
+      <span class="calc">v = s / t = 45 / 3 = 15 km/t</span>
+    </div>
+    <div class="step">
+      <strong>Omregning:</strong> 90 km/t til m/s:
+      <span class="calc">90 / 3,6 = 25 m/s</span>
+    </div>
+    <div class="step">
+      <strong>Omregning:</strong> 12 m/s til km/t:
+      <span class="calc">12 &middot; 3,6 = 43,2 km/t</span>
+    </div>
+    <div class="step">
+      <strong>Tid:</strong> En løper holder 8 m/s. Hvor lang tid bruker hun på 100 m?
+      <span class="calc">t = s / v = 100 / 8 = 12,5 s</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ AREAL OG VOLUM ============ -->
+<div class="card" id="areal-volum">
+  <h2>Areal og volum</h2>
+
+  <h3>Areal av flate figurer</h3>
+  <div class="rule-grid">
+    <div class="rule-item">
+      <div class="rule-name">Rektangel</div>
+      <div class="rule-formula">A = l &middot; b</div>
+      <div class="rule-example">lengde &middot; bredde</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Kvadrat</div>
+      <div class="rule-formula">A = s<sup>2</sup></div>
+      <div class="rule-example">side &middot; side</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Trekant</div>
+      <div class="rule-formula">A = <span class="frac"><span class="frac-num">g &middot; h</span><span class="frac-den">2</span></span></div>
+      <div class="rule-example">grunnlinje &middot; høyde / 2</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Parallellogram</div>
+      <div class="rule-formula">A = g &middot; h</div>
+      <div class="rule-example">grunnlinje &middot; høyde</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Trapes</div>
+      <div class="rule-formula">A = <span class="frac"><span class="frac-num">(a + b) &middot; h</span><span class="frac-den">2</span></span></div>
+      <div class="rule-example">sum av parallelle sider &middot; høyde / 2</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Sirkel</div>
+      <div class="rule-formula">A = &pi; r<sup>2</sup></div>
+      <div class="rule-example">Omkrets: O = 2&pi;r</div>
+    </div>
+  </div>
+
+  <h3>Volum av romfigurer</h3>
+  <div class="rule-grid">
+    <div class="rule-item">
+      <div class="rule-name">Rett prisme / boks</div>
+      <div class="rule-formula">V = l &middot; b &middot; h</div>
+      <div class="rule-example">lengde &middot; bredde &middot; høyde</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Kube</div>
+      <div class="rule-formula">V = s<sup>3</sup></div>
+      <div class="rule-example">side &middot; side &middot; side</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Sylinder</div>
+      <div class="rule-formula">V = &pi; r<sup>2</sup> h</div>
+      <div class="rule-example">grunnflate &middot; høyde</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Kjegle</div>
+      <div class="rule-formula">V = <span class="frac"><span class="frac-num">&pi; r<sup>2</sup> h</span><span class="frac-den">3</span></span></div>
+      <div class="rule-example">1/3 av sylinderens volum</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Pyramide</div>
+      <div class="rule-formula">V = <span class="frac"><span class="frac-num">G &middot; h</span><span class="frac-den">3</span></span></div>
+      <div class="rule-example">G = grunnflatens areal</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Kule</div>
+      <div class="rule-formula">V = <span class="frac"><span class="frac-num">4</span><span class="frac-den">3</span></span> &pi; r<sup>3</sup></div>
+      <div class="rule-example">Overflate: O = 4&pi;r<sup>2</sup></div>
+    </div>
+  </div>
+
+  <h3>Eksempler</h3>
+  <div class="steps">
+    <div class="step">
+      <strong>Trekant:</strong> Grunnlinje 10 cm, høyde 6 cm.
+      <span class="calc">A = (10 &middot; 6) / 2 = 30 cm²</span>
+    </div>
+    <div class="step">
+      <strong>Sirkel:</strong> Radius 5 cm.
+      <span class="calc">A = &pi; &middot; 5² = 25&pi; &asymp; 78,5 cm²</span>
+    </div>
+    <div class="step">
+      <strong>Sylinder:</strong> Radius 3 cm, høyde 10 cm.
+      <span class="calc">V = &pi; &middot; 3² &middot; 10 = 90&pi; &asymp; 282,7 cm³</span>
+    </div>
+    <div class="step">
+      <strong>Kule:</strong> Radius 4 cm.
+      <span class="calc">V = (4/3) &middot; &pi; &middot; 4³ = (256/3)&pi; &asymp; 268,1 cm³</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 1.5 PYTAGORAS ============ -->
+<div class="card" id="pytagoras">
+  <h2>1.5 Bevis og sammenhenger: Pytagoras' setning</h2>
+
+  <div style="display:flex; gap:2rem; align-items:flex-start; flex-wrap:wrap;">
+    <svg viewBox="0 0 220 200" width="220" style="flex-shrink:0;">
+      <!-- Rettvinklet trekant -->
+      <polygon points="20,170 200,170 200,30" fill="#eff6ff" stroke="#2563eb" stroke-width="2.5"/>
+      <rect x="188" y="158" width="12" height="12" fill="none" stroke="#2563eb" stroke-width="1.5"/>
+      <!-- sider -->
+      <text x="100" y="190" fill="#1e293b" font-size="15" font-weight="600" text-anchor="middle">a</text>
+      <text x="212" y="105" fill="#dc2626" font-size="15" font-weight="600">b</text>
+      <text x="90" y="90" fill="#16a34a" font-size="15" font-weight="600">c</text>
+    </svg>
+    <div style="flex:1; min-width:250px;">
+      <p>I en <strong>rettvinklet trekant</strong> gjelder:</p>
+      <div class="formula-box">
+        a<sup>2</sup> + b<sup>2</sup> = c<sup>2</sup>
+      </div>
+      <p>Der <strong>c</strong> er <span style="color:var(--green);font-weight:600;">hypotenusen</span> (den lengste siden, mot den rette vinkelen) og <strong>a</strong> og <strong>b</strong> er de to <strong>katetene</strong>.</p>
+    </div>
+  </div>
+
+  <h3>Bruk av Pytagoras</h3>
+  <div class="steps">
+    <div class="step">
+      <strong>Finne hypotenusen:</strong> c = &radic;(a<sup>2</sup> + b<sup>2</sup>)
+      <span class="calc">a = 3, b = 4: c = &radic;(9 + 16) = &radic;25 = 5</span>
+    </div>
+    <div class="step">
+      <strong>Finne en katet:</strong> a = &radic;(c<sup>2</sup> &minus; b<sup>2</sup>)
+      <span class="calc">c = 13, b = 5: a = &radic;(169 &minus; 25) = &radic;144 = 12</span>
+    </div>
+    <div class="step">
+      <strong>Sjekke rettvinklet trekant:</strong> Stemmer a<sup>2</sup> + b<sup>2</sup> = c<sup>2</sup>?
+      <span class="calc">3, 4, 5: 9 + 16 = 25 ✓ &rarr; Rettvinklet!</span>
+    </div>
+  </div>
+
+  <h3>Bevisidé (geometrisk)</h3>
+  <p>Tegn et stort kvadrat med side (a + b). Inne i dette kan vi lage fire kopier av trekanten og et lite kvadrat med side c. Da ser vi at:</p>
+  <div class="formula-box green">
+    (a + b)<sup>2</sup> = 4 &middot; <span class="frac"><span class="frac-num">ab</span><span class="frac-den">2</span></span> + c<sup>2</sup> &nbsp; &rArr; &nbsp; a<sup>2</sup> + 2ab + b<sup>2</sup> = 2ab + c<sup>2</sup> &nbsp; &rArr; &nbsp; a<sup>2</sup> + b<sup>2</sup> = c<sup>2</sup>
+  </div>
+</div>
+
+<!-- ============ 1.6 PROBLEMLØSNING ============ -->
+<div class="card" id="problemlosning">
+  <h2>1.6 Problemløsning</h2>
+  <p>Pólyas fire steg for problemløsning:</p>
+
+  <div class="problem-steps">
+    <div class="problem-step">
+      <div class="step-num">1</div>
+      <h4>Forstå problemet</h4>
+      <p>Hva er gitt? Hva skal vi finne? Tegn en figur eller lag en liste over det du vet.</p>
+    </div>
+    <div class="problem-step">
+      <div class="step-num">2</div>
+      <h4>Lage en plan</h4>
+      <p>Hvilken metode passer? Har du sett et lignende problem? Kan du dele det opp?</p>
+    </div>
+    <div class="problem-step">
+      <div class="step-num">3</div>
+      <h4>Gjennomføre planen</h4>
+      <p>Regn steg for steg. Sjekk hvert steg underveis. Vær nøyaktig.</p>
+    </div>
+    <div class="problem-step">
+      <div class="step-num">4</div>
+      <h4>Se tilbake</h4>
+      <p>Er svaret rimelig? Kan du kontrollere det? Kan metoden brukes på andre problemer?</p>
+    </div>
+  </div>
+
+  <h3>Eksempel: Problemløsning</h3>
+  <div class="note">
+    <strong>Oppgave:</strong> En rektangulær hage er 12 m lang og 5 m bred. Hvor lang er diagonalen?
+  </div>
+  <div class="steps">
+    <div class="step">
+      <strong>Forstå:</strong> Rektangel med sider 12 m og 5 m. Diagonalen deler rektangelet i to rettvinklede trekanter.
+    </div>
+    <div class="step">
+      <strong>Plan:</strong> Bruk Pytagoras' setning der a = 12 og b = 5.
+    </div>
+    <div class="step">
+      <strong>Gjennomfør:</strong> d = &radic;(12<sup>2</sup> + 5<sup>2</sup>) = &radic;(144 + 25) = &radic;169 = 13 m
+    </div>
+    <div class="step">
+      <strong>Se tilbake:</strong> 13<sup>2</sup> = 169 = 144 + 25 ✓ Svaret er rimelig (diagonalen er lenger enn begge sidene).
+    </div>
+  </div>
+</div>
+
+<!-- ============ NÅR BRUKER DU HVA? ============ -->
+<div class="card" id="metodevalg">
+  <h2>Når bruker du hva?</h2>
+  <p>Her er en oversikt over hvilken metode du bør velge i ulike situasjoner.</p>
+
+  <h3>Prosent vs. vekstfaktor</h3>
+  <table class="set-table">
+    <thead>
+      <tr><th>Situasjon</th><th>Metode</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Finne hvor mange prosent noe er av noe annet</td><td>Prosentregning: (del / hele) &middot; 100 %</td></tr>
+      <tr><td>Én enkelt økning eller reduksjon</td><td>Prosent eller vekstfaktor (begge fungerer)</td></tr>
+      <tr><td>Flere endringer etter hverandre</td><td><strong>Vekstfaktor</strong> &mdash; gang faktorene sammen</td></tr>
+      <tr><td>Gjentatt vekst over <em>n</em> perioder</td><td><strong>Vekstfaktor:</strong> startverdi &middot; v<sup>n</sup></td></tr>
+      <tr><td>Sammenligne to prosenttall</td><td><strong>Prosentpoeng</strong> (differansen mellom prosenttallene)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Brøkregning</h3>
+  <table class="set-table">
+    <thead>
+      <tr><th>Situasjon</th><th>Metode</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Legge sammen / trekke fra brøker</td><td>Finn <strong>felles nevner</strong> først</td></tr>
+      <tr><td>Gange brøker</td><td>Teller &middot; teller, nevner &middot; nevner</td></tr>
+      <tr><td>Dele med en brøk</td><td><strong>Snu</strong> den andre brøken og gang</td></tr>
+      <tr><td>Forenkle en brøk</td><td>Finn største felles faktor, <strong>forkort</strong></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Fart, strekning og tid</h3>
+  <table class="set-table">
+    <thead>
+      <tr><th>Du vil finne</th><th>Formel</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Strekning (kjenner fart og tid)</td><td>s = v &middot; t</td></tr>
+      <tr><td>Fart (kjenner strekning og tid)</td><td>v = s / t</td></tr>
+      <tr><td>Tid (kjenner strekning og fart)</td><td>t = s / v</td></tr>
+      <tr><td>Blander km/t og m/s i oppgaven</td><td><strong>Regn om til samme enhet først</strong> (del/gang med 3,6)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Areal og volum</h3>
+  <table class="set-table">
+    <thead>
+      <tr><th>Situasjon</th><th>Metode</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Flat figur med rette kanter</td><td>Rektangel, trekant eller trapes-formel</td></tr>
+      <tr><td>Rund flat figur</td><td>Sirkel: A = &pi;r<sup>2</sup></td></tr>
+      <tr><td>Romfigur med flat topp og bunn</td><td>Grunnflate &middot; høyde (prisme, sylinder)</td></tr>
+      <tr><td>Romfigur som smalner til en spiss</td><td>Grunnflate &middot; høyde / 3 (pyramide, kjegle)</td></tr>
+      <tr><td>Kule</td><td>V = (4/3)&pi;r<sup>3</sup></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Pytagoras og trekanter</h3>
+  <table class="set-table">
+    <thead>
+      <tr><th>Situasjon</th><th>Metode</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Rettvinklet trekant, kjenner to sider</td><td><strong>Pytagoras:</strong> a<sup>2</sup> + b<sup>2</sup> = c<sup>2</sup></td></tr>
+      <tr><td>Sjekke om en trekant er rettvinklet</td><td>Sjekk om a<sup>2</sup> + b<sup>2</sup> = c<sup>2</sup></td></tr>
+      <tr><td>Vilkårlig trekant (ikke rettvinklet)</td><td>Bruk <strong>cosinussetningen</strong> eller <strong>sinussetningen</strong> (kap. 6)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <strong>Tips:</strong> Les oppgaven nøye. Tegn en figur. Skriv opp hva du vet og hva du skal finne &mdash; da ser du ofte hvilken metode som passer.
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<script>
+// ===== QUIZ =====
+const allQuestions = [
+  {
+    q: "Hvilket tall er et naturlig tall?",
+    opts: ["-3", "0", "7", "0,5"],
+    ans: 2,
+    tip: "Naturlige tall (N) er de positive hele tallene: 1, 2, 3, ..."
+  },
+  {
+    q: "Hvilken tallmengde tilhører √2?",
+    opts: ["N – naturlige tall", "Z – hele tall", "Q – rasjonale tall", "R – reelle tall (men ikke Q)"],
+    ans: 3,
+    tip: "√2 er irrasjonalt (kan ikke skrives som brøk), men det er et reelt tall."
+  },
+  {
+    q: "Hva er 2³ · 2⁴?",
+    opts: ["2⁷ = 128", "2¹² = 4096", "4⁷", "2³ = 8"],
+    ans: 0,
+    tip: "Potensregelen: aᵐ · aⁿ = aᵐ⁺ⁿ. Altså 2³⁺⁴ = 2⁷ = 128."
+  },
+  {
+    q: "Hva er verdien av 5⁰?",
+    opts: ["0", "1", "5", "Udefinert"],
+    ans: 1,
+    tip: "Alle tall (unntatt 0) opphøyd i 0 gir 1."
+  },
+  {
+    q: "Hva er riktig regnerekkefølge?",
+    opts: [
+      "Addisjon, multiplikasjon, parenteser, potenser",
+      "Parenteser, potenser, multiplikasjon/divisjon, addisjon/subtraksjon",
+      "Potenser, parenteser, addisjon, multiplikasjon",
+      "Multiplikasjon, addisjon, potenser, parenteser"
+    ],
+    ans: 1,
+    tip: "Husk: Parenteser → Potenser → Multiplikasjon/Divisjon → Addisjon/Subtraksjon."
+  },
+  {
+    q: "Hva er 2 + 3 · 4?",
+    opts: ["20", "14", "24", "10"],
+    ans: 1,
+    tip: "Multiplikasjon før addisjon: 3 · 4 = 12, deretter 2 + 12 = 14."
+  },
+  {
+    q: "Hva er 3/4 : 2/5?",
+    opts: ["6/20", "15/8", "3/10", "5/6"],
+    ans: 1,
+    tip: "Divisjon med brøk: snu og gang. 3/4 · 5/2 = 15/8."
+  },
+  {
+    q: "Forkort brøken 18/24.",
+    opts: ["2/3", "3/4", "9/12", "6/8"],
+    ans: 1,
+    tip: "18 og 24 har største felles faktor 6: 18/6 = 3, 24/6 = 4. Svaret er 3/4."
+  },
+  {
+    q: "Hva er 25 % skrevet som brøk?",
+    opts: ["1/5", "1/4", "1/3", "2/5"],
+    ans: 1,
+    tip: "25 % = 25/100 = 1/4."
+  },
+  {
+    q: "En vare koster 500 kr og øker med 20 %. Hva er ny pris?",
+    opts: ["520 kr", "600 kr", "400 kr", "620 kr"],
+    ans: 1,
+    tip: "500 · 1,20 = 600 kr."
+  },
+  {
+    q: "Hva er vekstfaktoren for en reduksjon på 15 %?",
+    opts: ["0,15", "0,85", "1,15", "1,85"],
+    ans: 1,
+    tip: "Reduksjon: vekstfaktor = 1 − 15/100 = 0,85."
+  },
+  {
+    q: "En investering vokser med 10 % per år i 2 år. Hva er samlet vekstfaktor?",
+    opts: ["1,20", "1,21", "2,10", "0,21"],
+    ans: 1,
+    tip: "1,10² = 1,21. Ikke 1,20 – rentes rente!"
+  },
+  {
+    q: "Renta gikk fra 2 % til 5 %. Hvor mange prosentpoeng er økningen?",
+    opts: ["3 prosentpoeng", "150 prosentpoeng", "2,5 prosentpoeng", "60 prosentpoeng"],
+    ans: 0,
+    tip: "Prosentpoeng = differansen mellom prosenttallene: 5 − 2 = 3 prosentpoeng."
+  },
+  {
+    q: "I en rettvinklet trekant er katetene 6 og 8. Hva er hypotenusen?",
+    opts: ["14", "10", "√48", "7"],
+    ans: 1,
+    tip: "c = √(6² + 8²) = √(36 + 64) = √100 = 10."
+  },
+  {
+    q: "Hva er (x + 4)(x − 4)?",
+    opts: ["x² − 16", "x² + 16", "x² − 8x + 16", "2x"],
+    ans: 0,
+    tip: "Konjugatsetningen: (a+b)(a−b) = a² − b². Altså x² − 16."
+  },
+  {
+    q: "Hva er 2⁻³?",
+    opts: ["-8", "-6", "1/8", "8"],
+    ans: 2,
+    tip: "Negativ eksponent: 2⁻³ = 1/2³ = 1/8."
+  },
+  {
+    q: "Hva er det første steget i Pólyas problemløsningsmetode?",
+    opts: ["Lage en plan", "Gjennomføre planen", "Forstå problemet", "Se tilbake"],
+    ans: 2,
+    tip: "Steg 1: Forstå problemet. Hva vet vi, og hva skal vi finne?"
+  },
+  {
+    q: "Hva er 1/3 + 1/6?",
+    opts: ["2/9", "1/2", "1/9", "2/6"],
+    ans: 1,
+    tip: "Felles nevner 6: 2/6 + 1/6 = 3/6 = 1/2."
+  },
+  {
+    q: "Hvilken tallmengde inneholder -7?",
+    opts: ["N (naturlige tall)", "Z (hele tall)", "Bare R (reelle tall)", "Ingen av dem"],
+    ans: 1,
+    tip: "-7 er et helt tall (Z). Det er også rasjonalt (Q) og reelt (R), men den mest spesifikke mengden er Z."
+  },
+  {
+    q: "(3²)³ er det samme som?",
+    opts: ["3⁵", "3⁶", "9⁶", "3⁸"],
+    ans: 1,
+    tip: "Potens av potens: (aᵐ)ⁿ = aᵐ·ⁿ. Altså 3²·³ = 3⁶ = 729."
+  },
+  {
+    q: "En bil kjører 80 km/t i 3 timer. Hvor langt kjører den?",
+    opts: ["160 km", "240 km", "83 km", "320 km"],
+    ans: 1,
+    tip: "s = v · t = 80 · 3 = 240 km."
+  },
+  {
+    q: "Hvordan regner du om fra km/t til m/s?",
+    opts: ["Gang med 3,6", "Del på 3,6", "Gang med 60", "Del på 60"],
+    ans: 1,
+    tip: "km/t → m/s: del på 3,6. For eksempel 72 km/t = 72/3,6 = 20 m/s."
+  },
+  {
+    q: "Hva er 90 km/t i m/s?",
+    opts: ["9 m/s", "25 m/s", "30 m/s", "324 m/s"],
+    ans: 1,
+    tip: "90 / 3,6 = 25 m/s."
+  },
+  {
+    q: "Hva er 15 m/s i km/t?",
+    opts: ["4,2 km/t", "45 km/t", "54 km/t", "150 km/t"],
+    ans: 2,
+    tip: "m/s → km/t: gang med 3,6. 15 · 3,6 = 54 km/t."
+  },
+  {
+    q: "Hva er arealet av en trekant med grunnlinje 8 cm og høyde 5 cm?",
+    opts: ["40 cm²", "13 cm²", "20 cm²", "80 cm²"],
+    ans: 2,
+    tip: "A = g · h / 2 = 8 · 5 / 2 = 20 cm²."
+  },
+  {
+    q: "Hva er arealet av en sirkel med radius 3 cm?",
+    opts: ["6π cm²", "9π cm²", "3π cm²", "12π cm²"],
+    ans: 1,
+    tip: "A = π · r² = π · 3² = 9π ≈ 28,3 cm²."
+  },
+  {
+    q: "Hva er volumet av en boks som er 4 cm × 5 cm × 3 cm?",
+    opts: ["12 cm³", "60 cm³", "35 cm³", "24 cm³"],
+    ans: 1,
+    tip: "V = l · b · h = 4 · 5 · 3 = 60 cm³."
+  },
+  {
+    q: "Volumet av en kjegle er … av volumet til en sylinder med samme grunnflate og høyde.",
+    opts: ["halvparten", "en tredjedel", "en fjerdedel", "like stort"],
+    ans: 1,
+    tip: "V(kjegle) = πr²h/3, altså en tredjedel av sylinderens volum."
+  },
+  {
+    q: "Hva er formelen for volumet av en kule?",
+    opts: ["V = πr²", "V = 4πr²", "V = (4/3)πr³", "V = (4/3)πr²"],
+    ans: 2,
+    tip: "V = (4/3)πr³. Merk: 4πr² er overflatearealet, ikke volumet."
+  },
+  {
+    q: "En løper holder 10 m/s. Hvor lang tid bruker hun på 200 m?",
+    opts: ["20 s", "2000 s", "0,05 s", "2 s"],
+    ans: 0,
+    tip: "t = s / v = 200 / 10 = 20 s."
+  },
+  // Metodevalg-spørsmål
+  {
+    q: "Du skal regne ut prisen etter to prisendringer (+10 % og deretter −20 %). Hva er enklest?",
+    opts: ["Regne ut prosent to ganger", "Bruke vekstfaktor: 1,10 · 0,80", "Legge sammen prosentene: −10 %", "Bruke brøkregning"],
+    ans: 1,
+    tip: "Ved flere endringer etter hverandre er vekstfaktor enklest — gang faktorene sammen."
+  },
+  {
+    q: "Du kjenner farten i km/t og tiden i sekunder. Hva gjør du først?",
+    opts: ["Ganger fart med tid", "Regner om til samme enhetssystem", "Deler strekning på tid", "Trekker fra 3,6"],
+    ans: 1,
+    tip: "Når enhetene ikke matcher, må du alltid regne om til samme system først (begge i m/s eller begge i km/t)."
+  },
+  {
+    q: "En trekant har tre kjente sider, men er IKKE rettvinklet. Hvilken metode finner en vinkel?",
+    opts: ["Pytagoras' setning", "Arealsetningen", "Cosinussetningen", "s = v · t"],
+    ans: 2,
+    tip: "Pytagoras gjelder bare rettvinklede trekanter. For vilkårlige trekanter bruker du cosinussetningen (kap. 6)."
+  }
+];
+
+let quizQuestions, currentQ, score;
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function openQuiz() {
+  document.getElementById('quizOverlay').classList.add('open');
+  startQuiz();
+}
+function closeQuiz() {
+  document.getElementById('quizOverlay').classList.remove('open');
+}
+function startQuiz() {
+  currentQ = 0;
+  score = 0;
+  quizQuestions = shuffle([...allQuestions]).slice(0, 10);
+  document.getElementById('quizBody').style.display = '';
+  document.getElementById('quizResult').style.display = 'none';
+  document.getElementById('qTotal').textContent = quizQuestions.length;
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = quizQuestions[currentQ];
+  document.getElementById('qNum').textContent = currentQ + 1;
+  document.getElementById('qBar').style.width = ((currentQ + 1) / quizQuestions.length * 100) + '%';
+  document.getElementById('qText').textContent = q.q;
+  document.getElementById('qFeedback').className = 'quiz-feedback';
+  document.getElementById('qFeedback').textContent = '';
+  document.getElementById('qNext').className = 'quiz-next';
+
+  const optBox = document.getElementById('qOptions');
+  optBox.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-option';
+    btn.textContent = opt;
+    btn.addEventListener('click', () => pickAnswer(i));
+    optBox.appendChild(btn);
+  });
+}
+
+function pickAnswer(idx) {
+  const q = quizQuestions[currentQ];
+  const btns = document.querySelectorAll('#qOptions .quiz-option');
+  btns.forEach(b => b.disabled = true);
+
+  const fb = document.getElementById('qFeedback');
+
+  if (idx === q.ans) {
+    btns[idx].classList.add('correct');
+    fb.className = 'quiz-feedback show is-correct';
+    fb.textContent = 'Riktig! ' + q.tip;
+    score++;
+  } else {
+    btns[idx].classList.add('wrong');
+    btns[q.ans].classList.add('correct');
+    fb.className = 'quiz-feedback show is-wrong';
+    fb.textContent = 'Feil. ' + q.tip;
+  }
+
+  const nextBtn = document.getElementById('qNext');
+  nextBtn.className = 'quiz-next show';
+  nextBtn.textContent = currentQ < quizQuestions.length - 1 ? 'Neste' : 'Se resultat';
+}
+
+function nextQuestion() {
+  currentQ++;
+  if (currentQ < quizQuestions.length) {
+    showQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function showResult() {
+  document.getElementById('quizBody').style.display = 'none';
+  const res = document.getElementById('quizResult');
+  res.style.display = '';
+  document.getElementById('rScore').textContent = score + ' / ' + quizQuestions.length;
+
+  const pct = score / quizQuestions.length;
+  let grade, color;
+  if (pct === 1)        { grade = 'Perfekt! Du kan tall og regning!'; color = '#16a34a'; }
+  else if (pct >= 0.8)  { grade = 'Veldig bra! Nesten alt riktig.'; color = '#2563eb'; }
+  else if (pct >= 0.6)  { grade = 'Bra jobba! Litt mer øving.'; color = '#ea580c'; }
+  else                  { grade = 'Øv litt mer – du klarer det!'; color = '#dc2626'; }
+
+  const g = document.getElementById('rGrade');
+  g.textContent = grade;
+  g.style.color = color;
+}
+</script>
+</body>
+</html>
