@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ligninger og andregradsuttrykk – Hjelpeside</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>π</text></svg>">
+<style>
+  :root {
+    --blue: #2563eb;
+    --red: #dc2626;
+    --green: #16a34a;
+    --orange: #ea580c;
+    --purple: #7c3aed;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 2rem 1rem;
+  }
+  .container { max-width: 960px; margin: 0 auto; }
+  h1 {
+    text-align: center;
+    font-size: 2.2rem;
+    margin-bottom: 0.3rem;
+    color: var(--blue);
+  }
+  .subtitle {
+    text-align: center;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    font-size: 1.05rem;
+  }
+  .card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .card h2 {
+    font-size: 1.35rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--blue);
+    color: var(--blue);
+  }
+  .card h3 {
+    font-size: 1.1rem;
+    margin: 1rem 0 0.5rem;
+    color: var(--text);
+  }
+
+  /* Formler */
+  .formula-box {
+    background: #eff6ff;
+    border-left: 4px solid var(--blue);
+    padding: 1rem 1.2rem;
+    border-radius: 0 8px 8px 0;
+    margin: 0.8rem 0;
+    font-size: 1.15rem;
+    text-align: center;
+  }
+  .formula-box.red {
+    background: #fef2f2;
+    border-left-color: var(--red);
+  }
+  .formula-box.green {
+    background: #f0fdf4;
+    border-left-color: var(--green);
+  }
+  .formula-box.orange {
+    background: #fff7ed;
+    border-left-color: var(--orange);
+  }
+  .formula-box.purple {
+    background: #f5f3ff;
+    border-left-color: var(--purple);
+  }
+  p { margin: 0.5rem 0; }
+
+  ul { padding-left: 1.3rem; }
+  ul li { margin: 0.3rem 0; }
+
+  .highlight { color: var(--blue); font-weight: 600; }
+  .note {
+    background: #fefce8;
+    border: 1px solid #fde68a;
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    margin-top: 0.8rem;
+    font-size: 0.95rem;
+  }
+
+  .toc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  .toc a {
+    background: var(--blue);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+  }
+  .toc a:hover { opacity: 0.8; }
+  .toc .quiz-btn {
+    background: var(--orange);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .toc .quiz-btn:hover { opacity: 0.8; }
+
+  /* Regel-boks */
+  .rule-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    margin: 0.8rem 0;
+  }
+  @media (max-width: 600px) {
+    .rule-grid { grid-template-columns: 1fr; }
+  }
+  .rule-item {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    text-align: center;
+  }
+  .rule-item .rule-name {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 0.3rem;
+  }
+  .rule-item .rule-formula {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  .rule-item .rule-example {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-top: 0.3rem;
+  }
+
+  /* Tabell */
+  .set-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 1rem;
+    margin: 0.8rem 0;
+  }
+  .set-table th, .set-table td {
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--border);
+  }
+  .set-table thead th {
+    background: var(--blue);
+    color: #fff;
+    font-weight: 600;
+  }
+  .set-table tbody tr:nth-child(even) { background: #f1f5f9; }
+
+  /* Steg-for-steg */
+  .steps { counter-reset: step; margin: 1rem 0; }
+  .step {
+    position: relative;
+    padding: 0.8rem 1rem 0.8rem 3.2rem;
+    margin-bottom: 0.6rem;
+    background: var(--bg);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  .step::before {
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    left: 0.8rem;
+    top: 0.75rem;
+    width: 1.7rem;
+    height: 1.7rem;
+    background: var(--blue);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+  .step strong { color: var(--blue); }
+  .step .calc {
+    display: block;
+    margin-top: 0.3rem;
+    font-family: 'Courier New', monospace;
+    background: #f1f5f9;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.95rem;
+  }
+
+  /* Brøk-visning */
+  .frac {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle;
+    margin: 0 0.2rem;
+    font-size: 0.95em;
+  }
+  .frac-num { border-bottom: 2px solid var(--text); padding: 0 0.3rem 0.15rem; }
+  .frac-den { padding: 0.15rem 0.3rem 0; }
+
+  /* Metode-valg grid */
+  .method-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.8rem;
+    margin: 0.8rem 0;
+  }
+  @media (max-width: 600px) {
+    .method-grid { grid-template-columns: 1fr; }
+  }
+  .method-item {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+  }
+  .method-item h4 {
+    color: var(--blue);
+    font-size: 0.95rem;
+    margin-bottom: 0.4rem;
+  }
+  .method-item p {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  /* ===== QUIZ OVERLAY ===== */
+  .quiz-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15,23,42,0.6);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+  }
+  .quiz-overlay.open { display: flex; }
+  .quiz-modal {
+    background: var(--card);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 560px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 2rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    position: relative;
+    animation: slideUp 0.3s ease;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .quiz-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--muted);
+    line-height: 1;
+  }
+  .quiz-close:hover { color: var(--text); }
+  .quiz-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  .quiz-header h2 {
+    color: var(--orange);
+    font-size: 1.5rem;
+    margin-bottom: 0.3rem;
+  }
+  .quiz-progress {
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .quiz-progress-bar {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    margin-top: 0.5rem;
+    overflow: hidden;
+  }
+  .quiz-progress-fill {
+    height: 100%;
+    background: var(--orange);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+  .quiz-question {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+  .quiz-options { display: flex; flex-direction: column; gap: 0.6rem; }
+  .quiz-option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0.85rem 1.1rem;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    background: var(--bg);
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    font-family: inherit;
+    color: var(--text);
+  }
+  .quiz-option:hover:not(:disabled) {
+    border-color: var(--blue);
+    background: #eff6ff;
+  }
+  .quiz-option:disabled { cursor: default; }
+  .quiz-option.correct {
+    border-color: var(--green);
+    background: #f0fdf4;
+    font-weight: 600;
+  }
+  .quiz-option.wrong {
+    border-color: var(--red);
+    background: #fef2f2;
+    opacity: 0.7;
+  }
+  .quiz-feedback {
+    margin-top: 1rem;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.is-correct {
+    background: #f0fdf4;
+    border: 1px solid #86efac;
+    color: #166534;
+  }
+  .quiz-feedback.is-wrong {
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    color: #991b1b;
+  }
+  .quiz-next {
+    display: none;
+    margin: 1.2rem auto 0;
+    padding: 0.7rem 2rem;
+    background: var(--blue);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: opacity 0.2s;
+  }
+  .quiz-next:hover { opacity: 0.85; }
+  .quiz-next.show { display: block; }
+  .quiz-result { text-align: center; }
+  .quiz-score {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--blue);
+    margin: 0.5rem 0;
+  }
+  .quiz-score-label { color: var(--muted); font-size: 1rem; }
+  .quiz-grade {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0.8rem 0;
+  }
+  .quiz-restart {
+    margin-top: 1rem;
+    padding: 0.7rem 2rem;
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .quiz-restart:hover { opacity: 0.85; }
+
+  /* Hjem-lenke */
+  .home-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: var(--blue);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .home-link:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<a href="index.html" class="home-link">&larr; Tilbake til forsiden</a>
+
+<h1>Ligninger og andregradsuttrykk</h1>
+<p class="subtitle">Kompakt hjelpeside – VG1 Kapittel 2</p>
+
+<div class="toc">
+  <a href="#forstegradsligninger">Førstegradsligninger</a>
+  <a href="#kvadratsetningene">Kvadratsetningene</a>
+  <a href="#fullstendig-kvadrat">Fullstendig kvadrat</a>
+  <a href="#andregradsligninger">Andregradsligninger</a>
+  <a href="#losningsformel">Løsningsformel</a>
+  <a href="#praktisk-bruk">Praktisk bruk</a>
+  <a href="#faktorisering">Faktorisering</a>
+  <a href="#metodevalg">Når bruker du hva?</a>
+  <button class="toc a quiz-btn" onclick="openQuiz()">Test deg selv!</button>
+</div>
+
+<!-- ===== QUIZ OVERLAY ===== -->
+<div class="quiz-overlay" id="quizOverlay">
+  <div class="quiz-modal">
+    <button class="quiz-close" onclick="closeQuiz()">&times;</button>
+    <div class="quiz-header">
+      <h2>Ligninger – quiz</h2>
+      <div class="quiz-progress">Sporsmal <span id="qNum">1</span> av <span id="qTotal">10</span></div>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="qBar" style="width:10%"></div></div>
+    </div>
+    <div id="quizBody">
+      <div class="quiz-question" id="qText"></div>
+      <div class="quiz-options" id="qOptions"></div>
+      <div class="quiz-feedback" id="qFeedback"></div>
+      <button class="quiz-next" id="qNext" onclick="nextQuestion()">Neste</button>
+    </div>
+    <div id="quizResult" class="quiz-result" style="display:none;">
+      <div class="quiz-score-label">Resultat</div>
+      <div class="quiz-score" id="rScore"></div>
+      <div class="quiz-grade" id="rGrade"></div>
+      <button class="quiz-restart" onclick="startQuiz()">Prøv igjen</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 2.1 FØRSTEGRADSLIGNINGER ============ -->
+<div class="card" id="forstegradsligninger">
+  <h2>2.1 Førstegradsligninger</h2>
+
+  <h3>Regning med bokstaver</h3>
+  <p>Når vi regner med bokstaver, skriver vi leddene i <strong>alfabetisk rekkefølge</strong>:</p>
+  <div class="rule-grid">
+    <div class="rule-item">
+      <div class="rule-name">Riktig rekkefølge</div>
+      <div class="rule-formula">ab, &nbsp; 2xy, &nbsp; 3abc</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Ikke skriv</div>
+      <div class="rule-formula" style="text-decoration:line-through; color:var(--red);">ba, &nbsp; 2yx, &nbsp; 3cba</div>
+    </div>
+  </div>
+  <p>Tall skrives <strong>foran</strong> bokstavene, og vi dropper gangetegnet:</p>
+  <div class="formula-box">
+    a + a + a = 3a &nbsp;&nbsp;&nbsp; a &middot; b = ab &nbsp;&nbsp;&nbsp; 2 &middot; x &middot; y = 2xy
+  </div>
+
+  <h3>Algebraiske uttrykk</h3>
+  <p>Et <strong>algebraisk uttrykk</strong> inneholder tall, bokstaver og regneoperasjoner. Vi forenkler ved å <strong>samle like ledd</strong>:</p>
+  <div class="formula-box green">
+    3x + 2x &minus; 5 + 7 = 5x + 2
+  </div>
+  <div class="rule-grid">
+    <div class="rule-item">
+      <div class="rule-name">Samle like ledd</div>
+      <div class="rule-formula">3x + 2x = 5x</div>
+      <div class="rule-example">Like ledd har samme bokstavdel</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Distributiv lov</div>
+      <div class="rule-formula">a(b + c) = ab + ac</div>
+      <div class="rule-example">3(2x &minus; 1) = 6x &minus; 3</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Parenteser med minus foran</div>
+      <div class="rule-formula">&minus;(a + b) = &minus;a &minus; b</div>
+      <div class="rule-example">&minus;(2x &minus; 5) = &minus;2x + 5</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Multiplisere parenteser</div>
+      <div class="rule-formula">(a+b)(c+d) = ac+ad+bc+bd</div>
+      <div class="rule-example">(x+2)(x+3) = x²+5x+6</div>
+    </div>
+  </div>
+
+  <p>En <strong>ligning</strong> har et likhetstegn og sier at to uttrykk er like. Vi løser ligningen for å finne verdien av den ukjente.</p>
+
+  <h3>Blokkmetoden (vektprinsippet)</h3>
+  <p>En ligning er som en <strong>vekt i balanse</strong>. Det vi gjør på den ene siden, må vi også gjøre på den andre:</p>
+  <div class="formula-box purple">
+    Vi kan addere, subtrahere, multiplisere eller dividere med det samme tallet på begge sider.
+  </div>
+
+  <p><strong>Eksempel 1:</strong> Løs 3x + 5 = 20</p>
+  <div class="steps">
+    <div class="step">
+      <strong>Trekk fra 5</strong> på begge sider:
+      <span class="calc">3x + 5 &minus; 5 = 20 &minus; 5 &nbsp; &rArr; &nbsp; 3x = 15</span>
+    </div>
+    <div class="step">
+      <strong>Del på 3</strong> på begge sider:
+      <span class="calc">3x / 3 = 15 / 3 &nbsp; &rArr; &nbsp; x = 5</span>
+    </div>
+    <div class="step">
+      <strong>Kontroll:</strong> Sett inn x = 5:
+      <span class="calc">3 &middot; 5 + 5 = 15 + 5 = 20 ✓</span>
+    </div>
+  </div>
+
+  <p><strong>Eksempel 2:</strong> Løs 2(x &minus; 3) = 4x + 2</p>
+  <div class="steps">
+    <div class="step">
+      <strong>Ekspander</strong> venstre side:
+      <span class="calc">2x &minus; 6 = 4x + 2</span>
+    </div>
+    <div class="step">
+      <strong>Trekk fra 2x</strong> på begge sider:
+      <span class="calc">&minus;6 = 2x + 2</span>
+    </div>
+    <div class="step">
+      <strong>Trekk fra 2</strong> på begge sider:
+      <span class="calc">&minus;8 = 2x</span>
+    </div>
+    <div class="step">
+      <strong>Del på 2:</strong>
+      <span class="calc">x = &minus;4</span>
+    </div>
+    <div class="step">
+      <strong>Kontroll:</strong> V.S. = 2(&minus;4 &minus; 3) = 2(&minus;7) = &minus;14. H.S. = 4(&minus;4) + 2 = &minus;14 ✓
+    </div>
+  </div>
+
+  <p><strong>Eksempel 3:</strong> Løs 5x &minus; 3 = 2x + 9</p>
+  <div class="steps">
+    <div class="step">
+      <strong>Samle x-ledd:</strong> Trekk fra 2x på begge sider:
+      <span class="calc">3x &minus; 3 = 9</span>
+    </div>
+    <div class="step">
+      <strong>Samle talledd:</strong> Legg til 3 på begge sider:
+      <span class="calc">3x = 12</span>
+    </div>
+    <div class="step">
+      <strong>Del på 3:</strong>
+      <span class="calc">x = 4</span>
+    </div>
+    <div class="step">
+      <strong>Kontroll:</strong> V.S. = 5(4) &minus; 3 = 17. H.S. = 2(4) + 9 = 17 ✓
+    </div>
+  </div>
+</div>
+
+<!-- ============ 2.2 KVADRATSETNINGENE ============ -->
+<div class="card" id="kvadratsetningene">
+  <h2>2.2 Kvadratsetningene</h2>
+
+  <h3>Første kvadratsetning</h3>
+  <div class="formula-box red">
+    (a + b)<sup>2</sup> = a<sup>2</sup> + 2ab + b<sup>2</sup>
+  </div>
+  <p><strong>Eksempel:</strong> (x + 3)<sup>2</sup> = x<sup>2</sup> + 2 &middot; x &middot; 3 + 3<sup>2</sup> = x<sup>2</sup> + 6x + 9</p>
+  <p><strong>Eksempel:</strong> (2x + 5)<sup>2</sup> = (2x)<sup>2</sup> + 2 &middot; 2x &middot; 5 + 5<sup>2</sup> = 4x<sup>2</sup> + 20x + 25</p>
+
+  <h3>Andre kvadratsetning</h3>
+  <div class="formula-box green">
+    (a &minus; b)<sup>2</sup> = a<sup>2</sup> &minus; 2ab + b<sup>2</sup>
+  </div>
+  <p><strong>Eksempel:</strong> (x &minus; 4)<sup>2</sup> = x<sup>2</sup> &minus; 8x + 16</p>
+  <p><strong>Eksempel:</strong> (3x &minus; 2)<sup>2</sup> = 9x<sup>2</sup> &minus; 12x + 4</p>
+
+  <h3>Konjugatregelen</h3>
+  <div class="formula-box orange">
+    (a + b)(a &minus; b) = a<sup>2</sup> &minus; b<sup>2</sup>
+  </div>
+  <p><strong>Eksempel:</strong> (x + 7)(x &minus; 7) = x<sup>2</sup> &minus; 49</p>
+  <p><strong>Eksempel:</strong> (3x + 4)(3x &minus; 4) = 9x<sup>2</sup> &minus; 16</p>
+
+  <h3>Identiteter</h3>
+  <p>Kvadratsetningene og konjugatregelen er <strong>identiteter</strong> — de gjelder for <em>alle</em> verdier av a og b. En identitet er ikke en ligning vi løser, men en omskriving som alltid stemmer.</p>
+
+  <div class="rule-grid" style="grid-template-columns:1fr 1fr 1fr;">
+    <div class="rule-item">
+      <div class="rule-name">1. kvadratsetning</div>
+      <div class="rule-formula">(a+b)<sup>2</sup> = a<sup>2</sup>+2ab+b<sup>2</sup></div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">2. kvadratsetning</div>
+      <div class="rule-formula">(a&minus;b)<sup>2</sup> = a<sup>2</sup>&minus;2ab+b<sup>2</sup></div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Konjugatregelen</div>
+      <div class="rule-formula">(a+b)(a&minus;b) = a<sup>2</sup>&minus;b<sup>2</sup></div>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>Vanlig feil:</strong> (a + b)<sup>2</sup> &ne; a<sup>2</sup> + b<sup>2</sup>. Man glemmer ofte <strong>dobbeltproduktet 2ab</strong>!
+  </div>
+</div>
+
+<!-- ============ 2.3 FULLSTENDIG KVADRAT ============ -->
+<div class="card" id="fullstendig-kvadrat">
+  <h2>2.3 Fullstendig kvadrat</h2>
+
+  <p>Å <strong>fullføre kvadratet</strong> betyr å skrive et andregradsuttrykk på formen (x + d)<sup>2</sup> + e. Nøkkelformelen er:</p>
+  <div class="formula-box purple">
+    x<sup>2</sup> + bx = (x + <span class="frac"><span class="frac-num">b</span><span class="frac-den">2</span></span>)<sup>2</sup> &minus; (<span class="frac"><span class="frac-num">b</span><span class="frac-den">2</span></span>)<sup>2</sup>
+  </div>
+
+  <p><strong>Eksempel 1:</strong> Skriv x<sup>2</sup> + 6x + 2 som fullstendig kvadrat.</p>
+  <div class="steps">
+    <div class="step">
+      <strong>Identifiser b:</strong> b = 6, så b/2 = 3.
+    </div>
+    <div class="step">
+      <strong>Skriv om x<sup>2</sup> + 6x:</strong>
+      <span class="calc">x² + 6x = (x + 3)² &minus; 9</span>
+    </div>
+    <div class="step">
+      <strong>Legg til konstantleddet:</strong>
+      <span class="calc">x² + 6x + 2 = (x + 3)² &minus; 9 + 2 = (x + 3)² &minus; 7</span>
+    </div>
+  </div>
+
+  <p><strong>Eksempel 2:</strong> Skriv x<sup>2</sup> &minus; 4x + 7 som fullstendig kvadrat.</p>
+  <div class="steps">
+    <div class="step">
+      <strong>Identifiser b:</strong> b = &minus;4, så b/2 = &minus;2.
+    </div>
+    <div class="step">
+      <strong>Skriv om:</strong>
+      <span class="calc">x² &minus; 4x = (x &minus; 2)² &minus; 4</span>
+    </div>
+    <div class="step">
+      <strong>Legg til konstantleddet:</strong>
+      <span class="calc">x² &minus; 4x + 7 = (x &minus; 2)² &minus; 4 + 7 = (x &minus; 2)² + 3</span>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>Hvorfor er dette nyttig?</strong> Fullstendig kvadrat brukes til å løse andregradsligninger, finne toppunkt/bunnpunkt til parabler, og er grunnlaget for å utlede løsningsformelen (abc-formelen).
+  </div>
+</div>
+
+<!-- ============ 2.4 ANDREGRADSLIGNINGER ============ -->
+<div class="card" id="andregradsligninger">
+  <h2>2.4 Andregradsligninger</h2>
+
+  <p>En <strong>andregradsligning</strong> har formen ax<sup>2</sup> + bx + c = 0, der a &ne; 0.</p>
+
+  <h3>Kvadratrot</h3>
+  <p>Den enkleste typen: bare x<sup>2</sup>-ledd.</p>
+  <div class="formula-box">
+    x<sup>2</sup> = a &nbsp; &rArr; &nbsp; x = &pm;&radic;a &nbsp; (når a &ge; 0)
+  </div>
+  <p><strong>Eksempel:</strong> x<sup>2</sup> = 25 &nbsp;&rArr;&nbsp; x = &pm;5 &nbsp; (to løsninger: x = 5 og x = &minus;5)</p>
+  <p><strong>Eksempel:</strong> x<sup>2</sup> = &minus;4 &nbsp;&rArr;&nbsp; ingen reell løsning (kan ikke ta kvadratrot av negativt tall)</p>
+
+  <h3>Løsning ved faktorisering</h3>
+  <p>Hvis vi kan skrive uttrykket som et produkt av to faktorer, bruker vi <strong>produktregelen</strong>:</p>
+  <div class="formula-box red">
+    A &middot; B = 0 &nbsp; &rArr; &nbsp; A = 0 &nbsp; eller &nbsp; B = 0
+  </div>
+  <p>Produktregelen (nullpunktregelen) sier at minst én av faktorene <strong>må</strong> være null for at produktet skal bli null.</p>
+
+  <p><strong>Eksempel:</strong> Løs x<sup>2</sup> &minus; 5x + 6 = 0</p>
+  <div class="steps">
+    <div class="step">
+      <strong>Faktoriser:</strong>
+      <span class="calc">x² &minus; 5x + 6 = (x &minus; 2)(x &minus; 3)</span>
+    </div>
+    <div class="step">
+      <strong>Sett lik null:</strong>
+      <span class="calc">(x &minus; 2)(x &minus; 3) = 0</span>
+    </div>
+    <div class="step">
+      <strong>Produktregelen:</strong>
+      <span class="calc">x &minus; 2 = 0 &rArr; x = 2 &nbsp;&nbsp; eller &nbsp;&nbsp; x &minus; 3 = 0 &rArr; x = 3</span>
+    </div>
+  </div>
+
+  <p><strong>Eksempel:</strong> Løs x<sup>2</sup> &minus; 9 = 0</p>
+  <div class="steps">
+    <div class="step">
+      <strong>Konjugatregelen:</strong>
+      <span class="calc">x² &minus; 9 = (x + 3)(x &minus; 3) = 0</span>
+    </div>
+    <div class="step">
+      <strong>Løsning:</strong>
+      <span class="calc">x = &minus;3 &nbsp; eller &nbsp; x = 3</span>
+    </div>
+  </div>
+
+  <h3>Løsning ved sum og produkt</h3>
+  <p>For ligningen <strong>x<sup>2</sup> + bx + c = 0</strong> leter vi etter to tall x<sub>1</sub> og x<sub>2</sub> slik at:</p>
+  <div class="rule-grid">
+    <div class="rule-item">
+      <div class="rule-name">Summen av røttene</div>
+      <div class="rule-formula">x<sub>1</sub> + x<sub>2</sub> = &minus;b</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Produktet av røttene</div>
+      <div class="rule-formula">x<sub>1</sub> &middot; x<sub>2</sub> = c</div>
+    </div>
+  </div>
+
+  <p><strong>Eksempel:</strong> Løs x<sup>2</sup> &minus; 7x + 12 = 0</p>
+  <div class="steps">
+    <div class="step">
+      <strong>Finn to tall</strong> med sum 7 og produkt 12:
+      <span class="calc">3 + 4 = 7 &nbsp; og &nbsp; 3 &middot; 4 = 12 ✓</span>
+    </div>
+    <div class="step">
+      <strong>Løsning:</strong>
+      <span class="calc">x = 3 &nbsp; eller &nbsp; x = 4</span>
+    </div>
+    <div class="step">
+      <strong>Faktorisering:</strong>
+      <span class="calc">x² &minus; 7x + 12 = (x &minus; 3)(x &minus; 4)</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 2.5 LØSNINGSFORMEL ============ -->
+<div class="card" id="losningsformel">
+  <h2>2.5 Løsningsformel for andregradsligninger</h2>
+
+  <p>For ligningen <strong>ax<sup>2</sup> + bx + c = 0</strong> gir <strong>abc-formelen</strong>:</p>
+  <div class="formula-box red" style="font-size:1.3rem;">
+    x = <span class="frac"><span class="frac-num">&minus;b &pm; &radic;(b<sup>2</sup> &minus; 4ac)</span><span class="frac-den">2a</span></span>
+  </div>
+
+  <h3>Diskriminanten</h3>
+  <p>Uttrykket under rottegnet kalles <strong>diskriminanten</strong>:</p>
+  <div class="formula-box orange">
+    D = b<sup>2</sup> &minus; 4ac
+  </div>
+
+  <div class="rule-grid" style="grid-template-columns:1fr 1fr 1fr;">
+    <div class="rule-item" style="border-color:var(--green);">
+      <div class="rule-name">D &gt; 0</div>
+      <div class="rule-formula" style="color:var(--green);">To løsninger</div>
+      <div class="rule-example">To ulike skjæringspunkter med x-aksen</div>
+    </div>
+    <div class="rule-item" style="border-color:var(--orange);">
+      <div class="rule-name">D = 0</div>
+      <div class="rule-formula" style="color:var(--orange);">Én løsning</div>
+      <div class="rule-example">Dobbeltrot – tangerer x-aksen</div>
+    </div>
+    <div class="rule-item" style="border-color:var(--red);">
+      <div class="rule-name">D &lt; 0</div>
+      <div class="rule-formula" style="color:var(--red);">Ingen reelle løsninger</div>
+      <div class="rule-example">Grafen krysser ikke x-aksen</div>
+    </div>
+  </div>
+
+  <p><strong>Eksempel:</strong> Løs 2x<sup>2</sup> &minus; 4x &minus; 6 = 0</p>
+  <div class="steps">
+    <div class="step">
+      <strong>Identifiser a, b, c:</strong>
+      <span class="calc">a = 2, &nbsp; b = &minus;4, &nbsp; c = &minus;6</span>
+    </div>
+    <div class="step">
+      <strong>Regn ut diskriminanten:</strong>
+      <span class="calc">D = (&minus;4)² &minus; 4 &middot; 2 &middot; (&minus;6) = 16 + 48 = 64</span>
+    </div>
+    <div class="step">
+      <strong>D &gt; 0</strong>, altså to løsninger. Sett inn i formelen:
+      <span class="calc">x = (4 &pm; &radic;64) / (2 &middot; 2) = (4 &pm; 8) / 4</span>
+    </div>
+    <div class="step">
+      <strong>Finn de to løsningene:</strong>
+      <span class="calc">x = (4 + 8) / 4 = 3 &nbsp;&nbsp; eller &nbsp;&nbsp; x = (4 &minus; 8) / 4 = &minus;1</span>
+    </div>
+    <div class="step">
+      <strong>Kontroll:</strong>
+      <span class="calc">2(3)² &minus; 4(3) &minus; 6 = 18 &minus; 12 &minus; 6 = 0 ✓</span>
+    </div>
+  </div>
+
+  <h3>Valg av løsningsmetode</h3>
+
+  <table class="set-table">
+    <thead>
+      <tr><th>Situasjon</th><th>Metode</th><th>Eksempel</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Bare x<sup>2</sup>-ledd (ingen bx)</td><td>Kvadratrot: x = &pm;&radic;...</td><td>x<sup>2</sup> = 25 &rarr; x = &pm;5</td></tr>
+      <tr><td>c = 0 (ingen konstantledd)</td><td>Faktoriser ut x</td><td>x<sup>2</sup> &minus; 3x = x(x &minus; 3) = 0</td></tr>
+      <tr><td>Lett å se faktorene</td><td>Faktorisering + produktregel</td><td>x<sup>2</sup> &minus; 5x + 6 = (x&minus;2)(x&minus;3)</td></tr>
+      <tr><td>a = 1 og b er partall</td><td>Fullstendig kvadrat</td><td>x<sup>2</sup> + 6x + 2 = (x+3)<sup>2</sup> &minus; 7</td></tr>
+      <tr><td>Vanskelig å faktorisere</td><td><strong>abc-formelen</strong></td><td>2x<sup>2</sup> &minus; 3x &minus; 7 = 0</td></tr>
+      <tr><td>Usikker?</td><td>abc-formelen fungerer <strong>alltid</strong></td><td>Sjekk diskriminanten først!</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Steg-for-steg: Hvilken metode?</h3>
+  <div class="steps">
+    <div class="step">
+      <strong>Omform</strong> ligningen til formen ax<sup>2</sup> + bx + c = 0.
+    </div>
+    <div class="step">
+      <strong>Er b = 0?</strong> &rarr; Bruk kvadratrot direkte: x = &pm;&radic;(&minus;c/a).
+    </div>
+    <div class="step">
+      <strong>Er c = 0?</strong> &rarr; Faktoriser ut x: x(ax + b) = 0.
+    </div>
+    <div class="step">
+      <strong>Ser du faktorene?</strong> &rarr; Faktoriser og bruk produktregelen.
+    </div>
+    <div class="step">
+      <strong>Ellers</strong> &rarr; Bruk abc-formelen. Sjekk diskriminanten D = b<sup>2</sup> &minus; 4ac for antall løsninger.
+    </div>
+  </div>
+</div>
+
+<!-- ============ 2.6 PRAKTISK BRUK ============ -->
+<div class="card" id="praktisk-bruk">
+  <h2>2.6 Praktisk bruk av andregradsligninger</h2>
+
+  <h3>Eksempel 1: Kast</h3>
+  <div class="note">
+    <strong>Oppgave:</strong> En ball kastes opp. Høyden h (i meter) etter t sekunder er gitt ved h = &minus;5t<sup>2</sup> + 20t. Når er ballen 15 m over bakken?
+  </div>
+  <div class="steps">
+    <div class="step">
+      <strong>Sett opp ligningen:</strong>
+      <span class="calc">&minus;5t² + 20t = 15 &nbsp; &rArr; &nbsp; &minus;5t² + 20t &minus; 15 = 0</span>
+    </div>
+    <div class="step">
+      <strong>Del på &minus;5:</strong>
+      <span class="calc">t² &minus; 4t + 3 = 0</span>
+    </div>
+    <div class="step">
+      <strong>Faktoriser:</strong>
+      <span class="calc">(t &minus; 1)(t &minus; 3) = 0</span>
+    </div>
+    <div class="step">
+      <strong>Løsning:</strong>
+      <span class="calc">t = 1 s &nbsp; eller &nbsp; t = 3 s</span>
+    </div>
+    <div class="step">
+      <strong>Tolkning:</strong> Ballen er 15 m over bakken <em>to ganger</em> — på vei opp (t = 1 s) og på vei ned (t = 3 s).
+    </div>
+  </div>
+
+  <h3>Eksempel 2: Areal</h3>
+  <div class="note">
+    <strong>Oppgave:</strong> Et rektangel har omkrets 20 cm og areal 24 cm<sup>2</sup>. Finn sidene.
+  </div>
+  <div class="steps">
+    <div class="step">
+      <strong>Sett opp:</strong> La lengden være x. Omkrets = 2(x + b) = 20, altså b = 10 &minus; x.
+      <span class="calc">Areal: x(10 &minus; x) = 24</span>
+    </div>
+    <div class="step">
+      <strong>Omform:</strong>
+      <span class="calc">10x &minus; x² = 24 &nbsp; &rArr; &nbsp; x² &minus; 10x + 24 = 0</span>
+    </div>
+    <div class="step">
+      <strong>Faktoriser:</strong> To tall med sum 10 og produkt 24: 4 og 6.
+      <span class="calc">(x &minus; 4)(x &minus; 6) = 0 &nbsp; &rArr; &nbsp; x = 4 eller x = 6</span>
+    </div>
+    <div class="step">
+      <strong>Svar:</strong> Sidene er <strong>4 cm og 6 cm</strong>. (Begge løsningene gir samme rektangel.)
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>Tips:</strong> I praktiske oppgaver — sjekk alltid om begge løsningene gir mening. Negativ tid, negativ lengde eller umulige verdier forkastes.
+  </div>
+</div>
+
+<!-- ============ 2.7 FAKTORISERING OG FORKORTING ============ -->
+<div class="card" id="faktorisering">
+  <h2>2.7 Faktorisering og forkorting</h2>
+
+  <h3>Faktorisering av andregradsuttrykk</h3>
+  <p>Når vi kjenner røttene x<sub>1</sub> og x<sub>2</sub>, kan vi skrive:</p>
+  <div class="formula-box">
+    ax<sup>2</sup> + bx + c = a(x &minus; x<sub>1</sub>)(x &minus; x<sub>2</sub>)
+  </div>
+
+  <p><strong>Eksempel 1:</strong> Faktoriser x<sup>2</sup> &minus; 5x + 6</p>
+  <div class="steps">
+    <div class="step">
+      <strong>Finn røttene:</strong> Sum 5, produkt 6 &rarr; tallene 2 og 3.
+      <span class="calc">x² &minus; 5x + 6 = (x &minus; 2)(x &minus; 3)</span>
+    </div>
+  </div>
+
+  <p><strong>Eksempel 2:</strong> Faktoriser x<sup>2</sup> &minus; 4</p>
+  <div class="steps">
+    <div class="step">
+      <strong>Konjugatregelen:</strong>
+      <span class="calc">x² &minus; 4 = x² &minus; 2² = (x + 2)(x &minus; 2)</span>
+    </div>
+  </div>
+
+  <p><strong>Eksempel 3:</strong> Faktoriser 2x<sup>2</sup> + 6x</p>
+  <div class="steps">
+    <div class="step">
+      <strong>Felles faktor:</strong>
+      <span class="calc">2x² + 6x = 2x(x + 3)</span>
+    </div>
+  </div>
+
+  <h3>Forkorting av brøkuttrykk</h3>
+  <p>Faktoriser teller og nevner, og <strong>stryk felles faktorer</strong>:</p>
+
+  <p><strong>Eksempel:</strong> Forkort
+    <span class="frac"><span class="frac-num">x<sup>2</sup> &minus; 9</span><span class="frac-den">x + 3</span></span>
+  </p>
+  <div class="steps">
+    <div class="step">
+      <strong>Faktoriser telleren</strong> med konjugatregelen:
+      <span class="calc">x² &minus; 9 = (x + 3)(x &minus; 3)</span>
+    </div>
+    <div class="step">
+      <strong>Forkort:</strong>
+      <span class="calc">(x + 3)(x &minus; 3) / (x + 3) = x &minus; 3 &nbsp; (for x &ne; &minus;3)</span>
+    </div>
+  </div>
+
+  <p><strong>Eksempel:</strong> Forkort
+    <span class="frac"><span class="frac-num">x<sup>2</sup> &minus; x &minus; 6</span><span class="frac-den">x<sup>2</sup> &minus; 4</span></span>
+  </p>
+  <div class="steps">
+    <div class="step">
+      <strong>Faktoriser teller:</strong>
+      <span class="calc">x² &minus; x &minus; 6 = (x &minus; 3)(x + 2)</span>
+    </div>
+    <div class="step">
+      <strong>Faktoriser nevner:</strong>
+      <span class="calc">x² &minus; 4 = (x + 2)(x &minus; 2)</span>
+    </div>
+    <div class="step">
+      <strong>Forkort (x + 2):</strong>
+      <span class="calc">(x &minus; 3)(x + 2) / ((x + 2)(x &minus; 2)) = (x &minus; 3) / (x &minus; 2) &nbsp; (for x &ne; &minus;2)</span>
+    </div>
+  </div>
+
+  <h3>Ligninger med variabelen i nevner</h3>
+  <p>Når x står i nevneren, må vi <strong>oppgi krav</strong> til x (nevneren kan ikke være null) og <strong>sjekke for falske løsninger</strong>.</p>
+
+  <p><strong>Eksempel:</strong> Løs
+    <span class="frac"><span class="frac-num">1</span><span class="frac-den">x &minus; 2</span></span>
+    + 3 =
+    <span class="frac"><span class="frac-num">x</span><span class="frac-den">x &minus; 2</span></span>
+  </p>
+  <div class="steps">
+    <div class="step">
+      <strong>Krav:</strong> x &ne; 2 (nevneren kan ikke være null).
+    </div>
+    <div class="step">
+      <strong>Gang begge sider med (x &minus; 2):</strong>
+      <span class="calc">1 + 3(x &minus; 2) = x</span>
+    </div>
+    <div class="step">
+      <strong>Ekspander og løs:</strong>
+      <span class="calc">1 + 3x &minus; 6 = x &nbsp; &rArr; &nbsp; 3x &minus; 5 = x &nbsp; &rArr; &nbsp; 2x = 5 &nbsp; &rArr; &nbsp; x = 2,5</span>
+    </div>
+    <div class="step">
+      <strong>Sjekk kravet:</strong> x = 2,5 &ne; 2 ✓ Løsningen er gyldig.
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>Viktig:</strong> Hvis løsningen du finner bryter med kravet (f.eks. x = 2 her), er det en <strong>falsk løsning</strong> og ligningen har ingen løsning.
+  </div>
+</div>
+
+<!-- ============ NÅR BRUKER DU HVA? ============ -->
+<div class="card" id="metodevalg">
+  <h2>Når bruker du hva?</h2>
+  <p>Oversikt over hvilken metode du bør velge i ulike situasjoner i dette kapittelet.</p>
+
+  <table class="set-table">
+    <thead>
+      <tr><th>Situasjon</th><th>Metode</th><th>Se seksjon</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Ligning med bare x (ingen x<sup>2</sup>)</td><td>Blokkmetoden &mdash; samle x på den ene siden, tall på den andre</td><td>&sect;2.1</td></tr>
+      <tr><td>Skal utvide eller forenkle et uttrykk</td><td>Kvadratsetningene / konjugatregelen</td><td>&sect;2.2</td></tr>
+      <tr><td>Skal skrive uttrykk på formen (x + d)<sup>2</sup> + e</td><td>Fullstendig kvadrat</td><td>&sect;2.3</td></tr>
+      <tr><td>Skal løse ax<sup>2</sup> + bx + c = 0</td><td>Se steg-for-steg-guiden i &sect;2.5</td><td>&sect;2.4&ndash;2.5</td></tr>
+      <tr><td>Tekstoppgave (fart, areal, osv.)</td><td>Sett opp ligning, løs, sjekk at svaret gir mening</td><td>&sect;2.6</td></tr>
+      <tr><td>Skal forenkle et brøkuttrykk</td><td>Faktoriser teller og nevner, stryk felles faktorer</td><td>&sect;2.7</td></tr>
+      <tr><td>Variabel i nevner</td><td>Sett krav til x, gang bort nevner, sjekk for falske løsninger</td><td>&sect;2.7</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <strong>Huskeregel:</strong> Prøv alltid den enkleste metoden først. Kan du faktorisere? Gjør det. Ellers &mdash; abc-formelen fungerer alltid. Og husk: sjekk svaret ved å sette inn!
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<script>
+// ===== QUIZ =====
+const allQuestions = [
+  // 2.1 Førstegradsligninger
+  {
+    q: "Hva er 3x + 2x?",
+    opts: ["5x", "6x", "5x²", "6"],
+    ans: 0,
+    tip: "Like ledd: 3x + 2x = 5x. Vi legger sammen koeffisientene."
+  },
+  {
+    q: "Løs ligningen: 2x + 3 = 11",
+    opts: ["x = 3", "x = 4", "x = 7", "x = 5,5"],
+    ans: 1,
+    tip: "2x = 11 − 3 = 8, så x = 8/2 = 4."
+  },
+  {
+    q: "Hva betyr blokkmetoden?",
+    opts: [
+      "Vi gjetter på svaret",
+      "Vi gjør det samme på begge sider av likhetstegnet",
+      "Vi bytter fortegn på alle ledd",
+      "Vi setter x = 0"
+    ],
+    ans: 1,
+    tip: "Blokkmetoden (vektprinsippet): ligningen er i balanse, og vi gjør samme operasjon på begge sider."
+  },
+  {
+    q: "Forenkle: 3(2x − 4) + 5",
+    opts: ["6x − 7", "6x − 12", "6x + 1", "6x − 17"],
+    ans: 0,
+    tip: "3 · 2x − 3 · 4 + 5 = 6x − 12 + 5 = 6x − 7."
+  },
+  {
+    q: "Løs: 5x − 3 = 2x + 9",
+    opts: ["x = 4", "x = 2", "x = 6", "x = 3"],
+    ans: 0,
+    tip: "5x − 2x = 9 + 3 → 3x = 12 → x = 4."
+  },
+  // 2.2 Kvadratsetningene
+  {
+    q: "Hva er (x + 3)²?",
+    opts: ["x² + 9", "x² + 3x + 9", "x² + 6x + 9", "x² + 6x + 3"],
+    ans: 2,
+    tip: "(x + 3)² = x² + 2·x·3 + 3² = x² + 6x + 9."
+  },
+  {
+    q: "Hva er (x − 5)²?",
+    opts: ["x² − 25", "x² − 5x + 25", "x² + 10x + 25", "x² − 10x + 25"],
+    ans: 3,
+    tip: "(x − 5)² = x² − 2·x·5 + 5² = x² − 10x + 25."
+  },
+  {
+    q: "Hva er (x + 4)(x − 4)?",
+    opts: ["x² + 16", "x² − 8", "x² − 16", "x² − 8x + 16"],
+    ans: 2,
+    tip: "Konjugatregelen: (a+b)(a−b) = a² − b². Altså x² − 16."
+  },
+  {
+    q: "Hva er (2x + 1)²?",
+    opts: ["2x² + 1", "4x² + 2x + 1", "4x² + 4x + 1", "4x² + 1"],
+    ans: 2,
+    tip: "(2x)² + 2·2x·1 + 1² = 4x² + 4x + 1."
+  },
+  {
+    q: "Hvilken regel gir (a+b)(a−b) = a² − b²?",
+    opts: ["Første kvadratsetning", "Andre kvadratsetning", "Konjugatregelen", "Distributiv lov"],
+    ans: 2,
+    tip: "Konjugatregelen handler om summen ganger differansen av de samme leddene."
+  },
+  {
+    q: "Er (a + b)² = a² + b² riktig?",
+    opts: ["Ja, alltid", "Nei, det mangler 2ab", "Bare når a = b", "Bare når b = 0"],
+    ans: 1,
+    tip: "Vanlig feil! Riktig: (a + b)² = a² + 2ab + b². Man glemmer dobbeltproduktet."
+  },
+  // 2.3 Fullstendig kvadrat
+  {
+    q: "Skriv x² + 8x som (x + ?)² − ?",
+    opts: ["(x + 4)² − 16", "(x + 8)² − 64", "(x + 4)² − 8", "(x + 2)² − 4"],
+    ans: 0,
+    tip: "b = 8, b/2 = 4: x² + 8x = (x + 4)² − 16."
+  },
+  {
+    q: "x² − 6x + 5 som fullstendig kvadrat er:",
+    opts: ["(x − 3)² − 4", "(x − 3)² + 4", "(x − 6)² − 31", "(x − 3)² − 14"],
+    ans: 0,
+    tip: "x² − 6x = (x − 3)² − 9. Legger til 5: (x − 3)² − 9 + 5 = (x − 3)² − 4."
+  },
+  {
+    q: "Hva legger vi til og trekker fra for å fullføre kvadratet i x² + 10x?",
+    opts: ["10", "25", "5", "100"],
+    ans: 1,
+    tip: "b = 10, (b/2)² = 5² = 25. Vi legger til og trekker fra 25."
+  },
+  // 2.4 Andregradsligninger
+  {
+    q: "x² = 49 gir x = ?",
+    opts: ["x = 7", "x = −7", "x = ±7", "x = 49"],
+    ans: 2,
+    tip: "Kvadratrot gir alltid to løsninger: x = 7 og x = −7."
+  },
+  {
+    q: "Løs: x² − 5x + 6 = 0",
+    opts: ["x = 1 eller x = 6", "x = 2 eller x = 3", "x = −2 eller x = −3", "x = 5 eller x = 1"],
+    ans: 1,
+    tip: "(x − 2)(x − 3) = 0. Sum 5, produkt 6 → tallene 2 og 3."
+  },
+  {
+    q: "Produktregelen: Hvis A · B = 0, da er …",
+    opts: ["A = 0 og B = 0", "A = 0 eller B = 0", "A + B = 0", "A = B"],
+    ans: 1,
+    tip: "Minst én faktor må være null. Det holder at én av dem er null."
+  },
+  {
+    q: "Løs: x² − 9 = 0",
+    opts: ["x = 9", "x = 3", "x = ±3", "x = ±9"],
+    ans: 2,
+    tip: "x² = 9 → x = ±3. Eller: (x+3)(x−3) = 0."
+  },
+  {
+    q: "Finn to tall med sum 7 og produkt 12:",
+    opts: ["2 og 5", "3 og 4", "6 og 1", "4 og 4"],
+    ans: 1,
+    tip: "3 + 4 = 7 og 3 · 4 = 12."
+  },
+  // 2.5 Løsningsformelen
+  {
+    q: "Hva er diskriminanten til x² − 6x + 9 = 0?",
+    opts: ["D = 0", "D = 36", "D = −36", "D = 72"],
+    ans: 0,
+    tip: "D = (−6)² − 4·1·9 = 36 − 36 = 0. Én løsning (dobbeltrot)."
+  },
+  {
+    q: "Hvor mange løsninger har en andregradsligningen når D < 0?",
+    opts: ["To", "Én", "Ingen reelle", "Uendelig mange"],
+    ans: 2,
+    tip: "D < 0 betyr at vi må ta kvadratrot av et negativt tall — ingen reelle løsninger."
+  },
+  {
+    q: "Løs 2x² − 8x + 6 = 0 med abc-formelen.",
+    opts: ["x = 1 eller x = 3", "x = 2 eller x = 6", "x = −1 eller x = −3", "x = 4"],
+    ans: 0,
+    tip: "a=2, b=−8, c=6. D = 64−48 = 16. x = (8±4)/4 → x = 3 eller x = 1."
+  },
+  {
+    q: "I ligningen 3x² + 5x − 2 = 0, hva er a, b og c?",
+    opts: ["a=3, b=5, c=2", "a=3, b=5, c=−2", "a=5, b=3, c=−2", "a=3, b=−5, c=2"],
+    ans: 1,
+    tip: "Vi leser rett av: a er koeffisienten foran x², b foran x, og c er konstantleddet."
+  },
+  // 2.6 Praktisk bruk
+  {
+    q: "h = −5t² + 20t. Når treffer ballen bakken (h = 0)?",
+    opts: ["t = 2 s", "t = 4 s", "t = 5 s", "t = 10 s"],
+    ans: 1,
+    tip: "−5t² + 20t = 0 → −5t(t − 4) = 0 → t = 0 (start) eller t = 4 s."
+  },
+  {
+    q: "Kan en andregradsligningen ha to negative løsninger?",
+    opts: ["Nei, aldri", "Ja", "Bare hvis c = 0", "Bare hvis a < 0"],
+    ans: 1,
+    tip: "Ja! F.eks. x² + 5x + 6 = 0 → (x+2)(x+3) = 0 → x = −2 eller x = −3."
+  },
+  {
+    q: "Et rektangel har omkrets 16 cm og areal 15 cm². Hva er sidene?",
+    opts: ["3 cm og 5 cm", "4 cm og 4 cm", "2 cm og 6 cm", "1 cm og 7 cm"],
+    ans: 0,
+    tip: "b = 8 − x. x(8−x) = 15 → x² − 8x + 15 = 0 → (x−3)(x−5) = 0. Sidene er 3 og 5."
+  },
+  // 2.7 Faktorisering og forkorting
+  {
+    q: "Faktoriser x² − 4",
+    opts: ["(x − 2)²", "(x + 2)(x − 2)", "(x + 4)(x − 1)", "x(x − 4)"],
+    ans: 1,
+    tip: "Konjugatregelen: x² − 4 = x² − 2² = (x+2)(x−2)."
+  },
+  {
+    q: "Forkort (x² − 9)/(x + 3)",
+    opts: ["x + 3", "x − 3", "x² − 3", "x − 9"],
+    ans: 1,
+    tip: "x² − 9 = (x+3)(x−3). Stryk (x+3): svaret er x − 3."
+  },
+  {
+    q: "Hva må x IKKE være i uttrykket 1/(x − 5)?",
+    opts: ["x ≠ 0", "x ≠ 1", "x ≠ −5", "x ≠ 5"],
+    ans: 3,
+    tip: "Nevneren x − 5 kan ikke være null, altså x ≠ 5."
+  },
+  {
+    q: "Faktoriser x² + 5x + 6",
+    opts: ["(x + 1)(x + 6)", "(x + 2)(x + 3)", "(x + 5)(x + 1)", "(x − 2)(x − 3)"],
+    ans: 1,
+    tip: "To tall med sum 5 og produkt 6: 2 og 3. Altså (x + 2)(x + 3)."
+  },
+  // Metodevalg-spørsmål
+  {
+    q: "Du skal løse x² − 16 = 0. Raskeste metode?",
+    opts: ["abc-formelen", "Fullstendig kvadrat", "Konjugatregel / kvadratrot", "Blokkmetoden"],
+    ans: 2,
+    tip: "x² − 16 = (x+4)(x−4) = 0 (konjugatregel), eller x² = 16 → x = ±4 (kvadratrot). Begge er raske!"
+  },
+  {
+    q: "Du har 3x² + 2x − 5 = 0 og klarer ikke faktorisere. Hva gjør du?",
+    opts: ["Gir opp", "Prøver tilfeldige tall", "Bruker abc-formelen", "Bruker blokkmetoden"],
+    ans: 2,
+    tip: "abc-formelen fungerer alltid for andregradsligninger, selv når du ikke ser faktorene."
+  },
+  {
+    q: "Hva bør du ALLTID sjekke når du løser en ligning med x i nevner?",
+    opts: ["At svaret er positivt", "At diskriminanten er positiv", "At løsningen ikke gir null i nevner", "At a ≠ 0"],
+    ans: 2,
+    tip: "Nevneren kan ikke være null. Sjekk alltid at løsningen ikke bryter med kravet — ellers er det en falsk løsning."
+  }
+];
+
+let quizQuestions, currentQ, score;
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function openQuiz() {
+  document.getElementById('quizOverlay').classList.add('open');
+  startQuiz();
+}
+function closeQuiz() {
+  document.getElementById('quizOverlay').classList.remove('open');
+}
+function startQuiz() {
+  currentQ = 0;
+  score = 0;
+  quizQuestions = shuffle([...allQuestions]).slice(0, 10);
+  document.getElementById('quizBody').style.display = '';
+  document.getElementById('quizResult').style.display = 'none';
+  document.getElementById('qTotal').textContent = quizQuestions.length;
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = quizQuestions[currentQ];
+  document.getElementById('qNum').textContent = currentQ + 1;
+  document.getElementById('qBar').style.width = ((currentQ + 1) / quizQuestions.length * 100) + '%';
+  document.getElementById('qText').textContent = q.q;
+  document.getElementById('qFeedback').className = 'quiz-feedback';
+  document.getElementById('qFeedback').textContent = '';
+  document.getElementById('qNext').className = 'quiz-next';
+
+  const optBox = document.getElementById('qOptions');
+  optBox.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-option';
+    btn.textContent = opt;
+    btn.addEventListener('click', () => pickAnswer(i));
+    optBox.appendChild(btn);
+  });
+}
+
+function pickAnswer(idx) {
+  const q = quizQuestions[currentQ];
+  const btns = document.querySelectorAll('#qOptions .quiz-option');
+  btns.forEach(b => b.disabled = true);
+
+  const fb = document.getElementById('qFeedback');
+
+  if (idx === q.ans) {
+    btns[idx].classList.add('correct');
+    fb.className = 'quiz-feedback show is-correct';
+    fb.textContent = 'Riktig! ' + q.tip;
+    score++;
+  } else {
+    btns[idx].classList.add('wrong');
+    btns[q.ans].classList.add('correct');
+    fb.className = 'quiz-feedback show is-wrong';
+    fb.textContent = 'Feil. ' + q.tip;
+  }
+
+  const nextBtn = document.getElementById('qNext');
+  nextBtn.className = 'quiz-next show';
+  nextBtn.textContent = currentQ < quizQuestions.length - 1 ? 'Neste' : 'Se resultat';
+}
+
+function nextQuestion() {
+  currentQ++;
+  if (currentQ < quizQuestions.length) {
+    showQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function showResult() {
+  document.getElementById('quizBody').style.display = 'none';
+  const res = document.getElementById('quizResult');
+  res.style.display = '';
+  document.getElementById('rScore').textContent = score + ' / ' + quizQuestions.length;
+
+  const pct = score / quizQuestions.length;
+  let grade, color;
+  if (pct === 1)        { grade = 'Perfekt! Du kan ligninger og andregradsuttrykk!'; color = '#16a34a'; }
+  else if (pct >= 0.8)  { grade = 'Veldig bra! Nesten alt riktig.'; color = '#2563eb'; }
+  else if (pct >= 0.6)  { grade = 'Bra jobba! Litt mer øving.'; color = '#ea580c'; }
+  else                  { grade = 'Øv litt mer – du klarer det!'; color = '#dc2626'; }
+
+  const g = document.getElementById('rGrade');
+  g.textContent = grade;
+  g.style.color = color;
+}
+</script>
+</body>
+</html>

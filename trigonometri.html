@@ -160,6 +160,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+    align-items: center;
     justify-content: center;
     margin-bottom: 2rem;
   }
@@ -177,11 +178,19 @@
   /* Quiz-knapp i toc */
   .toc .quiz-btn {
     background: var(--orange);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    line-height: 1.4;
     font-weight: 700;
     cursor: pointer;
     border: none;
     font-family: inherit;
+    text-decoration: none;
+    transition: opacity 0.2s;
   }
+  .toc .quiz-btn:hover { opacity: 0.8; }
 
   /* ===== QUIZ OVERLAY ===== */
   .quiz-overlay {
