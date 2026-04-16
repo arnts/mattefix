@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tentamen Del 2 – Hjelpeside 1T</title>
+<style>
+  :root {
+    --blue: #2563eb;
+    --red: #dc2626;
+    --green: #16a34a;
+    --orange: #ea580c;
+    --purple: #7c3aed;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 2rem 1rem;
+  }
+  .container { max-width: 960px; margin: 0 auto; }
+  h1 { text-align: center; font-size: 2.2rem; margin-bottom: 0.3rem; color: var(--blue); }
+  .subtitle { text-align: center; color: var(--muted); margin-bottom: 1rem; font-size: 1.05rem; }
+  .home-link {
+    display: inline-block;
+    margin-bottom: 1.2rem;
+    color: var(--blue);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+  .home-link:hover { text-decoration: underline; }
+
+  .card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .card h2 {
+    font-size: 1.35rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--blue);
+    color: var(--blue);
+  }
+  .card h3 { font-size: 1.1rem; margin: 1.2rem 0 0.5rem; color: var(--text); }
+  p { margin: 0.5rem 0; }
+  ul, ol { padding-left: 1.3rem; }
+  ul li, ol li { margin: 0.3rem 0; }
+  .highlight { color: var(--blue); font-weight: 600; }
+
+  .formula-box {
+    background: #eff6ff;
+    border-left: 4px solid var(--blue);
+    padding: 1rem 1.2rem;
+    border-radius: 0 8px 8px 0;
+    margin: 0.8rem 0;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  .formula-box.red    { background:#fef2f2; border-left-color: var(--red); }
+  .formula-box.green  { background:#f0fdf4; border-left-color: var(--green); }
+  .formula-box.orange { background:#fff7ed; border-left-color: var(--orange); }
+
+  .note {
+    background: #fefce8;
+    border: 1px solid #fde68a;
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    margin-top: 0.8rem;
+    font-size: 0.95rem;
+  }
+  .warn {
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    margin-top: 0.8rem;
+    font-size: 0.95rem;
+    color: #991b1b;
+  }
+  .tip {
+    background: #f0fdf4;
+    border: 1px solid #86efac;
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    margin-top: 0.8rem;
+    font-size: 0.95rem;
+    color: #166534;
+  }
+
+  /* TOC */
+  .toc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  .toc a {
+    background: var(--blue);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+  }
+  .toc a:hover { opacity: 0.8; }
+  .toc .quiz-btn {
+    background: var(--orange);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+    transition: opacity 0.2s;
+  }
+  .toc .quiz-btn:hover { opacity: 0.8; }
+
+  /* Steg-for-steg */
+  .steps { counter-reset: step; margin: 1rem 0; }
+  .step {
+    position: relative;
+    padding: 0.8rem 1rem 0.8rem 3.2rem;
+    margin-bottom: 0.6rem;
+    background: var(--bg);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  .step::before {
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    left: 0.8rem;
+    top: 0.75rem;
+    width: 1.7rem;
+    height: 1.7rem;
+    background: var(--blue);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+  .step strong { color: var(--blue); }
+  .step .calc {
+    display: block;
+    margin-top: 0.3rem;
+    font-family: 'Courier New', monospace;
+    background: #f1f5f9;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.95rem;
+  }
+
+  /* GeoGebra-blokk */
+  .gb-example {
+    background: #1e293b;
+    color: #e2e8f0;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin: 0.8rem 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    overflow-x: auto;
+  }
+  .gb-example .comment { color: #94a3b8; }
+  .gb-example .result { color: #86efac; }
+
+  /* Python-blokk */
+  .py-example {
+    background: #0f172a;
+    color: #e2e8f0;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin: 0.8rem 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    overflow-x: auto;
+    border-left: 4px solid var(--purple);
+  }
+  .py-example .kw      { color: #f472b6; }
+  .py-example .str     { color: #fde68a; }
+  .py-example .num     { color: #fdba74; }
+  .py-example .comment { color: #94a3b8; }
+  .py-example .fn      { color: #7dd3fc; }
+
+  /* Kommandotabell */
+  .gb-cmd-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    margin: 0.8rem 0;
+  }
+  .gb-cmd-table th, .gb-cmd-table td {
+    padding: 0.55rem 0.8rem;
+    border: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+  }
+  .gb-cmd-table thead th {
+    background: var(--blue);
+    color: #fff;
+    font-weight: 600;
+  }
+  .gb-cmd-table tbody tr:nth-child(even) { background: #f1f5f9; }
+  .gb-cmd-table code {
+    background: #e2e8f0;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+
+  /* Sjekkliste */
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li {
+    padding: 0.5rem 0.8rem 0.5rem 2.2rem;
+    margin: 0.3rem 0;
+    position: relative;
+    background: var(--bg);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  .checklist li::before {
+    content: "☐";
+    position: absolute;
+    left: 0.7rem;
+    top: 0.5rem;
+    font-size: 1.1rem;
+    color: var(--blue);
+    font-weight: 700;
+  }
+
+  /* Diagram-rad */
+  .diagram-row {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .diagram-row .text { flex: 1; min-width: 250px; }
+
+  /* Eksempel-kort */
+  .example {
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    margin: 1rem 0;
+  }
+  .example h4 {
+    color: var(--orange);
+    margin-bottom: 0.5rem;
+    font-size: 1.05rem;
+  }
+
+  /* QUIZ */
+  .quiz-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15,23,42,0.6);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+  }
+  .quiz-overlay.open { display: flex; }
+  .quiz-modal {
+    background: var(--card);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 560px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 2rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    position: relative;
+    animation: slideUp 0.3s ease;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+  }
+  .quiz-close {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    background: none; border: none;
+    font-size: 1.5rem; cursor: pointer;
+    color: var(--muted); line-height: 1;
+  }
+  .quiz-close:hover { color: var(--text); }
+  .quiz-header { text-align: center; margin-bottom: 1.5rem; }
+  .quiz-header h2 { color: var(--orange); font-size: 1.5rem; margin-bottom: 0.3rem; }
+  .quiz-progress { font-size: 0.9rem; color: var(--muted); }
+  .quiz-progress-bar {
+    height: 6px; background: var(--border);
+    border-radius: 3px; margin-top: 0.5rem; overflow: hidden;
+  }
+  .quiz-progress-fill {
+    height: 100%; background: var(--orange);
+    border-radius: 3px; transition: width 0.4s ease;
+  }
+  .quiz-question {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+  .quiz-options { display: flex; flex-direction: column; gap: 0.6rem; }
+  .quiz-option {
+    display: block; width: 100%; text-align: left;
+    padding: 0.85rem 1.1rem;
+    border: 2px solid var(--border); border-radius: 10px;
+    background: var(--bg); font-size: 1rem;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    font-family: inherit; color: var(--text);
+  }
+  .quiz-option:hover:not(:disabled) {
+    border-color: var(--blue); background: #eff6ff;
+  }
+  .quiz-option:disabled { cursor: default; }
+  .quiz-option.correct {
+    border-color: var(--green); background: #f0fdf4; font-weight: 600;
+  }
+  .quiz-option.wrong {
+    border-color: var(--red); background: #fef2f2; opacity: 0.7;
+  }
+  .quiz-feedback {
+    margin-top: 1rem;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.is-correct {
+    background: #f0fdf4; border: 1px solid #86efac; color: #166534;
+  }
+  .quiz-feedback.is-wrong {
+    background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b;
+  }
+  .quiz-next {
+    display: none;
+    margin: 1.2rem auto 0;
+    padding: 0.7rem 2rem;
+    background: var(--blue); color: #fff;
+    border: none; border-radius: 8px;
+    font-size: 1rem; font-weight: 600; cursor: pointer;
+    font-family: inherit;
+  }
+  .quiz-next.show { display: block; }
+  .quiz-result { text-align: center; }
+  .quiz-score {
+    font-size: 3rem; font-weight: 800;
+    color: var(--blue); margin: 0.5rem 0;
+  }
+  .quiz-score-label { color: var(--muted); font-size: 1rem; }
+  .quiz-grade { font-size: 1.2rem; font-weight: 600; margin: 0.8rem 0; }
+  .quiz-restart {
+    margin-top: 1rem;
+    padding: 0.7rem 2rem;
+    background: var(--orange); color: #fff;
+    border: none; border-radius: 8px;
+    font-size: 1rem; font-weight: 600; cursor: pointer;
+    font-family: inherit;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="index.html" class="home-link">&larr; Tilbake til forsiden</a>
+
+<h1>Tentamen Del 2 – 1T</h1>
+<p class="subtitle">Alt du trenger med hjelpemidler: GeoGebra, CAS, regresjon, trigonometri, optimering og Python</p>
+
+<div class="toc">
+  <a href="#strategi">Strategi</a>
+  <a href="#regresjon">Regresjon</a>
+  <a href="#funksjonsanalyse">Funksjonsanalyse</a>
+  <a href="#polynom">Polynom m/ukjente</a>
+  <a href="#rasjonal">Rasjonale</a>
+  <a href="#likningssett">Likningssett</a>
+  <a href="#trig">Trigonometri</a>
+  <a href="#optimering">Optimering</a>
+  <a href="#derivasjon">Derivasjon</a>
+  <a href="#geogebra">GeoGebra-ordbok</a>
+  <a href="#python">Python</a>
+  <button class="quiz-btn" onclick="openQuiz()">Test deg selv!</button>
+</div>
+
+<!-- QUIZ OVERLAY -->
+<div class="quiz-overlay" id="quizOverlay">
+  <div class="quiz-modal">
+    <button class="quiz-close" onclick="closeQuiz()">&times;</button>
+    <div class="quiz-header">
+      <h2>Tentamen Del 2 – quiz</h2>
+      <div class="quiz-progress">Spørsmål <span id="qNum">1</span> av <span id="qTotal">12</span></div>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="qBar" style="width:8%"></div></div>
+    </div>
+    <div id="quizBody">
+      <div class="quiz-question" id="qText"></div>
+      <div class="quiz-options" id="qOptions"></div>
+      <div class="quiz-feedback" id="qFeedback"></div>
+      <button class="quiz-next" id="qNext" onclick="nextQuestion()">Neste</button>
+    </div>
+    <div id="quizResult" class="quiz-result" style="display:none;">
+      <div class="quiz-score-label">Resultat</div>
+      <div class="quiz-score" id="rScore"></div>
+      <div class="quiz-grade" id="rGrade"></div>
+      <button class="quiz-restart" onclick="startQuiz()">Prøv igjen</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ STRATEGI ============ -->
+<div class="card" id="strategi">
+  <h2>Strategi og hjelpemidler på Del 2</h2>
+  <p>På Del 2 har du <strong>alle hjelpemidler</strong>: GeoGebra, CAS, Python, kalkulator, formelark, matteboka og mappa di. Det er ikke nok å finne riktig svar – du må <strong>forklare hva du gjør</strong>.</p>
+
+  <h3>Hva sensor ser etter</h3>
+  <ul>
+    <li><strong>Hvilken kommando du bruker</strong> – skriv «Jeg bruker <em>Løs()</em> i CAS» før du limer inn skjermbildet.</li>
+    <li><strong>Hvorfor</strong> du velger metoden (f.eks. «punktene ligger i kurve → jeg prøver polynomregresjon»).</li>
+    <li><strong>Tolkning av svaret</strong> i konteksten (f.eks. «dvs. at antall bakterier er 1200 etter 5 timer»).</li>
+    <li><strong>Gyldighetsområde</strong> – ikke bare finn svaret, sjekk om det gir mening (lengder &gt; 0, tid &ge; 0 osv.).</li>
+  </ul>
+
+  <h3>Sjekkliste før du leverer</h3>
+  <ul class="checklist">
+    <li>Har jeg skrevet <em>hvilken kommando</em> og <em>hvilket program</em> jeg brukte?</li>
+    <li>Har jeg tatt med skjermbilder fra GeoGebra/Python?</li>
+    <li>Har jeg svart i hele setninger med riktig enhet?</li>
+    <li>Har jeg sjekket at svaret er rimelig (positive lengder, fornuftig tall)?</li>
+    <li>Har jeg oppgitt gyldighetsområdet?</li>
+  </ul>
+
+  <div class="tip">
+    <strong>Tidsfordeling:</strong> De fleste oppgaver har 2–4 deloppgaver. Bruk maks 20 min per oppgave, og hopp videre om du står fast. Kom tilbake senere.
+  </div>
+</div>
+
+<!-- ============ REGRESJON ============ -->
+<div class="card" id="regresjon">
+  <h2>Regresjon i GeoGebra</h2>
+  <p>Regresjon brukes når du har en <strong>tabell med målinger</strong> og skal finne en modell (funksjon) som passer best. Du må også velge <em>hvilken modell</em>.</p>
+
+  <h3>Steg for steg</h3>
+  <div class="steps">
+    <div class="step">
+      <strong>Åpne regneark</strong> i GeoGebra (Vis → Regneark).
+      <span class="calc">Legg x-verdier i kolonne A, y-verdier i kolonne B</span>
+    </div>
+    <div class="step">
+      <strong>Marker tallene</strong>, høyreklikk → <em>Lag</em> → <em>Liste med punkt</em>. Da får du en punktliste (f.eks. <code>L1</code>) som vises i grafikkfeltet.
+    </div>
+    <div class="step">
+      <strong>Se på formen</strong> på punktene:
+      <ul>
+        <li>Rett linje → <em>lineær</em>: <code>RegLin(L1)</code></li>
+        <li>Kurve som vokser raskere og raskere → <em>eksponentiell</em>: <code>RegEksp(L1)</code></li>
+        <li>Topp/bunn-kurve → <em>polynom</em>: <code>RegPoly(L1, 2)</code> (2 = andregrad)</li>
+        <li>Går gjennom (0,0) og vokser/avtar → <em>potens</em>: <code>RegPot(L1)</code></li>
+      </ul>
+    </div>
+    <div class="step">
+      <strong>Skriv opp funksjonen</strong> fra algebrafeltet, f.eks. <em>f(x) = 2.4·1.08^x</em>. Avrund fornuftig (3 gjeldende siffer er vanlig).
+    </div>
+  </div>
+
+  <div class="warn">
+    <strong>ALDRI bruk årstall som x-verdier!</strong> Tall som 2024, 2025 gir kjempestore eksponenter og ødelegger modellen. Bruk i stedet <em>antall år etter et startår</em>. Eksempel: år 2018 → x = 0, år 2024 → x = 6.
+  </div>
+
+  <div class="example">
+    <h4>Eksempel: Innbyggere i en by</h4>
+    <p>Du får tabellen:</p>
+    <table class="gb-cmd-table">
+      <thead><tr><th>År</th><th>2018</th><th>2020</th><th>2022</th><th>2024</th></tr></thead>
+      <tbody><tr><td>Innbyggere</td><td>5000</td><td>5408</td><td>5849</td><td>6326</td></tr></tbody>
+    </table>
+    <p>Sett år 2018 som x = 0. Da blir x-verdiene 0, 2, 4, 6.</p>
+    <div class="gb-example">
+<span class="comment"># I regnearket: A1–A4 = 0,2,4,6    B1–B4 = 5000,5408,5849,6326</span>
+L1 = {(0,5000),(2,5408),(4,5849),(6,6326)}
+f(x) = RegEksp(L1)
+<span class="result">→ f(x) ≈ 5000 · 1.04^x</span></div>
+    <p><strong>Tolkning:</strong> vekstfaktoren 1.04 betyr at byen vokser med ca. <strong>4 %</strong> per år. Etter 10 år: f(10) ≈ 7401 innbyggere.</p>
+  </div>
+
+  <h3>Valg av modell – kjappguide</h3>
+  <table class="gb-cmd-table">
+    <thead><tr><th>Typisk kontekst</th><th>Modell</th><th>Uttrykk</th></tr></thead>
+    <tbody>
+      <tr><td>Fast tillegg hvert år (lønn, strømpris)</td><td>Lineær</td><td>f(x) = ax + b</td></tr>
+      <tr><td>Fast prosent hvert år (rente, bakterier, radioaktivitet)</td><td>Eksponentiell</td><td>f(x) = a · b^x</td></tr>
+      <tr><td>Kurve med topp eller bunn (kast, brems)</td><td>Polynom grad 2</td><td>f(x) = ax² + bx + c</td></tr>
+      <tr><td>Vokser fra (0, 0) – «doblingslov»</td><td>Potens</td><td>f(x) = a · x^b</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============ FUNKSJONSANALYSE ============ -->
+<div class="card" id="funksjonsanalyse">
+  <h2>Funksjonsanalyse i praktisk kontekst</h2>
+
+  <h3>Gjennomsnittlig vekstfart</h3>
+  <p>Gjennomsnittlig vekstfart er <strong>stigningstallet til sekanten</strong> mellom to punkter på grafen.</p>
+  <div class="formula-box">
+    Gj.snitt vekstfart = (f(b) − f(a)) / (b − a)
+  </div>
+  <p><strong>Tolkning:</strong> hvor mye funksjonen endrer seg i gjennomsnitt per enhet x mellom a og b.</p>
+
+  <div class="example">
+    <h4>Eksempel</h4>
+    <p>f(x) = innbyggertall etter x år. f(0) = 5000 og f(6) = 6326.</p>
+    <p>Gj.snittlig vekst = (6326 − 5000) / (6 − 0) = 1326 / 6 ≈ <strong>221 per år</strong>.</p>
+    <p>Tolkning: i gjennomsnitt kom det ca. 221 nye innbyggere per år i perioden.</p>
+  </div>
+
+  <h3>Momentan vekstfart</h3>
+  <p>Momentan vekstfart er <strong>stigningstallet til tangenten</strong> i ett bestemt punkt. Det er f'(x) = den deriverte.</p>
+  <div class="formula-box green">
+    Momentan vekstfart i x = a  ⇔  f'(a)
+  </div>
+  <p><strong>Tolkning:</strong> endringsraten <em>akkurat nå</em>, altså hvor raskt f(x) endrer seg i punktet x = a.</p>
+  <div class="gb-example">
+<span class="comment"># Finn momentan vekstfart i x = 5</span>
+f(x) = 5000 · 1.04^x
+f'(5)
+<span class="result">→ ≈ 238.6</span></div>
+
+  <h3>Definisjons- og verdimengde fra kontekst</h3>
+  <ul>
+    <li><strong>Definisjonsmengde (D<sub>f</sub>):</strong> hvilke x-verdier gir mening? Negativ tid? Negativ lengde? Nei!</li>
+    <li><strong>Verdimengde (V<sub>f</sub>):</strong> hvilke y-verdier kan forekomme? Se på grafen.</li>
+  </ul>
+  <div class="example">
+    <h4>Eksempel</h4>
+    <p>En ball kastes. Høyde: h(t) = −5t² + 20t, der t er sekunder.</p>
+    <p>Ballen lander når h(t) = 0: t = 0 eller t = 4.</p>
+    <p><strong>D<sub>h</sub> = [0, 4]</strong> – fra kast til den lander. Maks høyde i t = 2: h(2) = 20. <strong>V<sub>h</sub> = [0, 20]</strong>.</p>
+  </div>
+
+  <h3>Gyldighetsområde for modellen</h3>
+  <p>En modell fungerer bare i et visst område. Utenfor dette blir tallene upålitelige.</p>
+  <ul>
+    <li>Eksponentiell vekst for all framtid? Nei – byen kan ikke vokse mot uendelig.</li>
+    <li>Tredjegradsmodell for bremselengde? Bare mellom minste og største målte fart.</li>
+  </ul>
+  <div class="tip">
+    <strong>Huskeregel:</strong> Oppgi gyldighetsområdet <em>innenfor</em> måleperioden, eller si «modellen er gyldig fram til ca. år …». Ikke ekstrapoler langt utenfor.
+  </div>
+
+  <h3>Skjæringspunkter grafisk</h3>
+  <p>Finn skjæring mellom to grafer med <code>Skjæring(f, g)</code> i GeoGebra. Bruk punktet til å svare på spørsmål som «når er tilbudet lik etterspørselen?» eller «når er de like høye?».</p>
+</div>
+
+<!-- ============ POLYNOM M/UKJENTE ============ -->
+<div class="card" id="polynom">
+  <h2>Polynomfunksjoner med ukjente parametere</h2>
+  <p>Når du får en funksjon som f(x) = ax² + bx + c med <strong>tre ukjente</strong>, trenger du <strong>tre betingelser</strong> for å finne a, b og c. Hver betingelse blir én likning.</p>
+
+  <h3>Typiske betingelser</h3>
+  <table class="gb-cmd-table">
+    <thead><tr><th>Tekst i oppgaven</th><th>Likning</th></tr></thead>
+    <tbody>
+      <tr><td>Grafen går gjennom (2, 5)</td><td>f(2) = 5</td></tr>
+      <tr><td>Grafen har nullpunkt i x = 3</td><td>f(3) = 0</td></tr>
+      <tr><td>Topp-/bunnpunkt i x = 1</td><td>f'(1) = 0</td></tr>
+      <tr><td>Gj.snittlig vekstfart fra 0 til 4 er 6</td><td>(f(4) − f(0)) / 4 = 6</td></tr>
+      <tr><td>Tangent i x = 2 har stigningstall 3</td><td>f'(2) = 3</td></tr>
+      <tr><td>Skjærer y-aksen i 7</td><td>f(0) = 7</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Løs med CAS</h3>
+  <div class="steps">
+    <div class="step"><strong>Definer funksjonen</strong> med ukjente:<span class="calc">f(x) := a*x^2 + b*x + c</span></div>
+    <div class="step"><strong>Skriv likningene</strong> som en liste.</div>
+    <div class="step"><strong>Bruk Løs()</strong> med ukjente til slutt:<span class="calc">Løs({likn1, likn2, likn3}, {a, b, c})</span></div>
+    <div class="step"><strong>Sett inn verdiene</strong> i f(x) og skriv det endelige uttrykket.</div>
+  </div>
+
+  <div class="example">
+    <h4>Eksempel</h4>
+    <p>Finn f(x) = ax² + bx + c når grafen går gjennom (0, 2), har bunnpunkt i x = 3, og f(5) = 6.</p>
+    <div class="gb-example">
+f(x) := a*x^2 + b*x + c
+f'(x)
+Løs({f(0) = 2, f'(3) = 0, f(5) = 6}, {a, b, c})
+<span class="result">→ {a = 1, b = −6, c = 2}</span>
+
+<span class="comment"># Endelig svar:</span>
+f(x) = x² − 6x + 2</div>
+  </div>
+
+  <div class="warn">
+    <strong>Pass på:</strong> I CAS skal du bruke <code>:=</code> når du <em>definerer</em> f, og <code>=</code> i <em>likningene</em> inni Løs(). Variabler som <code>a, b, c</code> skal IKKE være definert som tall før du løser!
+  </div>
+</div>
+
+<!-- ============ RASJONALE ============ -->
+<div class="card" id="rasjonal">
+  <h2>Rasjonale funksjoner</h2>
+  <p>En rasjonal funksjon har formen f(x) = (teller) / (nevner), der både teller og nevner er polynomer.</p>
+  <div class="formula-box">
+    f(x) = (ax + b) / (cx + d)
+  </div>
+
+  <h3>Asymptoter</h3>
+  <ul>
+    <li><strong>Vertikal asymptote:</strong> der nevneren = 0 (og telleren ≠ 0). Grafen stikker av mot ± uendelig.</li>
+    <li><strong>Horisontal asymptote:</strong> verdien grafen nærmer seg når x → ± uendelig. Les av fra grafen eller bruk regelen:</li>
+  </ul>
+
+  <table class="gb-cmd-table">
+    <thead><tr><th>Grad teller vs. nevner</th><th>Horisontal asymptote</th></tr></thead>
+    <tbody>
+      <tr><td>Teller &lt; nevner</td><td>y = 0</td></tr>
+      <tr><td>Teller = nevner</td><td>y = (ledende koeffisient teller) / (ledende koeffisient nevner)</td></tr>
+      <tr><td>Teller &gt; nevner</td><td>Ingen horisontal asymptote (skrå i stedet)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Finne ukjente parametere</h3>
+  <p>Har du f(x) = (ax + b) / (cx + d) og kjenner grafen:</p>
+  <ul>
+    <li>Les av <strong>vertikal asymptote</strong> (for eksempel x = 2) → cx + d = 0 når x = 2, altså 2c + d = 0.</li>
+    <li>Les av <strong>horisontal asymptote</strong> (for eksempel y = 3) → a/c = 3.</li>
+    <li>Les av et <strong>punkt</strong> på grafen, f.eks. skjæring med y-aksen.</li>
+    <li>Sett opp likningene og løs med <code>Løs()</code> i CAS.</li>
+  </ul>
+
+  <div class="example">
+    <h4>Eksempel</h4>
+    <p>f(x) = (ax + b) / (x − 2) har horisontal asymptote y = 3 og skjærer y-aksen i 1.</p>
+    <ul>
+      <li>Horisontal asymptote: a/1 = 3  →  a = 3.</li>
+      <li>Skjærer y-aksen: f(0) = 1  →  (a·0 + b) / (0 − 2) = 1  →  b / (−2) = 1  →  b = −2.</li>
+    </ul>
+    <p><strong>Svar:</strong> f(x) = (3x − 2) / (x − 2).</p>
+    <p><strong>Kontroll:</strong> f(0) = (−2)/(−2) = 1. ✓</p>
+  </div>
+
+  <div class="tip">
+    <strong>Sjekk alltid med y-aksen:</strong> Regn ut f(0) og sammenlign med det grafen viser. Dette er raskeste måte å oppdage slurvefeil.
+  </div>
+</div>
+
+<!-- ============ LIKNINGSSETT ============ -->
+<div class="card" id="likningssett">
+  <h2>Likningssett med to ukjente</h2>
+  <p>Fra en tekstoppgave: finn to sammenhenger, sett opp to likninger, løs i CAS.</p>
+
+  <h3>Fra tekst til likninger</h3>
+  <div class="steps">
+    <div class="step"><strong>Les oppgaven to ganger.</strong> Marker tall og størrelser som «antall», «pris», «kr», «kg».</div>
+    <div class="step"><strong>Velg variabler</strong> (f.eks. x = antall epler, y = antall appelsiner) og <em>skriv det ned</em>.</div>
+    <div class="step"><strong>Finn to sammenhenger</strong>. Ofte én for «antall» og én for «sum/pris».</div>
+    <div class="step"><strong>Løs med CAS:</strong> <span class="calc">Løs({likn1, likn2}, {x, y})</span></div>
+  </div>
+
+  <div class="example">
+    <h4>Eksempel</h4>
+    <p>Per kjøper 3 epler og 2 pærer for 24 kr. Anna kjøper 2 epler og 5 pærer for 27 kr. Hva koster ett eple og én pære?</p>
+    <p>La x = pris på eple, y = pris på pære.</p>
+    <div class="gb-example">
+Løs({3x + 2y = 24, 2x + 5y = 27}, {x, y})
+<span class="result">→ {x = 6, y = 3}</span></div>
+    <p><strong>Svar:</strong> Et eple koster 6 kr, en pære 3 kr.</p>
+  </div>
+
+  <div class="note">
+    <strong>Løs vs. NLøs:</strong>
+    <ul>
+      <li><code>Løs()</code> gir eksakt svar (brøk, rot). Prøv dette først.</li>
+      <li><code>NLøs()</code> gir numerisk svar (desimaltall). Bruk hvis Løs ikke klarer det.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============ TRIGONOMETRI ============ -->
+<div class="card" id="trig">
+  <h2>Trigonometri og geometri</h2>
+
+  <h3>Arealformelen</h3>
+  <div class="diagram-row">
+    <svg viewBox="0 0 220 160" width="220">
+      <polygon points="20,140 200,140 90,30" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+      <text x="100" y="158" fill="#1e293b" font-size="14" font-weight="600">b</text>
+      <text x="40" y="85" fill="#dc2626" font-size="14" font-weight="600">a</text>
+      <path d="M45,140 A25,25 0 0,0 36,120" fill="none" stroke="#ea580c" stroke-width="2"/>
+      <text x="50" y="130" fill="#ea580c" font-size="13" font-weight="600">C</text>
+    </svg>
+    <div class="text">
+      <div class="formula-box">
+        A = ½ · a · b · sin(C)
+      </div>
+      <p>Brukes når du kjenner <strong>to sider og vinkelen mellom dem</strong> (SVS). C er vinkelen mellom sidene a og b.</p>
+    </div>
+  </div>
+
+  <h3>Cosinussetningen</h3>
+  <div class="formula-box red">
+    c² = a² + b² − 2ab · cos(C)
+  </div>
+  <p>Finner <strong>tredje side</strong> når du har to sider og vinkelen mellom (SVS). Kan også løses med hensyn på cos(C) for å finne en vinkel når du kjenner alle tre sidene.</p>
+
+  <h3>Eksakte uttrykk</h3>
+  <p>Til tentamen bør du beholde <strong>√-tegn</strong> og brøker når oppgaven sier «eksakt verdi». Ikke skriv 1.41 når du mener √2.</p>
+  <div class="example">
+    <h4>Eksempel (cosinussetningen, eksakt)</h4>
+    <p>Trekant med a = 4, b = 5, C = 60°. Finn c.</p>
+    <p>c² = 16 + 25 − 2·4·5·cos(60°) = 41 − 40·½ = 21</p>
+    <p><strong>c = √21 ≈ 4.58</strong></p>
+  </div>
+
+  <h3>Velg riktig løsning ut fra kontekst</h3>
+  <p>Når du løser en andregradslikning får du ofte to svar. Spør deg selv:</p>
+  <ul>
+    <li>Er størrelsen en <strong>lengde</strong>? → bare positive svar er gyldige.</li>
+    <li>Er det en <strong>tid</strong>? → bare t ≥ 0 er gyldig.</li>
+    <li>Er det en <strong>vinkel i trekant</strong>? → mellom 0° og 180°.</li>
+  </ul>
+  <div class="tip">
+    <strong>Skriv alltid begrunnelse:</strong> «Jeg velger x = 3 fordi lengder må være positive.» Dette gir tellende poeng.
+  </div>
+</div>
+
+<!-- ============ OPTIMERING ============ -->
+<div class="card" id="optimering">
+  <h2>Optimering – maksimum og minimum</h2>
+  <p>Klassisk oppgave: du har en begrensning (f.eks. «50 m gjerde») og skal finne største mulige areal. Oppskrift:</p>
+
+  <div class="steps">
+    <div class="step"><strong>Tegn en figur</strong> og sett navn på sidene (x, y, osv.).</div>
+    <div class="step"><strong>Skriv begrensningen</strong> som likning. Eksempel: 2x + 2y = 50.</div>
+    <div class="step"><strong>Skriv størrelsen som skal maksimeres</strong> (areal, volum) som funksjon.</div>
+    <div class="step"><strong>Eliminer én variabel</strong> ved å bruke begrensningen: y = 25 − x.</div>
+    <div class="step"><strong>Skriv alt som funksjon av én variabel</strong>: A(x) = x(25 − x).</div>
+    <div class="step"><strong>Finn ekstremalpunkt</strong>:<span class="calc">Ekstremalpunkt(A)</span></div>
+    <div class="step"><strong>Bestem gyldighetsområde</strong>: for dette eksempelet må 0 &lt; x &lt; 25 (lengder positive).</div>
+  </div>
+
+  <div class="example">
+    <h4>Eksempel: rektangel med 20 m gjerde</h4>
+    <p>Anne har 20 m gjerde og vil lage et rektangulært område med størst mulig areal.</p>
+    <p>Omkrets: 2x + 2y = 20  →  y = 10 − x.</p>
+    <p>Areal: A(x) = x·(10 − x) = 10x − x².</p>
+    <div class="gb-example">
+A(x) := 10x - x^2
+Ekstremalpunkt(A)
+<span class="result">→ (5, 25)</span></div>
+    <p><strong>Svar:</strong> Maksimalt areal er 25 m² når x = 5 m og y = 5 m (et kvadrat).</p>
+    <p><strong>Gyldighetsområde:</strong> 0 &lt; x &lt; 10 (begge sider må være positive).</p>
+  </div>
+
+  <h3>Overflate som funksjon av én variabel</h3>
+  <p>Eksempel: en boks med kvadratisk bunn og volum 1000 cm³. Finn minimal overflate.</p>
+  <ol>
+    <li>Variabler: x = sidekant i bunn, h = høyde.</li>
+    <li>Begrensning: x² · h = 1000  →  h = 1000 / x².</li>
+    <li>Overflate: O = 2x² + 4xh = 2x² + 4x · (1000/x²) = 2x² + 4000/x.</li>
+    <li>I GeoGebra: <code>Ekstremalpunkt(O)</code>.</li>
+  </ol>
+  <div class="gb-example">
+O(x) := 2x^2 + 4000/x
+Ekstremalpunkt(O)
+<span class="result">→ (≈10, ≈600)</span></div>
+  <p><strong>Tolkning:</strong> minste overflate ≈ 600 cm², ved sidekant x ≈ 10 cm.</p>
+</div>
+
+<!-- ============ DERIVASJON ============ -->
+<div class="card" id="derivasjon">
+  <h2>Derivasjon og vekstfart</h2>
+
+  <h3>Tolkning av funksjonsverdier</h3>
+  <p>I kontekst betyr f(x) alltid <em>noe konkret</em>. Tenk på hva variabelen står for.</p>
+  <div class="example">
+    <h4>Eksempel</h4>
+    <p>V(t) = mengde vann (liter) i en tank etter t minutter.</p>
+    <ul>
+      <li><strong>V(0) = 0</strong> betyr at tappingen starter fra tom tank ved t = 0.</li>
+      <li><strong>V(5) = 40</strong> betyr at det er 40 liter i tanken etter 5 minutter.</li>
+      <li><strong>V'(5) = 8</strong> betyr at vannet stiger med 8 liter per minutt i øyeblikket t = 5.</li>
+    </ul>
+  </div>
+
+  <h3>Gjennomsnittlig vs. momentan</h3>
+  <table class="gb-cmd-table">
+    <thead><tr><th></th><th>Gjennomsnittlig</th><th>Momentan</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Formel</td>
+        <td>(f(b) − f(a)) / (b − a)</td>
+        <td>f'(a)</td>
+      </tr>
+      <tr>
+        <td>Grafisk</td>
+        <td>Stigningstall til sekant</td>
+        <td>Stigningstall til tangent</td>
+      </tr>
+      <tr>
+        <td>Tolkning</td>
+        <td>Snitt over et intervall</td>
+        <td>Endring akkurat nå</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Løs ulikheter med den deriverte</h3>
+  <p>Spørsmål som «når vokser f raskere enn 10 enheter per tidsenhet?» blir til ulikheten <strong>f'(x) &gt; 10</strong>.</p>
+  <div class="gb-example">
+f(x) := 2x^3 - 9x^2 + 12x
+f'(x)
+Løs(f'(x) > 0, x)
+<span class="result">→ x < 1 eller x > 2</span></div>
+  <p>Hvis Løs ikke håndterer ulikheten, bruk <code>NLøs()</code> eller tegn f'(x) og se hvor grafen ligger over/under riktig verdi.</p>
+
+  <h3>Sekantlinje i GeoGebra</h3>
+  <p>For å vise gj.snittlig vekstfart visuelt, tegn linjen mellom to punkter:</p>
+  <div class="gb-example">
+A = (2, f(2))
+B = (5, f(5))
+sekant = Linje(A, B)</div>
+</div>
+
+<!-- ============ GEOGEBRA-ORDBOK ============ -->
+<div class="card" id="geogebra">
+  <h2>GeoGebra-ordbok</h2>
+  <p>Disse kommandoene dekker 90 % av Del 2. Lær dem utenat.</p>
+  <table class="gb-cmd-table">
+    <thead><tr><th>Kommando</th><th>Hva den gjør</th><th>Eksempel</th></tr></thead>
+    <tbody>
+      <tr><td><code>Løs()</code></td><td>Løser likning eller likningssett eksakt</td><td><code>Løs(x^2 = 9, x)</code></td></tr>
+      <tr><td><code>NLøs()</code></td><td>Numerisk løsning – bruk når Løs feiler</td><td><code>NLøs(cos(x)=x, x)</code></td></tr>
+      <tr><td><code>Derivert()</code></td><td>Finner f'(x)</td><td><code>Derivert(f)</code></td></tr>
+      <tr><td><code>Ekstremalpunkt()</code></td><td>Topp- og bunnpunkt på en funksjon</td><td><code>Ekstremalpunkt(f)</code></td></tr>
+      <tr><td><code>Nullpunkt()</code></td><td>Finner nullpunktene</td><td><code>Nullpunkt(f)</code></td></tr>
+      <tr><td><code>Skjæring()</code></td><td>Finner skjæring mellom grafer</td><td><code>Skjæring(f, g)</code></td></tr>
+      <tr><td><code>RegLin()</code></td><td>Lineær regresjon</td><td><code>RegLin(L1)</code></td></tr>
+      <tr><td><code>RegEksp()</code></td><td>Eksponentiell regresjon</td><td><code>RegEksp(L1)</code></td></tr>
+      <tr><td><code>RegPot()</code></td><td>Potensregresjon</td><td><code>RegPot(L1)</code></td></tr>
+      <tr><td><code>RegPoly()</code></td><td>Polynomregresjon (grad n)</td><td><code>RegPoly(L1, 2)</code></td></tr>
+      <tr><td><code>Linje()</code></td><td>Linje gjennom to punkt (sekant)</td><td><code>Linje(A, B)</code></td></tr>
+      <tr><td><code>Tangent()</code></td><td>Tangent i punkt x = a</td><td><code>Tangent(2, f)</code></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Vanlige CAS-feil</h3>
+  <ul>
+    <li><strong>Glemt <code>:=</code></strong> ved definisjon. Riktig: <code>f(x) := x^2</code>. Feil: <code>f(x) = x^2</code>.</li>
+    <li><strong>Glemt gangetegn:</strong> <code>2sin(30°)</code> fungerer ikke. Skriv <code>2·sin(30°)</code>.</li>
+    <li><strong>Glemt ° for vinkler:</strong> <code>sin(60)</code> gir radianer. Bruk <code>sin(60°)</code>.</li>
+    <li><strong>Glemt variabel i Løs:</strong> <code>Løs(x+y=4, {x,y})</code> – variablene må stå til slutt.</li>
+  </ul>
+</div>
+
+<!-- ============ PYTHON ============ -->
+<div class="card" id="python">
+  <h2>Python-programmering</h2>
+
+  <h3>Variabler</h3>
+  <p>En variabel er et navn som lagrer en verdi. Python gjetter selv om det er tall, tekst eller liste.</p>
+  <div class="py-example">
+<span class="kw">pris</span> = <span class="num">20</span>       <span class="comment"># heltall</span>
+<span class="kw">rente</span> = <span class="num">1.04</span>    <span class="comment"># desimaltall</span>
+<span class="kw">navn</span> = <span class="str">"Per"</span>    <span class="comment"># tekst (string)</span>
+<span class="fn">print</span>(pris * <span class="num">3</span>)  <span class="comment"># → 60</span>
+</div>
+
+  <h3>For-løkke</h3>
+  <p>En <code>for</code>-løkke gjentar koden et <strong>bestemt antall ganger</strong>. <code>range(n)</code> gir tallene 0, 1, 2, …, n−1.</p>
+  <div class="py-example">
+<span class="comment"># Summer tallene 1 til 10</span>
+<span class="kw">sum</span> = <span class="num">0</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, <span class="num">11</span>):
+    <span class="kw">sum</span> = <span class="kw">sum</span> + i
+<span class="fn">print</span>(<span class="kw">sum</span>)  <span class="comment"># → 55</span>
+</div>
+  <div class="tip">
+    <strong>Hvordan lese en for-løkke:</strong> «For hver verdi i fra 1 til og med 10, gjør …». Indentering (innrykk) er viktig – Python forstår at koden hører til løkka fra innrykket.
+  </div>
+
+  <h3>While-løkke</h3>
+  <p>En <code>while</code>-løkke kjører så lenge en <strong>betingelse er sann</strong>. Du vet ikke på forhånd hvor mange ganger den kjører.</p>
+  <div class="py-example">
+<span class="comment"># Hvor mange år før beløpet passerer 2000 kr?</span>
+<span class="kw">belop</span> = <span class="num">1000</span>
+<span class="kw">ar</span> = <span class="num">0</span>
+<span class="kw">while</span> belop &lt; <span class="num">2000</span>:
+    belop = belop * <span class="num">1.05</span>
+    ar = ar + <span class="num">1</span>
+<span class="fn">print</span>(ar)  <span class="comment"># → 15</span>
+</div>
+
+  <h3>Forskjell på for og while</h3>
+  <table class="gb-cmd-table">
+    <thead><tr><th>For</th><th>While</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Når du <strong>vet</strong> antall ganger på forhånd</td>
+        <td>Når du vil kjøre til <strong>en betingelse er oppfylt</strong></td>
+      </tr>
+      <tr>
+        <td>«Regn ut summen av 100 første tallene»</td>
+        <td>«Regn til du passerer 1 million»</td>
+      </tr>
+      <tr>
+        <td>Ingen fare for evig løkke</td>
+        <td>Kan gå evig hvis betingelsen aldri blir falsk</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Geometriske rekker</h3>
+  <p>En geometrisk rekke multipliserer med samme tall hvert ledd: a, a·k, a·k², a·k³, …</p>
+  <div class="py-example">
+<span class="comment"># Summen av første 10 ledd, a = 2, k = 3</span>
+<span class="kw">a</span> = <span class="num">2</span>
+<span class="kw">k</span> = <span class="num">3</span>
+<span class="kw">s</span> = <span class="num">0</span>
+<span class="kw">ledd</span> = a
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">10</span>):
+    s = s + ledd
+    ledd = ledd * k
+<span class="fn">print</span>(s)  <span class="comment"># → 59048</span>
+</div>
+
+  <h3>Figurmønster</h3>
+  <p>Mønster: Figur 1 har 3 prikker, figur 2 har 5, figur 3 har 7, … Antall prikker i figur n?</p>
+  <div class="py-example">
+<span class="comment"># Skriv ut antall prikker i figur 1 til 10</span>
+<span class="kw">for</span> n <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, <span class="num">11</span>):
+    prikker = <span class="num">2</span>*n + <span class="num">1</span>
+    <span class="fn">print</span>(<span class="str">"Figur"</span>, n, <span class="str">":"</span>, prikker, <span class="str">"prikker"</span>)
+</div>
+
+  <h3>Tilpasse et program til et nytt problem</h3>
+  <p>På tentamen får du ofte et ferdig program og skal endre det for et <em>litt annet</em> problem. Strategi:</p>
+  <ol>
+    <li><strong>Les programmet linje for linje</strong> og skriv på norsk hva hver linje gjør.</li>
+    <li><strong>Finn hva som må endres</strong>: start-verdi, slutt-betingelse, regneregel?</li>
+    <li><strong>Bytt ut minst mulig</strong> – ikke skriv om hele programmet.</li>
+    <li><strong>Test med en liten verdi</strong> du kan regne i hodet for å sjekke at det stemmer.</li>
+  </ol>
+  <div class="tip">
+    <strong>Forklaring teller:</strong> Selv om koden er kort, skriv en setning om <em>hva</em> programmet gjør og <em>hvorfor</em> det løser oppgaven.
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<script>
+// ===== QUIZ =====
+const allQuestions = [
+  // ----- Regresjon -----
+  {
+    q: "Hva er viktig å passe på når du har årstall som x-verdier i regresjon?",
+    opts: [
+      "Bruk årstallene direkte (f.eks. 2024)",
+      "Ikke bruk årstall direkte – sett et startår som x = 0",
+      "Bruk bare de to siste sifrene",
+      "Del alle årstall på 1000"
+    ],
+    ans: 1,
+    tip: "ALDRI årstall som x-verdi. Lag et startår = 0 og regn videre derfra."
+  },
+  {
+    q: "Punktene ligger tilnærmet på en rett linje. Hvilken modell passer best?",
+    opts: ["Eksponentiell", "Potens", "Lineær", "Polynom grad 3"],
+    ans: 2,
+    tip: "Rett linje → lineær regresjon, f(x) = ax + b."
+  },
+  {
+    q: "Vokser med fast prosent per år. Hvilken modell?",
+    opts: ["Lineær", "Eksponentiell", "Potens", "Polynom grad 2"],
+    ans: 1,
+    tip: "Fast prosent = eksponentiell vekst, f(x) = a · b^x."
+  },
+  {
+    q: "Hvilken GeoGebra-kommando gjør eksponentiell regresjon?",
+    opts: ["RegPoly(L1, 2)", "RegLin(L1)", "RegEksp(L1)", "RegPot(L1)"],
+    ans: 2,
+    tip: "RegEksp(L1) gir f(x) = a · b^x."
+  },
+
+  // ----- Vekstfart -----
+  {
+    q: "Hvordan finner du gjennomsnittlig vekstfart fra x = 2 til x = 6?",
+    opts: [
+      "f'(4)",
+      "(f(6) − f(2)) / (6 − 2)",
+      "f(6) − f(2)",
+      "f(6) / f(2)"
+    ],
+    ans: 1,
+    tip: "Gj.snitt = endring i y delt på endring i x = stigningstall til sekanten."
+  },
+  {
+    q: "Momentan vekstfart i x = 5 er det samme som …",
+    opts: [
+      "f(5)",
+      "(f(5) − f(0)) / 5",
+      "f'(5)",
+      "f(10) − f(5)"
+    ],
+    ans: 2,
+    tip: "Momentan vekstfart = den deriverte, altså stigningstallet til tangenten."
+  },
+  {
+    q: "V(0) = 0 i en tapping. Hva betyr det?",
+    opts: [
+      "Tanken er tom ved tappestart",
+      "Tanken er full ved tappestart",
+      "Tappingen varer i 0 min",
+      "Det renner 0 liter per minutt"
+    ],
+    ans: 0,
+    tip: "V(0) = 0 betyr at ved t = 0 er det 0 liter – tanken starter tom."
+  },
+
+  // ----- Polynom m/ukjente -----
+  {
+    q: "Du skal finne a, b, c i f(x) = ax² + bx + c. Hvor mange betingelser trenger du?",
+    opts: ["1", "2", "3", "4"],
+    ans: 2,
+    tip: "Tre ukjente → tre likninger → tre betingelser."
+  },
+  {
+    q: "Hvordan skrives «grafen har bunnpunkt i x = 4» som likning?",
+    opts: ["f(4) = 0", "f(0) = 4", "f'(4) = 0", "f'(0) = 4"],
+    ans: 2,
+    tip: "Topp/bunn = horisontal tangent → f'(x) = 0 i det punktet."
+  },
+  {
+    q: "Hvilken CAS-kommando løser likningssystemet for a, b, c?",
+    opts: [
+      "Derivert({likn1, likn2, likn3})",
+      "Løs({likn1, likn2, likn3}, {a, b, c})",
+      "Nullpunkt({likn1, likn2, likn3})",
+      "Ekstremalpunkt({likn1, likn2, likn3})"
+    ],
+    ans: 1,
+    tip: "Løs med likningsliste og variabelliste til slutt."
+  },
+
+  // ----- Rasjonal -----
+  {
+    q: "Hvordan finner du vertikal asymptote for f(x) = (ax+b)/(cx+d)?",
+    opts: [
+      "Sett telleren = 0",
+      "Sett nevneren = 0",
+      "Sett hele uttrykket = 0",
+      "Finn f(0)"
+    ],
+    ans: 1,
+    tip: "Vertikal asymptote der nevner blir 0 (og teller ikke er 0 samme sted)."
+  },
+  {
+    q: "f(x) = (3x+1)/(x−2). Hva er horisontal asymptote?",
+    opts: ["y = 0", "y = 3", "y = −2", "y = 1"],
+    ans: 1,
+    tip: "Samme grad i teller og nevner → asymptote = forhold mellom ledende koeff = 3/1 = 3."
+  },
+  {
+    q: "Hvordan kan du raskt kontrollere funksjonsuttrykket for en rasjonal funksjon?",
+    opts: [
+      "Regne f(1) og håpe det er enkelt",
+      "Sjekke f(0) mot y-aksen på grafen",
+      "Tegne grafen på papir",
+      "Kun ved å sammenligne asymptoter"
+    ],
+    ans: 1,
+    tip: "f(0) = skjæring med y-aksen – enkel og treffsikker kontroll."
+  },
+
+  // ----- Likningssett -----
+  {
+    q: "Du skal sette opp et likningssett fra tekstoppgave. Hva gjør du FØRST?",
+    opts: [
+      "Skriver Løs() i CAS",
+      "Velger navn på variabler (f.eks. x og y) og skriver hva de betyr",
+      "Gjetter svaret",
+      "Setter alle tall inn i én likning"
+    ],
+    ans: 1,
+    tip: "Alltid definér variablene dine først – både for å hjelpe deg selv og sensor."
+  },
+  {
+    q: "Hvilken kommando prøver du først for eksakt løsning?",
+    opts: ["NLøs()", "Skjæring()", "Løs()", "Derivert()"],
+    ans: 2,
+    tip: "Løs() gir eksakt svar. NLøs() er reserven når eksakt ikke funker."
+  },
+
+  // ----- Trigonometri -----
+  {
+    q: "Du har to sider og vinkelen mellom dem. Hvordan finner du arealet?",
+    opts: [
+      "Sinussetningen",
+      "Cosinussetningen",
+      "A = ½ · a · b · sin(C)",
+      "A = a · b"
+    ],
+    ans: 2,
+    tip: "Arealsetningen: A = ½·a·b·sin(C), der C er vinkelen mellom a og b."
+  },
+  {
+    q: "Hva er cosinussetningen?",
+    opts: [
+      "c² = a² + b² + 2ab·cos(C)",
+      "c² = a² − b² − 2ab·cos(C)",
+      "c² = a² + b² − 2ab·cos(C)",
+      "c = a + b − 2ab·cos(C)"
+    ],
+    ans: 2,
+    tip: "c² = a² + b² − 2ab·cos(C). Ligner Pytagoras med en korreksjon."
+  },
+  {
+    q: "Du får to løsninger for en sidelengde: x = 4 eller x = −7. Hvilken velger du?",
+    opts: [
+      "−7, fordi det er først",
+      "4, fordi lengder må være positive",
+      "Begge er gyldige",
+      "Gjennomsnittet av dem"
+    ],
+    ans: 1,
+    tip: "Lengder er alltid positive – forkast den negative og forklar hvorfor."
+  },
+
+  // ----- Optimering -----
+  {
+    q: "Du skal finne maksimalt areal med en gitt omkrets. Hva er nøkkelsteget?",
+    opts: [
+      "Gjette verdier til du treffer",
+      "Skrive areal som funksjon av kun én variabel ved å bruke omkrets-likningen",
+      "Derivere omkretsen",
+      "Sette areal = 0"
+    ],
+    ans: 1,
+    tip: "Bruk begrensningen (omkrets) til å eliminere den ene variabelen."
+  },
+  {
+    q: "Hvilken kommando finner maks/min i GeoGebra?",
+    opts: ["Nullpunkt()", "Ekstremalpunkt()", "Skjæring()", "Derivert()"],
+    ans: 1,
+    tip: "Ekstremalpunkt(f) gir topp- og bunnpunkter."
+  },
+  {
+    q: "Hvorfor må du bestemme gyldighetsområde i en optimeringsoppgave?",
+    opts: [
+      "For å få ekstra karakter",
+      "For at lengder/volum skal være positive og gi mening",
+      "Fordi GeoGebra krever det",
+      "For å finne nullpunktene"
+    ],
+    ans: 1,
+    tip: "Hvis x < 0 eller x > omkretsen/2, har ikke oppgaven en fysisk løsning."
+  },
+
+  // ----- GeoGebra -----
+  {
+    q: "Hva er forskjellen på = og := i CAS?",
+    opts: [
+      "Ingen forskjell",
+      "= sjekker om noe er likt, := definerer en variabel eller funksjon",
+      "= er for tall, := er for vinkler",
+      ":= fungerer bare på engelsk versjon"
+    ],
+    ans: 1,
+    tip: "Bruk := når du definerer f(x) eller tildeler verdi. = brukes i likninger."
+  },
+  {
+    q: "Hva gir sin(60) i GeoGebra (uten °)?",
+    opts: [
+      "0.866 (det vi vil ha)",
+      "En feilmelding",
+      "Sinus av 60 radianer, altså ≈ −0.305",
+      "Presis √3/2"
+    ],
+    ans: 2,
+    tip: "Uten ° tolkes tallet som radianer! Skriv alltid sin(60°)."
+  },
+  {
+    q: "Hvilken kommando tegner sekantlinjen mellom to punkter?",
+    opts: ["Tangent(A, B)", "Linje(A, B)", "Sekant(A, B)", "Kurve(A, B)"],
+    ans: 1,
+    tip: "Linje(A, B) tegner den rette linjen gjennom punktene – akkurat en sekant."
+  },
+
+  // ----- Python -----
+  {
+    q: "Når passer det best å bruke en for-løkke?",
+    opts: [
+      "Når du vet antall gjentakelser på forhånd",
+      "Når du ikke vet hvor lenge det skal kjøre",
+      "Bare når du jobber med tekst",
+      "Aldri – bruk alltid while"
+    ],
+    ans: 0,
+    tip: "For: kjent antall ganger (range). While: til en betingelse endres."
+  },
+  {
+    q: "Hva gjør range(1, 11) i en for-løkke?",
+    opts: [
+      "Tallene 1, 2, …, 11",
+      "Tallene 1, 2, …, 10",
+      "Bare tallet 11",
+      "Tallene 0 til 11"
+    ],
+    ans: 1,
+    tip: "range(a, b) stopper FØR b, så range(1,11) gir 1..10."
+  },
+  {
+    q: "Hva er risikoen ved en while-løkke?",
+    opts: [
+      "Den kan gi feil svar",
+      "Den kan gå evig hvis betingelsen aldri blir falsk",
+      "Den bruker for mye minne",
+      "Den fungerer bare på heltall"
+    ],
+    ans: 1,
+    tip: "Glemmer du å endre variabelen som sjekkes, stopper den aldri."
+  },
+  {
+    q: "I en geometrisk rekke går du fra ett ledd til neste ved å …",
+    opts: [
+      "Legge til samme tall",
+      "Trekke fra samme tall",
+      "Gange med samme tall",
+      "Dele på rekkenummeret"
+    ],
+    ans: 2,
+    tip: "Geometrisk: multipliserer med konstanten k hvert ledd."
+  },
+
+  // ----- Generelt om Del 2 -----
+  {
+    q: "Hva er forventet av svaret ditt på Del 2?",
+    opts: [
+      "Bare det endelige tallet",
+      "Tall + navn på GeoGebra-kommando + tolkning i konteksten",
+      "En fullstendig for-hånd-utregning uten hjelpemidler",
+      "Bare skjermbilde"
+    ],
+    ans: 1,
+    tip: "Sensor skal se HVA du brukte, HVORDAN du brukte det, og HVA svaret betyr."
+  }
+];
+
+let quizQuestions, currentQ, score;
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function openQuiz() {
+  startQuiz();
+  document.getElementById('quizOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeQuiz() {
+  document.getElementById('quizOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('quizOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeQuiz();
+});
+
+function startQuiz() {
+  quizQuestions = shuffle([...allQuestions]).slice(0, 12);
+  currentQ = 0;
+  score = 0;
+  document.getElementById('quizBody').style.display = '';
+  document.getElementById('quizResult').style.display = 'none';
+  document.getElementById('qTotal').textContent = quizQuestions.length;
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = quizQuestions[currentQ];
+  document.getElementById('qNum').textContent = currentQ + 1;
+  document.getElementById('qBar').style.width = ((currentQ + 1) / quizQuestions.length * 100) + '%';
+  document.getElementById('qText').textContent = q.q;
+  document.getElementById('qFeedback').className = 'quiz-feedback';
+  document.getElementById('qFeedback').textContent = '';
+  document.getElementById('qNext').className = 'quiz-next';
+
+  const optBox = document.getElementById('qOptions');
+  optBox.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-option';
+    btn.textContent = opt;
+    btn.addEventListener('click', () => pickAnswer(i));
+    optBox.appendChild(btn);
+  });
+}
+
+function pickAnswer(idx) {
+  const q = quizQuestions[currentQ];
+  const btns = document.querySelectorAll('#qOptions .quiz-option');
+  btns.forEach(b => b.disabled = true);
+
+  const fb = document.getElementById('qFeedback');
+  if (idx === q.ans) {
+    btns[idx].classList.add('correct');
+    fb.className = 'quiz-feedback show is-correct';
+    fb.textContent = 'Riktig! ' + q.tip;
+    score++;
+  } else {
+    btns[idx].classList.add('wrong');
+    btns[q.ans].classList.add('correct');
+    fb.className = 'quiz-feedback show is-wrong';
+    fb.textContent = 'Feil. ' + q.tip;
+  }
+
+  const nextBtn = document.getElementById('qNext');
+  nextBtn.className = 'quiz-next show';
+  nextBtn.textContent = currentQ < quizQuestions.length - 1 ? 'Neste' : 'Se resultat';
+}
+
+function nextQuestion() {
+  currentQ++;
+  if (currentQ < quizQuestions.length) {
+    showQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function showResult() {
+  document.getElementById('quizBody').style.display = 'none';
+  const res = document.getElementById('quizResult');
+  res.style.display = '';
+  document.getElementById('rScore').textContent = score + ' / ' + quizQuestions.length;
+
+  const pct = score / quizQuestions.length;
+  let grade, color;
+  if (pct === 1)        { grade = 'Perfekt! Du er klar for Del 2.'; color = '#16a34a'; }
+  else if (pct >= 0.8)  { grade = 'Veldig bra! Karakter 5-nivå.';    color = '#2563eb'; }
+  else if (pct >= 0.6)  { grade = 'Bra jobba – litt mer finpuss.';   color = '#ea580c'; }
+  else                  { grade = 'Øv litt mer – les gjennom en gang til.'; color = '#dc2626'; }
+
+  const g = document.getElementById('rGrade');
+  g.textContent = grade;
+  g.style.color = color;
+}
+</script>
+</body>
+</html>
