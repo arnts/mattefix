@@ -483,7 +483,7 @@
         <li>Rett linje → <em>lineær</em>: <code>RegLin(L1)</code></li>
         <li>Kurve som vokser raskere og raskere → <em>eksponentiell</em>: <code>RegEksp(L1)</code></li>
         <li>Topp/bunn-kurve → <em>polynom</em>: <code>RegPoly(L1, 2)</code> (2 = andregrad)</li>
-        <li>Går gjennom (0,0) og vokser/avtar → <em>potens</em>: <code>RegPot(L1)</code></li>
+        <li>Bare positive x, og y = 0 når x = 0 (f.eks. areal/volum vs. lengde) → <em>potens</em>: <code>RegPot(L1)</code></li>
       </ul>
     </div>
     <div class="step">
@@ -518,7 +518,7 @@ f(x) = RegEksp(L1)
       <tr><td>Fast tillegg hvert år (lønn, strømpris)</td><td>Lineær</td><td>f(x) = ax + b</td></tr>
       <tr><td>Fast prosent hvert år (rente, bakterier, radioaktivitet)</td><td>Eksponentiell</td><td>f(x) = a · b^x</td></tr>
       <tr><td>Kurve med topp eller bunn (kast, brems)</td><td>Polynom grad 2</td><td>f(x) = ax² + bx + c</td></tr>
-      <tr><td>Vokser fra (0, 0) – «doblingslov»</td><td>Potens</td><td>f(x) = a · x^b</td></tr>
+      <tr><td>y avhenger av x etter et «forholdstall» (areal, volum vs. lengde)</td><td>Potens</td><td>f(x) = a · x^b</td></tr>
     </tbody>
   </table>
 </div>
@@ -607,15 +607,16 @@ f'(5)
 
   <div class="example">
     <h4>Eksempel</h4>
-    <p>Finn f(x) = ax² + bx + c når grafen går gjennom (0, 2), har bunnpunkt i x = 3, og f(5) = 6.</p>
+    <p>Finn f(x) = ax² + bx + c når grafen går gjennom (0, 2), har bunnpunkt i x = 3, og f(5) = −3.</p>
     <div class="gb-example">
 f(x) := a*x^2 + b*x + c
 f'(x)
-Løs({f(0) = 2, f'(3) = 0, f(5) = 6}, {a, b, c})
+Løs({f(0) = 2, f'(3) = 0, f(5) = −3}, {a, b, c})
 <span class="result">→ {a = 1, b = −6, c = 2}</span>
 
 <span class="comment"># Endelig svar:</span>
 f(x) = x² − 6x + 2</div>
+    <p><strong>Kontroll:</strong> f(0) = 2 ✓, f'(3) = 2·3 − 6 = 0 ✓, f(5) = 25 − 30 + 2 = −3 ✓.</p>
   </div>
 
   <div class="warn">
@@ -730,6 +731,32 @@ Løs({3x + 2y = 24, 2x + 5y = 27}, {x, y})
   </div>
   <p>Finner <strong>tredje side</strong> når du har to sider og vinkelen mellom (SVS). Kan også løses med hensyn på cos(C) for å finne en vinkel når du kjenner alle tre sidene.</p>
 
+  <h3>Sinussetningen</h3>
+  <div class="formula-box green">
+    a / sin(A) = b / sin(B) = c / sin(C)
+  </div>
+  <p>Brukes når du har <strong>én side og to vinkler</strong> (eller to sider og en motstående vinkel). Her er <em>a</em> siden som står <em>motsatt</em> av vinkelen A osv.</p>
+  <div class="example">
+    <h4>Eksempel (sinussetningen)</h4>
+    <p>Trekant ABC med A = 40°, B = 70° og a = 6. Finn b.</p>
+    <p>b / sin(70°) = 6 / sin(40°)  →  b = 6 · sin(70°) / sin(40°) ≈ <strong>8.77</strong></p>
+  </div>
+
+  <h3>Hvilken setning skal jeg bruke?</h3>
+  <table class="gb-cmd-table">
+    <thead><tr><th>Det du har</th><th>Kode</th><th>Setning</th></tr></thead>
+    <tbody>
+      <tr><td>To sider og vinkelen mellom dem</td><td>SVS</td><td>Cosinussetningen (for 3. side) eller arealformelen (for areal)</td></tr>
+      <tr><td>Alle tre sidene</td><td>SSS</td><td>Cosinussetningen (løs for cos)</td></tr>
+      <tr><td>Én side og to vinkler</td><td>VSV / SVV</td><td>Sinussetningen</td></tr>
+      <tr><td>To sider og en motstående vinkel</td><td>SSV</td><td>Sinussetningen (pass på – kan gi 2 løsninger)</td></tr>
+      <tr><td>Rettvinklet trekant</td><td>—</td><td>Pytagoras eller sin/cos/tan</td></tr>
+    </tbody>
+  </table>
+  <div class="warn">
+    <strong>SSV-felle:</strong> Når du kjenner to sider og en ikke-mellomliggende vinkel, kan svaret være to ulike trekanter. Sjekk alltid at vinkelsummen blir 180° og at alle sider er positive.
+  </div>
+
   <h3>Eksakte uttrykk</h3>
   <p>Til tentamen bør du beholde <strong>√-tegn</strong> og brøker når oppgaven sier «eksakt verdi». Ikke skriv 1.41 når du mener √2.</p>
   <div class="example">
@@ -780,11 +807,12 @@ Ekstremalpunkt(A)
   </div>
 
   <h3>Overflate som funksjon av én variabel</h3>
-  <p>Eksempel: en boks med kvadratisk bunn og volum 1000 cm³. Finn minimal overflate.</p>
+  <p>Eksempel: en <strong>lukket boks</strong> (bunn og lokk) med kvadratisk bunn og volum 1000 cm³. Finn minimal overflate.</p>
   <ol>
     <li>Variabler: x = sidekant i bunn, h = høyde.</li>
     <li>Begrensning: x² · h = 1000  →  h = 1000 / x².</li>
-    <li>Overflate: O = 2x² + 4xh = 2x² + 4x · (1000/x²) = 2x² + 4000/x.</li>
+    <li>Overflate: O = 2x² + 4xh = 2x² + 4x · (1000/x²) = 2x² + 4000/x.
+      <br><em>Forklaring:</em> 2x² er bunn + lokk, 4xh er de fire sideflatene.</li>
     <li>I GeoGebra: <code>Ekstremalpunkt(O)</code>.</li>
   </ol>
   <div class="gb-example">
@@ -847,6 +875,17 @@ Løs(f'(x) > 0, x)
 A = (2, f(2))
 B = (5, f(5))
 sekant = Linje(A, B)</div>
+
+  <h3>Tangent i et punkt</h3>
+  <p>Tangenten er linjen som <strong>bare berører</strong> grafen i ett punkt – stigningstallet er f'(a).</p>
+  <div class="gb-example">
+f(x) := x^2 - 4x + 5
+Tangent(3, f)
+<span class="result">→ y = 2x − 4</span></div>
+  <p><strong>Tolkning:</strong> stigningstallet 2 er det samme som f'(3) = 2·3 − 4 = 2. Tangenten i (3, 2) har likning y = 2x − 4.</p>
+  <div class="tip">
+    <strong>Tips:</strong> Trenger du bare stigningstallet? Skriv <code>f'(3)</code>. Trenger du hele likningen til tangenten? Bruk <code>Tangent(3, f)</code>.
+  </div>
 </div>
 
 <!-- ============ GEOGEBRA-ORDBOK ============ -->
@@ -1140,6 +1179,34 @@ const allQuestions = [
     ],
     ans: 2,
     tip: "c² = a² + b² − 2ab·cos(C). Ligner Pytagoras med en korreksjon."
+  },
+  {
+    q: "Du kjenner én side og to vinkler i en trekant. Hvilken setning bruker du?",
+    opts: ["Cosinussetningen", "Arealsetningen", "Sinussetningen", "Pytagoras"],
+    ans: 2,
+    tip: "Sinussetningen: a/sin(A) = b/sin(B) = c/sin(C). Passer når du har side + to vinkler."
+  },
+  {
+    q: "Hva sier sinussetningen?",
+    opts: [
+      "sin(A) + sin(B) + sin(C) = 1",
+      "a · sin(A) = b · sin(B) = c · sin(C)",
+      "a / sin(A) = b / sin(B) = c / sin(C)",
+      "sin(A) / sin(B) = a / c"
+    ],
+    ans: 2,
+    tip: "Side delt på sinus til motstående vinkel gir samme tall for alle tre sider."
+  },
+  {
+    q: "Hva gir Tangent(3, f) i GeoGebra?",
+    opts: [
+      "Tallverdien til f'(3)",
+      "Likningen for tangenten til f i x = 3",
+      "En sekant gjennom (3, f(3))",
+      "Et nullpunkt til f'"
+    ],
+    ans: 1,
+    tip: "Tangent(a, f) returnerer likningen y = ... for tangenten til f i x = a."
   },
   {
     q: "Du får to løsninger for en sidelengde: x = 4 eller x = −7. Hvilken velger du?",
