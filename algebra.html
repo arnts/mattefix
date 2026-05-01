@@ -1,0 +1,1943 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Algebra – Hjelpeside</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='80'>π</text></svg>">
+<style>
+  :root {
+    --blue: #2563eb;
+    --red: #dc2626;
+    --green: #16a34a;
+    --orange: #ea580c;
+    --purple: #9333ea;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 2rem 1rem;
+  }
+  .container { max-width: 960px; margin: 0 auto; }
+  h1 {
+    text-align: center;
+    font-size: 2.2rem;
+    margin-bottom: 0.3rem;
+    color: var(--blue);
+  }
+  .subtitle {
+    text-align: center;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    font-size: 1.05rem;
+  }
+  .card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .card h2 {
+    font-size: 1.35rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--blue);
+    color: var(--blue);
+  }
+  .card h3 {
+    font-size: 1.1rem;
+    margin: 1rem 0 0.5rem;
+    color: var(--text);
+  }
+  .section-num {
+    display: inline-block;
+    background: var(--blue);
+    color: #fff;
+    font-size: 0.85rem;
+    padding: 0.15rem 0.55rem;
+    border-radius: 6px;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+    font-weight: 700;
+  }
+
+  table.value-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    font-size: 1.05rem;
+  }
+  table.value-table th, table.value-table td {
+    padding: 0.55rem 0.7rem;
+    border: 1px solid var(--border);
+  }
+  table.value-table thead th {
+    background: var(--blue);
+    color: #fff;
+    font-weight: 600;
+  }
+  table.value-table tbody tr:nth-child(even) { background: #f1f5f9; }
+
+  .formula-box {
+    background: #eff6ff;
+    border-left: 4px solid var(--blue);
+    padding: 1rem 1.2rem;
+    border-radius: 0 8px 8px 0;
+    margin: 0.8rem 0;
+    font-size: 1.15rem;
+    text-align: center;
+  }
+  .formula-box.red { background: #fef2f2; border-left-color: var(--red); }
+  .formula-box.green { background: #f0fdf4; border-left-color: var(--green); }
+  .formula-box.orange { background: #fff7ed; border-left-color: var(--orange); }
+  .formula-box.purple { background: #faf5ff; border-left-color: var(--purple); }
+
+  p { margin: 0.5rem 0; }
+  ul { padding-left: 1.3rem; }
+  ul li { margin: 0.3rem 0; }
+
+  .highlight { color: var(--blue); font-weight: 600; }
+  .note {
+    background: #fefce8;
+    border: 1px solid #fde68a;
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    margin-top: 0.8rem;
+    font-size: 0.95rem;
+  }
+
+  .diagram-row {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .diagram-row .text { flex: 1; min-width: 250px; }
+  .diagram-row svg { flex-shrink: 0; }
+
+  /* TOC */
+  .toc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  .toc a {
+    background: var(--blue);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+  }
+  .toc a:hover { opacity: 0.8; }
+  .toc .quiz-btn {
+    background: var(--orange);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+    transition: opacity 0.2s;
+  }
+  .toc .quiz-btn:hover { opacity: 0.8; }
+
+  /* Steg-for-steg */
+  .steps { counter-reset: step; margin: 1rem 0; }
+  .step {
+    position: relative;
+    padding: 0.8rem 1rem 0.8rem 3.2rem;
+    margin-bottom: 0.6rem;
+    background: var(--bg);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  .step::before {
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    left: 0.8rem;
+    top: 0.75rem;
+    width: 1.7rem;
+    height: 1.7rem;
+    background: var(--blue);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+  .step strong { color: var(--blue); }
+  .step .calc {
+    display: block;
+    margin-top: 0.3rem;
+    font-family: 'Courier New', monospace;
+    background: #f1f5f9;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.95rem;
+  }
+
+  /* Eksempel-tabs */
+  .example-tabs {
+    display: flex;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+  .example-tab {
+    padding: 0.5rem 1.2rem;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text);
+    transition: all 0.2s;
+  }
+  .example-tab:hover { border-color: var(--blue); }
+  .example-tab.active {
+    background: var(--blue);
+    color: #fff;
+    border-color: var(--blue);
+  }
+  .example-content { display: none; }
+  .example-content.active { display: block; }
+
+  /* Polynomdivisjon "long division" */
+  .longdiv {
+    font-family: 'Courier New', monospace;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin: 0.8rem 0;
+    overflow-x: auto;
+    white-space: pre;
+  }
+  .longdiv .heading {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+    white-space: normal;
+  }
+  .longdiv .quotient { color: var(--green); font-weight: 700; }
+  .longdiv .subtract { color: var(--red); }
+  .longdiv .bring { color: var(--orange); }
+  .longdiv .remainder { color: var(--purple); font-weight: 700; }
+
+  /* Likningssystem-visualisering */
+  .system-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  @media (max-width: 600px) {
+    .system-grid { grid-template-columns: 1fr; }
+  }
+  .system-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem;
+  }
+  .system-card canvas {
+    width: 100%;
+    height: auto;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  .system-card h4 {
+    color: var(--blue);
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Likningssystem-tool */
+  .syseq-tool {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    margin: 0.8rem 0;
+  }
+  .syseq-tool canvas {
+    width: 100%;
+    height: auto;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    display: block;
+  }
+  .syseq-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 0.8rem;
+  }
+  .syseq-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+  .syseq-label {
+    font-weight: 700;
+    font-family: 'Courier New', monospace;
+    min-width: 2.4rem;
+  }
+  .syseq-x {
+    font-family: 'Courier New', monospace;
+    color: var(--muted);
+  }
+  .syseq-slider {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex: 1;
+    min-width: 180px;
+  }
+  .syseq-slider label {
+    font-family: 'Courier New', monospace;
+    color: var(--muted);
+    font-size: 0.9rem;
+    min-width: 1.5rem;
+  }
+  .syseq-slider input[type=range] {
+    flex: 1;
+    min-width: 100px;
+  }
+  .syseq-slider span {
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    min-width: 2.5rem;
+    text-align: right;
+    font-size: 0.9rem;
+  }
+  .syseq-readout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.6rem;
+    margin-top: 0.8rem;
+  }
+  .syseq-readout .item {
+    background: #fff;
+    border-radius: 8px;
+    padding: 0.55rem 0.8rem;
+    border: 1px solid var(--border);
+    font-size: 0.95rem;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .syseq-readout .item .label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    display: block;
+  }
+  .syseq-readout .item .val {
+    font-weight: 700;
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+  }
+  .syseq-readout .item.solved { border-color: var(--green); background: #f0fdf4; }
+  .syseq-readout .item.parallel { border-color: var(--red); background: #fef2f2; }
+  .syseq-readout .item.coincident { border-color: var(--purple); background: #faf5ff; }
+
+  /* Tallinje for ulikheter */
+  .numline-wrap {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    margin: 0.8rem 0;
+    text-align: center;
+  }
+  .numline-wrap svg { width: 100%; max-width: 600px; height: auto; }
+
+  /* GeoGebra */
+  .gb-cmd-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    margin: 0.8rem 0;
+  }
+  .gb-cmd-table th, .gb-cmd-table td {
+    padding: 0.55rem 0.8rem;
+    border: 1px solid var(--border);
+    text-align: left;
+  }
+  .gb-cmd-table thead th {
+    background: var(--blue);
+    color: #fff;
+    font-weight: 600;
+  }
+  .gb-cmd-table tbody tr:nth-child(even) { background: #f1f5f9; }
+  .gb-cmd-table code {
+    background: #e2e8f0;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+  .gb-example {
+    background: #1e293b;
+    color: #e2e8f0;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin: 0.8rem 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    overflow-x: auto;
+  }
+  .gb-example .comment { color: #94a3b8; }
+  .gb-example .result { color: #86efac; }
+  .gb-section {
+    margin-top: 1.2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+  .gb-section:first-of-type { margin-top: 0.5rem; border-top: none; padding-top: 0; }
+
+  .calc-tip {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    padding: 0.8rem 1rem;
+    background: var(--bg);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin-bottom: 0.6rem;
+  }
+  .calc-tip .icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    width: 1.8rem;
+    text-align: center;
+    font-weight: 700;
+    color: var(--blue);
+  }
+  .calc-tip code {
+    background: #e2e8f0;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+
+  /* Quiz overlay */
+  .quiz-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15,23,42,0.6);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+  }
+  .quiz-overlay.open { display: flex; }
+  .quiz-modal {
+    background: var(--card);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 560px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 2rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    position: relative;
+    animation: slideUp 0.3s ease;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .quiz-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--muted);
+    line-height: 1;
+  }
+  .quiz-close:hover { color: var(--text); }
+  .quiz-header { text-align: center; margin-bottom: 1.5rem; }
+  .quiz-header h2 { color: var(--orange); font-size: 1.5rem; margin-bottom: 0.3rem; }
+  .quiz-progress { font-size: 0.9rem; color: var(--muted); }
+  .quiz-progress-bar {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    margin-top: 0.5rem;
+    overflow: hidden;
+  }
+  .quiz-progress-fill {
+    height: 100%;
+    background: var(--orange);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+  .quiz-question {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+  .quiz-options { display: flex; flex-direction: column; gap: 0.6rem; }
+  .quiz-option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0.85rem 1.1rem;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    background: var(--bg);
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    font-family: inherit;
+    color: var(--text);
+  }
+  .quiz-option:hover:not(:disabled) {
+    border-color: var(--blue);
+    background: #eff6ff;
+  }
+  .quiz-option:disabled { cursor: default; }
+  .quiz-option.correct {
+    border-color: var(--green);
+    background: #f0fdf4;
+    font-weight: 600;
+  }
+  .quiz-option.wrong {
+    border-color: var(--red);
+    background: #fef2f2;
+    opacity: 0.7;
+  }
+  .quiz-feedback {
+    margin-top: 1rem;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.is-correct {
+    background: #f0fdf4;
+    border: 1px solid #86efac;
+    color: #166534;
+  }
+  .quiz-feedback.is-wrong {
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    color: #991b1b;
+  }
+  .quiz-next {
+    display: none;
+    margin: 1.2rem auto 0;
+    padding: 0.7rem 2rem;
+    background: var(--blue);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: opacity 0.2s;
+  }
+  .quiz-next:hover { opacity: 0.85; }
+  .quiz-next.show { display: block; }
+  .quiz-result { text-align: center; }
+  .quiz-score {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--blue);
+    margin: 0.5rem 0;
+  }
+  .quiz-score-label { color: var(--muted); font-size: 1rem; }
+  .quiz-grade {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0.8rem 0;
+  }
+  .quiz-restart {
+    margin-top: 1rem;
+    padding: 0.7rem 2rem;
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .quiz-restart:hover { opacity: 0.85; }
+
+  .home-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: var(--blue);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .home-link:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<a href="index.html" class="home-link">&larr; Tilbake til forsiden</a>
+
+<h1>Algebra</h1>
+<p class="subtitle">Kapittel 4 – polynomdivisjon, likningssystem, ulikheter og numerisk løsning</p>
+
+<div class="toc">
+  <a href="#polynomdivisjon">4.1 Polynomdivisjon</a>
+  <a href="#anvendelse">4.2 Anvendelse</a>
+  <a href="#likningssystem">4.3 Likningssystem</a>
+  <a href="#ulikheter">4.4 Ulikheter</a>
+  <a href="#numerisk">4.5 Numerisk løsning</a>
+  <a href="#oversikt">Mønster og oversikt</a>
+  <a href="#geogebra">GeoGebra</a>
+  <button class="quiz-btn" onclick="openQuiz()">Test deg selv!</button>
+</div>
+
+<!-- ============ QUIZ OVERLAY ============ -->
+<div class="quiz-overlay" id="quizOverlay">
+  <div class="quiz-modal">
+    <button class="quiz-close" onclick="closeQuiz()">&times;</button>
+    <div class="quiz-header">
+      <h2>Algebra-quiz</h2>
+      <div class="quiz-progress">Spørsmål <span id="qNum">1</span> av <span id="qTotal">12</span></div>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="qBar" style="width:8%"></div></div>
+    </div>
+    <div id="quizBody">
+      <div class="quiz-question" id="qText"></div>
+      <div class="quiz-options" id="qOptions"></div>
+      <div class="quiz-feedback" id="qFeedback"></div>
+      <button class="quiz-next" id="qNext" onclick="nextQuestion()">Neste</button>
+    </div>
+    <div id="quizResult" class="quiz-result" style="display:none;">
+      <div class="quiz-score-label">Resultat</div>
+      <div class="quiz-score" id="rScore"></div>
+      <div class="quiz-grade" id="rGrade"></div>
+      <button class="quiz-restart" onclick="startQuiz()">Prøv igjen</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 4.1 POLYNOMDIVISJON ============ -->
+<div class="card" id="polynomdivisjon">
+  <h2><span class="section-num">4.1</span>Polynomdivisjon</h2>
+  <p><strong>Polynomdivisjon</strong> er som vanlig deling, men med polynomer. Du deler ett polynom på et annet og får en kvotient — og kanskje en rest.</p>
+
+  <div class="formula-box">
+    <span style="color:#dc2626;">Dividend</span> = <span style="color:#16a34a;">Kvotient</span> · <span style="color:#2563eb;">Divisor</span> + <span style="color:#9333ea;">Rest</span>
+  </div>
+
+  <div class="diagram-row">
+    <div class="text">
+      <p>Sammenlign med tallregning:</p>
+      <ul>
+        <li>17 ÷ 5 = 3 rest 2</li>
+        <li>17 = 3 · 5 + 2 ✓</li>
+      </ul>
+      <p>Det samme gjelder for polynomer. <strong>Hvis resten er 0</strong>, har vi delt opp polynomet i faktorer.</p>
+    </div>
+    <div class="text">
+      <p><strong>Ord du må kunne:</strong></p>
+      <ul>
+        <li><span style="color:#dc2626;font-weight:600;">Dividend</span>: polynomet vi deler på</li>
+        <li><span style="color:#2563eb;font-weight:600;">Divisor</span>: det vi deler med</li>
+        <li><span style="color:#16a34a;font-weight:600;">Kvotient</span>: svaret</li>
+        <li><span style="color:#9333ea;font-weight:600;">Rest</span>: det som er igjen</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Algoritmen, steg for steg</h3>
+  <p>La oss dele <strong>(x³ − 4x² + x + 6)</strong> på <strong>(x − 2)</strong>.</p>
+
+  <div class="steps">
+    <div class="step">
+      <strong>Sett opp som langdivisjon.</strong> Skriv begge polynomer i synkende grad. Husk å sette inn 0 for ledd som mangler.
+      <span class="calc">(x³ − 4x² + x + 6) ÷ (x − 2)</span>
+    </div>
+    <div class="step">
+      <strong>Del høyeste ledd i dividenden på høyeste ledd i divisor.</strong>
+      <span class="calc">x³ ÷ x = x²    ← første ledd i kvotienten</span>
+    </div>
+    <div class="step">
+      <strong>Gang kvotient-leddet med hele divisor</strong>, og trekk fra.
+      <span class="calc">x² · (x − 2) = x³ − 2x²</span>
+      <span class="calc">(x³ − 4x²) − (x³ − 2x²) = −2x²</span>
+    </div>
+    <div class="step">
+      <strong>Hent ned neste ledd</strong> fra dividenden.
+      <span class="calc">−2x² + x</span>
+    </div>
+    <div class="step">
+      <strong>Gjenta: del nytt høyeste ledd på divisor.</strong>
+      <span class="calc">−2x² ÷ x = −2x    ← nytt ledd</span>
+      <span class="calc">−2x · (x − 2) = −2x² + 4x</span>
+      <span class="calc">(−2x² + x) − (−2x² + 4x) = −3x</span>
+    </div>
+    <div class="step">
+      <strong>Hent ned siste ledd og gjenta.</strong>
+      <span class="calc">−3x + 6;   −3x ÷ x = −3</span>
+      <span class="calc">−3 · (x − 2) = −3x + 6</span>
+      <span class="calc">(−3x + 6) − (−3x + 6) = 0  ← rest</span>
+    </div>
+    <div class="step">
+      <strong>Svar:</strong> kvotient er <strong>x² − 2x − 3</strong>, rest 0.
+    </div>
+  </div>
+
+  <h3>Oppstilling som «trapp»</h3>
+  <p>Her er hele utregningen ovenfor satt opp på den tradisjonelle måten:</p>
+  <div class="longdiv"><span class="heading">Kvotient over streken, rest under</span>
+                      <span class="quotient">x²  − 2x  − 3</span>
+                    ────────────────────────
+(x − 2) | x³ − 4x² +  x + 6
+        | <span class="subtract">x³ − 2x²</span>
+        ────────────────
+        |     <span class="bring">−2x² +  x</span>
+        |     <span class="subtract">−2x² + 4x</span>
+        ────────────────
+        |          <span class="bring">−3x +  6</span>
+        |          <span class="subtract">−3x +  6</span>
+        ────────────────
+        |          <span class="remainder">       0</span>
+</div>
+
+  <div class="formula-box green">
+    x³ − 4x² + x + 6 = (x − 2)(x² − 2x − 3)
+  </div>
+
+  <h3>Når det ikke går opp</h3>
+  <p>Hvis resten ikke blir 0, skriver vi resultatet slik:</p>
+  <div class="formula-box orange">
+    Dividend / Divisor = Kvotient + Rest / Divisor
+  </div>
+  <p><em>Eksempel:</em> (x² + 3x + 5) ÷ (x + 1) gir kvotient (x + 2) og rest 3, så:</p>
+  <div class="formula-box">
+    (x² + 3x + 5) / (x + 1) = (x + 2) + 3/(x + 1)
+  </div>
+
+  <div class="note">
+    <strong>Sjekk svaret ditt:</strong> kvotient · divisor + rest skal alltid bli dividenden tilbake. Bruk dette for å luke ut feil!
+  </div>
+
+  <h3>Når et ledd «mangler»</h3>
+  <p>Hva om vi skal dele <strong>(x³ + 1)</strong> på <strong>(x + 1)</strong>? Polynomet har ingen x²- eller x-ledd. Trikset er å <strong>skrive dem inn med koeffisient 0</strong>, så kolonnene holder seg på plass:</p>
+  <div class="formula-box orange">
+    x³ + 1 &nbsp;=&nbsp; x³ + 0·x² + 0·x + 1
+  </div>
+  <div class="steps">
+    <div class="step">
+      <strong>Del høyeste ledd:</strong> x³ ÷ x = x².
+      <span class="calc">x² · (x + 1) = x³ + x²</span>
+      <span class="calc">(x³ + 0x²) − (x³ + x²) = −x²</span>
+    </div>
+    <div class="step">
+      <strong>Hent ned 0x:</strong> −x² + 0x. Del: −x²/x = −x.
+      <span class="calc">−x · (x + 1) = −x² − x</span>
+      <span class="calc">(−x² + 0x) − (−x² − x) = x</span>
+    </div>
+    <div class="step">
+      <strong>Hent ned 1:</strong> x + 1. Del: x/x = 1.
+      <span class="calc">1 · (x + 1) = x + 1</span>
+      <span class="calc">(x + 1) − (x + 1) = 0</span>
+    </div>
+    <div class="step">
+      <strong>Svar:</strong> x³ + 1 = (x + 1)(x² − x + 1).
+    </div>
+  </div>
+  <div class="note">
+    <strong>Vanlig feil:</strong> å hoppe rett til neste ledd uten å skrive «0·» for de manglende. Da forskyver kolonnene seg og hele utregningen blir feil.
+  </div>
+</div>
+
+<!-- ============ 4.2 ANVENDELSE AV POLYNOMDIVISJON ============ -->
+<div class="card" id="anvendelse">
+  <h2><span class="section-num">4.2</span>Anvendelse av polynomdivisjon</h2>
+  <p>Polynomdivisjon er ikke bare en regneteknikk — det er et kraftig verktøy for å <strong>faktorisere</strong> polynomer og finne <strong>nullpunkter</strong>.</p>
+
+  <h3>Faktorsetningen</h3>
+  <div class="formula-box purple">
+    Hvis f(a) = 0, så er (x − a) en faktor i f(x).
+  </div>
+  <p>Med andre ord: hvis du finner ett nullpunkt, kan du «trekke det ut» som en faktor og dele bort. Polynomet som blir igjen har lavere grad og er enklere å løse.</p>
+
+  <h3>Strategi for å faktorisere et polynom</h3>
+  <div class="formula-box green">
+    <strong>Heltallsrot-tipset:</strong> hvis polynomet har et heltalls-nullpunkt, må det være en <em>divisor av konstantleddet</em>.
+  </div>
+  <p>For f(x) = x³ − 4x² + x + 6 er konstantleddet 6, så prøv ±1, ±2, ±3, ±6 — ikke 4, 5, 7 eller andre tall. Det sparer mye tid på prøven.</p>
+
+  <div class="steps">
+    <div class="step">
+      <strong>Gjett et nullpunkt.</strong> Test divisorene av konstantleddet, for eksempel ±1, ±2, ±3, ±6.
+    </div>
+    <div class="step">
+      <strong>Sjekk:</strong> regn ut f(gjettet tall). Er svaret 0, har du funnet et nullpunkt.
+    </div>
+    <div class="step">
+      <strong>Bruk polynomdivisjon</strong> til å dele polynomet på (x − nullpunkt).
+    </div>
+    <div class="step">
+      <strong>Faktoriser videre</strong> hvis det går (gjenta, eller bruk abc-formel for andregrads-faktoren).
+    </div>
+  </div>
+
+  <h3>Eksempel: faktoriser f(x) = x³ − 4x² + x + 6</h3>
+  <div class="steps">
+    <div class="step">
+      <strong>Test små tall.</strong>
+      <span class="calc">f(1) = 1 − 4 + 1 + 6 = 4 ≠ 0</span>
+      <span class="calc">f(−1) = −1 − 4 − 1 + 6 = 0 ✓</span>
+    </div>
+    <div class="step">
+      <strong>Vi vet:</strong> (x + 1) er en faktor. Del polynomet på (x + 1).
+      <span class="calc">x³ − 4x² + x + 6 = (x + 1) · (x² − 5x + 6)</span>
+    </div>
+    <div class="step">
+      <strong>Faktoriser andregradsleddet.</strong> Bruk abc-formel eller prøv: hva har sum 5 og produkt 6? Tallene 2 og 3.
+      <span class="calc">x² − 5x + 6 = (x − 2)(x − 3)</span>
+    </div>
+    <div class="step">
+      <strong>Sett alt sammen.</strong>
+      <span class="calc">f(x) = (x + 1)(x − 2)(x − 3)</span>
+    </div>
+    <div class="step">
+      <strong>Nullpunkter:</strong> x = −1, x = 2, x = 3.
+    </div>
+  </div>
+
+  <h3>Forkorting av rasjonale uttrykk</h3>
+  <p>Polynomdivisjon brukes også for å forkorte brøker med polynomer:</p>
+  <div class="formula-box">
+    (x² − 5x + 6) / (x − 2) = (x − 2)(x − 3) / (x − 2) = x − 3
+  </div>
+  <p>Når både teller og nevner har samme faktor, kan vi forkorte den bort (bortsett fra på selve nullpunktet).</p>
+
+  <div class="note">
+    <strong>Tips:</strong> Konstantleddet i polynomet (det uten x) er produktet av alle nullpunktene (med fortegnsregler). For x³ − 4x² + x + 6 er det 6 = (−1)·2·3·(−1) = 6 ✓.
+  </div>
+</div>
+
+<!-- ============ 4.3 LIKNINGSSYSTEM ============ -->
+<div class="card" id="likningssystem">
+  <h2><span class="section-num">4.3</span>Likningssystem</h2>
+  <p>Et <strong>likningssystem</strong> er to (eller flere) likninger som skal være sanne <em>samtidig</em>. Løsningen er verdiene som tilfredsstiller alle likningene.</p>
+
+  <div class="formula-box">
+    {  ax + by = c &nbsp;&nbsp; (likning 1)<br>
+    &nbsp; dx + ey = f &nbsp;&nbsp; (likning 2)  }
+  </div>
+
+  <h3>Tre måter å løse på</h3>
+
+  <div class="example-tabs">
+    <button class="example-tab active" onclick="showExample(0, this)">Innsetning</button>
+    <button class="example-tab" onclick="showExample(1, this)">Addisjon</button>
+    <button class="example-tab" onclick="showExample(2, this)">Grafisk</button>
+  </div>
+
+  <!-- Innsetningsmetoden -->
+  <div class="example-content active" id="ex0">
+    <h3>Innsetningsmetoden</h3>
+    <p>Løs det ene uttrykket for én variabel og sett inn i det andre.</p>
+    <p><em>Eksempel:</em></p>
+    <div class="formula-box">
+      I:&nbsp;&nbsp; y = 2x + 1<br>
+      II:&nbsp; 3x + y = 11
+    </div>
+    <div class="steps">
+      <div class="step">
+        <strong>Sett inn uttrykket fra I i II.</strong> y er allerede løst i I.
+        <span class="calc">3x + (2x + 1) = 11</span>
+      </div>
+      <div class="step">
+        <strong>Løs for x.</strong>
+        <span class="calc">5x + 1 = 11 ⇒ 5x = 10 ⇒ x = 2</span>
+      </div>
+      <div class="step">
+        <strong>Sett tilbake i I for å finne y.</strong>
+        <span class="calc">y = 2·2 + 1 = 5</span>
+      </div>
+      <div class="step">
+        <strong>Svar:</strong> (x, y) = (2, 5).
+      </div>
+    </div>
+  </div>
+
+  <!-- Addisjonsmetoden -->
+  <div class="example-content" id="ex1">
+    <h3>Addisjonsmetoden (eliminasjon)</h3>
+    <p>Gang likningene slik at en variabel forsvinner når du legger sammen.</p>
+    <div class="formula-box">
+      I:&nbsp;&nbsp; 2x + 3y = 12<br>
+      II:&nbsp; 4x − 3y = 6
+    </div>
+    <div class="steps">
+      <div class="step">
+        <strong>Legg sammen I + II.</strong> 3y og −3y kansellerer.
+        <span class="calc">(2x + 3y) + (4x − 3y) = 12 + 6</span>
+        <span class="calc">6x = 18 ⇒ x = 3</span>
+      </div>
+      <div class="step">
+        <strong>Sett inn i I.</strong>
+        <span class="calc">2·3 + 3y = 12 ⇒ 3y = 6 ⇒ y = 2</span>
+      </div>
+      <div class="step">
+        <strong>Svar:</strong> (x, y) = (3, 2).
+      </div>
+    </div>
+    <div class="note">
+      Hvis variablene ikke kansellerer direkte, gang en (eller begge) likninger med et passende tall først.
+    </div>
+  </div>
+
+  <!-- Grafisk metode -->
+  <div class="example-content" id="ex2">
+    <h3>Grafisk metode</h3>
+    <p>Tegn begge likninger som linjer. Skjæringspunktet er løsningen.</p>
+    <div class="formula-box">
+      I:&nbsp; y = 2x + 1<br>
+      II: y = −x + 4
+    </div>
+    <div class="system-card" style="background:#fff;">
+      <canvas id="systemCanvas" width="400" height="300"></canvas>
+    </div>
+    <p>Linjene krysser i (1, 3). <strong>Det er løsningen.</strong></p>
+    <div class="note">
+      <strong>Praktisk:</strong> grafisk er fin for å «se» løsningen, men nøyaktigheten er begrenset av hvor godt du kan lese av grafen. Bruk algebra for eksakte svar.
+    </div>
+  </div>
+
+  <h3>Hva skjer hvis likningene ikke har én løsning?</h3>
+  <div class="system-grid">
+    <div class="system-card">
+      <h4>Én løsning</h4>
+      <canvas id="caseOne" width="280" height="200"></canvas>
+      <p style="font-size:0.9rem; margin-top:0.4rem;">Linjene krysser i ett punkt. Vanligst!</p>
+    </div>
+    <div class="system-card">
+      <h4>Ingen løsning</h4>
+      <canvas id="caseNone" width="280" height="200"></canvas>
+      <p style="font-size:0.9rem; margin-top:0.4rem;">Parallelle linjer — møtes aldri.</p>
+    </div>
+    <div class="system-card">
+      <h4>Uendelig mange</h4>
+      <canvas id="caseInf" width="280" height="200"></canvas>
+      <p style="font-size:0.9rem; margin-top:0.4rem;">Samme linje to ganger. Alle punkter er løsninger.</p>
+    </div>
+    <div class="system-card">
+      <h4>Hint i regnestykket</h4>
+      <p style="font-size:0.95rem;">Får du <strong>0 = 0</strong> når du regner — uendelig mange løsninger.<br>Får du <strong>0 = 5</strong> (eller annet feil) — ingen løsning.</p>
+    </div>
+  </div>
+
+  <h3>Lek med to likninger og se skjæringen</h3>
+  <p>Dra på skyverne under for å endre stigningstall og konstantledd. Skjæringspunktet (om det finnes) regnes ut og markeres i sanntid. Prøv å gjøre linjene parallelle eller sammenfallende!</p>
+  <div class="syseq-tool">
+    <canvas id="syseqCanvas" width="640" height="380"></canvas>
+    <div class="syseq-controls">
+      <div class="syseq-row">
+        <span class="syseq-label" style="color:var(--blue);">y =</span>
+        <div class="syseq-slider">
+          <label for="syseqA1">a₁</label>
+          <input type="range" id="syseqA1" min="-3" max="3" step="0.1" value="2">
+          <span id="syseqA1Val">2.0</span>
+        </div>
+        <span class="syseq-x">x +</span>
+        <div class="syseq-slider">
+          <label for="syseqB1">b₁</label>
+          <input type="range" id="syseqB1" min="-6" max="6" step="0.1" value="1">
+          <span id="syseqB1Val">1.0</span>
+        </div>
+      </div>
+      <div class="syseq-row">
+        <span class="syseq-label" style="color:var(--red);">y =</span>
+        <div class="syseq-slider">
+          <label for="syseqA2">a₂</label>
+          <input type="range" id="syseqA2" min="-3" max="3" step="0.1" value="-1">
+          <span id="syseqA2Val">-1.0</span>
+        </div>
+        <span class="syseq-x">x +</span>
+        <div class="syseq-slider">
+          <label for="syseqB2">b₂</label>
+          <input type="range" id="syseqB2" min="-6" max="6" step="0.1" value="4">
+          <span id="syseqB2Val">4.0</span>
+        </div>
+      </div>
+    </div>
+    <div class="syseq-readout">
+      <div class="item"><span class="label">Linje 1</span><span class="val" id="syseqEq1" style="color:var(--blue);">y = 2x + 1</span></div>
+      <div class="item"><span class="label">Linje 2</span><span class="val" id="syseqEq2" style="color:var(--red);">y = −x + 4</span></div>
+      <div class="item" id="syseqStatusBox"><span class="label">Status</span><span class="val" id="syseqStatus" style="color:var(--green);">Én løsning</span></div>
+      <div class="item"><span class="label">Skjæringspunkt</span><span class="val" id="syseqSol">(1.00, 3.00)</span></div>
+    </div>
+  </div>
+
+  <h3>System med tre ukjente</h3>
+  <p>Tre likninger med tre ukjente løses på samme måte: bruk <em>addisjon</em> til å eliminere én variabel om gangen, så du står igjen med to likninger og to ukjente.</p>
+  <div class="formula-box purple">
+    Strategi: 3 likninger → 2 likninger → 1 likning. Løs bakover.
+  </div>
+
+  <h3>Fullt eksempel: tre ukjente</h3>
+  <div class="formula-box">
+    I:&nbsp;&nbsp;&nbsp; x + y + z = 6<br>
+    II:&nbsp;&nbsp; 2x − y + z = 3<br>
+    III:&nbsp; x + 2y − z = 2
+  </div>
+  <div class="steps">
+    <div class="step">
+      <strong>Eliminer z først.</strong> Legg sammen I og III (z + (−z) = 0).
+      <span class="calc">I + III: 2x + 3y = 8&nbsp;&nbsp; (kall denne IV)</span>
+    </div>
+    <div class="step">
+      <strong>Eliminer z igjen.</strong> Legg sammen II og III.
+      <span class="calc">II + III: 3x + y = 5&nbsp;&nbsp; (kall denne V)</span>
+    </div>
+    <div class="step">
+      <strong>Nå har vi to likninger med to ukjente.</strong> Løs IV og V.
+      <span class="calc">Fra V: y = 5 − 3x</span>
+      <span class="calc">Sett inn i IV: 2x + 3(5 − 3x) = 8</span>
+      <span class="calc">2x + 15 − 9x = 8 ⇒ −7x = −7 ⇒ x = 1</span>
+    </div>
+    <div class="step">
+      <strong>Finn y:</strong> y = 5 − 3·1 = 2.
+    </div>
+    <div class="step">
+      <strong>Finn z:</strong> sett x og y inn i I.
+      <span class="calc">1 + 2 + z = 6 ⇒ z = 3</span>
+    </div>
+    <div class="step">
+      <strong>Svar:</strong> (x, y, z) = <strong>(1, 2, 3)</strong>.
+    </div>
+    <div class="step">
+      <strong>Sjekk i alle tre likninger.</strong>
+      <span class="calc">I: 1 + 2 + 3 = 6 ✓</span>
+      <span class="calc">II: 2 − 2 + 3 = 3 ✓</span>
+      <span class="calc">III: 1 + 4 − 3 = 2 ✓</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 4.4 ULIKHETER ============ -->
+<div class="card" id="ulikheter">
+  <h2><span class="section-num">4.4</span>Ulikheter</h2>
+  <p>En <strong>ulikhet</strong> er som en likning, men med &lt;, &gt;, ≤ eller ≥ i stedet for likhetstegn. Løsningen er som regel et <em>intervall</em>, ikke ett enkelt tall.</p>
+
+  <div class="formula-box">
+    Symbolene: &lt; (mindre enn), &gt; (større enn), ≤ (mindre eller lik), ≥ (større eller lik)
+  </div>
+
+  <h3>Regnereglene</h3>
+  <ul>
+    <li>Du kan <strong>legge til/trekke fra</strong> samme tall på begge sider — ingen problem.</li>
+    <li>Du kan <strong>gange/dele med et positivt tall</strong> — ingen problem.</li>
+    <li><strong style="color:var(--red);">Når du ganger eller deler med et negativt tall, må du snu ulikhetstegnet!</strong></li>
+  </ul>
+
+  <div class="formula-box red">
+    Eks: −2x &lt; 6 &nbsp;⇒&nbsp; del på −2 og snu &nbsp;⇒&nbsp; x &gt; −3
+  </div>
+
+  <h3>Lineære ulikheter</h3>
+  <div class="steps">
+    <div class="step">
+      <strong>Eksempel:</strong> 3x − 4 ≥ 8
+    </div>
+    <div class="step">
+      <strong>Legg til 4 på begge sider.</strong>
+      <span class="calc">3x ≥ 12</span>
+    </div>
+    <div class="step">
+      <strong>Del på 3 (positivt — ingen snu).</strong>
+      <span class="calc">x ≥ 4</span>
+    </div>
+    <div class="step">
+      <strong>Svar:</strong> x ≥ 4. På intervallnotasjon: [4, →⟩.
+    </div>
+  </div>
+
+  <div class="numline-wrap">
+    <svg viewBox="0 0 600 80">
+      <line x1="20" y1="40" x2="580" y2="40" stroke="#1e293b" stroke-width="2"/>
+      <!-- pilspisser -->
+      <polygon points="580,40 570,35 570,45" fill="#1e293b"/>
+      <polygon points="20,40 30,35 30,45" fill="#1e293b"/>
+      <!-- merker -->
+      <g stroke="#1e293b" stroke-width="1.5">
+        <line x1="80" y1="35" x2="80" y2="45"/>
+        <line x1="160" y1="35" x2="160" y2="45"/>
+        <line x1="240" y1="35" x2="240" y2="45"/>
+        <line x1="320" y1="35" x2="320" y2="45"/>
+        <line x1="400" y1="35" x2="400" y2="45"/>
+        <line x1="480" y1="35" x2="480" y2="45"/>
+      </g>
+      <g fill="#64748b" font-size="14" text-anchor="middle">
+        <text x="80" y="65">1</text>
+        <text x="160" y="65">2</text>
+        <text x="240" y="65">3</text>
+        <text x="320" y="65">4</text>
+        <text x="400" y="65">5</text>
+        <text x="480" y="65">6</text>
+      </g>
+      <!-- markert område fra x=4 -->
+      <line x1="320" y1="40" x2="580" y2="40" stroke="#16a34a" stroke-width="6" opacity="0.55"/>
+      <circle cx="320" cy="40" r="7" fill="#16a34a"/>
+      <text x="335" y="22" fill="#16a34a" font-size="13" font-weight="600">x ≥ 4</text>
+    </svg>
+  </div>
+
+  <h3>Andregradsulikheter</h3>
+  <p>For å løse <strong>x² − x − 6 &lt; 0</strong>:</p>
+  <div class="steps">
+    <div class="step">
+      <strong>Faktoriser/finn nullpunktene</strong> til andregradsuttrykket.
+      <span class="calc">x² − x − 6 = (x − 3)(x + 2)</span>
+      <span class="calc">Nullpunkter: x = −2 og x = 3</span>
+    </div>
+    <div class="step">
+      <strong>Lag en fortegnslinje</strong> for hvert ledd, og kombiner.
+    </div>
+    <div class="step">
+      <strong>Les av:</strong> uttrykket er negativt mellom nullpunktene.
+      <span class="calc">−2 &lt; x &lt; 3</span>
+    </div>
+  </div>
+
+  <h3>Fortegnsskjema</h3>
+  <p>Et fortegnsskjema er et verktøy for å se hvor et uttrykk er positivt eller negativt. Slik bruker du det:</p>
+  <div class="steps">
+    <div class="step">
+      <strong>Faktoriser uttrykket.</strong> Hver faktor får sin egen rad.
+    </div>
+    <div class="step">
+      <strong>Marker nullpunktene</strong> til hver faktor på tallinjen.
+    </div>
+    <div class="step">
+      <strong>Test ett tall i hvert intervall.</strong> Velg et enkelt tall (f.eks. 0, eller noe utenfor) og regn ut fortegnet til faktoren der.
+    </div>
+    <div class="step">
+      <strong>Multipliser fortegnene</strong> kolonnevis for å finne fortegnet til hele uttrykket.
+    </div>
+  </div>
+
+  <p><em>For x² − x − 6 = (x + 2)(x − 3), test x = −5, x = 0, x = 5:</em></p>
+  <ul>
+    <li>x = −5: (−3)·(−8) = +24 (positivt)</li>
+    <li>x = 0: (2)·(−3) = −6 (negativt)</li>
+    <li>x = 5: (7)·(2) = +14 (positivt)</li>
+  </ul>
+  <p>Det matcher tabellen under:</p>
+  <table class="value-table" style="font-size:0.95rem;">
+    <thead>
+      <tr><th>Intervall</th><th>x &lt; −2</th><th>−2 &lt; x &lt; 3</th><th>x &gt; 3</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>x + 2</td><td style="color:var(--red);">−</td><td style="color:var(--green);">+</td><td style="color:var(--green);">+</td></tr>
+      <tr><td>x − 3</td><td style="color:var(--red);">−</td><td style="color:var(--red);">−</td><td style="color:var(--green);">+</td></tr>
+      <tr style="background:#fef9c3;"><td><strong>(x+2)(x−3)</strong></td><td style="color:var(--green);"><strong>+</strong></td><td style="color:var(--red);"><strong>−</strong></td><td style="color:var(--green);"><strong>+</strong></td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:0.6rem;">Vi vil ha &lt; 0, så svaret er der produktet er <strong>−</strong>: <strong>−2 &lt; x &lt; 3</strong>.</p>
+
+  <div class="numline-wrap">
+    <svg viewBox="0 0 600 80">
+      <line x1="20" y1="40" x2="580" y2="40" stroke="#1e293b" stroke-width="2"/>
+      <polygon points="580,40 570,35 570,45" fill="#1e293b"/>
+      <polygon points="20,40 30,35 30,45" fill="#1e293b"/>
+      <g stroke="#1e293b" stroke-width="1.5">
+        <line x1="80" y1="35" x2="80" y2="45"/>
+        <line x1="160" y1="35" x2="160" y2="45"/>
+        <line x1="240" y1="35" x2="240" y2="45"/>
+        <line x1="320" y1="35" x2="320" y2="45"/>
+        <line x1="400" y1="35" x2="400" y2="45"/>
+        <line x1="480" y1="35" x2="480" y2="45"/>
+      </g>
+      <g fill="#64748b" font-size="14" text-anchor="middle">
+        <text x="80" y="65">−3</text>
+        <text x="160" y="65">−2</text>
+        <text x="240" y="65">−1</text>
+        <text x="320" y="65">0</text>
+        <text x="400" y="65">1</text>
+        <text x="480" y="65">2</text>
+        <text x="560" y="65">3</text>
+      </g>
+      <!-- markert område -2<x<3 -->
+      <line x1="160" y1="40" x2="560" y2="40" stroke="#dc2626" stroke-width="6" opacity="0.55"/>
+      <circle cx="160" cy="40" r="6" fill="#fff" stroke="#dc2626" stroke-width="3"/>
+      <circle cx="560" cy="40" r="6" fill="#fff" stroke="#dc2626" stroke-width="3"/>
+      <text x="280" y="22" fill="#dc2626" font-size="13" font-weight="600">−2 &lt; x &lt; 3</text>
+    </svg>
+  </div>
+
+  <div class="note">
+    <strong>Åpne vs lukkede sirkler:</strong> Med &lt; eller &gt; er endepunktet ikke med (åpen sirkel). Med ≤ eller ≥ er det med (lukket sirkel).
+  </div>
+</div>
+
+<!-- ============ 4.5 NUMERISK LØSNING ============ -->
+<div class="card" id="numerisk">
+  <h2><span class="section-num">4.5</span>Numerisk løsning av likninger</h2>
+  <p>Noen likninger kan vi <em>ikke</em> løse algebraisk — eller det er veldig vanskelig. Da bruker vi en <strong>numerisk metode</strong>: vi finner et tilnærmet svar med datamaskin eller kalkulator.</p>
+
+  <div class="formula-box">
+    Eksempler: x⁵ − x − 1 = 0, e<sup>x</sup> = 5x, sin(x) = x/2
+  </div>
+
+  <h3>Idé: en likning er det samme som «hvor er nullpunktet»</h3>
+  <p>For å løse <strong>f(x) = g(x)</strong> kan vi flytte alt til én side og finne hvor <strong>h(x) = f(x) − g(x) = 0</strong>.</p>
+  <p>Med andre ord: vi tegner grafen og leser av <strong>der den krysser x-aksen</strong>.</p>
+
+  <div class="diagram-row">
+    <svg viewBox="0 0 240 200" width="240">
+      <line x1="20" y1="110" x2="220" y2="110" stroke="#94a3b8" stroke-width="1.5"/>
+      <line x1="120" y1="20" x2="120" y2="190" stroke="#94a3b8" stroke-width="1.5"/>
+      <!-- buet kurve -->
+      <path d="M 30,180 Q 80,30 130,140 T 220,40" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+      <!-- nullpunkter -->
+      <circle cx="55" cy="110" r="5" fill="#dc2626"/>
+      <circle cx="115" cy="110" r="5" fill="#dc2626"/>
+      <circle cx="180" cy="110" r="5" fill="#dc2626"/>
+      <text x="38" y="130" fill="#dc2626" font-size="11" font-weight="600">x₁</text>
+      <text x="100" y="130" fill="#dc2626" font-size="11" font-weight="600">x₂</text>
+      <text x="170" y="130" fill="#dc2626" font-size="11" font-weight="600">x₃</text>
+    </svg>
+    <div class="text">
+      <p>Punktene der grafen krysser x-aksen er løsningene.</p>
+      <p>I GeoGebra:</p>
+      <ul>
+        <li>Definer funksjonen <code>f(x) = …</code></li>
+        <li>Skriv <code>NLøs(f(x) = 0, x)</code> eller <code>Nullpunkt(f)</code></li>
+        <li>GeoGebra finner alle (eller ett, avhengig av kommandoen).</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Sentrale GeoGebra-kommandoer</h3>
+  <table class="gb-cmd-table">
+    <thead><tr><th>Kommando</th><th>Hva den gjør</th></tr></thead>
+    <tbody>
+      <tr><td><code>Løs(likning, x)</code></td><td>Eksakt løsning (når den finnes algebraisk)</td></tr>
+      <tr><td><code>NLøs(likning, x)</code></td><td>Numerisk (tilnærmet) løsning</td></tr>
+      <tr><td><code>NLøs(likning, x = startverdi)</code></td><td>Numerisk søk nær en startverdi</td></tr>
+      <tr><td><code>Nullpunkt(f)</code></td><td>Alle nullpunkter til en funksjon</td></tr>
+      <tr><td><code>Nullpunkt(f, a, b)</code></td><td>Nullpunkter mellom a og b</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Eksempel: løs e<sup>x</sup> = 5x</h3>
+  <div class="steps">
+    <div class="step">
+      <strong>Flytt alt til én side.</strong>
+      <span class="calc">e^x − 5x = 0</span>
+    </div>
+    <div class="step">
+      <strong>Definer funksjonen i GeoGebra.</strong>
+      <span class="calc">f(x) := exp(x) − 5x</span>
+    </div>
+    <div class="step">
+      <strong>Tegn grafen og se hvor den krysser x-aksen.</strong> Det ser ut til å være to nullpunkter.
+    </div>
+    <div class="step">
+      <strong>Bruk NLøs med startverdier.</strong>
+      <span class="calc">NLøs(f(x) = 0, x = 0)  →  x ≈ 0.259</span>
+      <span class="calc">NLøs(f(x) = 0, x = 3)  →  x ≈ 2.542</span>
+    </div>
+    <div class="step">
+      <strong>Svar:</strong> Likningen har to løsninger, ca. <strong>x ≈ 0.26</strong> og <strong>x ≈ 2.54</strong>.
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>Hvorfor startverdi?</strong> Numeriske metoder finner ofte bare ett nullpunkt om gangen — det nærmeste startverdien. Hvis du vet at det er flere, kjør NLøs flere ganger med ulike startverdier.
+  </div>
+</div>
+
+<!-- ============ MØNSTER OG OVERSIKT ============ -->
+<div class="card" id="oversikt">
+  <h2>Mønster og oversikt – velg riktig metode</h2>
+  <p>Her er en rask oversikt for å velge riktig algebra-verktøy:</p>
+
+  <table class="value-table" style="font-size:0.95rem;">
+    <thead><tr><th>Du skal …</th><th>Bruk</th></tr></thead>
+    <tbody>
+      <tr><td>Faktorisere et polynom av grad ≥ 3</td><td>Gjett nullpunkt, så polynomdivisjon</td></tr>
+      <tr><td>Forkorte (x² − …) / (x − a)</td><td>Polynomdivisjon</td></tr>
+      <tr><td>Løse 2 likninger med 2 ukjente</td><td>Innsetning eller addisjon</td></tr>
+      <tr><td>Løse 3 likninger med 3 ukjente</td><td>Eliminasjon (eller GeoGebra Løs)</td></tr>
+      <tr><td>Løse en lineær ulikhet</td><td>Som likning, men husk fortegn ved gange/dele med negativt</td></tr>
+      <tr><td>Løse en andregradsulikhet</td><td>Faktoriser, fortegnsskjema, les av</td></tr>
+      <tr><td>Løse en likning som er «umulig»</td><td>NLøs i GeoGebra (numerisk)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Tre raske huskeregler</h3>
+  <ul>
+    <li><strong>Faktorsetningen:</strong> f(a) = 0 ⇔ (x − a) er faktor i f.</li>
+    <li><strong>Gange med negativt = snu ulikhetstegnet.</strong> Glem aldri.</li>
+    <li><strong>NLøs trenger ofte en startverdi.</strong> Tegn grafen først for å se hvor du skal lete.</li>
+  </ul>
+</div>
+
+<!-- ============ GEOGEBRA ============ -->
+<div class="card" id="geogebra">
+  <h2>GeoGebra-guide for algebra</h2>
+  <p>Verktøykassen for kapittel 4. CAS-feltet (linje merket med ÷ eller fx) er det viktigste her.</p>
+
+  <div class="gb-section">
+    <h3>Polynomdivisjon</h3>
+    <p>GeoGebra kan gjøre polynomdivisjonen for deg!</p>
+    <div class="gb-example">
+      <span class="comment">// Dividere polynomer</span><br>
+      Divisjon(x^3 - 4x^2 + x + 6, x - 2)<br>
+      <span class="result">→ {x² − 2x − 3, 0}   (kvotient og rest)</span><br><br>
+      <span class="comment">// Faktorisere et polynom direkte</span><br>
+      Faktoriser(x^3 - 4x^2 + x + 6)<br>
+      <span class="result">→ (x − 2)(x − 3)(x + 1)</span>
+    </div>
+  </div>
+
+  <div class="gb-section">
+    <h3>Likningssystem</h3>
+    <div class="gb-example">
+      <span class="comment">// To likninger med to ukjente</span><br>
+      Løs({2x + 3y = 12, 4x - 3y = 6}, {x, y})<br>
+      <span class="result">→ {{x = 3, y = 2}}</span><br><br>
+      <span class="comment">// Tre likninger med tre ukjente</span><br>
+      Løs({x + y + z = 6, 2x - y + z = 3, x + 2y - z = 2}, {x, y, z})<br>
+      <span class="result">→ {{x = 1, y = 2, z = 3}}</span>
+    </div>
+    <div class="note">
+      <strong>Husk:</strong> krøllparenteser <code>{ … }</code> rundt likningssettet og rundt variabel-listen.
+    </div>
+  </div>
+
+  <div class="gb-section">
+    <h3>Ulikheter</h3>
+    <div class="gb-example">
+      <span class="comment">// Lineær ulikhet</span><br>
+      Løs(3x - 4 ≥ 8, x)<br>
+      <span class="result">→ x ≥ 4</span><br><br>
+      <span class="comment">// Andregradsulikhet</span><br>
+      Løs(x^2 - x - 6 &lt; 0, x)<br>
+      <span class="result">→ −2 &lt; x &lt; 3</span>
+    </div>
+    <div class="note">
+      Skriv <code>≥</code> som <code>&gt;=</code>, og <code>≤</code> som <code>&lt;=</code> hvis spesialtegnet er vanskelig å finne.
+    </div>
+  </div>
+
+  <div class="gb-section">
+    <h3>Numerisk løsning</h3>
+    <div class="gb-example">
+      <span class="comment">// Hvis Løs ikke greier det</span><br>
+      f(x) := exp(x) - 5x<br>
+      NLøs(f(x) = 0, x = 0)<br>
+      <span class="result">→ x ≈ 0.2592</span><br><br>
+      NLøs(f(x) = 0, x = 3)<br>
+      <span class="result">→ x ≈ 2.5426</span><br><br>
+      <span class="comment">// Alle nullpunkter i et intervall</span><br>
+      Nullpunkt(f, -2, 5)
+    </div>
+  </div>
+
+  <div class="gb-section">
+    <h3>Vanlige feil</h3>
+    <div class="calc-tip">
+      <div class="icon">1</div>
+      <div>
+        <strong>Glemte krøllparenteser i likningssett.</strong> <code>Løs(2x+3y=12, 4x-3y=6, {x,y})</code> fungerer ikke. Skriv <code>Løs({2x+3y=12, 4x-3y=6}, {x,y})</code>.
+      </div>
+    </div>
+    <div class="calc-tip">
+      <div class="icon">2</div>
+      <div>
+        <strong>Brukte = i stedet for :=.</strong> <code>f(x) := …</code> definerer en funksjon du kan regne videre med. <code>=</code> er bare en likning.
+      </div>
+    </div>
+    <div class="calc-tip">
+      <div class="icon">3</div>
+      <div>
+        <strong>Glemte å snu ulikhetstegnet.</strong> Når du regner for hånd og ganger eller deler med negativt — snu! GeoGebra gjør det selv.
+      </div>
+    </div>
+    <div class="calc-tip">
+      <div class="icon">4</div>
+      <div>
+        <strong>NLøs uten startverdi gir bare ett svar.</strong> Tegn grafen først, og kjør NLøs én gang per nullpunkt med ulike startverdier.
+      </div>
+    </div>
+    <div class="calc-tip">
+      <div class="icon">5</div>
+      <div>
+        <strong>Polynomdivisjon: glemte ledd.</strong> Hvis polynomet mangler et ledd (f.eks. ingen x²), skriv <code>0·x²</code> eller bare hold plassen — ellers blir oppstillingen feil.
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<script>
+// Tabs for likningssystem
+function showExample(idx, btn) {
+  document.querySelectorAll('.example-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.example-content').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('ex' + idx).classList.add('active');
+  // re-tegn grafer hvis nødvendig (canvas i skjult tab kan miste innhold)
+  if (idx === 2) drawSystemGraph();
+}
+
+// ============ Felles graf-tegner ============
+function plotFunc(canvasId, fn, opts) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const o = Object.assign({
+    xMin: -5, xMax: 5, yMin: -5, yMax: 5,
+    color: '#2563eb', lineWidth: 2.5,
+    showAxes: true, gridStep: 1,
+    pad: { l: 30, r: 10, t: 10, b: 25 }
+  }, opts || {});
+  const pad = o.pad;
+  const gw = W - pad.l - pad.r;
+  const gh = H - pad.t - pad.b;
+  const px = x => pad.l + (x - o.xMin) / (o.xMax - o.xMin) * gw;
+  const py = y => pad.t + (o.yMax - y) / (o.yMax - o.yMin) * gh;
+
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0, 0, W, H);
+
+  ctx.strokeStyle = '#e2e8f0';
+  ctx.lineWidth = 0.7;
+  for (let x = Math.ceil(o.xMin); x <= o.xMax; x += o.gridStep) {
+    ctx.beginPath(); ctx.moveTo(px(x), pad.t); ctx.lineTo(px(x), H - pad.b); ctx.stroke();
+  }
+  for (let y = Math.ceil(o.yMin); y <= o.yMax; y += o.gridStep) {
+    ctx.beginPath(); ctx.moveTo(pad.l, py(y)); ctx.lineTo(W - pad.r, py(y)); ctx.stroke();
+  }
+
+  if (o.showAxes) {
+    ctx.strokeStyle = '#94a3b8';
+    ctx.lineWidth = 1.3;
+    if (o.yMin <= 0 && o.yMax >= 0) {
+      ctx.beginPath(); ctx.moveTo(pad.l, py(0)); ctx.lineTo(W - pad.r, py(0)); ctx.stroke();
+    }
+    if (o.xMin <= 0 && o.xMax >= 0) {
+      ctx.beginPath(); ctx.moveTo(px(0), pad.t); ctx.lineTo(px(0), H - pad.b); ctx.stroke();
+    }
+    ctx.fillStyle = '#64748b';
+    ctx.font = '10px sans-serif';
+    ctx.textAlign = 'center';
+    for (let x = Math.ceil(o.xMin); x <= o.xMax; x += o.gridStep) {
+      if (x === 0) continue;
+      ctx.fillText(x, px(x), H - pad.b + 13);
+    }
+    ctx.textAlign = 'right';
+    for (let y = Math.ceil(o.yMin); y <= o.yMax; y += o.gridStep) {
+      if (y === 0) continue;
+      ctx.fillText(y, pad.l - 4, py(y) + 3);
+    }
+  }
+
+  // graf
+  if (typeof fn === 'function') {
+    ctx.strokeStyle = o.color;
+    ctx.lineWidth = o.lineWidth;
+    ctx.beginPath();
+    let started = false;
+    const N = gw * 2;
+    for (let i = 0; i <= N; i++) {
+      const x = o.xMin + i / N * (o.xMax - o.xMin);
+      let y;
+      try { y = fn(x); } catch (e) { started = false; continue; }
+      if (!isFinite(y) || y > o.yMax + 50 || y < o.yMin - 50) {
+        started = false; continue;
+      }
+      const X = px(x), Y = py(y);
+      if (!started) { ctx.moveTo(X, Y); started = true; }
+      else ctx.lineTo(X, Y);
+    }
+    ctx.stroke();
+  }
+  return { px, py, ctx, pad };
+}
+
+function drawTwoLines(canvasId, fns, colors, opts, marker) {
+  plotFunc(canvasId, null, opts);
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const o = Object.assign({
+    xMin: -5, xMax: 5, yMin: -5, yMax: 5,
+    pad: { l: 30, r: 10, t: 10, b: 25 }
+  }, opts || {});
+  const pad = o.pad;
+  const gw = W - pad.l - pad.r;
+  const gh = H - pad.t - pad.b;
+  const px = x => pad.l + (x - o.xMin) / (o.xMax - o.xMin) * gw;
+  const py = y => pad.t + (o.yMax - y) / (o.yMax - o.yMin) * gh;
+
+  fns.forEach((fn, i) => {
+    ctx.strokeStyle = colors[i];
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    let started = false;
+    for (let xi = 0; xi <= gw; xi++) {
+      const x = o.xMin + xi / gw * (o.xMax - o.xMin);
+      const y = fn(x);
+      if (!isFinite(y) || y > o.yMax + 30 || y < o.yMin - 30) { started = false; continue; }
+      const X = px(x), Y = py(y);
+      if (!started) { ctx.moveTo(X, Y); started = true; }
+      else ctx.lineTo(X, Y);
+    }
+    ctx.stroke();
+  });
+
+  if (marker) {
+    const X = px(marker.x), Y = py(marker.y);
+    ctx.fillStyle = '#9333ea';
+    ctx.beginPath(); ctx.arc(X, Y, 6, 0, 2*Math.PI); ctx.fill();
+    ctx.fillStyle = '#9333ea';
+    ctx.font = 'bold 12px sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(`(${marker.x}, ${marker.y})`, X + 8, Y - 6);
+  }
+}
+
+function drawSystemGraph() {
+  drawTwoLines('systemCanvas',
+    [x => 2*x + 1, x => -x + 4],
+    ['#2563eb', '#dc2626'],
+    { xMin: -3, xMax: 5, yMin: -2, yMax: 8, pad: { l: 35, r: 10, t: 15, b: 25 } },
+    { x: 1, y: 3 }
+  );
+  // legg til labels
+  const canvas = document.getElementById('systemCanvas');
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#2563eb';
+  ctx.font = 'bold 12px sans-serif';
+  ctx.textAlign = 'left';
+  ctx.fillText('y = 2x + 1', 280, 50);
+  ctx.fillStyle = '#dc2626';
+  ctx.fillText('y = −x + 4', 280, 75);
+}
+drawSystemGraph();
+
+// Cases
+drawTwoLines('caseOne',
+  [x => 2*x + 1, x => -x + 4],
+  ['#2563eb', '#dc2626'],
+  { xMin: -2, xMax: 4, yMin: -2, yMax: 6, pad: { l: 28, r: 8, t: 10, b: 22 } },
+  { x: 1, y: 3 }
+);
+drawTwoLines('caseNone',
+  [x => 0.5*x + 1, x => 0.5*x - 2],
+  ['#2563eb', '#dc2626'],
+  { xMin: -2, xMax: 4, yMin: -3, yMax: 4, pad: { l: 28, r: 8, t: 10, b: 22 } },
+  null
+);
+drawTwoLines('caseInf',
+  [x => x + 1, x => x + 1.05], // tegnes oppå hverandre
+  ['#2563eb', '#dc2626'],
+  { xMin: -2, xMax: 4, yMin: -2, yMax: 5, pad: { l: 28, r: 8, t: 10, b: 22 } },
+  null
+);
+
+// ============ LIKNINGSSYSTEM-UTFORSKER ============
+(function() {
+  const canvas = document.getElementById('syseqCanvas');
+  if (!canvas) return;
+
+  const sA1 = document.getElementById('syseqA1');
+  const sB1 = document.getElementById('syseqB1');
+  const sA2 = document.getElementById('syseqA2');
+  const sB2 = document.getElementById('syseqB2');
+  const vA1 = document.getElementById('syseqA1Val');
+  const vB1 = document.getElementById('syseqB1Val');
+  const vA2 = document.getElementById('syseqA2Val');
+  const vB2 = document.getElementById('syseqB2Val');
+  const eq1Out = document.getElementById('syseqEq1');
+  const eq2Out = document.getElementById('syseqEq2');
+  const statusOut = document.getElementById('syseqStatus');
+  const statusBox = document.getElementById('syseqStatusBox');
+  const solOut = document.getElementById('syseqSol');
+
+  function fmt(n) { return n.toFixed(2).replace('-', '−'); }
+
+  function fmtLine(a, b) {
+    let s = 'y = ';
+    if (Math.abs(a) < 0.05) {
+      s += b.toFixed(1).replace('-', '−');
+    } else {
+      const aPart = Math.abs(Math.abs(a) - 1) < 0.05 ? (a < 0 ? '−x' : 'x') : (a < 0 ? '−' + Math.abs(a).toFixed(1) + 'x' : a.toFixed(1) + 'x');
+      s += aPart;
+      if (Math.abs(b) >= 0.05) {
+        s += (b > 0 ? ' + ' : ' − ') + Math.abs(b).toFixed(1);
+      }
+    }
+    return s;
+  }
+
+  function update() {
+    const a1 = parseFloat(sA1.value);
+    const b1 = parseFloat(sB1.value);
+    const a2 = parseFloat(sA2.value);
+    const b2 = parseFloat(sB2.value);
+    vA1.textContent = a1.toFixed(1).replace('-', '−');
+    vB1.textContent = b1.toFixed(1).replace('-', '−');
+    vA2.textContent = a2.toFixed(1).replace('-', '−');
+    vB2.textContent = b2.toFixed(1).replace('-', '−');
+
+    eq1Out.textContent = fmtLine(a1, b1);
+    eq2Out.textContent = fmtLine(a2, b2);
+
+    let intersection = null;
+    const slopeDiff = a1 - a2;
+    if (Math.abs(slopeDiff) < 0.001) {
+      // Parallelle eller sammenfallende
+      if (Math.abs(b1 - b2) < 0.05) {
+        statusOut.textContent = 'Uendelig mange løsninger';
+        statusOut.style.color = '#9333ea';
+        statusBox.className = 'item coincident';
+        solOut.textContent = 'samme linje';
+      } else {
+        statusOut.textContent = 'Ingen løsning';
+        statusOut.style.color = '#dc2626';
+        statusBox.className = 'item parallel';
+        solOut.textContent = 'parallelle linjer';
+      }
+    } else {
+      const x = (b2 - b1) / slopeDiff;
+      const y = a1 * x + b1;
+      intersection = { x, y };
+      statusOut.textContent = 'Én løsning';
+      statusOut.style.color = '#16a34a';
+      statusBox.className = 'item solved';
+      solOut.textContent = '(' + fmt(x) + ', ' + fmt(y) + ')';
+    }
+
+    drawSyseq(a1, b1, a2, b2, intersection);
+  }
+
+  function drawSyseq(a1, b1, a2, b2, intersection) {
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    const xMin = -8, xMax = 8, yMin = -8, yMax = 8;
+    const pad = { l: 40, r: 15, t: 15, b: 30 };
+    const gw = W - pad.l - pad.r;
+    const gh = H - pad.t - pad.b;
+    const px = x => pad.l + (x - xMin) / (xMax - xMin) * gw;
+    const py = y => pad.t + (yMax - y) / (yMax - yMin) * gh;
+
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, W, H);
+
+    // Rutenett
+    ctx.strokeStyle = '#e2e8f0';
+    ctx.lineWidth = 0.7;
+    for (let x = xMin; x <= xMax; x++) {
+      ctx.beginPath(); ctx.moveTo(px(x), pad.t); ctx.lineTo(px(x), H - pad.b); ctx.stroke();
+    }
+    for (let y = yMin; y <= yMax; y++) {
+      ctx.beginPath(); ctx.moveTo(pad.l, py(y)); ctx.lineTo(W - pad.r, py(y)); ctx.stroke();
+    }
+
+    // Akser
+    ctx.strokeStyle = '#94a3b8';
+    ctx.lineWidth = 1.3;
+    ctx.beginPath(); ctx.moveTo(pad.l, py(0)); ctx.lineTo(W - pad.r, py(0)); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(px(0), pad.t); ctx.lineTo(px(0), H - pad.b); ctx.stroke();
+
+    ctx.fillStyle = '#64748b';
+    ctx.font = '11px sans-serif';
+    ctx.textAlign = 'center';
+    for (let x = xMin; x <= xMax; x += 2) {
+      if (x === 0) continue;
+      ctx.fillText(x, px(x), H - pad.b + 14);
+    }
+    ctx.textAlign = 'right';
+    for (let y = yMin; y <= yMax; y += 2) {
+      if (y === 0) continue;
+      ctx.fillText(y, pad.l - 5, py(y) + 4);
+    }
+
+    // Linje 1 (blå)
+    ctx.strokeStyle = '#2563eb';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(px(xMin), py(a1 * xMin + b1));
+    ctx.lineTo(px(xMax), py(a1 * xMax + b1));
+    ctx.stroke();
+
+    // Linje 2 (rød)
+    ctx.strokeStyle = '#dc2626';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(px(xMin), py(a2 * xMin + b2));
+    ctx.lineTo(px(xMax), py(a2 * xMax + b2));
+    ctx.stroke();
+
+    // Skjæringspunkt
+    if (intersection && intersection.x >= xMin && intersection.x <= xMax && intersection.y >= yMin && intersection.y <= yMax) {
+      ctx.fillStyle = '#16a34a';
+      ctx.beginPath(); ctx.arc(px(intersection.x), py(intersection.y), 8, 0, 2*Math.PI); ctx.fill();
+      ctx.fillStyle = '#fff';
+      ctx.beginPath(); ctx.arc(px(intersection.x), py(intersection.y), 3, 0, 2*Math.PI); ctx.fill();
+      // Label
+      ctx.fillStyle = '#16a34a';
+      ctx.font = 'bold 12px sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText('(' + intersection.x.toFixed(2) + ', ' + intersection.y.toFixed(2) + ')',
+                   px(intersection.x) + 12, py(intersection.y) - 8);
+    }
+  }
+
+  sA1.addEventListener('input', update);
+  sB1.addEventListener('input', update);
+  sA2.addEventListener('input', update);
+  sB2.addEventListener('input', update);
+  update();
+})();
+
+// ============ QUIZ ============
+const allQuestions = [
+  {
+    q: "Vi deler (x³ + 2x² − x − 2) på (x − 1). Hva er resten?",
+    opts: ["0", "−2", "2", "1"],
+    ans: 0,
+    tip: "Sjekk om x = 1 er nullpunkt: 1 + 2 − 1 − 2 = 0. Resten blir 0, og (x − 1) er en faktor."
+  },
+  {
+    q: "Faktorsetningen sier: hvis f(a) = 0, så er …",
+    opts: [
+      "(x + a) en faktor i f",
+      "(x − a) en faktor i f",
+      "f(x) = a",
+      "x = 0 et nullpunkt"
+    ],
+    ans: 1,
+    tip: "Riktig: (x − a) deler f(x) uten rest når f(a) = 0."
+  },
+  {
+    q: "Et polynom av grad 4 kan ha maksimalt hvor mange nullpunkter?",
+    opts: ["2", "3", "4", "8"],
+    ans: 2,
+    tip: "Et polynom av grad n har opptil n nullpunkter."
+  },
+  {
+    q: "Løs: 2x + 3y = 12 og x − y = 1. Hva er x?",
+    opts: ["x = 1", "x = 2", "x = 3", "x = 4"],
+    ans: 2,
+    tip: "Fra II: x = y + 1. Sett inn i I: 2(y+1) + 3y = 12 ⇒ 5y = 10 ⇒ y = 2, x = 3."
+  },
+  {
+    q: "Når må du snu ulikhetstegnet?",
+    opts: [
+      "Aldri",
+      "Når du legger til et negativt tall",
+      "Når du ganger eller deler med et negativt tall",
+      "Når du opphøyer i andre"
+    ],
+    ans: 2,
+    tip: "Multiplikasjon/divisjon med negativt tall snur retningen på ulikheten."
+  },
+  {
+    q: "−3x ≥ 9 betyr at:",
+    opts: ["x ≥ 3", "x ≤ 3", "x ≥ −3", "x ≤ −3"],
+    ans: 3,
+    tip: "Del på −3 og snu: x ≤ −3."
+  },
+  {
+    q: "Hvilken løsningsmengde har x² − x − 6 &lt; 0?",
+    opts: ["x &lt; −2 eller x &gt; 3", "−2 &lt; x &lt; 3", "x &gt; 3", "−3 &lt; x &lt; 2"],
+    ans: 1,
+    tip: "(x+2)(x−3) &lt; 0 mellom nullpunktene −2 og 3."
+  },
+  {
+    q: "Hva betyr at et likningssystem har «uendelig mange løsninger»?",
+    opts: [
+      "Alle x og y oppfyller begge",
+      "Linjene er parallelle",
+      "Linjene er identiske",
+      "Linjene krysser i origo"
+    ],
+    ans: 2,
+    tip: "Hvis begge likninger beskriver samme linje, er hvert punkt på linjen en løsning."
+  },
+  {
+    q: "Hvilken GeoGebra-kommando faktoriserer et polynom?",
+    opts: ["Løs", "Faktoriser", "Divisjon", "NLøs"],
+    ans: 1,
+    tip: "Faktoriser(uttrykk) gir polynomet på faktorisert form."
+  },
+  {
+    q: "Hvorfor bruker vi NLøs i stedet for Løs?",
+    opts: [
+      "Det går raskere",
+      "Når en likning ikke kan løses eksakt algebraisk",
+      "Det gir alltid alle løsninger",
+      "Det er bare for å tegne grafer"
+    ],
+    ans: 1,
+    tip: "NLøs gir tilnærmede svar og fungerer på likninger Løs ikke kan håndtere."
+  },
+  {
+    q: "Polynomdivisjon: (2x² + 5x + 3) ÷ (x + 1) gir kvotient …",
+    opts: ["2x + 3", "x + 3", "2x + 5", "2x − 3"],
+    ans: 0,
+    tip: "(x+1)(2x+3) = 2x² + 5x + 3, så kvotient er 2x + 3, rest 0."
+  },
+  {
+    q: "Hva er svaret på likningen 0 = 5 i utregningen din?",
+    opts: [
+      "Uendelig mange løsninger",
+      "Ingen løsning",
+      "x = 0",
+      "x = 5"
+    ],
+    ans: 1,
+    tip: "Hvis utregningen gir noe åpenbart usant (0 = 5), har systemet ingen løsning."
+  }
+];
+
+let questions = [];
+let qIdx = 0, score = 0;
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function startQuiz() {
+  questions = shuffle(allQuestions);
+  qIdx = 0; score = 0;
+  document.getElementById('quizResult').style.display = 'none';
+  document.getElementById('quizBody').style.display = 'block';
+  document.getElementById('qTotal').textContent = questions.length;
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[qIdx];
+  document.getElementById('qNum').textContent = qIdx + 1;
+  document.getElementById('qBar').style.width = ((qIdx + 1) / questions.length * 100) + '%';
+  document.getElementById('qText').innerHTML = q.q;
+  const optsEl = document.getElementById('qOptions');
+  optsEl.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-option';
+    btn.innerHTML = opt;
+    btn.onclick = () => answer(i, btn);
+    optsEl.appendChild(btn);
+  });
+  const fb = document.getElementById('qFeedback');
+  fb.className = 'quiz-feedback';
+  fb.textContent = '';
+  document.getElementById('qNext').classList.remove('show');
+}
+
+function answer(i, btn) {
+  const q = questions[qIdx];
+  const opts = document.querySelectorAll('.quiz-option');
+  opts.forEach((o, j) => {
+    o.disabled = true;
+    if (j === q.ans) o.classList.add('correct');
+    else if (j === i) o.classList.add('wrong');
+  });
+  const fb = document.getElementById('qFeedback');
+  fb.classList.add('show');
+  if (i === q.ans) {
+    score++;
+    fb.classList.add('is-correct');
+    fb.textContent = 'Riktig! ' + q.tip;
+  } else {
+    fb.classList.add('is-wrong');
+    fb.textContent = 'Feil. ' + q.tip;
+  }
+  document.getElementById('qNext').classList.add('show');
+}
+
+function nextQuestion() {
+  qIdx++;
+  if (qIdx >= questions.length) finishQuiz();
+  else showQuestion();
+}
+
+function finishQuiz() {
+  document.getElementById('quizBody').style.display = 'none';
+  const r = document.getElementById('quizResult');
+  r.style.display = 'block';
+  document.getElementById('rScore').textContent = score + ' / ' + questions.length;
+  const pct = score / questions.length;
+  let grade;
+  if (pct === 1) grade = 'Perfekt! Algebra-mester!';
+  else if (pct >= 0.8) grade = 'Veldig bra!';
+  else if (pct >= 0.6) grade = 'Bra jobbet — fortsett å øve.';
+  else if (pct >= 0.4) grade = 'På god vei. Repeter polynomdivisjon!';
+  else grade = 'Ta en titt på kapittelet og prøv igjen.';
+  document.getElementById('rGrade').textContent = grade;
+}
+
+function openQuiz() {
+  startQuiz();
+  document.getElementById('quizOverlay').classList.add('open');
+}
+function closeQuiz() {
+  document.getElementById('quizOverlay').classList.remove('open');
+}
+
+document.getElementById('quizOverlay').addEventListener('click', e => {
+  if (e.target.id === 'quizOverlay') closeQuiz();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeQuiz();
+});
+</script>
+</body>
+</html>

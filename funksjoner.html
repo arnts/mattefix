@@ -1,0 +1,2040 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Funksjoner – Hjelpeside</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='80'>π</text></svg>">
+<style>
+  :root {
+    --blue: #2563eb;
+    --red: #dc2626;
+    --green: #16a34a;
+    --orange: #ea580c;
+    --purple: #9333ea;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 2rem 1rem;
+  }
+  .container { max-width: 960px; margin: 0 auto; }
+  h1 {
+    text-align: center;
+    font-size: 2.2rem;
+    margin-bottom: 0.3rem;
+    color: var(--blue);
+  }
+  .subtitle {
+    text-align: center;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    font-size: 1.05rem;
+  }
+  .card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .card h2 {
+    font-size: 1.35rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--blue);
+    color: var(--blue);
+  }
+  .card h3 {
+    font-size: 1.1rem;
+    margin: 1rem 0 0.5rem;
+    color: var(--text);
+  }
+  .section-num {
+    display: inline-block;
+    background: var(--blue);
+    color: #fff;
+    font-size: 0.85rem;
+    padding: 0.15rem 0.55rem;
+    border-radius: 6px;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+    font-weight: 700;
+  }
+
+  table.value-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    font-size: 1.05rem;
+  }
+  table.value-table th, table.value-table td {
+    padding: 0.55rem 0.7rem;
+    border: 1px solid var(--border);
+  }
+  table.value-table thead th {
+    background: var(--blue);
+    color: #fff;
+    font-weight: 600;
+  }
+  table.value-table tbody tr:nth-child(even) { background: #f1f5f9; }
+  table.value-table tbody td:first-child { font-weight: 600; }
+
+  .formula-box {
+    background: #eff6ff;
+    border-left: 4px solid var(--blue);
+    padding: 1rem 1.2rem;
+    border-radius: 0 8px 8px 0;
+    margin: 0.8rem 0;
+    font-size: 1.15rem;
+    text-align: center;
+  }
+  .formula-box.red { background: #fef2f2; border-left-color: var(--red); }
+  .formula-box.green { background: #f0fdf4; border-left-color: var(--green); }
+  .formula-box.orange { background: #fff7ed; border-left-color: var(--orange); }
+  .formula-box.purple { background: #faf5ff; border-left-color: var(--purple); }
+
+  p { margin: 0.5rem 0; }
+  ul { padding-left: 1.3rem; }
+  ul li { margin: 0.3rem 0; }
+
+  .highlight { color: var(--blue); font-weight: 600; }
+  .note {
+    background: #fefce8;
+    border: 1px solid #fde68a;
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    margin-top: 0.8rem;
+    font-size: 0.95rem;
+  }
+
+  .diagram-row {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .diagram-row .text { flex: 1; min-width: 250px; }
+  .diagram-row svg { flex-shrink: 0; }
+
+  /* TOC */
+  .toc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  .toc a {
+    background: var(--blue);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+  }
+  .toc a:hover { opacity: 0.8; }
+  .toc .quiz-btn {
+    background: var(--orange);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+    transition: opacity 0.2s;
+  }
+  .toc .quiz-btn:hover { opacity: 0.8; }
+
+  /* Steg-for-steg */
+  .steps { counter-reset: step; margin: 1rem 0; }
+  .step {
+    position: relative;
+    padding: 0.8rem 1rem 0.8rem 3.2rem;
+    margin-bottom: 0.6rem;
+    background: var(--bg);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  .step::before {
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    left: 0.8rem;
+    top: 0.75rem;
+    width: 1.7rem;
+    height: 1.7rem;
+    background: var(--blue);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+  .step strong { color: var(--blue); }
+  .step .calc {
+    display: block;
+    margin-top: 0.3rem;
+    font-family: 'Courier New', monospace;
+    background: #f1f5f9;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.95rem;
+  }
+
+  /* Eksempel-tabs */
+  .example-tabs {
+    display: flex;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+  .example-tab {
+    padding: 0.5rem 1.2rem;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text);
+    transition: all 0.2s;
+  }
+  .example-tab:hover { border-color: var(--blue); }
+  .example-tab.active {
+    background: var(--blue);
+    color: #fff;
+    border-color: var(--blue);
+  }
+  .example-content { display: none; }
+  .example-content.active { display: block; }
+
+  /* Function gallery (mini-grafer) */
+  .func-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+  .func-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.8rem;
+    text-align: center;
+  }
+  .func-card canvas {
+    width: 100%;
+    height: auto;
+    background: #fff;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+  .func-card .func-label {
+    font-weight: 600;
+    margin-top: 0.4rem;
+    font-size: 1rem;
+  }
+  .func-card .func-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  /* Interaktiv plotter */
+  .plotter {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+  .plotter-canvas-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 280px;
+  }
+  .plotter-canvas-wrap canvas {
+    width: 100%;
+    height: auto;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    cursor: crosshair;
+  }
+  .plotter-controls {
+    flex: 1;
+    min-width: 240px;
+  }
+  .plotter-presets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+  }
+  .preset-btn {
+    padding: 0.4rem 0.9rem;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.9rem;
+    color: var(--text);
+    transition: all 0.15s;
+  }
+  .preset-btn:hover { border-color: var(--blue); background: #eff6ff; }
+  .preset-btn.active {
+    background: var(--blue);
+    color: #fff;
+    border-color: var(--blue);
+  }
+  .plotter-info {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--border);
+    font-size: 0.95rem;
+  }
+  .plotter-info .label { color: var(--muted); font-size: 0.85rem; }
+  .plotter-info .val { font-weight: 700; font-family: 'Courier New', monospace; }
+  .plotter-info .row { display: flex; justify-content: space-between; padding: 0.2rem 0; }
+
+  /* Interaktivt verktøy (parameter-slider, etc.) */
+  .parabola-tool {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    margin: 0.8rem 0;
+  }
+  .parabola-tool canvas {
+    width: 100%;
+    height: auto;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    display: block;
+  }
+  .ptool-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.8rem;
+  }
+  .ptool-slider {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .ptool-slider label {
+    font-weight: 700;
+    color: var(--blue);
+    min-width: 2.4rem;
+    font-family: 'Courier New', monospace;
+  }
+  .ptool-slider input[type=range] {
+    flex: 1;
+    min-width: 150px;
+  }
+  .ptool-slider span {
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    min-width: 3rem;
+    text-align: right;
+  }
+  .ptool-readout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.6rem;
+    margin-top: 0.8rem;
+  }
+  .ptool-readout .item {
+    background: #fff;
+    border-radius: 8px;
+    padding: 0.55rem 0.8rem;
+    border: 1px solid var(--border);
+    font-size: 0.95rem;
+  }
+  .ptool-readout .item .label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    display: block;
+  }
+  .ptool-readout .item .val {
+    font-weight: 700;
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+  }
+
+  /* Eksponentiell sammenligning */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  @media (max-width: 600px) {
+    .compare-grid { grid-template-columns: 1fr; }
+  }
+
+  /* GeoGebra */
+  .gb-cmd-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    margin: 0.8rem 0;
+  }
+  .gb-cmd-table th, .gb-cmd-table td {
+    padding: 0.55rem 0.8rem;
+    border: 1px solid var(--border);
+    text-align: left;
+  }
+  .gb-cmd-table thead th {
+    background: var(--blue);
+    color: #fff;
+    font-weight: 600;
+  }
+  .gb-cmd-table tbody tr:nth-child(even) { background: #f1f5f9; }
+  .gb-cmd-table code {
+    background: #e2e8f0;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+  .gb-example {
+    background: #1e293b;
+    color: #e2e8f0;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin: 0.8rem 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    overflow-x: auto;
+  }
+  .gb-example .comment { color: #94a3b8; }
+  .gb-example .result { color: #86efac; }
+  .gb-section {
+    margin-top: 1.2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+  .gb-section:first-of-type { margin-top: 0.5rem; border-top: none; padding-top: 0; }
+
+  .calc-tip {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    padding: 0.8rem 1rem;
+    background: var(--bg);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin-bottom: 0.6rem;
+  }
+  .calc-tip .icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    width: 1.8rem;
+    text-align: center;
+    font-weight: 700;
+    color: var(--blue);
+  }
+  .calc-tip code {
+    background: #e2e8f0;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+
+  /* Quiz overlay */
+  .quiz-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15,23,42,0.6);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+  }
+  .quiz-overlay.open { display: flex; }
+  .quiz-modal {
+    background: var(--card);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 560px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 2rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    position: relative;
+    animation: slideUp 0.3s ease;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .quiz-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--muted);
+    line-height: 1;
+  }
+  .quiz-close:hover { color: var(--text); }
+  .quiz-header { text-align: center; margin-bottom: 1.5rem; }
+  .quiz-header h2 { color: var(--orange); font-size: 1.5rem; margin-bottom: 0.3rem; }
+  .quiz-progress { font-size: 0.9rem; color: var(--muted); }
+  .quiz-progress-bar {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    margin-top: 0.5rem;
+    overflow: hidden;
+  }
+  .quiz-progress-fill {
+    height: 100%;
+    background: var(--orange);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+  .quiz-question {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+  .quiz-options { display: flex; flex-direction: column; gap: 0.6rem; }
+  .quiz-option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0.85rem 1.1rem;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    background: var(--bg);
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    font-family: inherit;
+    color: var(--text);
+  }
+  .quiz-option:hover:not(:disabled) {
+    border-color: var(--blue);
+    background: #eff6ff;
+  }
+  .quiz-option:disabled { cursor: default; }
+  .quiz-option.correct {
+    border-color: var(--green);
+    background: #f0fdf4;
+    font-weight: 600;
+  }
+  .quiz-option.wrong {
+    border-color: var(--red);
+    background: #fef2f2;
+    opacity: 0.7;
+  }
+  .quiz-feedback {
+    margin-top: 1rem;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.is-correct {
+    background: #f0fdf4;
+    border: 1px solid #86efac;
+    color: #166534;
+  }
+  .quiz-feedback.is-wrong {
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    color: #991b1b;
+  }
+  .quiz-next {
+    display: none;
+    margin: 1.2rem auto 0;
+    padding: 0.7rem 2rem;
+    background: var(--blue);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: opacity 0.2s;
+  }
+  .quiz-next:hover { opacity: 0.85; }
+  .quiz-next.show { display: block; }
+  .quiz-result { text-align: center; }
+  .quiz-score {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--blue);
+    margin: 0.5rem 0;
+  }
+  .quiz-score-label { color: var(--muted); font-size: 1rem; }
+  .quiz-grade {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0.8rem 0;
+  }
+  .quiz-restart {
+    margin-top: 1rem;
+    padding: 0.7rem 2rem;
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .quiz-restart:hover { opacity: 0.85; }
+
+  .home-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: var(--blue);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .home-link:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<a href="index.html" class="home-link">&larr; Tilbake til forsiden</a>
+
+<h1>Funksjoner</h1>
+<p class="subtitle">Kapittel 3 – funksjonsbegrepet, grafer, modellering og regresjon</p>
+
+<div class="toc">
+  <a href="#funksjonsbegrepet">3.1 Funksjonsbegrepet</a>
+  <a href="#skjaeringspunkter">3.2 Skjæringspunkter</a>
+  <a href="#lineaere">3.3 Lineære</a>
+  <a href="#polynom">3.4 Polynom</a>
+  <a href="#eksponential">3.5 Eksponential</a>
+  <a href="#potens">3.6 Potens og rot</a>
+  <a href="#rasjonale">3.7 Rasjonale</a>
+  <a href="#modellering">3.8 Modellering</a>
+  <a href="#oversikt">Mønster og oversikt</a>
+  <a href="#plotter">Funksjonsutforsker</a>
+  <a href="#geogebra">GeoGebra</a>
+  <button class="quiz-btn" onclick="openQuiz()">Test deg selv!</button>
+</div>
+
+<!-- ============ QUIZ OVERLAY ============ -->
+<div class="quiz-overlay" id="quizOverlay">
+  <div class="quiz-modal">
+    <button class="quiz-close" onclick="closeQuiz()">&times;</button>
+    <div class="quiz-header">
+      <h2>Funksjoner-quiz</h2>
+      <div class="quiz-progress">Spørsmål <span id="qNum">1</span> av <span id="qTotal">12</span></div>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="qBar" style="width:8%"></div></div>
+    </div>
+    <div id="quizBody">
+      <div class="quiz-question" id="qText"></div>
+      <div class="quiz-options" id="qOptions"></div>
+      <div class="quiz-feedback" id="qFeedback"></div>
+      <button class="quiz-next" id="qNext" onclick="nextQuestion()">Neste</button>
+    </div>
+    <div id="quizResult" class="quiz-result" style="display:none;">
+      <div class="quiz-score-label">Resultat</div>
+      <div class="quiz-score" id="rScore"></div>
+      <div class="quiz-grade" id="rGrade"></div>
+      <button class="quiz-restart" onclick="startQuiz()">Prøv igjen</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 3.1 FUNKSJONSBEGREPET ============ -->
+<div class="card" id="funksjonsbegrepet">
+  <h2><span class="section-num">3.1</span>Funksjonsbegrepet</h2>
+  <p>En <strong>funksjon</strong> er en regel som tar inn en verdi og gir ut én bestemt verdi tilbake. Tenk deg en maskin: du putter inn et tall <em>x</em>, og maskinen leverer ut tallet <em>f(x)</em>.</p>
+
+  <div class="diagram-row">
+    <svg viewBox="0 0 320 140" width="320">
+      <!-- input pil -->
+      <line x1="20" y1="70" x2="80" y2="70" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arr1)"/>
+      <text x="22" y="60" fill="#2563eb" font-size="16" font-weight="700">x</text>
+      <text x="22" y="92" fill="#64748b" font-size="11">input</text>
+      <!-- maskin (boks) -->
+      <rect x="90" y="35" width="140" height="70" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="2.5"/>
+      <text x="160" y="68" fill="#1e293b" font-size="16" font-weight="700" text-anchor="middle">f</text>
+      <text x="160" y="90" fill="#64748b" font-size="11" text-anchor="middle">funksjon</text>
+      <!-- output pil -->
+      <line x1="240" y1="70" x2="300" y2="70" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arr2)"/>
+      <text x="278" y="60" fill="#16a34a" font-size="16" font-weight="700">f(x)</text>
+      <text x="278" y="92" fill="#64748b" font-size="11">output</text>
+      <defs>
+        <marker id="arr1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/>
+        </marker>
+        <marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="#16a34a"/>
+        </marker>
+      </defs>
+    </svg>
+    <div class="text">
+      <p>Eksempel: hvis <strong>f(x) = 2x + 3</strong>, så:</p>
+      <ul>
+        <li>f(0) = 2·0 + 3 = <strong>3</strong></li>
+        <li>f(1) = 2·1 + 3 = <strong>5</strong></li>
+        <li>f(5) = 2·5 + 3 = <strong>13</strong></li>
+      </ul>
+      <p>For hver <em>x</em> finnes det <strong>én og bare én</strong> verdi <em>f(x)</em>.</p>
+    </div>
+  </div>
+
+  <h3>Den loddrette linjetesten</h3>
+  <div class="diagram-row">
+    <svg viewBox="0 0 320 160" width="320">
+      <!-- Funksjon (OK): parabel -->
+      <line x1="20" y1="140" x2="140" y2="140" stroke="#94a3b8" stroke-width="1"/>
+      <line x1="80" y1="20" x2="80" y2="150" stroke="#94a3b8" stroke-width="1"/>
+      <path d="M 30,40 Q 80,200 130,40" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+      <line x1="100" y1="20" x2="100" y2="150" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <circle cx="100" cy="84" r="4" fill="#16a34a"/>
+      <text x="40" y="155" fill="#16a34a" font-size="12" font-weight="600">funksjon ✓</text>
+      <!-- Ikke en funksjon: sirkel -->
+      <line x1="180" y1="80" x2="300" y2="80" stroke="#94a3b8" stroke-width="1"/>
+      <line x1="240" y1="20" x2="240" y2="140" stroke="#94a3b8" stroke-width="1"/>
+      <circle cx="240" cy="80" r="40" fill="none" stroke="#dc2626" stroke-width="2.5"/>
+      <line x1="255" y1="20" x2="255" y2="140" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <circle cx="255" cy="43" r="4" fill="#dc2626"/>
+      <circle cx="255" cy="117" r="4" fill="#dc2626"/>
+      <text x="195" y="155" fill="#dc2626" font-size="12" font-weight="600">ikke funksjon ✗</text>
+    </svg>
+    <div class="text">
+      <p>Trekk en <strong>loddrett linje</strong> gjennom grafen:</p>
+      <ul>
+        <li>Krysser den grafen i <strong>høyst ett punkt</strong> for hvilken som helst x → det er en funksjon.</li>
+        <li>Krysser den i <strong>to eller flere punkter</strong> → det er <em>ikke</em> en funksjon.</li>
+      </ul>
+      <p>En sirkel er for eksempel ikke en funksjon, fordi en loddrett linje krysser den i to punkter.</p>
+    </div>
+  </div>
+
+  <h3>Definisjonsmengde og verdimengde</h3>
+  <p>To viktige begreper når vi snakker om funksjoner:</p>
+  <ul>
+    <li><strong>Definisjonsmengden</strong> (<em>D<sub>f</sub></em>): alle x-verdier funksjonen kan ta inn.</li>
+    <li><strong>Verdimengden</strong> (<em>V<sub>f</sub></em>): alle y-verdier funksjonen gir ut.</li>
+  </ul>
+  <div class="note">
+    <strong>Eksempel:</strong> For f(x) = √x må x ≥ 0, så D<sub>f</sub> = [0, →⟩ og V<sub>f</sub> = [0, →⟩. For g(x) = 1/x kan ikke x = 0, så D<sub>g</sub> = alle tall unntatt 0.
+  </div>
+
+  <h3>Grafen til en funksjon</h3>
+  <div class="diagram-row">
+    <svg viewBox="0 0 240 200" width="240">
+      <!-- akser -->
+      <line x1="20" y1="180" x2="220" y2="180" stroke="#94a3b8" stroke-width="1.5"/>
+      <line x1="120" y1="20" x2="120" y2="190" stroke="#94a3b8" stroke-width="1.5"/>
+      <text x="222" y="184" fill="#64748b" font-size="11">x</text>
+      <text x="124" y="20" fill="#64748b" font-size="11">y</text>
+      <!-- rutenett -->
+      <g stroke="#e2e8f0" stroke-width="0.6">
+        <line x1="60" y1="20" x2="60" y2="190"/>
+        <line x1="180" y1="20" x2="180" y2="190"/>
+        <line x1="20" y1="120" x2="220" y2="120"/>
+        <line x1="20" y1="60" x2="220" y2="60"/>
+      </g>
+      <!-- graf av f(x)=2x+3 (skala 20px = 1 enhet) -->
+      <line x1="40" y1="180" x2="200" y2="20" stroke="#2563eb" stroke-width="2.5"/>
+      <!-- punkt (1,5) -->
+      <circle cx="140" cy="80" r="4" fill="#dc2626"/>
+      <line x1="140" y1="80" x2="140" y2="180" stroke="#dc2626" stroke-width="1" stroke-dasharray="4,3"/>
+      <line x1="140" y1="80" x2="120" y2="80" stroke="#dc2626" stroke-width="1" stroke-dasharray="4,3"/>
+      <text x="143" y="76" fill="#dc2626" font-size="11" font-weight="600">(1, 5)</text>
+      <text x="200" y="40" fill="#2563eb" font-size="12" font-weight="600">f(x)=2x+3</text>
+    </svg>
+    <div class="text">
+      <p>Grafen er <strong>alle punkter (x, f(x))</strong> tegnet inn i et koordinatsystem.</p>
+      <p>For å lese av grafen:</p>
+      <ul>
+        <li>Velg en x-verdi på x-aksen.</li>
+        <li>Gå rett opp (eller ned) til grafen.</li>
+        <li>Gå vannrett til y-aksen — det er f(x).</li>
+      </ul>
+      <p>Eksempel: ved x = 1 er f(1) = 5, så punktet (1, 5) ligger på grafen.</p>
+    </div>
+  </div>
+
+  <h3>Verditabell</h3>
+  <p>En verditabell viser noen utvalgte (x, f(x))-par. Eksempel for f(x) = x² − 2:</p>
+  <table class="value-table">
+    <thead><tr><th>x</th><th>−2</th><th>−1</th><th>0</th><th>1</th><th>2</th></tr></thead>
+    <tbody><tr><td>f(x)</td><td>2</td><td>−1</td><td>−2</td><td>−1</td><td>2</td></tr></tbody>
+  </table>
+  <div class="note">
+    <strong>Tips:</strong> En verditabell er nyttig når du skal tegne en graf for hånd. Velg gjerne 5–7 fornuftige x-verdier rundt 0.
+  </div>
+</div>
+
+<!-- ============ 3.2 SKJÆRINGSPUNKTER ============ -->
+<div class="card" id="skjaeringspunkter">
+  <h2><span class="section-num">3.2</span>Skjæringspunkter</h2>
+  <p>Skjæringspunkter er punkter der grafen krysser en akse, eller der to grafer krysser hverandre.</p>
+
+  <h3>Skjæring med y-aksen</h3>
+  <div class="diagram-row">
+    <svg viewBox="0 0 220 200" width="220">
+      <line x1="20" y1="180" x2="200" y2="180" stroke="#94a3b8" stroke-width="1.5"/>
+      <line x1="110" y1="20" x2="110" y2="190" stroke="#94a3b8" stroke-width="1.5"/>
+      <text x="200" y="184" fill="#64748b" font-size="11">x</text>
+      <text x="114" y="20" fill="#64748b" font-size="11">y</text>
+      <!-- graf -->
+      <line x1="30" y1="170" x2="200" y2="50" stroke="#2563eb" stroke-width="2.5"/>
+      <!-- y-skjæring -->
+      <circle cx="110" cy="115" r="5" fill="#dc2626"/>
+      <text x="60" y="110" fill="#dc2626" font-size="12" font-weight="600">(0, f(0))</text>
+    </svg>
+    <div class="text">
+      <p>Sett <strong>x = 0</strong> i funksjonsuttrykket. Da finner du y-koordinaten der grafen krysser y-aksen.</p>
+      <div class="formula-box">
+        Skjæring med y-aksen = (0, f(0))
+      </div>
+      <p><em>Eksempel:</em> f(x) = 3x − 6 ⇒ f(0) = −6. Grafen krysser y-aksen i (0, −6).</p>
+    </div>
+  </div>
+
+  <h3>Skjæring med x-aksen (nullpunkter)</h3>
+  <div class="diagram-row">
+    <svg viewBox="0 0 220 200" width="220">
+      <line x1="20" y1="110" x2="200" y2="110" stroke="#94a3b8" stroke-width="1.5"/>
+      <line x1="110" y1="20" x2="110" y2="190" stroke="#94a3b8" stroke-width="1.5"/>
+      <text x="200" y="106" fill="#64748b" font-size="11">x</text>
+      <text x="114" y="20" fill="#64748b" font-size="11">y</text>
+      <!-- parabel x²-4 -->
+      <path d="M 40,40 Q 110,200 180,40" fill="none" stroke="#16a34a" stroke-width="2.5"/>
+      <!-- nullpunkt -->
+      <circle cx="70" cy="110" r="5" fill="#dc2626"/>
+      <circle cx="150" cy="110" r="5" fill="#dc2626"/>
+      <text x="50" y="130" fill="#dc2626" font-size="12" font-weight="600">x = −2</text>
+      <text x="135" y="130" fill="#dc2626" font-size="12" font-weight="600">x = 2</text>
+    </svg>
+    <div class="text">
+      <p>Sett <strong>f(x) = 0</strong> og løs for x. Disse x-verdiene kalles <em>nullpunkter</em>.</p>
+      <div class="formula-box red">
+        Skjæring med x-aksen: løs f(x) = 0
+      </div>
+      <p><em>Eksempel:</em> f(x) = x² − 4 ⇒ x² − 4 = 0 ⇒ x = ±2. Nullpunktene er (−2, 0) og (2, 0).</p>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>Ikke alle grafer har nullpunkter!</strong> For f(x) = x² + 1 får vi x² = −1, som ikke har noen løsning blant reelle tall. Grafen ligger helt over x-aksen og krysser den aldri. Det er helt greit — det betyr bare at f ikke har nullpunkter.
+  </div>
+
+  <h3>Skjæring mellom to grafer</h3>
+  <div class="diagram-row">
+    <svg viewBox="0 0 220 200" width="220">
+      <line x1="20" y1="110" x2="200" y2="110" stroke="#94a3b8" stroke-width="1.5"/>
+      <line x1="110" y1="20" x2="110" y2="190" stroke="#94a3b8" stroke-width="1.5"/>
+      <line x1="30" y1="170" x2="190" y2="50" stroke="#2563eb" stroke-width="2.5"/>
+      <line x1="30" y1="60" x2="190" y2="160" stroke="#dc2626" stroke-width="2.5"/>
+      <circle cx="110" cy="110" r="5" fill="#9333ea"/>
+      <text x="115" y="105" fill="#9333ea" font-size="12" font-weight="600">(a, b)</text>
+    </svg>
+    <div class="text">
+      <p>To grafer møtes der <strong>f(x) = g(x)</strong>. Løs ligningen for x, så finn y-verdien ved å sette x inn i en av funksjonene.</p>
+      <div class="formula-box purple">
+        Skjæring f og g: løs f(x) = g(x)
+      </div>
+      <p><em>Eksempel:</em> f(x) = 2x + 1 og g(x) = −x + 4. Setter likt: 2x + 1 = −x + 4 ⇒ 3x = 3 ⇒ x = 1. Da blir y = f(1) = 3. Skjæring i (1, 3).</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 3.3 LINEÆRE FUNKSJONER ============ -->
+<div class="card" id="lineaere">
+  <h2><span class="section-num">3.3</span>Lineære funksjoner</h2>
+  <p>En <strong>lineær funksjon</strong> har grafen som en rett linje. Generell form:</p>
+  <div class="formula-box">
+    f(x) = a·x + b
+  </div>
+  <ul>
+    <li><strong>a</strong> = stigningstall (hvor bratt linjen er)</li>
+    <li><strong>b</strong> = konstantledd (skjæring med y-aksen)</li>
+  </ul>
+
+  <div class="diagram-row">
+    <svg viewBox="0 0 240 220" width="240">
+      <!-- akser -->
+      <line x1="20" y1="200" x2="220" y2="200" stroke="#94a3b8" stroke-width="1.5"/>
+      <line x1="40" y1="20" x2="40" y2="210" stroke="#94a3b8" stroke-width="1.5"/>
+      <text x="222" y="204" fill="#64748b" font-size="11">x</text>
+      <text x="44" y="20" fill="#64748b" font-size="11">y</text>
+      <!-- rett linje y = 0.5x + 1 (stigning 1, b=1) -->
+      <line x1="40" y1="140" x2="220" y2="50" stroke="#2563eb" stroke-width="2.5"/>
+      <!-- konstantledd b -->
+      <circle cx="40" cy="140" r="4.5" fill="#dc2626"/>
+      <text x="48" y="144" fill="#dc2626" font-size="12" font-weight="600">b</text>
+      <!-- stigningstrekant -->
+      <line x1="100" y1="110" x2="160" y2="110" stroke="#16a34a" stroke-width="2" stroke-dasharray="4,3"/>
+      <line x1="160" y1="110" x2="160" y2="80" stroke="#16a34a" stroke-width="2" stroke-dasharray="4,3"/>
+      <text x="120" y="125" fill="#16a34a" font-size="12" font-weight="600">Δx</text>
+      <text x="165" y="100" fill="#16a34a" font-size="12" font-weight="600">Δy</text>
+      <text x="170" y="40" fill="#2563eb" font-size="12" font-weight="600">a = Δy/Δx</text>
+    </svg>
+    <div class="text">
+      <p><strong>Stigningstallet</strong> mellom to punkter (x₁, y₁) og (x₂, y₂):</p>
+      <div class="formula-box green">
+        a = (y₂ − y₁) / (x₂ − x₁)
+      </div>
+      <ul>
+        <li><strong>a &gt; 0</strong>: linjen stiger</li>
+        <li><strong>a &lt; 0</strong>: linjen synker</li>
+        <li><strong>a = 0</strong>: vannrett linje</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Ettpunktformelen</h3>
+  <p>Hvis du kjenner ett punkt (x₁, y₁) og stigningstallet a:</p>
+  <div class="formula-box orange">
+    y − y₁ = a · (x − x₁)
+  </div>
+
+  <h3>Eksempel: finn linjen gjennom (1, 2) og (3, 8)</h3>
+  <div class="steps">
+    <div class="step">
+      <strong>Finn stigningstallet a.</strong>
+      <span class="calc">a = (8 − 2) / (3 − 1) = 6/2 = 3</span>
+    </div>
+    <div class="step">
+      <strong>Bruk ettpunktformelen.</strong> Med (1, 2) som kjent punkt.
+      <span class="calc">y − 2 = 3·(x − 1)</span>
+    </div>
+    <div class="step">
+      <strong>Forenkle.</strong>
+      <span class="calc">y = 3x − 3 + 2 = 3x − 1</span>
+    </div>
+    <div class="step">
+      <strong>Svar:</strong> linjen er <strong>y = 3x − 1</strong>.
+    </div>
+  </div>
+
+  <h3>Lineære vekstmodeller</h3>
+  <div class="note">
+    Bruk en lineær funksjon når noe vokser eller minker med <strong>samme mengde</strong> per tidsenhet (konstant tilvekst). Eksempler: en bil som kjører i konstant fart, et bassen som fylles med konstant vannmengde, en månedlig avgift.
+  </div>
+</div>
+
+<!-- ============ 3.4 POLYNOMFUNKSJONER ============ -->
+<div class="card" id="polynom">
+  <h2><span class="section-num">3.4</span>Polynomfunksjoner</h2>
+  <p>En <strong>polynomfunksjon</strong> er en sum av ledd på formen <em>a·xⁿ</em> der n er et heltall ≥ 0.</p>
+  <div class="formula-box">
+    f(x) = aₙxⁿ + aₙ₋₁xⁿ⁻¹ + … + a₁x + a₀
+  </div>
+  <p><strong>Graden</strong> er den høyeste eksponenten. Den bestemmer mye om grafens utseende.</p>
+
+  <h3>Grad 1: lineær</h3>
+  <p>f(x) = ax + b. Rett linje. (Se 3.3.)</p>
+
+  <h3>Grad 2: andregrad (parabel)</h3>
+  <div class="diagram-row">
+    <svg viewBox="0 0 240 200" width="240">
+      <line x1="20" y1="170" x2="220" y2="170" stroke="#94a3b8" stroke-width="1.5"/>
+      <line x1="120" y1="20" x2="120" y2="190" stroke="#94a3b8" stroke-width="1.5"/>
+      <!-- parabel åpner opp -->
+      <path d="M 40,40 Q 120,260 200,40" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+      <!-- toppunkt -->
+      <circle cx="120" cy="150" r="5" fill="#dc2626"/>
+      <text x="128" y="148" fill="#dc2626" font-size="12" font-weight="600">bunnpunkt</text>
+      <text x="40" y="35" fill="#2563eb" font-size="12" font-weight="600">a > 0</text>
+    </svg>
+    <div class="text">
+      <p>f(x) = ax² + bx + c gir en <strong>parabel</strong>.</p>
+      <ul>
+        <li><strong>a &gt; 0</strong>: åpner oppover, har <em>bunnpunkt</em>.</li>
+        <li><strong>a &lt; 0</strong>: åpner nedover, har <em>toppunkt</em>.</li>
+        <li>Symmetriaksen: <strong>x = −b / (2a)</strong></li>
+        <li>Bunn-/toppunktet ligger på symmetriaksen.</li>
+      </ul>
+      <div class="formula-box">
+        Toppunkt: x = −b / (2a)
+      </div>
+      <p>For å finne <strong>y-koordinaten</strong> til topp-/bunnpunktet: sett x-verdien tilbake i f(x).</p>
+    </div>
+  </div>
+
+  <p><em>Eksempel:</em> for f(x) = x² − 4x + 1 er a = 1, b = −4, så x = 4/2 = 2 og y = f(2) = 4 − 8 + 1 = −3. Bunnpunktet er <strong>(2, −3)</strong>.</p>
+
+  <h3>Lek med parametrene a, b, c</h3>
+  <p>Dra på skyverne under og se hva hver parameter gjør med parabelen. Hvilke endringer flytter toppunktet sidelengs? Hvilke gjør den brattere?</p>
+  <div class="parabola-tool">
+    <canvas id="parabolaCanvas" width="640" height="380"></canvas>
+    <div class="ptool-controls">
+      <div class="ptool-slider">
+        <label for="paramA">a =</label>
+        <input type="range" id="paramA" min="-3" max="3" step="0.1" value="1">
+        <span id="paramAVal">1.0</span>
+      </div>
+      <div class="ptool-slider">
+        <label for="paramB">b =</label>
+        <input type="range" id="paramB" min="-6" max="6" step="0.1" value="-4">
+        <span id="paramBVal">-4.0</span>
+      </div>
+      <div class="ptool-slider">
+        <label for="paramC">c =</label>
+        <input type="range" id="paramC" min="-8" max="8" step="0.1" value="1">
+        <span id="paramCVal">1.0</span>
+      </div>
+    </div>
+    <div class="ptool-readout">
+      <div class="item"><span class="label">Funksjon</span><span class="val" id="paramEq">f(x) = x² − 4x + 1</span></div>
+      <div class="item"><span class="label">Symmetriakse</span><span class="val" id="paramAxis">x = 2.00</span></div>
+      <div class="item"><span class="label">Topp/bunnpunkt</span><span class="val" id="paramVertex">(2.00, −3.00)</span></div>
+      <div class="item"><span class="label">Nullpunkter</span><span class="val" id="paramRoots">x ≈ 0.27, 3.73</span></div>
+    </div>
+  </div>
+
+  <h3>Grad 3: tredjegrad</h3>
+  <div class="diagram-row">
+    <svg viewBox="0 0 240 200" width="240">
+      <line x1="20" y1="100" x2="220" y2="100" stroke="#94a3b8" stroke-width="1.5"/>
+      <line x1="120" y1="20" x2="120" y2="190" stroke="#94a3b8" stroke-width="1.5"/>
+      <!-- kubisk kurve med top og bunn -->
+      <path d="M 30,180 C 70,30 100,30 120,100 C 140,170 170,170 210,20" fill="none" stroke="#9333ea" stroke-width="2.5"/>
+      <text x="40" y="35" fill="#9333ea" font-size="12" font-weight="600">f(x) = ax³ + …</text>
+    </svg>
+    <div class="text">
+      <p>f(x) = ax³ + bx² + cx + d gir en S-formet kurve.</p>
+      <ul>
+        <li>Kan ha <strong>opptil 2 topp-/bunnpunkter</strong>.</li>
+        <li>Kan ha <strong>opptil 3 nullpunkter</strong>.</li>
+        <li>Når x → ∞ går grafen mot ±∞ avhengig av fortegnet til a.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Faktorisert form</h3>
+  <p>Hvis polynomet er på <strong>faktorisert form</strong>, kan du lese av nullpunktene direkte:</p>
+  <div class="formula-box green">
+    f(x) = a · (x − r₁)(x − r₂)(x − r₃) ⇒ nullpunkter: x = r₁, r₂, r₃
+  </div>
+  <p><em>Eksempel:</em> f(x) = 2(x − 1)(x + 3) har nullpunkter i x = 1 og x = −3.</p>
+
+  <div class="note">
+    <strong>Tips:</strong> Generelt har et polynom av grad <em>n</em> opptil <em>n</em> nullpunkter og opptil <em>n − 1</em> topp-/bunnpunkter.
+  </div>
+</div>
+
+<!-- ============ 3.5 EKSPONENTIALFUNKSJONER ============ -->
+<div class="card" id="eksponential">
+  <h2><span class="section-num">3.5</span>Eksponentialfunksjoner</h2>
+
+  <div class="formula-box purple">
+    <strong>Viktig forskjell:</strong> i en <em>potensfunksjon</em> står x i grunntallet (x²).<br>
+    I en <em>eksponentialfunksjon</em> står x i eksponenten (2<sup>x</sup>).
+  </div>
+
+  <p>I en <strong>eksponentialfunksjon</strong> er den variable i eksponenten:</p>
+  <div class="formula-box">
+    f(x) = a · b<sup>x</sup> &nbsp; (b &gt; 0, b ≠ 1)
+  </div>
+  <ul>
+    <li><strong>a</strong> = startverdi (når x = 0)</li>
+    <li><strong>b</strong> = vekstfaktor</li>
+    <li>Hvis <strong>b &gt; 1</strong>: <em>vekst</em> (grafen stiger)</li>
+    <li>Hvis <strong>0 &lt; b &lt; 1</strong>: <em>nedgang</em> (grafen synker)</li>
+  </ul>
+
+  <div class="note">
+    <strong>Hvorfor må b &gt; 0 og b ≠ 1?</strong> Med b = 0 blir alt 0 (lite interessant). Med b &lt; 0 vil b<sup>x</sup> ofte ikke gi reelt svar (f.eks. (−2)<sup>0.5</sup> = √(−2)). Og med b = 1 er b<sup>x</sup> = 1 for alle x — da har vi en <em>konstant</em>, ikke vekst.
+  </div>
+
+  <div class="compare-grid">
+    <div class="func-card">
+      <canvas id="expGrowGraph" width="320" height="220"></canvas>
+      <div class="func-label" style="color:var(--green);">Vekst: f(x) = 2 · 1.5<sup>x</sup></div>
+      <div class="func-desc">15% vekst per tidsenhet</div>
+    </div>
+    <div class="func-card">
+      <canvas id="expDecayGraph" width="320" height="220"></canvas>
+      <div class="func-label" style="color:var(--red);">Nedgang: f(x) = 8 · 0.7<sup>x</sup></div>
+      <div class="func-desc">30% nedgang per tidsenhet</div>
+    </div>
+  </div>
+
+  <h3>Sammenheng med vekstfaktor</h3>
+  <p>Hvis noe vokser med <strong>p %</strong> per periode, er vekstfaktoren:</p>
+  <div class="formula-box green">
+    b = 1 + p/100
+  </div>
+  <p>Hvis noe minker med p %:</p>
+  <div class="formula-box red">
+    b = 1 − p/100
+  </div>
+
+  <h3>Eksempel: bakteriekultur</h3>
+  <p>Det starter med 200 bakterier. Antallet dobles hver time. Lag en modell og finn antallet etter 5 timer.</p>
+  <div class="steps">
+    <div class="step">
+      <strong>Sett opp modellen.</strong> Startverdi a = 200, vekstfaktor b = 2 (dobling).
+      <span class="calc">f(x) = 200 · 2<sup>x</sup></span>
+    </div>
+    <div class="step">
+      <strong>Sett inn x = 5.</strong>
+      <span class="calc">f(5) = 200 · 2⁵ = 200 · 32</span>
+    </div>
+    <div class="step">
+      <strong>Regn ut.</strong>
+      <span class="calc">f(5) = 6400 bakterier</span>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>Karakteristisk for eksponentialfunksjoner:</strong> de vokser <em>raskere og raskere</em> (eller minker saktere og saktere). En lineær funksjon legger til samme mengde — en eksponentiell ganger med samme faktor.
+  </div>
+</div>
+
+<!-- ============ 3.6 POTENS- OG ROTFUNKSJONER ============ -->
+<div class="card" id="potens">
+  <h2><span class="section-num">3.6</span>Potensfunksjoner og rotfunksjoner</h2>
+
+  <h3>Potensfunksjon</h3>
+  <p>En <strong>potensfunksjon</strong> har formen:</p>
+  <div class="formula-box">
+    f(x) = a · x<sup>r</sup>
+  </div>
+  <p>Her er <strong>x</strong> grunntallet og <strong>r</strong> en konstant eksponent. (Sammenlign med eksponentialfunksjon der x er <em>i eksponenten</em>!)</p>
+
+  <div class="compare-grid">
+    <div class="func-card">
+      <canvas id="potGraph1" width="320" height="220"></canvas>
+      <div class="func-label" style="color:var(--blue);">f(x) = x²</div>
+      <div class="func-desc">heltallseksponent (parabel)</div>
+    </div>
+    <div class="func-card">
+      <canvas id="potGraph2" width="320" height="220"></canvas>
+      <div class="func-label" style="color:var(--orange);">f(x) = x<sup>1/2</sup> = √x</div>
+      <div class="func-desc">brøkeksponent (rotfunksjon)</div>
+    </div>
+  </div>
+
+  <h3>Rotfunksjon</h3>
+  <p>En <strong>rotfunksjon</strong> er en spesiell potensfunksjon med eksponent mellom 0 og 1:</p>
+  <div class="formula-box orange">
+    f(x) = √x = x<sup>1/2</sup>
+  </div>
+  <ul>
+    <li>Definisjonsmengde: <strong>x ≥ 0</strong> (kan ikke ta kvadratrot av negative tall).</li>
+    <li>Grafen starter i origo og stiger, men <em>flater ut</em>.</li>
+    <li>Generelt: <strong>ⁿ√x = x<sup>1/n</sup></strong></li>
+  </ul>
+
+  <h3>Forskjeller mellom funksjonstypene</h3>
+  <table class="value-table" style="font-size:0.9rem;">
+    <thead><tr><th>Type</th><th>Form</th><th>Kjennetegn</th></tr></thead>
+    <tbody>
+      <tr><td>Lineær</td><td>ax + b</td><td>Konstant tilvekst</td></tr>
+      <tr><td>Polynom</td><td>x², x³, …</td><td>Vokser stadig raskere</td></tr>
+      <tr><td>Potens</td><td>x<sup>r</sup></td><td>Vokser polynomielt</td></tr>
+      <tr><td>Eksponential</td><td>b<sup>x</sup></td><td>Vokser eksplosivt</td></tr>
+      <tr><td>Rot</td><td>√x</td><td>Vokser saktere og saktere</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <strong>Husk:</strong> For store x vil eksponentialfunksjoner alltid «vinne» over potensfunksjoner — uansett hvor stor potensen er!
+  </div>
+</div>
+
+<!-- ============ 3.7 RASJONALE FUNKSJONER ============ -->
+<div class="card" id="rasjonale">
+  <h2><span class="section-num">3.7</span>Rasjonale funksjoner</h2>
+  <p>En <strong>rasjonal funksjon</strong> er en brøk med polynomer i teller og nevner:</p>
+  <div class="formula-box">
+    f(x) = P(x) / Q(x)
+  </div>
+
+  <div class="diagram-row">
+    <svg viewBox="0 0 240 220" width="240">
+      <!-- akser -->
+      <line x1="20" y1="110" x2="220" y2="110" stroke="#94a3b8" stroke-width="1.5"/>
+      <line x1="120" y1="20" x2="120" y2="200" stroke="#94a3b8" stroke-width="1.5"/>
+      <!-- vannrett asymptote y=0 (allerede x-aksen) -->
+      <!-- loddrett asymptote x=0 (y-aksen) -->
+      <text x="222" y="106" fill="#64748b" font-size="11">x</text>
+      <text x="124" y="22" fill="#64748b" font-size="11">y</text>
+      <!-- f(x)=1/x graf, høyre gren (x>0, y>0): øvre-høyre kvadrant -->
+      <path d="M 130,20 C 135,70 145,100 220,106" fill="none" stroke="#dc2626" stroke-width="2.5"/>
+      <!-- venstre gren (x<0, y<0): nedre-venstre kvadrant -->
+      <path d="M 20,114 C 95,120 105,150 110,200" fill="none" stroke="#dc2626" stroke-width="2.5"/>
+      <!-- asymptote-merker (stiplet) -->
+      <line x1="120" y1="20" x2="120" y2="200" stroke="#9333ea" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.7"/>
+      <line x1="20" y1="110" x2="220" y2="110" stroke="#9333ea" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.7"/>
+      <text x="125" y="35" fill="#9333ea" font-size="11" font-weight="600">x = 0</text>
+      <text x="170" y="125" fill="#9333ea" font-size="11" font-weight="600">y = 0</text>
+    </svg>
+    <div class="text">
+      <p><strong>Eksempel:</strong> f(x) = 1/x</p>
+      <ul>
+        <li>Definisjonsmengde: alle tall <strong>unntatt 0</strong> (kan ikke dele på 0).</li>
+        <li>Grafen har to grener.</li>
+        <li><strong>Asymptoter:</strong> linjer grafen nærmer seg uten å nå.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Asymptoter</h3>
+  <ul>
+    <li><strong>Loddrette asymptoter</strong>: der nevneren = 0 (men telleren ≠ 0). Grafen «skyter mot» ±∞ der.</li>
+    <li><strong>Vannrette asymptoter</strong>: hva grafen nærmer seg når x → ±∞.</li>
+  </ul>
+  <div class="formula-box purple">
+    Eks: f(x) = 1/(x − 2) har loddrett asymptote x = 2 og vannrett asymptote y = 0
+  </div>
+
+  <h3>Eksempel: finn definisjonsmengden</h3>
+  <p>For f(x) = (x + 3) / (x − 5):</p>
+  <div class="steps">
+    <div class="step">
+      <strong>Finn hva nevneren ikke kan være.</strong> Den kan ikke være 0.
+      <span class="calc">x − 5 ≠ 0 ⇒ x ≠ 5</span>
+    </div>
+    <div class="step">
+      <strong>Skriv definisjonsmengden.</strong>
+      <span class="calc">D<sub>f</sub> = alle tall unntatt 5</span>
+    </div>
+    <div class="step">
+      <strong>Loddrett asymptote</strong> ligger ved x = 5.
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>Regn raskt:</strong> for å finne loddrette asymptoter, sett nevner = 0 og løs.
+  </div>
+</div>
+
+<!-- ============ 3.8 MODELLERING OG REGRESJON ============ -->
+<div class="card" id="modellering">
+  <h2><span class="section-num">3.8</span>Modellering og regresjon</h2>
+  <p><strong>Modellering</strong> betyr å lage en matematisk funksjon som beskriver et virkelig fenomen. <strong>Regresjon</strong> er metoden vi bruker for å finne den «beste» funksjonen ut fra datapunkter.</p>
+
+  <div class="diagram-row">
+    <svg viewBox="0 0 260 200" width="260">
+      <line x1="30" y1="180" x2="240" y2="180" stroke="#94a3b8" stroke-width="1.5"/>
+      <line x1="30" y1="20" x2="30" y2="190" stroke="#94a3b8" stroke-width="1.5"/>
+      <!-- punkter -->
+      <circle cx="50" cy="160" r="4" fill="#dc2626"/>
+      <circle cx="80" cy="140" r="4" fill="#dc2626"/>
+      <circle cx="110" cy="135" r="4" fill="#dc2626"/>
+      <circle cx="140" cy="100" r="4" fill="#dc2626"/>
+      <circle cx="170" cy="90" r="4" fill="#dc2626"/>
+      <circle cx="200" cy="60" r="4" fill="#dc2626"/>
+      <circle cx="225" cy="40" r="4" fill="#dc2626"/>
+      <!-- regresjonslinje -->
+      <line x1="40" y1="170" x2="235" y2="35" stroke="#2563eb" stroke-width="2.5"/>
+      <text x="50" y="35" fill="#2563eb" font-size="12" font-weight="600">regresjonslinje</text>
+      <text x="100" y="180" dy="14" fill="#64748b" font-size="11">målepunkter</text>
+    </svg>
+    <div class="text">
+      <p>Idé: vi har en serie målinger og leter etter en funksjon som passer godt.</p>
+      <p>I praksis lar vi <strong>GeoGebra</strong> gjøre regresjonen og finne parametrene.</p>
+    </div>
+  </div>
+
+  <h3>Velg riktig type modell</h3>
+  <table class="value-table" style="font-size:0.92rem;">
+    <thead><tr><th>Mønster i data</th><th>Modell</th><th>GeoGebra-kommando</th></tr></thead>
+    <tbody>
+      <tr><td>Konstant tilvekst</td><td>Lineær: ax + b</td><td><code>RegLin</code></td></tr>
+      <tr><td>U-form / parabolsk</td><td>Andregrad: ax² + bx + c</td><td><code>RegPoly2</code></td></tr>
+      <tr><td>S-formet svinge</td><td>Tredjegrad</td><td><code>RegPoly3</code></td></tr>
+      <tr><td>Prosentvis tilvekst</td><td>Eksponential: a·b<sup>x</sup></td><td><code>RegEksp</code></td></tr>
+      <tr><td>Vokser, men flater ut</td><td>Potens: a·x<sup>r</sup></td><td><code>RegPot</code></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Eksempel: lineær regresjon i GeoGebra</h3>
+  <p>Du har målt høyden på en plante hver uke:</p>
+  <table class="value-table" style="font-size:0.95rem;">
+    <thead><tr><th>Uke (x)</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+    <tbody><tr><td>Høyde (cm)</td><td>5</td><td>9</td><td>13</td><td>16</td><td>20</td></tr></tbody>
+  </table>
+  <div class="steps">
+    <div class="step">
+      <strong>Lag en liste i GeoGebra.</strong> Skriv i CAS eller inntastingsfeltet:
+      <span class="calc">L = {(1,5), (2,9), (3,13), (4,16), (5,20)}</span>
+    </div>
+    <div class="step">
+      <strong>Kjør lineær regresjon.</strong>
+      <span class="calc">f(x) := RegLin(L)</span>
+    </div>
+    <div class="step">
+      <strong>GeoGebra svarer.</strong>
+      <span class="calc">f(x) = 3.7x + 1.5</span>
+    </div>
+    <div class="step">
+      <strong>Bruk modellen.</strong> Anslå høyden i uke 8.
+      <span class="calc">f(8) = 3.7·8 + 1.5 = 31.1 cm</span>
+    </div>
+  </div>
+
+  <h3>Hvor godt passer modellen?</h3>
+  <p>Bare fordi GeoGebra gir deg en funksjon, betyr det ikke at modellen er god. Sjekk to ting:</p>
+  <ul>
+    <li><strong>Tegn punktene og grafen i samme bilde.</strong> Ligger punktene tett på grafen, eller spriker de mye?</li>
+    <li><strong>Korrelasjonskoeffisienten r².</strong> En verdi nær 1 betyr god tilpasning. I GeoGebra: <code>RSquare(L, f)</code> eller se «egenskaper» for regresjonen.</li>
+  </ul>
+  <div class="formula-box green">
+    r² = 1 → perfekt tilpasning. r² = 0 → ingen sammenheng.
+  </div>
+
+  <div class="note">
+    <strong>Modellen er ikke fasit.</strong> Den passer godt i nærheten av målepunktene, men <strong>ekstrapolering</strong> (langt utenfor) kan gi urealistiske svar — planten kan jo ikke vokse i det uendelige! Vær alltid kritisk: gir modellen mening innenfor det området du bruker den?
+  </div>
+</div>
+
+<!-- ============ MØNSTER OG OVERSIKT ============ -->
+<div class="card" id="oversikt">
+  <h2>Mønster og oversikt – kjenn igjen funksjonstypen</h2>
+  <p>På prøven får du ofte data eller en graf og må gjenkjenne hvilken type funksjon det er. Her er kjennetegnene:</p>
+
+  <div class="func-gallery">
+    <div class="func-card">
+      <canvas id="g1" width="240" height="160"></canvas>
+      <div class="func-label" style="color:var(--blue);">Lineær</div>
+      <div class="func-desc">rett linje</div>
+    </div>
+    <div class="func-card">
+      <canvas id="g2" width="240" height="160"></canvas>
+      <div class="func-label" style="color:var(--green);">Andregrad</div>
+      <div class="func-desc">parabel (U-form)</div>
+    </div>
+    <div class="func-card">
+      <canvas id="g3" width="240" height="160"></canvas>
+      <div class="func-label" style="color:var(--purple);">Tredjegrad</div>
+      <div class="func-desc">S-formet</div>
+    </div>
+    <div class="func-card">
+      <canvas id="g4" width="240" height="160"></canvas>
+      <div class="func-label" style="color:var(--orange);">Eksponential</div>
+      <div class="func-desc">eksplosiv vekst</div>
+    </div>
+    <div class="func-card">
+      <canvas id="g5" width="240" height="160"></canvas>
+      <div class="func-label" style="color:var(--red);">Rotfunksjon</div>
+      <div class="func-desc">flater ut</div>
+    </div>
+    <div class="func-card">
+      <canvas id="g6" width="240" height="160"></canvas>
+      <div class="func-label" style="color:var(--purple);">Rasjonal (1/x)</div>
+      <div class="func-desc">asymptoter</div>
+    </div>
+  </div>
+
+  <h3>Tre raske spørsmål for å gjenkjenne en modell</h3>
+  <ul>
+    <li><strong>Er endringen konstant per tidsenhet?</strong> → Lineær.</li>
+    <li><strong>Er endringen prosentvis lik per tidsenhet?</strong> → Eksponentiell.</li>
+    <li><strong>Snur grafen retning?</strong> Én gang → andregrad. To ganger → tredjegrad.</li>
+  </ul>
+</div>
+
+<!-- ============ INTERAKTIV PLOTTER ============ -->
+<div class="card" id="plotter">
+  <h2>Funksjonsutforsker</h2>
+  <p>Velg en funksjonstype og se grafen. Beveg musen over grafen for å lese av (x, f(x)).</p>
+  <div class="plotter-presets">
+    <button class="preset-btn active" onclick="setPlot(0, this)">Lineær</button>
+    <button class="preset-btn" onclick="setPlot(1, this)">Andregrad</button>
+    <button class="preset-btn" onclick="setPlot(2, this)">Tredjegrad</button>
+    <button class="preset-btn" onclick="setPlot(3, this)">Eksponential</button>
+    <button class="preset-btn" onclick="setPlot(4, this)">Eksp. nedgang</button>
+    <button class="preset-btn" onclick="setPlot(5, this)">Rotfunksjon</button>
+    <button class="preset-btn" onclick="setPlot(6, this)">1/x</button>
+  </div>
+  <div class="plotter">
+    <div class="plotter-canvas-wrap">
+      <canvas id="plotCanvas" width="500" height="380"></canvas>
+    </div>
+    <div class="plotter-controls">
+      <div class="plotter-info">
+        <div class="row"><span class="label">Funksjon:</span><span class="val" id="plotEq">f(x) = x</span></div>
+        <div class="row"><span class="label">Lest av:</span><span class="val" id="plotXY">—</span></div>
+        <div class="row"><span class="label">Nullpunkt:</span><span class="val" id="plotZero">—</span></div>
+        <div class="row"><span class="label">y-skjæring:</span><span class="val" id="plotYInt">—</span></div>
+      </div>
+      <p style="margin-top:0.8rem; color:var(--muted); font-size:0.9rem;">Tips: dra musen over grafen for å lese av en x- og y-verdi.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ GEOGEBRA ============ -->
+<div class="card" id="geogebra">
+  <h2>GeoGebra-guide for funksjoner</h2>
+  <p>Alt du trenger å kunne i GeoGebra for å jobbe med funksjoner i 1T.</p>
+
+  <div class="gb-section">
+    <h3>Definere funksjoner</h3>
+    <table class="gb-cmd-table">
+      <thead><tr><th>Du vil</th><th>Skriv</th></tr></thead>
+      <tbody>
+        <tr><td>Definere f(x) = 2x + 3</td><td><code>f(x) = 2x + 3</code></td></tr>
+        <tr><td>Definere parabel</td><td><code>g(x) = x^2 - 4x + 1</code></td></tr>
+        <tr><td>Definere eksponentialfunksjon</td><td><code>h(x) = 200 · 1.05^x</code></td></tr>
+        <tr><td>Regne ut f(5)</td><td><code>f(5)</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="gb-section">
+    <h3>Finne skjæringspunkter</h3>
+    <div class="gb-example">
+      <span class="comment">// Skjæring med x-aksen (nullpunkter)</span><br>
+      Nullpunkt(f)<br>
+      <span class="result">→ punktene der grafen krysser x-aksen</span><br><br>
+      <span class="comment">// Skjæring med y-aksen</span><br>
+      f(0)<br>
+      <span class="result">→ y-verdien der x = 0</span><br><br>
+      <span class="comment">// Skjæring mellom to grafer f og g</span><br>
+      Skjæring(f, g)<br>
+      <span class="result">→ punktene der f(x) = g(x)</span>
+    </div>
+  </div>
+
+  <div class="gb-section">
+    <h3>Finne topp- og bunnpunkt</h3>
+    <div class="gb-example">
+      <span class="comment">// Toppunkt på en parabel</span><br>
+      Ekstremalpunkt(f)<br>
+      <span class="result">→ topp- eller bunnpunkt</span><br><br>
+      <span class="comment">// Toppunkt i et bestemt intervall</span><br>
+      Ekstremalpunkt(f, 0, 10)<br>
+      <span class="result">→ ekstremalpunktene mellom x = 0 og x = 10</span>
+    </div>
+  </div>
+
+  <div class="gb-section">
+    <h3>Regresjon (modellere data)</h3>
+    <p>Lag først en liste med punkter:</p>
+    <div class="gb-example">
+      <span class="comment">// Datapunkter</span><br>
+      L = {(1, 5), (2, 9), (3, 13), (4, 16), (5, 20)}<br><br>
+      <span class="comment">// Lineær regresjon</span><br>
+      f(x) := RegLin(L)<br>
+      <span class="result">→ f(x) = 3.7x + 1.3</span><br><br>
+      <span class="comment">// Andregrad</span><br>
+      g(x) := RegPoly2(L)<br><br>
+      <span class="comment">// Eksponentiell</span><br>
+      h(x) := RegEksp(L)<br><br>
+      <span class="comment">// Potens</span><br>
+      p(x) := RegPot(L)
+    </div>
+    <div class="note">
+      <strong>Tips:</strong> Bruk <code>:=</code> så blir resultatet en funksjon du kan regne videre med (f.eks. <code>f(8)</code>).
+    </div>
+  </div>
+
+  <div class="gb-section">
+    <h3>Asymptoter og definisjonsmengde</h3>
+    <div class="gb-example">
+      <span class="comment">// Finn asymptoter</span><br>
+      Asymptote(f)<br><br>
+      <span class="comment">// Tegn en rasjonal funksjon</span><br>
+      f(x) = (x + 3) / (x - 5)<br>
+      <span class="result">→ asymptotene blir tegnet automatisk</span>
+    </div>
+  </div>
+
+  <div class="gb-section">
+    <h3>Vanlige feil</h3>
+    <div class="calc-tip">
+      <div class="icon">1</div>
+      <div>
+        <strong>Glemte gangetegn.</strong> Skriv <code>2*x</code> eller <code>2x</code>, ikke <code>2 x</code> med mellomrom.
+      </div>
+    </div>
+    <div class="calc-tip">
+      <div class="icon">2</div>
+      <div>
+        <strong>Skrev feil i regresjon.</strong> <code>RegLin</code> trenger en <em>liste</em> med punkter. Hugs krøllparenteser: <code>{(1,2), (2,4)}</code>.
+      </div>
+    </div>
+    <div class="calc-tip">
+      <div class="icon">3</div>
+      <div>
+        <strong>Brukte = i stedet for :=.</strong> <code>f(x) := RegLin(L)</code> definerer funksjonen. Med <code>=</code> får du bare en likning.
+      </div>
+    </div>
+    <div class="calc-tip">
+      <div class="icon">4</div>
+      <div>
+        <strong>Glemte parenteser i brøk.</strong> <code>1/x+1</code> tolkes som <code>(1/x) + 1</code>. Mente du <code>1/(x+1)</code>?
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<script>
+// ============ Felles graf-tegner ============
+function plotFunc(canvasId, fn, opts) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const o = Object.assign({
+    xMin: -5, xMax: 5, yMin: -5, yMax: 5,
+    color: '#2563eb', lineWidth: 2.5,
+    showAxes: true, gridStep: 1,
+    pad: { l: 30, r: 10, t: 10, b: 25 }
+  }, opts || {});
+  const pad = o.pad;
+  const gw = W - pad.l - pad.r;
+  const gh = H - pad.t - pad.b;
+  const px = x => pad.l + (x - o.xMin) / (o.xMax - o.xMin) * gw;
+  const py = y => pad.t + (o.yMax - y) / (o.yMax - o.yMin) * gh;
+
+  // bakgrunn
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0, 0, W, H);
+
+  // rutenett
+  ctx.strokeStyle = '#e2e8f0';
+  ctx.lineWidth = 0.7;
+  for (let x = Math.ceil(o.xMin); x <= o.xMax; x += o.gridStep) {
+    ctx.beginPath(); ctx.moveTo(px(x), pad.t); ctx.lineTo(px(x), H - pad.b); ctx.stroke();
+  }
+  for (let y = Math.ceil(o.yMin); y <= o.yMax; y += o.gridStep) {
+    ctx.beginPath(); ctx.moveTo(pad.l, py(y)); ctx.lineTo(W - pad.r, py(y)); ctx.stroke();
+  }
+
+  // akser
+  if (o.showAxes) {
+    ctx.strokeStyle = '#94a3b8';
+    ctx.lineWidth = 1.3;
+    if (o.yMin <= 0 && o.yMax >= 0) {
+      ctx.beginPath(); ctx.moveTo(pad.l, py(0)); ctx.lineTo(W - pad.r, py(0)); ctx.stroke();
+    }
+    if (o.xMin <= 0 && o.xMax >= 0) {
+      ctx.beginPath(); ctx.moveTo(px(0), pad.t); ctx.lineTo(px(0), H - pad.b); ctx.stroke();
+    }
+    // labels
+    ctx.fillStyle = '#64748b';
+    ctx.font = '10px sans-serif';
+    ctx.textAlign = 'center';
+    for (let x = Math.ceil(o.xMin); x <= o.xMax; x += o.gridStep) {
+      if (x === 0) continue;
+      ctx.fillText(x, px(x), H - pad.b + 13);
+    }
+    ctx.textAlign = 'right';
+    for (let y = Math.ceil(o.yMin); y <= o.yMax; y += o.gridStep) {
+      if (y === 0) continue;
+      ctx.fillText(y, pad.l - 4, py(y) + 3);
+    }
+  }
+
+  // graf
+  ctx.strokeStyle = o.color;
+  ctx.lineWidth = o.lineWidth;
+  ctx.beginPath();
+  let started = false;
+  const N = gw * 2;
+  for (let i = 0; i <= N; i++) {
+    const x = o.xMin + i / N * (o.xMax - o.xMin);
+    let y;
+    try { y = fn(x); } catch (e) { started = false; continue; }
+    if (!isFinite(y) || y > o.yMax + 50 || y < o.yMin - 50) {
+      started = false; continue;
+    }
+    const X = px(x), Y = py(y);
+    if (!started) { ctx.moveTo(X, Y); started = true; }
+    else ctx.lineTo(X, Y);
+  }
+  ctx.stroke();
+}
+
+// Mini-galleri-grafer
+plotFunc('g1', x => 0.7*x + 1, { color: '#2563eb', xMin: -4, xMax: 4, yMin: -4, yMax: 4 });
+plotFunc('g2', x => 0.5*x*x - 2, { color: '#16a34a', xMin: -4, xMax: 4, yMin: -4, yMax: 4 });
+plotFunc('g3', x => 0.15*x*x*x - x, { color: '#9333ea', xMin: -4, xMax: 4, yMin: -4, yMax: 4 });
+plotFunc('g4', x => Math.pow(1.5, x), { color: '#ea580c', xMin: -4, xMax: 4, yMin: -1, yMax: 8 });
+plotFunc('g5', x => x >= 0 ? Math.sqrt(x) : NaN, { color: '#dc2626', xMin: -1, xMax: 9, yMin: -0.5, yMax: 4 });
+plotFunc('g6', x => 1/x, { color: '#9333ea', xMin: -4, xMax: 4, yMin: -4, yMax: 4 });
+
+// Eksponential vekst/nedgang
+plotFunc('expGrowGraph', x => 2 * Math.pow(1.5, x), {
+  color: '#16a34a', xMin: -1, xMax: 6, yMin: 0, yMax: 25, gridStep: 1
+});
+plotFunc('expDecayGraph', x => 8 * Math.pow(0.7, x), {
+  color: '#dc2626', xMin: -1, xMax: 6, yMin: 0, yMax: 12, gridStep: 1
+});
+
+// Potens
+plotFunc('potGraph1', x => x*x, { color: '#2563eb', xMin: -4, xMax: 4, yMin: -1, yMax: 16, gridStep: 2 });
+plotFunc('potGraph2', x => x >= 0 ? Math.sqrt(x) : NaN, { color: '#ea580c', xMin: -1, xMax: 9, yMin: -0.5, yMax: 4 });
+
+// ============ Interaktiv plotter ============
+const plotPresets = [
+  { name: 'Lineær', eq: 'f(x) = 2x + 1', fn: x => 2*x + 1, xMin: -5, xMax: 5, yMin: -8, yMax: 8, color: '#2563eb', zero: '−0.5', yint: '1' },
+  { name: 'Andregrad', eq: 'f(x) = x² − 2x − 3', fn: x => x*x - 2*x - 3, xMin: -3, xMax: 5, yMin: -5, yMax: 8, color: '#16a34a', zero: '−1 og 3', yint: '−3' },
+  { name: 'Tredjegrad', eq: 'f(x) = 0.2x³ − x', fn: x => 0.2*x*x*x - x, xMin: -4, xMax: 4, yMin: -3, yMax: 3, color: '#9333ea', zero: '−√5, 0, √5', yint: '0' },
+  { name: 'Eksp.', eq: 'f(x) = 2 · 1.5^x', fn: x => 2 * Math.pow(1.5, x), xMin: -3, xMax: 5, yMin: 0, yMax: 16, color: '#ea580c', zero: 'ingen', yint: '2' },
+  { name: 'Eksp.ned', eq: 'f(x) = 8 · 0.7^x', fn: x => 8 * Math.pow(0.7, x), xMin: -2, xMax: 8, yMin: 0, yMax: 16, color: '#dc2626', zero: 'ingen', yint: '8' },
+  { name: 'Rot', eq: 'f(x) = √x', fn: x => x >= 0 ? Math.sqrt(x) : NaN, xMin: -1, xMax: 16, yMin: -1, yMax: 5, color: '#dc2626', zero: '0', yint: '0' },
+  { name: '1/x', eq: 'f(x) = 1/x', fn: x => 1/x, xMin: -5, xMax: 5, yMin: -5, yMax: 5, color: '#9333ea', zero: 'ingen (asymptote y = 0)', yint: 'ikke definert' }
+];
+
+let currentPlot = 0;
+
+function setPlot(idx, btn) {
+  currentPlot = idx;
+  const p = plotPresets[idx];
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  document.getElementById('plotEq').textContent = p.eq;
+  document.getElementById('plotZero').textContent = p.zero;
+  document.getElementById('plotYInt').textContent = p.yint;
+  document.getElementById('plotXY').textContent = '—';
+  drawPlot();
+}
+
+function drawPlot() {
+  const p = plotPresets[currentPlot];
+  plotFunc('plotCanvas', p.fn, {
+    color: p.color, xMin: p.xMin, xMax: p.xMax, yMin: p.yMin, yMax: p.yMax,
+    gridStep: 1, lineWidth: 3,
+    pad: { l: 40, r: 15, t: 15, b: 30 }
+  });
+}
+
+// Hover read-out
+const plotCanvas = document.getElementById('plotCanvas');
+plotCanvas.addEventListener('mousemove', e => {
+  const p = plotPresets[currentPlot];
+  const rect = plotCanvas.getBoundingClientRect();
+  const scaleX = plotCanvas.width / rect.width;
+  const scaleY = plotCanvas.height / rect.height;
+  const mx = (e.clientX - rect.left) * scaleX;
+  const my = (e.clientY - rect.top) * scaleY;
+  const pad = { l: 40, r: 15, t: 15, b: 30 };
+  const gw = plotCanvas.width - pad.l - pad.r;
+  const gh = plotCanvas.height - pad.t - pad.b;
+  if (mx < pad.l || mx > plotCanvas.width - pad.r || my < pad.t || my > plotCanvas.height - pad.b) {
+    document.getElementById('plotXY').textContent = '—';
+    drawPlot();
+    return;
+  }
+  const x = p.xMin + (mx - pad.l) / gw * (p.xMax - p.xMin);
+  let y;
+  try { y = p.fn(x); } catch { y = NaN; }
+  if (!isFinite(y)) {
+    document.getElementById('plotXY').textContent = `x=${x.toFixed(2)}, ikke def.`;
+    drawPlot();
+    return;
+  }
+  document.getElementById('plotXY').textContent = `(${x.toFixed(2)}, ${y.toFixed(2)})`;
+  drawPlot();
+  // tegn markør
+  const ctx = plotCanvas.getContext('2d');
+  const px = pad.l + (x - p.xMin) / (p.xMax - p.xMin) * gw;
+  const py = pad.t + (p.yMax - y) / (p.yMax - p.yMin) * gh;
+  ctx.fillStyle = '#dc2626';
+  ctx.strokeStyle = '#dc2626';
+  ctx.lineWidth = 1.2;
+  ctx.setLineDash([4, 3]);
+  ctx.beginPath(); ctx.moveTo(px, plotCanvas.height - pad.b); ctx.lineTo(px, py); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(pad.l, py); ctx.lineTo(px, py); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.beginPath(); ctx.arc(px, py, 5, 0, 2*Math.PI); ctx.fill();
+});
+plotCanvas.addEventListener('mouseleave', () => {
+  document.getElementById('plotXY').textContent = '—';
+  drawPlot();
+});
+
+// Init plot
+setPlot(0, document.querySelector('.preset-btn'));
+
+// ============ Parameter-slider for andregradsfunksjon ============
+(function() {
+  const canvas = document.getElementById('parabolaCanvas');
+  if (!canvas) return;
+
+  const sliderA = document.getElementById('paramA');
+  const sliderB = document.getElementById('paramB');
+  const sliderC = document.getElementById('paramC');
+  const valA = document.getElementById('paramAVal');
+  const valB = document.getElementById('paramBVal');
+  const valC = document.getElementById('paramCVal');
+  const eqOut = document.getElementById('paramEq');
+  const axisOut = document.getElementById('paramAxis');
+  const vertexOut = document.getElementById('paramVertex');
+  const rootsOut = document.getElementById('paramRoots');
+
+  function fmt(n) {
+    return n.toFixed(2).replace('-', '−');
+  }
+
+  function fmtTerm(coef, varStr, isFirst) {
+    if (Math.abs(coef) < 0.05) return '';
+    const sign = coef >= 0 ? (isFirst ? '' : ' + ') : (isFirst ? '−' : ' − ');
+    const abs = Math.abs(coef);
+    const num = abs.toFixed(1);
+    if (varStr === '') return sign + num;
+    if (Math.abs(abs - 1) < 0.05) return sign + varStr;
+    return sign + num + varStr;
+  }
+
+  function update() {
+    const a = parseFloat(sliderA.value);
+    const b = parseFloat(sliderB.value);
+    const c = parseFloat(sliderC.value);
+    valA.textContent = a.toFixed(1).replace('-', '−');
+    valB.textContent = b.toFixed(1).replace('-', '−');
+    valC.textContent = c.toFixed(1).replace('-', '−');
+
+    // Likning
+    let eq = 'f(x) = ';
+    if (Math.abs(a) < 0.05) {
+      eq += '0' + fmtTerm(b, 'x', false) + fmtTerm(c, '', false);
+    } else {
+      eq += fmtTerm(a, 'x²', true) + fmtTerm(b, 'x', false) + fmtTerm(c, '', false);
+    }
+    eqOut.textContent = eq;
+
+    // Toppunkt / nullpunkter (a ≈ 0 håndteres som lineær)
+    if (Math.abs(a) < 0.05) {
+      axisOut.textContent = '— (lineær)';
+      vertexOut.textContent = '— (lineær)';
+      if (Math.abs(b) < 0.05) {
+        rootsOut.textContent = c === 0 ? 'alle x' : 'ingen';
+      } else {
+        rootsOut.textContent = 'x = ' + fmt(-c / b);
+      }
+    } else {
+      const xv = -b / (2 * a);
+      const yv = a * xv * xv + b * xv + c;
+      axisOut.textContent = 'x = ' + fmt(xv);
+      vertexOut.textContent = '(' + fmt(xv) + ', ' + fmt(yv) + ')';
+      const D = b * b - 4 * a * c;
+      if (D > 0.001) {
+        const r1 = (-b - Math.sqrt(D)) / (2 * a);
+        const r2 = (-b + Math.sqrt(D)) / (2 * a);
+        rootsOut.textContent = 'x ≈ ' + fmt(Math.min(r1, r2)) + ', ' + fmt(Math.max(r1, r2));
+      } else if (D > -0.001) {
+        rootsOut.textContent = 'x = ' + fmt(-b / (2 * a)) + ' (dobbel)';
+      } else {
+        rootsOut.textContent = 'ingen reelle';
+      }
+    }
+
+    drawParabola(a, b, c);
+  }
+
+  function drawParabola(a, b, c) {
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    const xMin = -8, xMax = 8, yMin = -10, yMax = 10;
+    const pad = { l: 40, r: 15, t: 15, b: 30 };
+    const gw = W - pad.l - pad.r;
+    const gh = H - pad.t - pad.b;
+    const px = x => pad.l + (x - xMin) / (xMax - xMin) * gw;
+    const py = y => pad.t + (yMax - y) / (yMax - yMin) * gh;
+
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, W, H);
+
+    // Rutenett
+    ctx.strokeStyle = '#e2e8f0';
+    ctx.lineWidth = 0.7;
+    for (let x = xMin; x <= xMax; x++) {
+      ctx.beginPath(); ctx.moveTo(px(x), pad.t); ctx.lineTo(px(x), H - pad.b); ctx.stroke();
+    }
+    for (let y = yMin; y <= yMax; y++) {
+      ctx.beginPath(); ctx.moveTo(pad.l, py(y)); ctx.lineTo(W - pad.r, py(y)); ctx.stroke();
+    }
+
+    // Akser
+    ctx.strokeStyle = '#94a3b8';
+    ctx.lineWidth = 1.3;
+    ctx.beginPath(); ctx.moveTo(pad.l, py(0)); ctx.lineTo(W - pad.r, py(0)); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(px(0), pad.t); ctx.lineTo(px(0), H - pad.b); ctx.stroke();
+
+    // Akse-labels
+    ctx.fillStyle = '#64748b';
+    ctx.font = '11px sans-serif';
+    ctx.textAlign = 'center';
+    for (let x = xMin; x <= xMax; x += 2) {
+      if (x === 0) continue;
+      ctx.fillText(x, px(x), H - pad.b + 14);
+    }
+    ctx.textAlign = 'right';
+    for (let y = yMin; y <= yMax; y += 2) {
+      if (y === 0) continue;
+      ctx.fillText(y, pad.l - 5, py(y) + 4);
+    }
+
+    // Symmetriakse (stiplet) — bare hvis a ≠ 0
+    if (Math.abs(a) >= 0.05) {
+      const xv = -b / (2 * a);
+      if (xv > xMin && xv < xMax) {
+        ctx.strokeStyle = '#9333ea';
+        ctx.lineWidth = 1.4;
+        ctx.setLineDash([5, 4]);
+        ctx.beginPath(); ctx.moveTo(px(xv), pad.t); ctx.lineTo(px(xv), H - pad.b); ctx.stroke();
+        ctx.setLineDash([]);
+      }
+    }
+
+    // Parabelen
+    ctx.strokeStyle = '#2563eb';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    let started = false;
+    const N = gw * 2;
+    for (let i = 0; i <= N; i++) {
+      const x = xMin + i / N * (xMax - xMin);
+      const y = a * x * x + b * x + c;
+      if (y > yMax + 30 || y < yMin - 30 || !isFinite(y)) { started = false; continue; }
+      const X = px(x), Y = py(y);
+      if (!started) { ctx.moveTo(X, Y); started = true; }
+      else ctx.lineTo(X, Y);
+    }
+    ctx.stroke();
+
+    // Toppunkt/bunnpunkt + nullpunkter
+    if (Math.abs(a) >= 0.05) {
+      const xv = -b / (2 * a);
+      const yv = a * xv * xv + b * xv + c;
+      if (xv > xMin && xv < xMax && yv > yMin && yv < yMax) {
+        ctx.fillStyle = '#9333ea';
+        ctx.beginPath(); ctx.arc(px(xv), py(yv), 6, 0, 2*Math.PI); ctx.fill();
+      }
+      const D = b * b - 4 * a * c;
+      if (D >= 0) {
+        const r1 = (-b - Math.sqrt(D)) / (2 * a);
+        const r2 = (-b + Math.sqrt(D)) / (2 * a);
+        ctx.fillStyle = '#dc2626';
+        [r1, r2].forEach(r => {
+          if (r > xMin && r < xMax) {
+            ctx.beginPath(); ctx.arc(px(r), py(0), 5, 0, 2*Math.PI); ctx.fill();
+          }
+        });
+      }
+    }
+
+    // y-akse-skjæring
+    if (c > yMin && c < yMax) {
+      ctx.fillStyle = '#16a34a';
+      ctx.beginPath(); ctx.arc(px(0), py(c), 5, 0, 2*Math.PI); ctx.fill();
+    }
+  }
+
+  sliderA.addEventListener('input', update);
+  sliderB.addEventListener('input', update);
+  sliderC.addEventListener('input', update);
+  update();
+})();
+
+// ============ QUIZ ============
+const allQuestions = [
+  {
+    q: "Hva er definisjonsmengden til f(x) = 1/x?",
+    opts: ["Alle tall", "Alle positive tall", "Alle tall unntatt 0", "Alle tall ≥ 0"],
+    ans: 2,
+    tip: "Vi kan ikke dele på 0, så x = 0 er ikke tillatt."
+  },
+  {
+    q: "f(x) = 3x − 6. Hvor krysser grafen y-aksen?",
+    opts: ["(0, 3)", "(0, −6)", "(0, 6)", "(2, 0)"],
+    ans: 1,
+    tip: "Sett x = 0: f(0) = 3·0 − 6 = −6."
+  },
+  {
+    q: "Stigningstallet til linjen gjennom (1, 4) og (3, 10) er:",
+    opts: ["2", "3", "6", "0.5"],
+    ans: 1,
+    tip: "a = (10 − 4) / (3 − 1) = 6/2 = 3."
+  },
+  {
+    q: "f(x) = x² − 9. Hva er nullpunktene?",
+    opts: ["x = 9", "x = ±3", "x = 3", "ingen nullpunkter"],
+    ans: 1,
+    tip: "x² − 9 = 0 ⇒ x² = 9 ⇒ x = ±3."
+  },
+  {
+    q: "En populasjon vokser med 4 % per år. Vekstfaktoren er:",
+    opts: ["0.04", "0.96", "1.04", "4"],
+    ans: 2,
+    tip: "Vekstfaktor = 1 + p/100 = 1 + 0.04 = 1.04."
+  },
+  {
+    q: "Hvilken funksjon passer prosentvis vekst?",
+    opts: ["Lineær", "Andregrad", "Eksponential", "Rotfunksjon"],
+    ans: 2,
+    tip: "Eksponentialfunksjoner ganges med samme faktor — det gir prosentvis vekst."
+  },
+  {
+    q: "f(x) = 200 · 1.05^x. Hva er startverdien?",
+    opts: ["1.05", "200", "5", "205"],
+    ans: 1,
+    tip: "f(0) = 200·1.05⁰ = 200·1 = 200. Startverdien er a = 200."
+  },
+  {
+    q: "Hvilken kommando i GeoGebra gir lineær regresjon?",
+    opts: ["LinearReg", "RegLin", "Lineær(L)", "RegPoly1"],
+    ans: 1,
+    tip: "Det er RegLin(liste) i norsk GeoGebra."
+  },
+  {
+    q: "f(x) = (x + 1) / (x − 4). Hvor har grafen loddrett asymptote?",
+    opts: ["x = 1", "x = −1", "x = 4", "x = −4"],
+    ans: 2,
+    tip: "Sett nevner = 0: x − 4 = 0 ⇒ x = 4."
+  },
+  {
+    q: "f(x) = 2(x − 1)(x + 3). Nullpunktene er:",
+    opts: ["x = 1 og x = 3", "x = 1 og x = −3", "x = −1 og x = 3", "x = 2"],
+    ans: 1,
+    tip: "Faktorisert form: nullpunkter der parentes = 0. (x − 1) = 0 → x = 1, (x + 3) = 0 → x = −3."
+  },
+  {
+    q: "Et polynom har grad 4. Maks antall nullpunkter er:",
+    opts: ["2", "3", "4", "8"],
+    ans: 2,
+    tip: "Et polynom av grad n har opptil n nullpunkter."
+  },
+  {
+    q: "f(x) = x² − 4x. Hvor ligger symmetriaksen?",
+    opts: ["x = 0", "x = 2", "x = 4", "x = −2"],
+    ans: 1,
+    tip: "Symmetriaksen ligger på x = −b/(2a) = −(−4)/(2·1) = 2."
+  }
+];
+
+let questions = [];
+let qIdx = 0, score = 0;
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function startQuiz() {
+  questions = shuffle(allQuestions);
+  qIdx = 0; score = 0;
+  document.getElementById('quizResult').style.display = 'none';
+  document.getElementById('quizBody').style.display = 'block';
+  document.getElementById('qTotal').textContent = questions.length;
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[qIdx];
+  document.getElementById('qNum').textContent = qIdx + 1;
+  document.getElementById('qBar').style.width = ((qIdx + 1) / questions.length * 100) + '%';
+  document.getElementById('qText').textContent = q.q;
+  const optsEl = document.getElementById('qOptions');
+  optsEl.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-option';
+    btn.textContent = opt;
+    btn.onclick = () => answer(i, btn);
+    optsEl.appendChild(btn);
+  });
+  const fb = document.getElementById('qFeedback');
+  fb.className = 'quiz-feedback';
+  fb.textContent = '';
+  document.getElementById('qNext').classList.remove('show');
+}
+
+function answer(i, btn) {
+  const q = questions[qIdx];
+  const opts = document.querySelectorAll('.quiz-option');
+  opts.forEach((o, j) => {
+    o.disabled = true;
+    if (j === q.ans) o.classList.add('correct');
+    else if (j === i) o.classList.add('wrong');
+  });
+  const fb = document.getElementById('qFeedback');
+  fb.classList.add('show');
+  if (i === q.ans) {
+    score++;
+    fb.classList.add('is-correct');
+    fb.textContent = 'Riktig! ' + q.tip;
+  } else {
+    fb.classList.add('is-wrong');
+    fb.textContent = 'Feil. ' + q.tip;
+  }
+  document.getElementById('qNext').classList.add('show');
+}
+
+function nextQuestion() {
+  qIdx++;
+  if (qIdx >= questions.length) finishQuiz();
+  else showQuestion();
+}
+
+function finishQuiz() {
+  document.getElementById('quizBody').style.display = 'none';
+  const r = document.getElementById('quizResult');
+  r.style.display = 'block';
+  document.getElementById('rScore').textContent = score + ' / ' + questions.length;
+  const pct = score / questions.length;
+  let grade;
+  if (pct === 1) grade = 'Perfekt! Du behersker funksjoner!';
+  else if (pct >= 0.8) grade = 'Veldig bra!';
+  else if (pct >= 0.6) grade = 'Bra jobbet — fortsett å øve.';
+  else if (pct >= 0.4) grade = 'På god vei. Repeter graf-typene!';
+  else grade = 'Ta en titt på kapittelet og prøv igjen.';
+  document.getElementById('rGrade').textContent = grade;
+}
+
+function openQuiz() {
+  startQuiz();
+  document.getElementById('quizOverlay').classList.add('open');
+}
+
+function closeQuiz() {
+  document.getElementById('quizOverlay').classList.remove('open');
+}
+
+document.getElementById('quizOverlay').addEventListener('click', e => {
+  if (e.target.id === 'quizOverlay') closeQuiz();
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeQuiz();
+});
+</script>
+</body>
+</html>

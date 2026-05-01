@@ -482,7 +482,7 @@
   <a href="#pytagoras">Pytagoras</a>
   <a href="#problemlosning">Problemløsning</a>
   <a href="#metodevalg">Når bruker du hva?</a>
-  <button class="toc a quiz-btn" onclick="openQuiz()">Test deg selv!</button>
+  <button class="quiz-btn" onclick="openQuiz()">Test deg selv!</button>
 </div>
 
 <!-- ===== QUIZ OVERLAY ===== -->
@@ -491,7 +491,7 @@
     <button class="quiz-close" onclick="closeQuiz()">&times;</button>
     <div class="quiz-header">
       <h2>Tall og regning – quiz</h2>
-      <div class="quiz-progress">Sporsmal <span id="qNum">1</span> av <span id="qTotal">10</span></div>
+      <div class="quiz-progress">Spørsmål <span id="qNum">1</span> av <span id="qTotal">10</span></div>
       <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="qBar" style="width:10%"></div></div>
     </div>
     <div id="quizBody">
@@ -531,10 +531,10 @@
       <text x="305" y="75" fill="#ea580c" font-size="18" font-weight="700">Z</text>
       <ellipse cx="185" cy="100" rx="60" ry="32" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
       <text x="240" y="90" fill="#dc2626" font-size="18" font-weight="700">N</text>
-      <text x="165" y="105" fill="#1e293b" font-size="13">1, 2, 3 ...</text>
-      <text x="125" y="140" fill="#1e293b" font-size="12">..., -2, -1, 0</text>
-      <text x="310" y="120" fill="#1e293b" font-size="12">&frac12;, &frac34;, 0.25</text>
-      <text x="400" y="150" fill="#1e293b" font-size="12">&pi;, &radic;2</text>
+      <text x="165" y="105" fill="#1e293b" font-size="13">1, 2, 3 …</text>
+      <text x="125" y="140" fill="#1e293b" font-size="12">…, &minus;2, &minus;1, 0</text>
+      <text x="335" y="125" fill="#1e293b" font-size="12">&frac12;, &minus;&frac34;, 0,25</text>
+      <text x="380" y="155" fill="#1e293b" font-size="12">&pi;, &radic;2, e</text>
     </svg>
   </div>
 
@@ -558,14 +558,14 @@
       <tr>
         <td class="set-symbol" style="color:var(--green);">Q</td>
         <td><strong>Rasjonale tall</strong></td>
-        <td>Alle tall som kan skrives som en brøk <em>a/b</em> (der b &ne; 0)</td>
-        <td>&frac12;, -&frac34;, 0.25, 3, -7</td>
+        <td>Alle tall som kan skrives som en brøk <em>a/b</em> (der b &ne; 0). Inkluderer alle hele tall, brøker og endelige eller periodiske desimaltall.</td>
+        <td>&frac12;, &minus;&frac34;, 0,25, ⁷⁄₃</td>
       </tr>
       <tr>
         <td class="set-symbol" style="color:var(--blue);">R</td>
         <td><strong>Reelle tall</strong></td>
         <td>Alle tall på tallinja (rasjonale + irrasjonale)</td>
-        <td>&pi;, &radic;2, e, 0.333..., 7</td>
+        <td>&pi;, &radic;2, e, 0,333…, 7</td>
       </tr>
     </tbody>
   </table>
@@ -577,7 +577,7 @@
 
 <!-- ============ POTENSER ============ -->
 <div class="card" id="potenser">
-  <h2>1.1 Eksponenter og potenser</h2>
+  <h2>1.2 Eksponenter og potenser</h2>
   <p>En <strong>potens</strong> er en kompakt måte å skrive gjentatt multiplikasjon:</p>
   <div class="formula-box">
     a<sup>n</sup> = a &middot; a &middot; a &middot; ... &middot; a &nbsp; (n faktorer)
@@ -614,14 +614,61 @@
     <div class="rule-item">
       <div class="rule-name">Negativ eksponent</div>
       <div class="rule-formula">a<sup>&minus;n</sup> = 1 / a<sup>n</sup></div>
-      <div class="rule-example">2<sup>&minus;3</sup> = 1/8 = 0.125</div>
+      <div class="rule-example">2<sup>&minus;3</sup> = 1/8 = 0,125</div>
     </div>
+  </div>
+
+  <div class="note">
+    <strong>Hvorfor er a<sup>0</sup> = 1?</strong> Bruk divisjonsregelen: a<sup>n</sup> / a<sup>n</sup> = a<sup>n−n</sup> = a<sup>0</sup>. Men a<sup>n</sup> / a<sup>n</sup> = 1. Altså må a<sup>0</sup> = 1.
+  </div>
+
+  <h3>Potens med rasjonal eksponent</h3>
+  <p>Eksponenten kan også være en brøk. Da får vi sammenheng mellom potenser og røtter:</p>
+  <div class="rule-grid">
+    <div class="rule-item">
+      <div class="rule-name">Kvadratrot</div>
+      <div class="rule-formula">a<sup>1/2</sup> = &radic;a</div>
+      <div class="rule-example">9<sup>1/2</sup> = &radic;9 = 3</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">n-te rot</div>
+      <div class="rule-formula">a<sup>1/n</sup> = <sup>n</sup>&radic;a</div>
+      <div class="rule-example">8<sup>1/3</sup> = <sup>3</sup>&radic;8 = 2</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Brøkeksponent generelt</div>
+      <div class="rule-formula">a<sup>m/n</sup> = <sup>n</sup>&radic;(a<sup>m</sup>)</div>
+      <div class="rule-example">8<sup>2/3</sup> = (<sup>3</sup>&radic;8)<sup>2</sup> = 4</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Negativ brøkeksponent</div>
+      <div class="rule-formula">a<sup>&minus;1/2</sup> = 1 / &radic;a</div>
+      <div class="rule-example">4<sup>&minus;1/2</sup> = 1/&radic;4 = 1/2</div>
+    </div>
+  </div>
+  <div class="note">
+    <strong>Kobling til kapittel 3.6:</strong> En <em>rotfunksjon</em> som f(x) = √x er det samme som potensfunksjonen f(x) = x<sup>1/2</sup>. <a href="funksjoner.html#potens" style="color:var(--blue);">Se potens- og rotfunksjoner</a>.
+  </div>
+
+  <h3>Standardform (vitenskapelig notasjon)</h3>
+  <p>Veldig store eller små tall skrives ofte med 10-er-potenser:</p>
+  <div class="formula-box purple">
+    a · 10<sup>n</sup> &nbsp; (1 ≤ a &lt; 10, n heltall)
+  </div>
+  <ul>
+    <li>4 500 000 = 4,5 · 10<sup>6</sup> (positiv n for store tall)</li>
+    <li>0,000 32 = 3,2 · 10<sup>−4</sup> (negativ n for små tall)</li>
+    <li>Lysets fart: c ≈ 3,0 · 10<sup>8</sup> m/s</li>
+    <li>Massen til et elektron: ≈ 9,1 · 10<sup>−31</sup> kg</li>
+  </ul>
+  <div class="note">
+    <strong>Tips:</strong> Tell antall plasser desimalkommaet flyttes. Flyttes det <em>til venstre</em> blir n positiv; <em>til høyre</em> blir n negativ.
   </div>
 </div>
 
 <!-- ============ REGNEREGLER ============ -->
 <div class="card" id="regneregler">
-  <h2>1.1 Regneregler</h2>
+  <h2>1.3 Regneregler</h2>
   <p>Disse reglene gjelder for alle tall (og bokstaver som representerer tall):</p>
 
   <h3>Med tall</h3>
@@ -648,26 +695,88 @@
     </div>
   </div>
 
+  <h3>Regning med negative tall</h3>
+  <div class="rule-grid">
+    <div class="rule-item">
+      <div class="rule-name">Minus &middot; minus = pluss</div>
+      <div class="rule-formula">(&minus;a) &middot; (&minus;b) = a &middot; b</div>
+      <div class="rule-example">(&minus;3)(&minus;4) = 12</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Minus &middot; pluss = minus</div>
+      <div class="rule-formula">(&minus;a) &middot; b = &minus;ab</div>
+      <div class="rule-example">(&minus;3) &middot; 4 = &minus;12</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Minus foran parentes</div>
+      <div class="rule-formula">&minus;(a &minus; b) = &minus;a + b</div>
+      <div class="rule-example">&minus;(2x &minus; 3) = &minus;2x + 3</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Distribusjon med minus</div>
+      <div class="rule-formula">a(b &minus; c) = ab &minus; ac</div>
+      <div class="rule-example">5(x &minus; 2) = 5x &minus; 10</div>
+    </div>
+  </div>
+  <div class="note">
+    <strong>Vanligste feil i 1T:</strong> &laquo;å miste minustegnet&raquo; når du fjerner parenteser. <strong>−(2x − 3) = −2x + 3</strong>, ikke −2x − 3. Hvert ledd inne i parentesen skal bytte fortegn.
+  </div>
+
   <h3>Med bokstaver (algebra)</h3>
   <div class="formula-box green">
     a(b + c) = ab + ac
   </div>
   <p><strong>Eksempel:</strong> 2x(3x + 4) = 6x<sup>2</sup> + 8x</p>
 
+  <h3>De tre kvadrat- og konjugatsetningene</h3>
+  <p>Disse tre er de viktigste mønstrene i algebra. Lær dem utenat — du bruker dem konstant i kapittel 2 og 4.</p>
   <div class="formula-box purple">
-    (a + b)<sup>2</sup> = a<sup>2</sup> + 2ab + b<sup>2</sup>
+    <strong>1. kvadratsetning:</strong> &nbsp; (a + b)<sup>2</sup> = a<sup>2</sup> + 2ab + b<sup>2</sup>
   </div>
   <p><strong>Eksempel:</strong> (x + 3)<sup>2</sup> = x<sup>2</sup> + 6x + 9</p>
 
+  <div class="formula-box red">
+    <strong>2. kvadratsetning:</strong> &nbsp; (a &minus; b)<sup>2</sup> = a<sup>2</sup> &minus; 2ab + b<sup>2</sup>
+  </div>
+  <p><strong>Eksempel:</strong> (x &minus; 4)<sup>2</sup> = x<sup>2</sup> &minus; 8x + 16</p>
+
   <div class="formula-box orange">
-    (a + b)(a &minus; b) = a<sup>2</sup> &minus; b<sup>2</sup>
+    <strong>Konjugatsetningen:</strong> &nbsp; (a + b)(a &minus; b) = a<sup>2</sup> &minus; b<sup>2</sup>
   </div>
   <p><strong>Eksempel:</strong> (x + 5)(x &minus; 5) = x<sup>2</sup> &minus; 25</p>
+
+  <h3>Faktorisering</h3>
+  <p><strong>Faktorisering</strong> er å skrive et uttrykk som et <em>produkt</em> av enklere faktorer — motsatt av å gange ut. Du bruker setningene over <em>baklengs</em>:</p>
+  <div class="rule-grid">
+    <div class="rule-item">
+      <div class="rule-name">Felles faktor</div>
+      <div class="rule-formula">ab + ac = a(b + c)</div>
+      <div class="rule-example">6x + 9 = 3(2x + 3)</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Konjugatsetningen baklengs</div>
+      <div class="rule-formula">a<sup>2</sup> &minus; b<sup>2</sup> = (a + b)(a &minus; b)</div>
+      <div class="rule-example">x<sup>2</sup> &minus; 25 = (x + 5)(x &minus; 5)</div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Kvadratsetning baklengs</div>
+      <div class="rule-formula">a<sup>2</sup> + 2ab + b<sup>2</sup> = (a + b)<sup>2</sup></div>
+      <div class="rule-example">x<sup>2</sup> + 6x + 9 = (x + 3)<sup>2</sup></div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-name">Andregradsuttrykk</div>
+      <div class="rule-formula">x<sup>2</sup> + (a+b)x + ab = (x+a)(x+b)</div>
+      <div class="rule-example">x<sup>2</sup> + 5x + 6 = (x+2)(x+3)</div>
+    </div>
+  </div>
+  <div class="note">
+    <strong>Kobling til kapittel 4:</strong> Faktorisering er nøkkelen til å løse andregradslikninger og finne nullpunkter til polynom. <a href="algebra.html#anvendelse" style="color:var(--blue);">Se anvendelse av polynomdivisjon</a>.
+  </div>
 </div>
 
 <!-- ============ REGNEREKKEFØLGE ============ -->
 <div class="card" id="rekkefolge">
-  <h2>1.1 Regnerekkefølge</h2>
+  <h2>1.4 Regnerekkefølge</h2>
   <p>Når et uttrykk har flere operasjoner, regner vi i denne rekkefølgen:</p>
 
   <div class="steps">
@@ -697,9 +806,9 @@
   </div>
 </div>
 
-<!-- ============ 1.2 BRØK ============ -->
+<!-- ============ BRØK ============ -->
 <div class="card" id="brok">
-  <h2>1.2 Regning med brøk</h2>
+  <h2>1.5 Regning med brøk</h2>
 
   <h3>Forkorting og utviding</h3>
   <p><strong>Forkorte:</strong> Del teller og nevner med samme tall.</p>
@@ -718,6 +827,97 @@
     = <span class="frac"><span class="frac-num">2 &middot; 3</span><span class="frac-den">5 &middot; 3</span></span>
     = <span class="frac"><span class="frac-num">6</span><span class="frac-den">15</span></span>
   </p>
+
+  <h3>Hva betyr en brøk visuelt?</h3>
+  <p>En brøk er en <em>del av en helhet</em>. Stolpen under viser ⅓, ½ og ¾ — sammenlign dem:</p>
+  <div style="text-align:center; margin:0.8rem 0;">
+    <svg viewBox="0 0 480 180" width="480" style="max-width:100%;">
+      <!-- 1/3 -->
+      <text x="20" y="35" fill="#1e293b" font-size="14" font-weight="600">⅓</text>
+      <g>
+        <rect x="60" y="20" width="120" height="30" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+        <rect x="60" y="20" width="40" height="30" fill="#2563eb"/>
+        <line x1="100" y1="20" x2="100" y2="50" stroke="#fff" stroke-width="1"/>
+        <line x1="140" y1="20" x2="140" y2="50" stroke="#2563eb" stroke-width="1"/>
+        <text x="195" y="40" fill="#64748b" font-size="13">= 1 av 3 deler</text>
+      </g>
+      <!-- 1/2 -->
+      <text x="20" y="85" fill="#1e293b" font-size="14" font-weight="600">½</text>
+      <g>
+        <rect x="60" y="70" width="120" height="30" fill="#fef9c3" stroke="#ea580c" stroke-width="1.5"/>
+        <rect x="60" y="70" width="60" height="30" fill="#ea580c"/>
+        <line x1="120" y1="70" x2="120" y2="100" stroke="#fff" stroke-width="1"/>
+        <text x="195" y="90" fill="#64748b" font-size="13">= 1 av 2 deler</text>
+      </g>
+      <!-- 3/4 -->
+      <text x="20" y="135" fill="#1e293b" font-size="14" font-weight="600">¾</text>
+      <g>
+        <rect x="60" y="120" width="120" height="30" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+        <rect x="60" y="120" width="90" height="30" fill="#16a34a"/>
+        <line x1="90" y1="120" x2="90" y2="150" stroke="#fff" stroke-width="1"/>
+        <line x1="120" y1="120" x2="120" y2="150" stroke="#fff" stroke-width="1"/>
+        <line x1="150" y1="120" x2="150" y2="150" stroke="#16a34a" stroke-width="1"/>
+        <text x="195" y="140" fill="#64748b" font-size="13">= 3 av 4 deler</text>
+      </g>
+    </svg>
+  </div>
+  <p>Når vi legger sammen brøker, må «delene» være like store. Det er derfor vi trenger <strong>felles nevner</strong>:</p>
+  <div style="text-align:center; margin:0.8rem 0;">
+    <svg viewBox="0 0 480 130" width="480" style="max-width:100%;">
+      <!-- ⅓ + ¼ ulike størrelser -->
+      <text x="20" y="35" fill="#1e293b" font-size="13">⅓</text>
+      <rect x="50" y="20" width="120" height="22" fill="#dbeafe" stroke="#2563eb" stroke-width="1.2"/>
+      <rect x="50" y="20" width="40" height="22" fill="#2563eb"/>
+      <line x1="90" y1="20" x2="90" y2="42" stroke="#fff" stroke-width="1"/>
+      <line x1="130" y1="20" x2="130" y2="42" stroke="#2563eb" stroke-width="1"/>
+      <text x="180" y="35" fill="#1e293b" font-size="14">+</text>
+      <text x="200" y="35" fill="#1e293b" font-size="13">¼</text>
+      <rect x="220" y="20" width="120" height="22" fill="#fef9c3" stroke="#ea580c" stroke-width="1.2"/>
+      <rect x="220" y="20" width="30" height="22" fill="#ea580c"/>
+      <line x1="250" y1="20" x2="250" y2="42" stroke="#fff" stroke-width="1"/>
+      <line x1="280" y1="20" x2="280" y2="42" stroke="#ea580c" stroke-width="1"/>
+      <line x1="310" y1="20" x2="310" y2="42" stroke="#ea580c" stroke-width="1"/>
+      <text x="350" y="35" fill="#dc2626" font-size="13">ulike biter ✗</text>
+      <!-- som tolvdeler -->
+      <text x="20" y="85" fill="#1e293b" font-size="13">⁴⁄₁₂</text>
+      <g>
+        <rect x="50" y="70" width="120" height="22" fill="#dbeafe" stroke="#2563eb" stroke-width="1.2"/>
+        <rect x="50" y="70" width="40" height="22" fill="#2563eb"/>
+        <g stroke="#2563eb" stroke-width="0.8">
+          <line x1="60" y1="70" x2="60" y2="92"/>
+          <line x1="70" y1="70" x2="70" y2="92"/>
+          <line x1="80" y1="70" x2="80" y2="92"/>
+          <line x1="90" y1="70" x2="90" y2="92"/>
+          <line x1="100" y1="70" x2="100" y2="92"/>
+          <line x1="110" y1="70" x2="110" y2="92"/>
+          <line x1="120" y1="70" x2="120" y2="92"/>
+          <line x1="130" y1="70" x2="130" y2="92"/>
+          <line x1="140" y1="70" x2="140" y2="92"/>
+          <line x1="150" y1="70" x2="150" y2="92"/>
+          <line x1="160" y1="70" x2="160" y2="92"/>
+        </g>
+      </g>
+      <text x="180" y="85" fill="#1e293b" font-size="14">+</text>
+      <text x="200" y="85" fill="#1e293b" font-size="13">³⁄₁₂</text>
+      <rect x="220" y="70" width="120" height="22" fill="#fef9c3" stroke="#ea580c" stroke-width="1.2"/>
+      <rect x="220" y="70" width="30" height="22" fill="#ea580c"/>
+      <g stroke="#ea580c" stroke-width="0.8">
+        <line x1="230" y1="70" x2="230" y2="92"/>
+        <line x1="240" y1="70" x2="240" y2="92"/>
+        <line x1="250" y1="70" x2="250" y2="92"/>
+        <line x1="260" y1="70" x2="260" y2="92"/>
+        <line x1="270" y1="70" x2="270" y2="92"/>
+        <line x1="280" y1="70" x2="280" y2="92"/>
+        <line x1="290" y1="70" x2="290" y2="92"/>
+        <line x1="300" y1="70" x2="300" y2="92"/>
+        <line x1="310" y1="70" x2="310" y2="92"/>
+        <line x1="320" y1="70" x2="320" y2="92"/>
+        <line x1="330" y1="70" x2="330" y2="92"/>
+      </g>
+      <text x="350" y="85" fill="#16a34a" font-size="13">like biter ✓</text>
+      <text x="160" y="120" fill="#16a34a" font-size="13" font-weight="600">⁴⁄₁₂ + ³⁄₁₂ = ⁷⁄₁₂</text>
+    </svg>
+  </div>
 
   <h3>Addisjon og subtraksjon</h3>
   <p>Brøkene må ha <strong>felles nevner</strong>:</p>
@@ -786,9 +986,9 @@
   </p>
 </div>
 
-<!-- ============ 1.3 PROSENTREGNING ============ -->
+<!-- ============ PROSENTREGNING ============ -->
 <div class="card" id="prosent">
-  <h2>1.3 Prosentregning</h2>
+  <h2>1.6 Prosentregning</h2>
 
   <h3>Andeler i brøk og prosent</h3>
   <p><strong>Prosent</strong> betyr &laquo;per hundre&raquo;. Vi regner om mellom brøk, desimaltall og prosent:</p>
@@ -809,10 +1009,14 @@
   <p><strong>Eksempel:</strong> 15 av 60 = <span class="frac"><span class="frac-num">15</span><span class="frac-den">60</span></span> &middot; 100 % = 25 %</p>
 
   <h3>Prosentpoeng</h3>
-  <p><strong>Prosentpoeng</strong> er forskjellen mellom to prosenttall.</p>
+  <p><strong>Prosentpoeng</strong> er forskjellen mellom to prosenttall. Det er ikke det samme som prosent — og avisene blander ofte begrepene.</p>
   <div class="note">
-    <strong>Eksempel:</strong> Renta gikk fra 3 % til 5 %. Det er en økning på <strong>2 prosentpoeng</strong>.<br>
-    Men selve renta økte med <span class="frac"><span class="frac-num">2</span><span class="frac-den">3</span></span> &middot; 100 % &asymp; 66,7 % (prosentvis økning).
+    <strong>Eksempel:</strong> Renta gikk fra 3 % til 5 %.
+    <ul style="margin-top:0.4rem;">
+      <li>Økningen er <strong>2 prosentpoeng</strong> (5 − 3).</li>
+      <li>Men selve renta økte med <span class="frac"><span class="frac-num">2</span><span class="frac-den">3</span></span> &middot; 100 % &asymp; <strong>66,7 %</strong> (prosentvis økning).</li>
+    </ul>
+    Stor forskjell! Hvis noen sier &laquo;renta økte med 2 %&raquo; mener de antagelig prosentpoeng. Vær kritisk.
   </div>
 
   <h3>Prosentvis økning og reduksjon</h3>
@@ -827,9 +1031,9 @@
   </p>
 </div>
 
-<!-- ============ 1.4 VEKSTFAKTOR ============ -->
+<!-- ============ VEKSTFAKTOR ============ -->
 <div class="card" id="vekstfaktor">
-  <h2>1.4 Vekstfaktor</h2>
+  <h2>1.7 Vekstfaktor</h2>
 
   <h3>Hva er vekstfaktor?</h3>
   <p>Vekstfaktoren er tallet vi <strong>ganger med</strong> for å gå fra gammel til ny verdi:</p>
@@ -870,11 +1074,15 @@
   <p><strong>Eksempel:</strong> Et beløp på 10 000 kr vokser med 5 % per år i 3 år:<br>
     10 000 &middot; 1,05<sup>3</sup> = 10 000 &middot; 1,157625 = 11 576,25 kr
   </p>
+
+  <div class="note">
+    <strong>Kobling til kapittel 3.5:</strong> Når vi setter inn en variabel <em>x</em> for tid, får vi en <strong>eksponentialfunksjon</strong>: f(x) = a · b<sup>x</sup>. <a href="funksjoner.html#eksponential" style="color:var(--blue);">Se eksponentialfunksjoner</a>.
+  </div>
 </div>
 
 <!-- ============ FART, STREKNING, TID ============ -->
 <div class="card" id="fart">
-  <h2>Strekning, fart og tid</h2>
+  <h2>1.8 Strekning, fart og tid</h2>
 
   <p>Sammenhengen mellom strekning (<strong>s</strong>), fart (<strong>v</strong>) og tid (<strong>t</strong>):</p>
   <div class="rule-grid" style="grid-template-columns:1fr 1fr 1fr;">
@@ -917,6 +1125,10 @@
     <strong>Hvorfor 3,6?</strong> 1 km = 1000 m og 1 t = 3600 s. Så 1 km/t = 1000/3600 m/s = 1/3,6 m/s.
   </div>
 
+  <div class="note">
+    <strong>Kobling til kapittel 5:</strong> Fart er et eksempel på <em>vekstfart</em> — hvor mye en størrelse forandrer seg per tidsenhet. Det generaliseres til <strong>derivasjon</strong>. <a href="derivasjon.html#vekst" style="color:var(--blue);">Se vekst og vekstfart</a>.
+  </div>
+
   <h3>Eksempler</h3>
   <div class="steps">
     <div class="step">
@@ -944,73 +1156,161 @@
 
 <!-- ============ AREAL OG VOLUM ============ -->
 <div class="card" id="areal-volum">
-  <h2>Areal og volum</h2>
+  <h2>1.9 Areal og volum</h2>
+
+  <style>
+    .geo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.8rem;
+      margin: 0.8rem 0;
+    }
+    .geo-item {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.8rem;
+      text-align: center;
+    }
+    .geo-item svg { display: block; margin: 0 auto 0.4rem; max-width: 100%; height: auto; }
+    .geo-item .geo-name {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
+    }
+    .geo-item .geo-formula {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+  </style>
 
   <h3>Areal av flate figurer</h3>
-  <div class="rule-grid">
-    <div class="rule-item">
-      <div class="rule-name">Rektangel</div>
-      <div class="rule-formula">A = l &middot; b</div>
-      <div class="rule-example">lengde &middot; bredde</div>
+  <div class="geo-grid">
+    <div class="geo-item">
+      <svg viewBox="0 0 120 80" width="120">
+        <rect x="15" y="20" width="90" height="45" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+        <text x="60" y="78" font-size="10" fill="#1e293b" text-anchor="middle">l</text>
+        <text x="9" y="46" font-size="10" fill="#1e293b" text-anchor="middle">b</text>
+      </svg>
+      <div class="geo-name">Rektangel</div>
+      <div class="geo-formula">A = l · b</div>
     </div>
-    <div class="rule-item">
-      <div class="rule-name">Kvadrat</div>
-      <div class="rule-formula">A = s<sup>2</sup></div>
-      <div class="rule-example">side &middot; side</div>
+    <div class="geo-item">
+      <svg viewBox="0 0 120 80" width="120">
+        <rect x="30" y="15" width="60" height="60" fill="#fef9c3" stroke="#ea580c" stroke-width="2"/>
+        <text x="60" y="88" font-size="10" fill="#1e293b" text-anchor="middle">s</text>
+      </svg>
+      <div class="geo-name">Kvadrat</div>
+      <div class="geo-formula">A = s²</div>
     </div>
-    <div class="rule-item">
-      <div class="rule-name">Trekant</div>
-      <div class="rule-formula">A = <span class="frac"><span class="frac-num">g &middot; h</span><span class="frac-den">2</span></span></div>
-      <div class="rule-example">grunnlinje &middot; høyde / 2</div>
+    <div class="geo-item">
+      <svg viewBox="0 0 120 80" width="120">
+        <polygon points="20,70 100,70 65,15" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+        <line x1="65" y1="15" x2="65" y2="70" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3,3"/>
+        <text x="60" y="78" font-size="10" fill="#1e293b" text-anchor="middle">g</text>
+        <text x="72" y="46" font-size="10" fill="#dc2626">h</text>
+      </svg>
+      <div class="geo-name">Trekant</div>
+      <div class="geo-formula">A = g · h / 2</div>
     </div>
-    <div class="rule-item">
-      <div class="rule-name">Parallellogram</div>
-      <div class="rule-formula">A = g &middot; h</div>
-      <div class="rule-example">grunnlinje &middot; høyde</div>
+    <div class="geo-item">
+      <svg viewBox="0 0 120 80" width="120">
+        <polygon points="20,65 80,65 100,20 40,20" fill="#fce7f3" stroke="#9333ea" stroke-width="2"/>
+        <line x1="40" y1="20" x2="40" y2="65" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3,3"/>
+        <text x="60" y="78" font-size="10" fill="#1e293b" text-anchor="middle">g</text>
+        <text x="48" y="46" font-size="10" fill="#dc2626">h</text>
+      </svg>
+      <div class="geo-name">Parallellogram</div>
+      <div class="geo-formula">A = g · h</div>
     </div>
-    <div class="rule-item">
-      <div class="rule-name">Trapes</div>
-      <div class="rule-formula">A = <span class="frac"><span class="frac-num">(a + b) &middot; h</span><span class="frac-den">2</span></span></div>
-      <div class="rule-example">sum av parallelle sider &middot; høyde / 2</div>
+    <div class="geo-item">
+      <svg viewBox="0 0 120 80" width="120">
+        <polygon points="15,65 105,65 85,20 35,20" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+        <line x1="60" y1="20" x2="60" y2="65" stroke="#1e293b" stroke-width="1.5" stroke-dasharray="3,3"/>
+        <text x="60" y="13" font-size="10" fill="#1e293b" text-anchor="middle">b</text>
+        <text x="60" y="78" font-size="10" fill="#1e293b" text-anchor="middle">a</text>
+        <text x="68" y="46" font-size="10" fill="#1e293b">h</text>
+      </svg>
+      <div class="geo-name">Trapes</div>
+      <div class="geo-formula">A = (a + b)·h / 2</div>
     </div>
-    <div class="rule-item">
-      <div class="rule-name">Sirkel</div>
-      <div class="rule-formula">A = &pi; r<sup>2</sup></div>
-      <div class="rule-example">Omkrets: O = 2&pi;r</div>
+    <div class="geo-item">
+      <svg viewBox="0 0 120 80" width="120">
+        <circle cx="60" cy="40" r="28" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+        <line x1="60" y1="40" x2="88" y2="40" stroke="#dc2626" stroke-width="1.5"/>
+        <circle cx="60" cy="40" r="2.5" fill="#dc2626"/>
+        <text x="74" y="36" font-size="10" fill="#dc2626">r</text>
+      </svg>
+      <div class="geo-name">Sirkel</div>
+      <div class="geo-formula">A = π r²,&nbsp; O = 2πr</div>
     </div>
   </div>
 
   <h3>Volum av romfigurer</h3>
-  <div class="rule-grid">
-    <div class="rule-item">
-      <div class="rule-name">Rett prisme / boks</div>
-      <div class="rule-formula">V = l &middot; b &middot; h</div>
-      <div class="rule-example">lengde &middot; bredde &middot; høyde</div>
+  <div class="geo-grid">
+    <div class="geo-item">
+      <svg viewBox="0 0 120 90" width="120">
+        <polygon points="15,75 75,75 95,55 35,55" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+        <polygon points="15,75 15,30 35,10 35,55" fill="#bfdbfe" stroke="#2563eb" stroke-width="1.5"/>
+        <polygon points="15,30 75,30 95,10 35,10" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+        <polygon points="75,75 75,30 95,10 95,55" fill="#93c5fd" stroke="#2563eb" stroke-width="1.5"/>
+      </svg>
+      <div class="geo-name">Rett prisme / boks</div>
+      <div class="geo-formula">V = l · b · h</div>
     </div>
-    <div class="rule-item">
-      <div class="rule-name">Kube</div>
-      <div class="rule-formula">V = s<sup>3</sup></div>
-      <div class="rule-example">side &middot; side &middot; side</div>
+    <div class="geo-item">
+      <svg viewBox="0 0 120 90" width="120">
+        <polygon points="25,75 75,75 95,55 45,55" fill="#fef3c7" stroke="#ea580c" stroke-width="1.5"/>
+        <polygon points="25,75 25,25 45,5 45,55" fill="#fde68a" stroke="#ea580c" stroke-width="1.5"/>
+        <polygon points="25,25 75,25 95,5 45,5" fill="#fef3c7" stroke="#ea580c" stroke-width="1.5"/>
+        <polygon points="75,75 75,25 95,5 95,55" fill="#fcd34d" stroke="#ea580c" stroke-width="1.5"/>
+      </svg>
+      <div class="geo-name">Kube</div>
+      <div class="geo-formula">V = s³</div>
     </div>
-    <div class="rule-item">
-      <div class="rule-name">Sylinder</div>
-      <div class="rule-formula">V = &pi; r<sup>2</sup> h</div>
-      <div class="rule-example">grunnflate &middot; høyde</div>
+    <div class="geo-item">
+      <svg viewBox="0 0 120 90" width="120">
+        <ellipse cx="60" cy="20" rx="30" ry="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+        <line x1="30" y1="20" x2="30" y2="70" stroke="#16a34a" stroke-width="1.5"/>
+        <line x1="90" y1="20" x2="90" y2="70" stroke="#16a34a" stroke-width="1.5"/>
+        <ellipse cx="60" cy="70" rx="30" ry="8" fill="#bbf7d0" stroke="#16a34a" stroke-width="1.5"/>
+        <line x1="60" y1="70" x2="90" y2="70" stroke="#dc2626" stroke-width="1.2"/>
+        <text x="74" y="83" font-size="10" fill="#dc2626">r</text>
+      </svg>
+      <div class="geo-name">Sylinder</div>
+      <div class="geo-formula">V = π r² h</div>
     </div>
-    <div class="rule-item">
-      <div class="rule-name">Kjegle</div>
-      <div class="rule-formula">V = <span class="frac"><span class="frac-num">&pi; r<sup>2</sup> h</span><span class="frac-den">3</span></span></div>
-      <div class="rule-example">1/3 av sylinderens volum</div>
+    <div class="geo-item">
+      <svg viewBox="0 0 120 90" width="120">
+        <ellipse cx="60" cy="75" rx="35" ry="9" fill="#fce7f3" stroke="#9333ea" stroke-width="1.5"/>
+        <path d="M 25,75 L 60,10 L 95,75" fill="#fbcfe8" stroke="#9333ea" stroke-width="1.5"/>
+        <line x1="60" y1="10" x2="60" y2="75" stroke="#dc2626" stroke-width="1.2" stroke-dasharray="3,2"/>
+        <text x="65" y="46" font-size="10" fill="#dc2626">h</text>
+      </svg>
+      <div class="geo-name">Kjegle</div>
+      <div class="geo-formula">V = π r² h / 3</div>
     </div>
-    <div class="rule-item">
-      <div class="rule-name">Pyramide</div>
-      <div class="rule-formula">V = <span class="frac"><span class="frac-num">G &middot; h</span><span class="frac-den">3</span></span></div>
-      <div class="rule-example">G = grunnflatens areal</div>
+    <div class="geo-item">
+      <svg viewBox="0 0 120 90" width="120">
+        <polygon points="20,75 100,75 60,15" fill="#fef9c3" stroke="#ea580c" stroke-width="1.5"/>
+        <polygon points="20,75 75,80 60,15" fill="#fde68a" stroke="#ea580c" stroke-width="1.2" opacity="0.7"/>
+        <line x1="60" y1="15" x2="60" y2="78" stroke="#dc2626" stroke-width="1.2" stroke-dasharray="3,2"/>
+        <text x="65" y="48" font-size="10" fill="#dc2626">h</text>
+      </svg>
+      <div class="geo-name">Pyramide</div>
+      <div class="geo-formula">V = G · h / 3</div>
     </div>
-    <div class="rule-item">
-      <div class="rule-name">Kule</div>
-      <div class="rule-formula">V = <span class="frac"><span class="frac-num">4</span><span class="frac-den">3</span></span> &pi; r<sup>3</sup></div>
-      <div class="rule-example">Overflate: O = 4&pi;r<sup>2</sup></div>
+    <div class="geo-item">
+      <svg viewBox="0 0 120 90" width="120">
+        <circle cx="60" cy="45" r="32" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+        <ellipse cx="60" cy="45" rx="32" ry="9" fill="none" stroke="#dc2626" stroke-width="1" stroke-dasharray="2,2" opacity="0.6"/>
+        <line x1="60" y1="45" x2="92" y2="45" stroke="#1e293b" stroke-width="1.2"/>
+        <circle cx="60" cy="45" r="2" fill="#1e293b"/>
+        <text x="73" y="41" font-size="10" fill="#1e293b">r</text>
+      </svg>
+      <div class="geo-name">Kule</div>
+      <div class="geo-formula">V = ⁴⁄₃ π r³,&nbsp; O = 4πr²</div>
     </div>
   </div>
 
@@ -1035,9 +1335,9 @@
   </div>
 </div>
 
-<!-- ============ 1.5 PYTAGORAS ============ -->
+<!-- ============ PYTAGORAS ============ -->
 <div class="card" id="pytagoras">
-  <h2>1.5 Bevis og sammenhenger: Pytagoras' setning</h2>
+  <h2>1.10 Pytagoras' setning</h2>
 
   <div style="display:flex; gap:2rem; align-items:flex-start; flex-wrap:wrap;">
     <svg viewBox="0 0 220 200" width="220" style="flex-shrink:0;">
@@ -1075,15 +1375,45 @@
   </div>
 
   <h3>Bevisidé (geometrisk)</h3>
-  <p>Tegn et stort kvadrat med side (a + b). Inne i dette kan vi lage fire kopier av trekanten og et lite kvadrat med side c. Da ser vi at:</p>
+  <div class="diagram-row" style="display:flex; gap:2rem; align-items:flex-start; flex-wrap:wrap;">
+    <svg viewBox="0 0 200 200" width="200" style="flex-shrink:0;">
+      <!-- Stort kvadrat (a+b)x(a+b) -->
+      <rect x="20" y="20" width="160" height="160" fill="#eff6ff" stroke="#2563eb" stroke-width="2.5"/>
+      <!-- Indre kvadrat med side c, rotert -->
+      <polygon points="80,20 180,80 120,180 20,120" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+      <!-- Trekanter (markert med farger ved hjørner) -->
+      <text x="50" y="14" font-size="11" fill="#1e293b" text-anchor="middle">a</text>
+      <text x="130" y="14" font-size="11" fill="#1e293b" text-anchor="middle">b</text>
+      <text x="14" y="55" font-size="11" fill="#1e293b" text-anchor="end">b</text>
+      <text x="14" y="155" font-size="11" fill="#1e293b" text-anchor="end">a</text>
+      <text x="186" y="55" font-size="11" fill="#1e293b">a</text>
+      <text x="186" y="155" font-size="11" fill="#1e293b">b</text>
+      <text x="50" y="195" font-size="11" fill="#1e293b" text-anchor="middle">b</text>
+      <text x="130" y="195" font-size="11" fill="#1e293b" text-anchor="middle">a</text>
+      <!-- c labels på indre kvadrat -->
+      <text x="124" y="48" font-size="13" fill="#16a34a" font-weight="600">c</text>
+      <text x="148" y="138" font-size="13" fill="#16a34a" font-weight="600">c</text>
+      <text x="62" y="158" font-size="13" fill="#16a34a" font-weight="600">c</text>
+      <text x="42" y="76" font-size="13" fill="#16a34a" font-weight="600">c</text>
+    </svg>
+    <div style="flex:1; min-width:280px;">
+      <p>Tegn et kvadrat med side <strong>(a + b)</strong>. Plasser fire kopier av den rettvinklede trekanten i hjørnene. Da blir det et lite kvadrat igjen i midten med side <strong>c</strong>.</p>
+      <p>Hele arealet kan regnes på <em>to måter</em>:</p>
+      <ul>
+        <li>Ytre kvadrat: (a + b)²</li>
+        <li>4 trekanter + indre kvadrat: 4 · (ab/2) + c²</li>
+      </ul>
+      <p>Setter vi disse like, får vi beviset:</p>
+    </div>
+  </div>
   <div class="formula-box green">
     (a + b)<sup>2</sup> = 4 &middot; <span class="frac"><span class="frac-num">ab</span><span class="frac-den">2</span></span> + c<sup>2</sup> &nbsp; &rArr; &nbsp; a<sup>2</sup> + 2ab + b<sup>2</sup> = 2ab + c<sup>2</sup> &nbsp; &rArr; &nbsp; a<sup>2</sup> + b<sup>2</sup> = c<sup>2</sup>
   </div>
 </div>
 
-<!-- ============ 1.6 PROBLEMLØSNING ============ -->
+<!-- ============ PROBLEMLØSNING ============ -->
 <div class="card" id="problemlosning">
-  <h2>1.6 Problemløsning</h2>
+  <h2>1.11 Problemløsning</h2>
   <p>Pólyas fire steg for problemløsning:</p>
 
   <div class="problem-steps">
@@ -1324,10 +1654,10 @@ const allQuestions = [
     tip: "Felles nevner 6: 2/6 + 1/6 = 3/6 = 1/2."
   },
   {
-    q: "Hvilken tallmengde inneholder -7?",
-    opts: ["N (naturlige tall)", "Z (hele tall)", "Bare R (reelle tall)", "Ingen av dem"],
+    q: "Hva er den minste tallmengden som inneholder −7?",
+    opts: ["N (naturlige tall)", "Z (hele tall)", "Q (rasjonale tall)", "R (reelle tall)"],
     ans: 1,
-    tip: "-7 er et helt tall (Z). Det er også rasjonalt (Q) og reelt (R), men den mest spesifikke mengden er Z."
+    tip: "−7 er et negativt heltall, så det er i Z. Det er også i Q og R, men Z er den minste mengden."
   },
   {
     q: "(3²)³ er det samme som?",

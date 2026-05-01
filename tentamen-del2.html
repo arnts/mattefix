@@ -449,6 +449,26 @@
     <li><strong>Gyldighetsområde</strong> – ikke bare finn svaret, sjekk om det gir mening (lengder &gt; 0, tid &ge; 0 osv.).</li>
   </ul>
 
+  <h3>Mal for å strukturere svaret</h3>
+  <p>Sensor leter etter struktur. Bruk denne malen på hver deloppgave — det gir maks poeng:</p>
+  <div class="formula-box">
+    <strong>Gitt:</strong> hva oppgaven gir<br>
+    <strong>Søkt:</strong> hva du skal finne<br>
+    <strong>Metode:</strong> hvilken kommando/setning og hvorfor<br>
+    <strong>Utregning:</strong> skjermbilde eller utregning steg for steg<br>
+    <strong>Svar:</strong> med enhet og tolkning i kontekst<br>
+    <strong>Kontroll:</strong> er svaret rimelig?
+  </div>
+  <div class="example">
+    <h4>Mini-eksempel med malen</h4>
+    <p><strong>Gitt:</strong> En tank tappes. V(t) = 100 − 5t (liter etter t minutter).</p>
+    <p><strong>Søkt:</strong> Når er tanken tom?</p>
+    <p><strong>Metode:</strong> Setter V(t) = 0 og løser likningen i CAS.</p>
+    <p><strong>Utregning:</strong> <code>Løs(100 - 5t = 0, t)</code> → t = 20</p>
+    <p><strong>Svar:</strong> Tanken er tom etter 20 minutter.</p>
+    <p><strong>Kontroll:</strong> V(20) = 100 − 100 = 0 ✓ Rimelig (tappingen kan ikke fortsette etter dette).</p>
+  </div>
+
   <h3>Sjekkliste før du leverer</h3>
   <ul class="checklist">
     <li>Har jeg skrevet <em>hvilken kommando</em> og <em>hvilket program</em> jeg brukte?</li>
@@ -456,6 +476,8 @@
     <li>Har jeg svart i hele setninger med riktig enhet?</li>
     <li>Har jeg sjekket at svaret er rimelig (positive lengder, fornuftig tall)?</li>
     <li>Har jeg oppgitt gyldighetsområdet?</li>
+    <li>Har jeg forklart <em>hvilken setning eller formel</em> jeg brukte?</li>
+    <li>Har jeg brukt desimalkomma (norsk standard) i fritekst?</li>
   </ul>
 
   <div class="tip">
@@ -507,8 +529,8 @@
 <span class="comment"># I regnearket: A1–A4 = 0,2,4,6    B1–B4 = 5000,5408,5849,6326</span>
 L1 = {(0,5000),(2,5408),(4,5849),(6,6326)}
 f(x) = RegEksp(L1)
-<span class="result">→ f(x) ≈ 5000 · 1.04^x</span></div>
-    <p><strong>Tolkning:</strong> vekstfaktoren 1.04 betyr at byen vokser med ca. <strong>4 %</strong> per år. Etter 10 år: f(10) ≈ 7401 innbyggere.</p>
+<span class="result">→ f(x) ≈ 5000 · 1,04^x</span></div>
+    <p><strong>Tolkning:</strong> vekstfaktoren 1,04 betyr at byen vokser med ca. <strong>4 %</strong> per år. Etter 10 år: f(10) ≈ 7401 innbyggere.</p>
   </div>
 
   <h3>Valg av modell – kjappguide</h3>
@@ -521,6 +543,38 @@ f(x) = RegEksp(L1)
       <tr><td>y avhenger av x etter et «forholdstall» (areal, volum vs. lengde)</td><td>Potens</td><td>f(x) = a · x^b</td></tr>
     </tbody>
   </table>
+
+  <h3>Tolkning av parametere</h3>
+  <p>Når regresjonen er gjort, må du forklare <em>hva tallene betyr</em>. Dette er typiske oppfølgingsspørsmål:</p>
+  <table class="gb-cmd-table">
+    <thead><tr><th>Modell</th><th>Parameter</th><th>Tolkning</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="2">Lineær: f(x) = ax + b</td><td>a</td><td>Endring per tidsenhet (f.eks. 5 kr/dag)</td></tr>
+      <tr><td>b</td><td>Startverdi (f(0))</td></tr>
+      <tr><td rowspan="2">Eksponentiell: f(x) = a · b<sup>x</sup></td><td>a</td><td>Startverdi (f(0))</td></tr>
+      <tr><td>b</td><td>Vekstfaktor: b − 1 = prosentvis endring per periode</td></tr>
+      <tr><td rowspan="2">Potens: f(x) = a · x<sup>b</sup></td><td>a</td><td>f(1) = a</td></tr>
+      <tr><td>b</td><td>Eksponent: hvis x dobles, ganges y med 2<sup>b</sup></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Doblingstid og halveringstid</h3>
+  <p>For en eksponentiell modell f(x) = a · b<sup>x</sup>:</p>
+  <ul>
+    <li><strong>Doblingstid</strong>: hvor mange perioder før verdien er doblet. Løs b<sup>x</sup> = 2 ⇒ x = log(2)/log(b)</li>
+    <li><strong>Halveringstid</strong>: hvor lang tid før verdien er halvert (gjelder når b &lt; 1). Løs b<sup>x</sup> = ½ ⇒ x = log(½)/log(b)</li>
+  </ul>
+  <div class="example">
+    <h4>Eksempel: doblingstid for byen vår</h4>
+    <p>Med vekstfaktor 1,04 per år: hvor lang tid før byen er doblet?</p>
+    <div class="gb-example">
+Løs(1,04^x = 2, x)
+<span class="result">→ x ≈ 17,67</span></div>
+    <p><strong>Tolkning:</strong> Byen er doblet etter ca. 17–18 år.</p>
+  </div>
+
+  <h3>Kobling til andre kapitler</h3>
+  <p>Mer om regresjon: <a href="funksjoner.html#modellering" style="color:var(--blue);">funksjoner kap. 3.8</a>. Mer om eksponentialfunksjoner: <a href="funksjoner.html#eksponential" style="color:var(--blue);">kap. 3.5</a>.</p>
 </div>
 
 <!-- ============ FUNKSJONSANALYSE ============ -->
@@ -549,9 +603,9 @@ f(x) = RegEksp(L1)
   <p><strong>Tolkning:</strong> endringsraten <em>akkurat nå</em>, altså hvor raskt f(x) endrer seg i punktet x = a.</p>
   <div class="gb-example">
 <span class="comment"># Finn momentan vekstfart i x = 5</span>
-f(x) = 5000 · 1.04^x
+f(x) = 5000 · 1,04^x
 f'(5)
-<span class="result">→ ≈ 238.6</span></div>
+<span class="result">→ ≈ 238,6</span></div>
 
   <h3>Definisjons- og verdimengde fra kontekst</h3>
   <ul>
@@ -577,6 +631,27 @@ f'(5)
 
   <h3>Skjæringspunkter grafisk</h3>
   <p>Finn skjæring mellom to grafer med <code>Skjæring(f, g)</code> i GeoGebra. Bruk punktet til å svare på spørsmål som «når er tilbudet lik etterspørselen?» eller «når er de like høye?».</p>
+
+  <h3>Tolkning av f og f' i kontekst</h3>
+  <p>Sensor leter etter at du knytter den deriverte til hva den <em>betyr</em> i oppgavens kontekst:</p>
+  <table class="gb-cmd-table">
+    <thead><tr><th>Hvis f(t) er …</th><th>er f'(t) …</th></tr></thead>
+    <tbody>
+      <tr><td>Posisjon (m)</td><td>Fart (m/s)</td></tr>
+      <tr><td>Volum vann i tank (L)</td><td>Tappehastighet (L/min)</td></tr>
+      <tr><td>Antall innbyggere</td><td>Befolkningsendring per år</td></tr>
+      <tr><td>Høyde (m)</td><td>Vertikal hastighet (m/s)</td></tr>
+      <tr><td>Temperatur (°C)</td><td>Endring i temperatur per tid</td></tr>
+      <tr><td>Pris</td><td>Prisendring per tidsenhet</td></tr>
+      <tr><td>Total kostnad</td><td>Marginalkostnad (hva neste enhet koster)</td></tr>
+    </tbody>
+  </table>
+  <div class="tip">
+    <strong>Skriv enheten til f' eksplisitt:</strong> «f'(5) = 8 betyr at vannmengden øker med 8 liter per minutt ved t = 5 min.» Eleven som hopper over enheten mister poeng.
+  </div>
+
+  <h3>Kobling til andre kapitler</h3>
+  <p>Mer om vekstfart og derivasjon: <a href="derivasjon.html#momentan" style="color:var(--blue);">kapittel 5</a>. Mer om funksjoner generelt: <a href="funksjoner.html#funksjonsbegrepet" style="color:var(--blue);">kapittel 3</a>.</p>
 </div>
 
 <!-- ============ POLYNOM M/UKJENTE ============ -->
@@ -622,6 +697,9 @@ f(x) = x² − 6x + 2</div>
   <div class="warn">
     <strong>Pass på:</strong> I CAS skal du bruke <code>:=</code> når du <em>definerer</em> f, og <code>=</code> i <em>likningene</em> inni Løs(). Variabler som <code>a, b, c</code> skal IKKE være definert som tall før du løser!
   </div>
+
+  <h3>Kobling til andre kapitler</h3>
+  <p>Mer om polynomfunksjoner: <a href="funksjoner.html#polynom" style="color:var(--blue);">kapittel 3.4</a>. Topp-/bunnpunkt med derivasjon: <a href="derivasjon.html#praktisk" style="color:var(--blue);">kapittel 5.6</a>.</p>
 </div>
 
 <!-- ============ RASJONALE ============ -->
@@ -670,6 +748,9 @@ f(x) = x² − 6x + 2</div>
   <div class="tip">
     <strong>Sjekk alltid med y-aksen:</strong> Regn ut f(0) og sammenlign med det grafen viser. Dette er raskeste måte å oppdage slurvefeil.
   </div>
+
+  <h3>Kobling til andre kapitler</h3>
+  <p>Mer om rasjonale funksjoner: <a href="funksjoner.html#rasjonale" style="color:var(--blue);">kapittel 3.7</a>.</p>
 </div>
 
 <!-- ============ LIKNINGSSETT ============ -->
@@ -702,6 +783,39 @@ Løs({3x + 2y = 24, 2x + 5y = 27}, {x, y})
       <li><code>NLøs()</code> gir numerisk svar (desimaltall). Bruk hvis Løs ikke klarer det.</li>
     </ul>
   </div>
+
+  <h3>Tre vanlige tekstoppgavetyper</h3>
+
+  <div class="example">
+    <h4>Type 1: Sum + pris</h4>
+    <p>Per og Anna har til sammen 1500 kr. Anna har 300 kr mer enn Per. Hvor mye har hver?</p>
+    <p>x = Pers beløp, y = Annas beløp.</p>
+    <div class="gb-example">
+Løs({x + y = 1500, y = x + 300}, {x, y})
+<span class="result">→ {x = 600, y = 900}</span></div>
+  </div>
+
+  <div class="example">
+    <h4>Type 2: Forhold (én er n ganger den andre)</h4>
+    <p>I en klasse er det 24 elever. Det er 5 ganger så mange jenter som gutter. Hvor mange er det av hver?</p>
+    <p>x = antall gutter, y = antall jenter.</p>
+    <div class="gb-example">
+Løs({x + y = 24, y = 5x}, {x, y})
+<span class="result">→ {x = 4, y = 20}</span></div>
+  </div>
+
+  <div class="example">
+    <h4>Type 3: Fart med og mot strømmen</h4>
+    <p>En båt bruker 3 timer ned elven og 5 timer tilbake. Strekningen er 30 km. Finn båtens fart i stille vann og strømmens fart.</p>
+    <p>v = båtens fart, s = strømmens fart. Med strømmen: (v + s)·3 = 30. Mot strømmen: (v − s)·5 = 30.</p>
+    <div class="gb-example">
+Løs({(v + s)·3 = 30, (v - s)·5 = 30}, {v, s})
+<span class="result">→ {v = 8, s = 2}</span></div>
+    <p>Båten har 8 km/t i stille vann. Strømmen har fart 2 km/t.</p>
+  </div>
+
+  <h3>Kobling til andre kapitler</h3>
+  <p>Mer om likningssystem: <a href="algebra.html#likningssystem" style="color:var(--blue);">kapittel 4.3</a> har innsetning, addisjon og grafisk metode.</p>
 </div>
 
 <!-- ============ TRIGONOMETRI ============ -->
@@ -739,7 +853,7 @@ Løs({3x + 2y = 24, 2x + 5y = 27}, {x, y})
   <div class="example">
     <h4>Eksempel (sinussetningen)</h4>
     <p>Trekant ABC med A = 40°, B = 70° og a = 6. Finn b.</p>
-    <p>b / sin(70°) = 6 / sin(40°)  →  b = 6 · sin(70°) / sin(40°) ≈ <strong>8.77</strong></p>
+    <p>b / sin(70°) = 6 / sin(40°)  →  b = 6 · sin(70°) / sin(40°) ≈ <strong>8,77</strong></p>
   </div>
 
   <h3>Hvilken setning skal jeg bruke?</h3>
@@ -758,12 +872,12 @@ Løs({3x + 2y = 24, 2x + 5y = 27}, {x, y})
   </div>
 
   <h3>Eksakte uttrykk</h3>
-  <p>Til tentamen bør du beholde <strong>√-tegn</strong> og brøker når oppgaven sier «eksakt verdi». Ikke skriv 1.41 når du mener √2.</p>
+  <p>Til tentamen bør du beholde <strong>√-tegn</strong> og brøker når oppgaven sier «eksakt verdi». Ikke skriv 1,41 når du mener √2.</p>
   <div class="example">
     <h4>Eksempel (cosinussetningen, eksakt)</h4>
     <p>Trekant med a = 4, b = 5, C = 60°. Finn c.</p>
     <p>c² = 16 + 25 − 2·4·5·cos(60°) = 41 − 40·½ = 21</p>
-    <p><strong>c = √21 ≈ 4.58</strong></p>
+    <p><strong>c = √21 ≈ 4,58</strong></p>
   </div>
 
   <h3>Velg riktig løsning ut fra kontekst</h3>
@@ -776,6 +890,9 @@ Løs({3x + 2y = 24, 2x + 5y = 27}, {x, y})
   <div class="tip">
     <strong>Skriv alltid begrunnelse:</strong> «Jeg velger x = 3 fordi lengder må være positive.» Dette gir tellende poeng.
   </div>
+
+  <h3>Kobling til andre kapitler</h3>
+  <p>Mer om trigonometri (sin, cos, tan, enhetssirkelen, supplementvinkler): <a href="trigonometri.html#definisjoner" style="color:var(--blue);">kapittel 6</a>.</p>
 </div>
 
 <!-- ============ OPTIMERING ============ -->
@@ -820,6 +937,18 @@ O(x) := 2x^2 + 4000/x
 Ekstremalpunkt(O)
 <span class="result">→ (≈10, ≈600)</span></div>
   <p><strong>Tolkning:</strong> minste overflate ≈ 600 cm², ved sidekant x ≈ 10 cm.</p>
+
+  <div class="warn">
+    <strong>Backup hvis Ekstremalpunkt ikke gir svar:</strong> noen ganger sliter GeoGebra med funksjoner som har brøk eller rot. Da bruker du den deriverte direkte:
+    <div class="gb-example" style="margin-top:0.4rem;">
+Løs(O'(x) = 0, x)<br>
+<span class="comment"># eller numerisk om det trengs:</span><br>
+NLøs(O'(x) = 0, x = 10)</div>
+    Sett deretter x-verdien tilbake i O(x) for å finne minimumsverdien.
+  </div>
+
+  <h3>Kobling til andre kapitler</h3>
+  <p>Mer om optimering med derivasjon: <a href="derivasjon.html#praktisk" style="color:var(--blue);">kapittel 5.6</a>.</p>
 </div>
 
 <!-- ============ DERIVASJON ============ -->
@@ -886,6 +1015,9 @@ Tangent(3, f)
   <div class="tip">
     <strong>Tips:</strong> Trenger du bare stigningstallet? Skriv <code>f'(3)</code>. Trenger du hele likningen til tangenten? Bruk <code>Tangent(3, f)</code>.
   </div>
+
+  <h3>Kobling til andre kapitler</h3>
+  <p>Hele kapittelet om derivasjon: <a href="derivasjon.html#vekst" style="color:var(--blue);">kapittel 5</a> (vekstfart, sekant→tangent, polynom-derivasjon).</p>
 </div>
 
 <!-- ============ GEOGEBRA-ORDBOK ============ -->
@@ -907,6 +1039,12 @@ Tangent(3, f)
       <tr><td><code>RegPoly()</code></td><td>Polynomregresjon (grad n)</td><td><code>RegPoly(L1, 2)</code></td></tr>
       <tr><td><code>Linje()</code></td><td>Linje gjennom to punkt (sekant)</td><td><code>Linje(A, B)</code></td></tr>
       <tr><td><code>Tangent()</code></td><td>Tangent i punkt x = a</td><td><code>Tangent(2, f)</code></td></tr>
+      <tr><td><code>Faktoriser()</code></td><td>Faktoriser polynom</td><td><code>Faktoriser(x^2 - 5x + 6)</code></td></tr>
+      <tr><td><code>Asymptote()</code></td><td>Asymptoter til en funksjon</td><td><code>Asymptote(f)</code></td></tr>
+      <tr><td><code>Vinkel()</code></td><td>Vinkel ved tre punkter — punktet i midten</td><td><code>Vinkel(B, A, C)</code></td></tr>
+      <tr><td><code>Avstand()</code></td><td>Avstand mellom to punkter</td><td><code>Avstand(A, B)</code></td></tr>
+      <tr><td><code>Mangekant()</code></td><td>Tegn polygon (trekant, firkant)</td><td><code>Mangekant(A, B, C)</code></td></tr>
+      <tr><td><code>Areal()</code></td><td>Areal av polygon eller mellom grafer</td><td><code>Areal(poly1)</code></td></tr>
     </tbody>
   </table>
 
@@ -999,6 +1137,52 @@ Tangent(3, f)
     <span class="fn">print</span>(<span class="str">"Figur"</span>, n, <span class="str">":"</span>, prikker, <span class="str">"prikker"</span>)
 </div>
 
+  <h3>If-setninger</h3>
+  <p>En <code>if</code>-setning kjører kode bare hvis en betingelse er sann. Brukes ofte for å sjekke om noe har overskredet en grense.</p>
+  <div class="py-example">
+<span class="comment"># Sjekk om en plante har passert 100 cm høyde</span>
+<span class="kw">hoyde</span> = <span class="num">87</span>
+<span class="kw">if</span> hoyde &gt; <span class="num">100</span>:
+    <span class="fn">print</span>(<span class="str">"Planten er høyere enn 1 meter"</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="str">"Planten er fortsatt under 1 meter"</span>)
+</div>
+
+  <h3>Funksjoner i Python (def)</h3>
+  <p>Du kan definere dine egne funksjoner med <code>def</code>. Praktisk for matematiske formler du bruker flere ganger:</p>
+  <div class="py-example">
+<span class="comment"># Definer høyde-funksjonen for et kast</span>
+<span class="kw">def</span> <span class="fn">hoyde</span>(t):
+    <span class="kw">return</span> -<span class="num">5</span>*t**<span class="num">2</span> + <span class="num">20</span>*t
+
+<span class="comment"># Bruk den som en vanlig matematisk funksjon</span>
+<span class="fn">print</span>(<span class="fn">hoyde</span>(<span class="num">2</span>))   <span class="comment"># → 20</span>
+<span class="fn">print</span>(<span class="fn">hoyde</span>(<span class="num">4</span>))   <span class="comment"># → 0  (ballen lander)</span>
+</div>
+  <div class="tip">
+    <strong>Fordel:</strong> Når du har <code>def hoyde(t)</code>, kan du bruke <code>hoyde(t)</code> overalt — som å definere f(x) i GeoGebra.
+  </div>
+
+  <h3>Lister og f-strings (penere utskrift)</h3>
+  <p>Lister samler flere verdier. f-strings (f"...") gir penere utskrift med variabler i.</p>
+  <div class="py-example">
+<span class="comment"># Lag en liste med høyder for hvert sekund</span>
+<span class="kw">tider</span> = [<span class="num">0</span>, <span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>, <span class="num">4</span>]
+<span class="kw">for</span> t <span class="kw">in</span> tider:
+    h = -<span class="num">5</span>*t**<span class="num">2</span> + <span class="num">20</span>*t
+    <span class="fn">print</span>(<span class="str">f"Etter {t} s: høyde = {h} m"</span>)
+
+<span class="comment"># Utskrift:</span>
+<span class="comment"># Etter 0 s: høyde = 0 m</span>
+<span class="comment"># Etter 1 s: høyde = 15 m</span>
+<span class="comment"># Etter 2 s: høyde = 20 m</span>
+<span class="comment"># Etter 3 s: høyde = 15 m</span>
+<span class="comment"># Etter 4 s: høyde = 0 m</span>
+</div>
+  <div class="tip">
+    <strong>Avrunding i f-string:</strong> <code>f"{x:.2f}"</code> gir to desimaler. Eksempel: <code>f"{1/3:.2f}"</code> → "0.33".
+  </div>
+
   <h3>Tilpasse et program til et nytt problem</h3>
   <p>På tentamen får du ofte et ferdig program og skal endre det for et <em>litt annet</em> problem. Strategi:</p>
   <ol>
@@ -1009,6 +1193,16 @@ Tangent(3, f)
   </ol>
   <div class="tip">
     <strong>Forklaring teller:</strong> Selv om koden er kort, skriv en setning om <em>hva</em> programmet gjør og <em>hvorfor</em> det løser oppgaven.
+  </div>
+
+  <div class="warn">
+    <strong>Vanlige feil i Python:</strong>
+    <ul style="margin-top:0.4rem;">
+      <li>Glemt kolon (<code>:</code>) på slutten av <code>for</code>, <code>while</code>, <code>if</code>, <code>def</code></li>
+      <li>Feil innrykk — Python bruker innrykket til å forstå hva som hører sammen</li>
+      <li>Brukt <code>=</code> (tilordning) der du mente <code>==</code> (sammenligning) i if</li>
+      <li>Glemt å øke variabelen i while — gir uendelig løkke</li>
+    </ul>
   </div>
 </div>
 
@@ -1265,9 +1459,9 @@ const allQuestions = [
   {
     q: "Hva gir sin(60) i GeoGebra (uten °)?",
     opts: [
-      "0.866 (det vi vil ha)",
+      "0,866 (det vi vil ha)",
       "En feilmelding",
-      "Sinus av 60 radianer, altså ≈ −0.305",
+      "Sinus av 60 radianer, altså ≈ −0,305",
       "Presis √3/2"
     ],
     ans: 2,
@@ -1337,6 +1531,63 @@ const allQuestions = [
     ],
     ans: 1,
     tip: "Sensor skal se HVA du brukte, HVORDAN du brukte det, og HVA svaret betyr."
+  },
+
+  // ----- Kontekst-tolkning -----
+  {
+    q: "f(t) = 5000 · 1,04^t er antall bakterier etter t timer. Hva betyr 1,04?",
+    opts: [
+      "Antall bakterier i starten",
+      "Vekstfaktor — bakteriene øker med 4 % per time",
+      "Antallet etter 4 timer",
+      "Tiden det tar før dobling"
+    ],
+    ans: 1,
+    tip: "Vekstfaktoren b = 1,04 betyr 4 % økning per tidsenhet (her: per time)."
+  },
+  {
+    q: "V(t) er volum vann (liter) i en tank etter t minutter. Hva betyr V'(5) = 8?",
+    opts: [
+      "Tanken har 8 liter etter 5 minutter",
+      "Vannet stiger med 8 liter per minutt ved t = 5 min",
+      "Tanken blir tom på 8 minutter",
+      "Det er 5 liter etter 8 minutter"
+    ],
+    ans: 1,
+    tip: "f'(a) er momentan vekstfart i punktet — her: tappehastigheten."
+  },
+  {
+    q: "f(x) = 2 · 1,5^x. Hva er doblingstiden? (i samme enhet som x)",
+    opts: [
+      "1,5",
+      "log(2) / log(1,5) ≈ 1,71",
+      "2",
+      "log(1,5) / log(2) ≈ 0,58"
+    ],
+    ans: 1,
+    tip: "Løs 1,5^x = 2 ⇒ x = log(2)/log(1,5) ≈ 1,71. Doblingstid er uavhengig av startverdien a."
+  },
+  {
+    q: "I CAS-eksemplet O(x) := 2x^2 + 4000/x finner ikke Ekstremalpunkt() svar. Hva gjør du?",
+    opts: [
+      "Gir opp og hopper over oppgaven",
+      "Bruk Løs(O'(x) = 0, x) som backup",
+      "Tegner grafen i Photoshop",
+      "Endrer funksjonen"
+    ],
+    ans: 1,
+    tip: "Backup når Ekstremalpunkt feiler: deriver, sett = 0 og løs. NLøs() hvis Løs ikke heller takler det."
+  },
+  {
+    q: "f(x) = 5x − 2. Hva betyr 5 i konteksten av en lønnsmodell f(x) = lønn etter x år?",
+    opts: [
+      "Startlønnen",
+      "Lønnsstigning på 5 kr per år",
+      "Lønnen etter 5 år",
+      "Antall år før dobling"
+    ],
+    ans: 1,
+    tip: "I lineær modell ax+b er a stigningstallet — her: kr per tidsenhet (5 kr/år)."
   }
 ];
 

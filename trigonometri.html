@@ -557,10 +557,22 @@
     border-top: 1px solid var(--border);
   }
   .gb-section:first-of-type { margin-top: 0.5rem; border-top: none; padding-top: 0; }
+
+  .home-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: var(--blue);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .home-link:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
 <div class="container">
+
+<a href="index.html" class="home-link">&larr; Tilbake til forsiden</a>
 
 <h1>Trigonometri</h1>
 <p class="subtitle">Kompakt hjelpeside – cos, sin, tan og de viktigste setningene</p>
@@ -576,6 +588,7 @@
   <a href="#arealsetningen">Arealsetningen</a>
   <a href="#sinussetningen">Sinussetningen</a>
   <a href="#cosinussetningen">Cosinussetningen</a>
+  <a href="#anvendelse">Anvendelse</a>
   <a href="#regneksempler">Regneksempler</a>
   <a href="#kalkulator">Kalkulator-tips</a>
   <a href="#geogebra">GeoGebra-guide</a>
@@ -588,7 +601,7 @@
     <button class="quiz-close" onclick="closeQuiz()">&times;</button>
     <div class="quiz-header">
       <h2>Trigonometri-quiz</h2>
-      <div class="quiz-progress">Sporsmal <span id="qNum">1</span> av <span id="qTotal">10</span></div>
+      <div class="quiz-progress">Spørsmål <span id="qNum">1</span> av <span id="qTotal">10</span></div>
       <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="qBar" style="width:10%"></div></div>
     </div>
     <div id="quizBody">
@@ -634,6 +647,20 @@
       </div>
     </div>
   </div>
+
+  <div class="note">
+    <strong>Huskeregel — SOH-CAH-TOA:</strong>
+    <ul style="margin-top:0.4rem;">
+      <li><strong>S</strong>in = <strong>O</strong>pposite / <strong>H</strong>ypotenuse (motstående/hypotenus)</li>
+      <li><strong>C</strong>os = <strong>A</strong>djacent / <strong>H</strong>ypotenuse (hosliggende/hypotenus)</li>
+      <li><strong>T</strong>an = <strong>O</strong>pposite / <strong>A</strong>djacent (motstående/hosliggende)</li>
+    </ul>
+    Si det ut høyt et par ganger — så husker du det resten av livet.
+  </div>
+
+  <div class="note">
+    <strong>Husk:</strong> disse definisjonene gjelder bare i <strong>rettvinklede trekanter</strong> for vinkler 0°-90°. For andre vinkler (over 90°, negative, eller i ikke-rettvinklede trekanter) trenger vi <a href="#enhetssirkelen" style="color:var(--blue);">enhetssirkelen</a>, og setningene <a href="#sinussetningen" style="color:var(--blue);">sinussetningen</a> og <a href="#cosinussetningen" style="color:var(--blue);">cosinussetningen</a>.
+  </div>
 </div>
 
 <!-- ============ VERDITABELL ============ -->
@@ -654,7 +681,7 @@
         <td>30°</td>
         <td><span class="fraction">√3 / 2</span></td>
         <td><span class="fraction">1 / 2</span></td>
-        <td><span class="fraction">1 / √3</span></td>
+        <td><span class="fraction">√3 / 3</span></td>
       </tr>
       <tr>
         <td>45°</td>
@@ -674,10 +701,54 @@
         <td>1</td>
         <td>ikke definert</td>
       </tr>
+      <tr>
+        <td>120°</td>
+        <td><span class="fraction">−1 / 2</span></td>
+        <td><span class="fraction">√3 / 2</span></td>
+        <td>−√3</td>
+      </tr>
+      <tr>
+        <td>135°</td>
+        <td><span class="fraction">−√2 / 2</span></td>
+        <td><span class="fraction">√2 / 2</span></td>
+        <td>−1</td>
+      </tr>
+      <tr>
+        <td>150°</td>
+        <td><span class="fraction">−√3 / 2</span></td>
+        <td><span class="fraction">1 / 2</span></td>
+        <td><span class="fraction">−√3 / 3</span></td>
+      </tr>
+      <tr>
+        <td>180°</td>
+        <td>−1</td>
+        <td>0</td>
+        <td>0</td>
+      </tr>
     </tbody>
   </table>
   <div class="note">
-    <strong>Huskeregel:</strong> cos-verdiene går «nedover» (1 → 0) mens sin-verdiene går «oppover» (0 → 1) fra 0° til 90°. De er «speilvendt» av hverandre.
+    <strong>Hvorfor «ikke definert»?</strong> tan(90°) = sin(90°)/cos(90°) = 1/0, og vi kan ikke dele på 0. Det samme gjelder for tan(270°). Dette gir <a href="funksjoner.html#rasjonale" style="color:var(--blue);">loddrette asymptoter</a> i tan-grafen.
+  </div>
+  <div class="note">
+    <strong>Rasjonaliser nevneren!</strong> Skriv tan(30°) = √3/3, ikke 1/√3. Norske lærebøker og prøver krever rasjonalisert form.
+  </div>
+  <div class="note">
+    <strong>Huskeregel:</strong> cos-verdiene går «nedover» (1 → 0) mens sin-verdiene går «oppover» (0 → 1) fra 0° til 90°. De er «speilvendt» av hverandre. Fra 90° til 180° er sin igjen synkende og cos blir negativ — derfor minustegnene over 90°.
+  </div>
+
+  <h3>Verdimengde</h3>
+  <p>Hva slags verdier kan sin, cos og tan ta?</p>
+  <table class="value-table" style="font-size:0.95rem;">
+    <thead><tr><th>Funksjon</th><th>Verdimengde</th><th>Periode</th></tr></thead>
+    <tbody>
+      <tr><td>sin x</td><td>−1 ≤ y ≤ 1</td><td>360°</td></tr>
+      <tr><td>cos x</td><td>−1 ≤ y ≤ 1</td><td>360°</td></tr>
+      <tr><td>tan x</td><td>alle reelle tall (men udef. ved 90° + n·180°)</td><td>180°</td></tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <strong>Konsekvens:</strong> Likningen sin(x) = 1,5 har <em>ingen løsning</em>. Sin kan aldri bli større enn 1.
   </div>
 </div>
 
@@ -769,6 +840,51 @@
       <p>Derfor gjelder alltid: <strong>cos²(u) + sin²(u) = 1</strong></p>
       <p>Enhetssirkelen lar oss utvide sin og cos til <em>alle</em> vinkler (også over 90° og negative vinkler).</p>
     </div>
+  </div>
+
+  <h3>Hvor kommer sin² + cos² = 1 fra?</h3>
+  <p>Direkte fra Pytagoras' setning! Punktet (cos u, sin u) ligger på enhetssirkelen, dvs. avstand 1 fra origo. Den loddrette katet er sin u, den vannrette katet er cos u, og hypotenusen er 1.</p>
+  <div class="formula-box green">
+    Pytagoras: cos²(u) + sin²(u) = 1² = 1
+  </div>
+  <div class="note">
+    <strong>Praktisk bruk:</strong> Hvis du vet sin(u) = 0,6, kan du finne cos(u) uten å regne ut vinkelen: cos²(u) = 1 − 0,36 = 0,64 ⇒ cos(u) = ±0,8 (avhengig av kvadrant). <a href="tall-og-regning.html#pytagoras" style="color:var(--blue);">Mer om Pytagoras</a>.
+  </div>
+
+  <h3>Tegnregel for de fire kvadrantene</h3>
+  <p>Når vinkelen øker fra 0° til 360°, beveger punktet seg gjennom fire kvadranter. I hver kvadrant skifter sin, cos og tan fortegn:</p>
+  <table class="value-table" style="font-size:0.95rem;">
+    <thead>
+      <tr><th>Kvadrant</th><th>Vinkel</th><th>sin</th><th>cos</th><th>tan</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>I</strong></td><td>0°–90°</td>
+        <td style="color:var(--green);">+</td><td style="color:var(--green);">+</td><td style="color:var(--green);">+</td>
+      </tr>
+      <tr>
+        <td><strong>II</strong></td><td>90°–180°</td>
+        <td style="color:var(--green);">+</td><td style="color:var(--red);">−</td><td style="color:var(--red);">−</td>
+      </tr>
+      <tr>
+        <td><strong>III</strong></td><td>180°–270°</td>
+        <td style="color:var(--red);">−</td><td style="color:var(--red);">−</td><td style="color:var(--green);">+</td>
+      </tr>
+      <tr>
+        <td><strong>IV</strong></td><td>270°–360°</td>
+        <td style="color:var(--red);">−</td><td style="color:var(--green);">+</td><td style="color:var(--red);">−</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <strong>Norsk huskeregel — «Alle Sin Tan Cos»:</strong>
+    <ul style="margin-top:0.4rem;">
+      <li><strong>A</strong>lle (I): alle tre er positive</li>
+      <li><strong>S</strong>in (II): bare sin er positiv</li>
+      <li><strong>T</strong>an (III): bare tan er positiv</li>
+      <li><strong>C</strong>os (IV): bare cos er positiv</li>
+    </ul>
+    Gå mot klokka rundt sirkelen og les «A-S-T-C».
   </div>
 </div>
 
@@ -904,6 +1020,104 @@
   </div>
 </div>
 
+<!-- ============ PRAKTISK ANVENDELSE ============ -->
+<div class="card" id="anvendelse">
+  <h2>Praktisk anvendelse</h2>
+  <p>Trigonometri brukes overalt: i bygg, navigasjon, fysikk, spillutvikling. Her er et par klassiske oppgaver som dukker opp på prøver.</p>
+
+  <h3>Eksempel 1: Hvor høyt er flaggstanga?</h3>
+  <div class="diagram-row">
+    <svg viewBox="0 0 280 200" width="280" style="flex-shrink:0;">
+      <!-- bakke -->
+      <line x1="20" y1="170" x2="260" y2="170" stroke="#16a34a" stroke-width="3"/>
+      <!-- person -->
+      <circle cx="50" cy="155" r="6" fill="#1e293b"/>
+      <line x1="50" y1="161" x2="50" y2="170" stroke="#1e293b" stroke-width="2"/>
+      <!-- flaggstang -->
+      <line x1="220" y1="170" x2="220" y2="50" stroke="#dc2626" stroke-width="3"/>
+      <polygon points="220,50 240,55 220,65" fill="#dc2626"/>
+      <!-- siktelinje -->
+      <line x1="50" y1="155" x2="220" y2="50" stroke="#2563eb" stroke-width="2" stroke-dasharray="4,3"/>
+      <!-- vinkel -->
+      <path d="M 80,155 A 30,30 0 0,0 75,138" fill="none" stroke="#ea580c" stroke-width="2"/>
+      <text x="78" y="148" fill="#ea580c" font-size="12" font-weight="600">35°</text>
+      <!-- avstand -->
+      <text x="125" y="186" fill="#1e293b" font-size="12" text-anchor="middle">20 m</text>
+      <text x="232" y="115" fill="#dc2626" font-size="12">h = ?</text>
+    </svg>
+    <div class="text">
+      <p>Du står 20 m fra foten av en flaggstang og ser opp på toppen i en vinkel på 35°. Hvor høy er flaggstanga (over øyehøyde)?</p>
+    </div>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <strong>Identifiser:</strong> Rettvinklet trekant. Hosliggende (hosl. til 35°) = 20 m. Motstående = h (det vi vil finne).
+    </div>
+    <div class="step">
+      <strong>Velg formel.</strong> tan binder hosliggende og motstående.
+      <span class="calc">tan(u) = motstående / hosliggende</span>
+    </div>
+    <div class="step">
+      <strong>Sett inn:</strong>
+      <span class="calc">tan(35°) = h / 20</span>
+    </div>
+    <div class="step">
+      <strong>Løs for h:</strong>
+      <span class="calc">h = 20 · tan(35°) ≈ 20 · 0,7002 ≈ 14,0 m</span>
+    </div>
+    <div class="step">
+      <strong>Svar:</strong> Flaggstanga er ca. <strong>14 m</strong> over øyehøyde.
+    </div>
+  </div>
+
+  <h3>Eksempel 2: To skip fra samme havn</h3>
+  <div class="diagram-row">
+    <svg viewBox="0 0 280 200" width="280" style="flex-shrink:0;">
+      <!-- havn -->
+      <circle cx="60" cy="100" r="6" fill="#dc2626"/>
+      <text x="35" y="118" fill="#dc2626" font-size="11" font-weight="600">havn</text>
+      <!-- skip 1 (nordøst) -->
+      <line x1="60" y1="100" x2="220" y2="50" stroke="#2563eb" stroke-width="2.5"/>
+      <text x="160" y="60" fill="#2563eb" font-size="11" font-weight="600">a = 30 km</text>
+      <text x="225" y="55" fill="#1e293b" font-size="13">⛵</text>
+      <!-- skip 2 (sørøst) -->
+      <line x1="60" y1="100" x2="220" y2="160" stroke="#16a34a" stroke-width="2.5"/>
+      <text x="155" y="155" fill="#16a34a" font-size="11" font-weight="600">b = 45 km</text>
+      <text x="225" y="166" fill="#1e293b" font-size="13">⛵</text>
+      <!-- vinkel -->
+      <path d="M 95,90 A 35,35 0 0,1 95,118" fill="none" stroke="#ea580c" stroke-width="2"/>
+      <text x="95" y="108" fill="#ea580c" font-size="12" font-weight="600">60°</text>
+      <!-- avstand mellom skipene (stiplet) -->
+      <line x1="220" y1="50" x2="220" y2="160" stroke="#9333ea" stroke-width="2" stroke-dasharray="5,3"/>
+      <text x="232" y="110" fill="#9333ea" font-size="11" font-weight="600">c = ?</text>
+    </svg>
+    <div class="text">
+      <p>To skip starter fra samme havn med en vinkel på 60° mellom kursene. Etter en stund er det ene skipet 30 km fra havna og det andre 45 km. Hvor langt er det mellom dem?</p>
+    </div>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <strong>Identifiser:</strong> Vi kjenner to sider og vinkelen mellom (SVS). Bruk cosinussetningen.
+    </div>
+    <div class="step">
+      <strong>Sett opp:</strong>
+      <span class="calc">c² = a² + b² − 2ab · cos(C)</span>
+      <span class="calc">c² = 30² + 45² − 2 · 30 · 45 · cos(60°)</span>
+    </div>
+    <div class="step">
+      <strong>Bruk eksakt verdi:</strong> cos(60°) = 0,5.
+      <span class="calc">c² = 900 + 2025 − 2700 · 0,5 = 2925 − 1350 = 1575</span>
+    </div>
+    <div class="step">
+      <strong>Ta kvadratrot:</strong>
+      <span class="calc">c = √1575 ≈ 39,7 km</span>
+    </div>
+    <div class="step">
+      <strong>Svar:</strong> Det er ca. <strong>39,7 km</strong> mellom skipene.
+    </div>
+  </div>
+</div>
+
 <!-- ============ SAMMENDRAG ============ -->
 <div class="card">
   <h2>Når bruker du hva?</h2>
@@ -916,6 +1130,18 @@
       <tr><td>Tre sider (SSS)</td><td>Cosinussetningen (finne vinkler)</td></tr>
     </tbody>
   </table>
+
+  <h3>Kobling til andre kapitler</h3>
+  <ul>
+    <li><strong>Pytagoras' setning og formlikhet</strong> er grunnlaget for trigonometri: <a href="tall-og-regning.html#pytagoras" style="color:var(--blue);">se kapittel 1</a>.</li>
+    <li><strong>sin og cos som periodiske funksjoner</strong> (grafer): <a href="funksjoner.html#funksjonsbegrepet" style="color:var(--blue);">se kapittel 3</a>.</li>
+    <li><strong>tan-grafens loddrette asymptoter</strong> (rasjonal funksjon-oppførsel): <a href="funksjoner.html#rasjonale" style="color:var(--blue);">se kapittel 3.7</a>.</li>
+    <li><strong>Trigonometriske likninger:</strong> <a href="algebra.html#numerisk" style="color:var(--blue);">numerisk løsning i kapittel 4.5</a>.</li>
+  </ul>
+
+  <div class="note">
+    <strong>Grader vs radianer:</strong> I 1T regner vi alltid i grader. I R1 og videre møter du <em>radianer</em> — en alternativ vinkelmåling der 180° = π og hele sirkelen er 2π. Foreløpig: pass på at kalkulatoren står i DEG (grader), ikke RAD.
+  </div>
 </div>
 
 <!-- ============ REGNEKSEMPLER ============ -->
@@ -1024,16 +1250,19 @@
         <span class="calc">sin(B) = 7 · sin(80°) / 10</span>
       </div>
       <div class="step">
-        <strong>Regn ut.</strong> sin(80°) ≈ 0.985 (bruk kalkulator).
-        <span class="calc">sin(B) = 7 · 0.985 / 10 = 0.6895</span>
+        <strong>Regn ut <em>uten å runde av underveis</em>.</strong> La kalkulatoren beholde alle desimaler:
+        <span class="calc">sin(B) = 7 · sin(80°) / 10 ≈ 0,68937…</span>
       </div>
       <div class="step">
-        <strong>Finn vinkelen.</strong> Bruk invers sinus (sin⁻¹) på kalkulatoren.
-        <span class="calc">B = sin⁻¹(0.6895) ≈ 43.6°</span>
+        <strong>Finn vinkelen.</strong> Bruk invers sinus (sin⁻¹) direkte på kalkulatoren — ikke på den avrundete verdien.
+        <span class="calc">B = sin⁻¹(7 · sin(80°) / 10) ≈ 43,6°</span>
       </div>
       <div class="step">
-        <strong>Svar:</strong> Vinkel B er ca. <strong>43.6°</strong>.
+        <strong>Svar:</strong> Vinkel B er ca. <strong>43,6°</strong>.
       </div>
+    </div>
+    <div class="note">
+      <strong>Hvorfor regne på denne måten?</strong> Hvis du runder av sin(80°) til 0,985 før du regner videre, mister du nøyaktighet. Skriv hele uttrykket inn på kalkulatoren i ett, og rund av <em>først helt til slutt</em>.
     </div>
   </div>
 </div>
@@ -1519,6 +1748,66 @@ const allQuestions = [
     ],
     ans: 1,
     tip: "Formlike trekanter har samme sideforhold – det er derfor trigonometri fungerer!"
+  },
+
+  // --- Vinkler over 90° og kvadranter ---
+  {
+    q: "Hva er sin(180°)?",
+    opts: ["1", "0", "−1", "ikke definert"],
+    ans: 1,
+    tip: "På enhetssirkelen ligger 180° på den negative x-aksen, punktet (−1, 0). y-koordinaten er 0, så sin(180°) = 0."
+  },
+  {
+    q: "Hva er cos(180°)?",
+    opts: ["1", "0", "−1", "ikke definert"],
+    ans: 2,
+    tip: "Punktet på enhetssirkelen ved 180° er (−1, 0). x-koordinaten er −1, så cos(180°) = −1."
+  },
+  {
+    q: "I 2. kvadrant (90°–180°), hvilke fortegn har sin og cos?",
+    opts: [
+      "begge positive",
+      "sin positiv, cos negativ",
+      "sin negativ, cos positiv",
+      "begge negative"
+    ],
+    ans: 1,
+    tip: "ASTC: i 2. kvadrant er bare Sin positiv. cos er negativ."
+  },
+  {
+    q: "Hva er cos(120°)?",
+    opts: ["1/2", "−1/2", "√3/2", "−√3/2"],
+    ans: 1,
+    tip: "120° er supplementvinkel til 60°: cos(120°) = −cos(60°) = −1/2."
+  },
+  {
+    q: "Hva er sin(150°)?",
+    opts: ["1/2", "−1/2", "√3/2", "−√3/2"],
+    ans: 0,
+    tip: "150° er supplementvinkel til 30°: sin(150°) = sin(30°) = 1/2."
+  },
+  {
+    q: "Likningen sin(x) = 1,5. Hvor mange løsninger har den?",
+    opts: ["2", "1", "Uendelig mange", "Ingen"],
+    ans: 3,
+    tip: "Verdimengden til sin er −1 ≤ y ≤ 1. sin kan aldri bli større enn 1, så likningen har ingen løsning."
+  },
+  {
+    q: "I hvilken kvadrant er tan negativ og cos positiv?",
+    opts: ["1.", "2.", "3.", "4."],
+    ans: 3,
+    tip: "ASTC: i 4. kvadrant (270°–360°) er bare Cos positiv. tan = sin/cos blir da negativ siden sin er negativ."
+  },
+  {
+    q: "Hvilken trigonometrisk identitet kommer direkte fra Pytagoras?",
+    opts: [
+      "sin(2u) = 2 sin(u) cos(u)",
+      "sin²(u) + cos²(u) = 1",
+      "tan(u) = sin(u) / cos(u)",
+      "sin(u) + cos(u) = 1"
+    ],
+    ans: 1,
+    tip: "Punktet (cos u, sin u) ligger på enhetssirkelen (avstand 1 fra origo). Pytagoras gir cos²+sin²=1."
   }
 ];
 

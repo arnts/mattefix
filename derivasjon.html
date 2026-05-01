@@ -1,0 +1,1923 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vekstfart og derivasjon – Hjelpeside</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='80'>π</text></svg>">
+<style>
+  :root {
+    --blue: #2563eb;
+    --red: #dc2626;
+    --green: #16a34a;
+    --orange: #ea580c;
+    --purple: #9333ea;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 2rem 1rem;
+  }
+  .container { max-width: 960px; margin: 0 auto; }
+  h1 {
+    text-align: center;
+    font-size: 2.2rem;
+    margin-bottom: 0.3rem;
+    color: var(--blue);
+  }
+  .subtitle {
+    text-align: center;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    font-size: 1.05rem;
+  }
+  .card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .card h2 {
+    font-size: 1.35rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--blue);
+    color: var(--blue);
+  }
+  .card h3 {
+    font-size: 1.1rem;
+    margin: 1rem 0 0.5rem;
+    color: var(--text);
+  }
+  .section-num {
+    display: inline-block;
+    background: var(--blue);
+    color: #fff;
+    font-size: 0.85rem;
+    padding: 0.15rem 0.55rem;
+    border-radius: 6px;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+    font-weight: 700;
+  }
+
+  table.value-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    font-size: 1.05rem;
+  }
+  table.value-table th, table.value-table td {
+    padding: 0.55rem 0.7rem;
+    border: 1px solid var(--border);
+  }
+  table.value-table thead th {
+    background: var(--blue);
+    color: #fff;
+    font-weight: 600;
+  }
+  table.value-table tbody tr:nth-child(even) { background: #f1f5f9; }
+
+  .formula-box {
+    background: #eff6ff;
+    border-left: 4px solid var(--blue);
+    padding: 1rem 1.2rem;
+    border-radius: 0 8px 8px 0;
+    margin: 0.8rem 0;
+    font-size: 1.15rem;
+    text-align: center;
+  }
+  .formula-box.red { background: #fef2f2; border-left-color: var(--red); }
+  .formula-box.green { background: #f0fdf4; border-left-color: var(--green); }
+  .formula-box.orange { background: #fff7ed; border-left-color: var(--orange); }
+  .formula-box.purple { background: #faf5ff; border-left-color: var(--purple); }
+
+  p { margin: 0.5rem 0; }
+  ul { padding-left: 1.3rem; }
+  ul li { margin: 0.3rem 0; }
+
+  .highlight { color: var(--blue); font-weight: 600; }
+  .note {
+    background: #fefce8;
+    border: 1px solid #fde68a;
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    margin-top: 0.8rem;
+    font-size: 0.95rem;
+  }
+
+  .diagram-row {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .diagram-row .text { flex: 1; min-width: 250px; }
+  .diagram-row svg { flex-shrink: 0; }
+
+  /* TOC */
+  .toc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  .toc a {
+    background: var(--blue);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+  }
+  .toc a:hover { opacity: 0.8; }
+  .toc .quiz-btn {
+    background: var(--orange);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+    transition: opacity 0.2s;
+  }
+  .toc .quiz-btn:hover { opacity: 0.8; }
+
+  /* Steg-for-steg */
+  .steps { counter-reset: step; margin: 1rem 0; }
+  .step {
+    position: relative;
+    padding: 0.8rem 1rem 0.8rem 3.2rem;
+    margin-bottom: 0.6rem;
+    background: var(--bg);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  .step::before {
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    left: 0.8rem;
+    top: 0.75rem;
+    width: 1.7rem;
+    height: 1.7rem;
+    background: var(--blue);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+  .step strong { color: var(--blue); }
+  .step .calc {
+    display: block;
+    margin-top: 0.3rem;
+    font-family: 'Courier New', monospace;
+    background: #f1f5f9;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.95rem;
+  }
+
+  /* Eksempel-tabs */
+  .example-tabs {
+    display: flex;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+  .example-tab {
+    padding: 0.5rem 1.2rem;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text);
+    transition: all 0.2s;
+  }
+  .example-tab:hover { border-color: var(--blue); }
+  .example-tab.active {
+    background: var(--blue);
+    color: #fff;
+    border-color: var(--blue);
+  }
+  .example-content { display: none; }
+  .example-content.active { display: block; }
+
+  /* Sekant/tangent visualizer */
+  .secant-tool {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    margin: 0.8rem 0;
+  }
+  .secant-tool canvas {
+    width: 100%;
+    height: auto;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    display: block;
+  }
+  .secant-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.8rem;
+    flex-wrap: wrap;
+  }
+  .secant-controls label {
+    font-weight: 600;
+    color: var(--blue);
+  }
+  .secant-controls input[type=range] {
+    flex: 1;
+    min-width: 200px;
+  }
+  .secant-readout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.6rem;
+    margin-top: 0.8rem;
+  }
+  .secant-readout .item {
+    background: #fff;
+    border-radius: 8px;
+    padding: 0.55rem 0.8rem;
+    border: 1px solid var(--border);
+    font-size: 0.95rem;
+  }
+  .secant-readout .item .label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    display: block;
+  }
+  .secant-readout .item .val {
+    font-weight: 700;
+    font-family: 'Courier New', monospace;
+    font-size: 1.05rem;
+  }
+
+  /* Derivasjons-spillere */
+  .derive-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  @media (max-width: 700px) {
+    .derive-pair { grid-template-columns: 1fr; }
+  }
+  .derive-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.8rem;
+    text-align: center;
+  }
+  .derive-card canvas {
+    width: 100%;
+    height: auto;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+  .derive-card .lbl {
+    font-weight: 600;
+    margin-top: 0.4rem;
+    font-size: 1rem;
+  }
+
+  /* Sync-tool: f og f' synkronisert */
+  .sync-tool {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    margin: 0.8rem 0;
+  }
+  .sync-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  @media (max-width: 700px) {
+    .sync-grid { grid-template-columns: 1fr; }
+  }
+  .sync-card { text-align: center; }
+  .sync-card canvas {
+    width: 100%;
+    height: auto;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: ew-resize;
+  }
+  .sync-label {
+    font-weight: 700;
+    margin-top: 0.4rem;
+    font-size: 1rem;
+  }
+  .sync-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.8rem;
+    flex-wrap: wrap;
+  }
+  .sync-controls label {
+    font-weight: 700;
+    color: var(--blue);
+    font-family: 'Courier New', monospace;
+  }
+  .sync-controls input[type=range] {
+    flex: 1;
+    min-width: 200px;
+  }
+  .sync-readout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.6rem;
+    margin-top: 0.8rem;
+  }
+  .sync-readout .item {
+    background: #fff;
+    border-radius: 8px;
+    padding: 0.55rem 0.8rem;
+    border: 1px solid var(--border);
+    font-size: 0.95rem;
+  }
+  .sync-readout .item .label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    display: block;
+  }
+  .sync-readout .item .val {
+    font-weight: 700;
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+  }
+
+  /* Regelkort */
+  .rule-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.8rem;
+  }
+  .rule-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.9rem 1rem;
+  }
+  .rule-card .name {
+    font-weight: 700;
+    color: var(--blue);
+    font-size: 0.95rem;
+    margin-bottom: 0.3rem;
+  }
+  .rule-card .formula {
+    font-family: 'Courier New', monospace;
+    font-size: 1.05rem;
+    background: #fff;
+    border-radius: 6px;
+    padding: 0.3rem 0.5rem;
+    border: 1px solid var(--border);
+    margin: 0.3rem 0;
+  }
+  .rule-card .ex {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 0.4rem;
+  }
+
+  /* GeoGebra */
+  .gb-cmd-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    margin: 0.8rem 0;
+  }
+  .gb-cmd-table th, .gb-cmd-table td {
+    padding: 0.55rem 0.8rem;
+    border: 1px solid var(--border);
+    text-align: left;
+  }
+  .gb-cmd-table thead th {
+    background: var(--blue);
+    color: #fff;
+    font-weight: 600;
+  }
+  .gb-cmd-table tbody tr:nth-child(even) { background: #f1f5f9; }
+  .gb-cmd-table code {
+    background: #e2e8f0;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+  .gb-example {
+    background: #1e293b;
+    color: #e2e8f0;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin: 0.8rem 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    overflow-x: auto;
+  }
+  .gb-example .comment { color: #94a3b8; }
+  .gb-example .result { color: #86efac; }
+  .gb-section {
+    margin-top: 1.2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+  .gb-section:first-of-type { margin-top: 0.5rem; border-top: none; padding-top: 0; }
+
+  .calc-tip {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    padding: 0.8rem 1rem;
+    background: var(--bg);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin-bottom: 0.6rem;
+  }
+  .calc-tip .icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    width: 1.8rem;
+    text-align: center;
+    font-weight: 700;
+    color: var(--blue);
+  }
+  .calc-tip code {
+    background: #e2e8f0;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+
+  /* Fortegnsskjema */
+  .fortegn {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1rem;
+    margin: 0.8rem 0;
+    text-align: center;
+  }
+  .fortegn th, .fortegn td {
+    padding: 0.55rem 0.7rem;
+    border: 1px solid var(--border);
+  }
+  .fortegn thead th {
+    background: var(--blue);
+    color: #fff;
+  }
+
+  /* Quiz overlay */
+  .quiz-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15,23,42,0.6);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+  }
+  .quiz-overlay.open { display: flex; }
+  .quiz-modal {
+    background: var(--card);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 560px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 2rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    position: relative;
+    animation: slideUp 0.3s ease;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .quiz-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--muted);
+    line-height: 1;
+  }
+  .quiz-close:hover { color: var(--text); }
+  .quiz-header { text-align: center; margin-bottom: 1.5rem; }
+  .quiz-header h2 { color: var(--orange); font-size: 1.5rem; margin-bottom: 0.3rem; }
+  .quiz-progress { font-size: 0.9rem; color: var(--muted); }
+  .quiz-progress-bar {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    margin-top: 0.5rem;
+    overflow: hidden;
+  }
+  .quiz-progress-fill {
+    height: 100%;
+    background: var(--orange);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+  .quiz-question {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+  .quiz-options { display: flex; flex-direction: column; gap: 0.6rem; }
+  .quiz-option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0.85rem 1.1rem;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    background: var(--bg);
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    font-family: inherit;
+    color: var(--text);
+  }
+  .quiz-option:hover:not(:disabled) {
+    border-color: var(--blue);
+    background: #eff6ff;
+  }
+  .quiz-option:disabled { cursor: default; }
+  .quiz-option.correct {
+    border-color: var(--green);
+    background: #f0fdf4;
+    font-weight: 600;
+  }
+  .quiz-option.wrong {
+    border-color: var(--red);
+    background: #fef2f2;
+    opacity: 0.7;
+  }
+  .quiz-feedback {
+    margin-top: 1rem;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.is-correct {
+    background: #f0fdf4;
+    border: 1px solid #86efac;
+    color: #166534;
+  }
+  .quiz-feedback.is-wrong {
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    color: #991b1b;
+  }
+  .quiz-next {
+    display: none;
+    margin: 1.2rem auto 0;
+    padding: 0.7rem 2rem;
+    background: var(--blue);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: opacity 0.2s;
+  }
+  .quiz-next:hover { opacity: 0.85; }
+  .quiz-next.show { display: block; }
+  .quiz-result { text-align: center; }
+  .quiz-score {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--blue);
+    margin: 0.5rem 0;
+  }
+  .quiz-score-label { color: var(--muted); font-size: 1rem; }
+  .quiz-grade {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0.8rem 0;
+  }
+  .quiz-restart {
+    margin-top: 1rem;
+    padding: 0.7rem 2rem;
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .quiz-restart:hover { opacity: 0.85; }
+
+  .home-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: var(--blue);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .home-link:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<a href="index.html" class="home-link">&larr; Tilbake til forsiden</a>
+
+<h1>Vekstfart og derivasjon</h1>
+<p class="subtitle">Kapittel 5 – fra gjennomsnittlig vekst til den deriverte og praktisk bruk</p>
+
+<div class="toc">
+  <a href="#vekst">5.1 Vekst og vekstfart</a>
+  <a href="#gjennomsnittlig">5.2 Gjennomsnittlig</a>
+  <a href="#momentan">5.3 Momentan</a>
+  <a href="#deriverte">5.4 Den deriverte</a>
+  <a href="#numerisk">5.5 Numerisk</a>
+  <a href="#praktisk">5.6 Praktisk bruk</a>
+  <a href="#polynomderivasjon">5.7 Derivere polynom</a>
+  <a href="#oversikt">Mønster og oversikt</a>
+  <a href="#geogebra">GeoGebra</a>
+  <button class="quiz-btn" onclick="openQuiz()">Test deg selv!</button>
+</div>
+
+<!-- ============ QUIZ OVERLAY ============ -->
+<div class="quiz-overlay" id="quizOverlay">
+  <div class="quiz-modal">
+    <button class="quiz-close" onclick="closeQuiz()">&times;</button>
+    <div class="quiz-header">
+      <h2>Derivasjons-quiz</h2>
+      <div class="quiz-progress">Spørsmål <span id="qNum">1</span> av <span id="qTotal">12</span></div>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="qBar" style="width:8%"></div></div>
+    </div>
+    <div id="quizBody">
+      <div class="quiz-question" id="qText"></div>
+      <div class="quiz-options" id="qOptions"></div>
+      <div class="quiz-feedback" id="qFeedback"></div>
+      <button class="quiz-next" id="qNext" onclick="nextQuestion()">Neste</button>
+    </div>
+    <div id="quizResult" class="quiz-result" style="display:none;">
+      <div class="quiz-score-label">Resultat</div>
+      <div class="quiz-score" id="rScore"></div>
+      <div class="quiz-grade" id="rGrade"></div>
+      <button class="quiz-restart" onclick="startQuiz()">Prøv igjen</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 5.1 VEKST OG VEKSTFART ============ -->
+<div class="card" id="vekst">
+  <h2><span class="section-num">5.1</span>Vekst og vekstfart</h2>
+
+  <div class="formula-box purple">
+    <strong>Tenk fart!</strong> Vekstfart er nøyaktig samme idé som <em>fart</em> i fysikk: hvor mye noe forandrer seg per tidsenhet. Når det vi måler er strekning, kaller vi det fart. Når det er noe annet (kroner, høyde, antall), kaller vi det vekstfart — men matematikken er den samme.
+  </div>
+
+  <p><strong>Vekst</strong> er hvor mye en størrelse forandrer seg. <strong>Vekstfart</strong> er hvor <em>raskt</em> den forandrer seg per tidsenhet.</p>
+
+  <div class="diagram-row">
+    <svg viewBox="0 0 240 180" width="240">
+      <line x1="20" y1="160" x2="220" y2="160" stroke="#94a3b8" stroke-width="1.5"/>
+      <line x1="40" y1="20" x2="40" y2="170" stroke="#94a3b8" stroke-width="1.5"/>
+      <text x="222" y="164" fill="#64748b" font-size="11">tid</text>
+      <text x="44" y="20" fill="#64748b" font-size="11">y</text>
+      <!-- kurve -->
+      <path d="M 50,140 Q 130,80 210,30" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+      <!-- to punkter -->
+      <circle cx="80" cy="120" r="4" fill="#dc2626"/>
+      <circle cx="180" cy="50" r="4" fill="#dc2626"/>
+      <line x1="80" y1="120" x2="80" y2="160" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="180" y1="50" x2="180" y2="160" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3"/>
+      <text x="65" y="173" fill="#64748b" font-size="11">t₁</text>
+      <text x="172" y="173" fill="#64748b" font-size="11">t₂</text>
+      <!-- Δy og Δt -->
+      <line x1="80" y1="120" x2="180" y2="120" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <line x1="180" y1="50" x2="180" y2="120" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <text x="115" y="135" fill="#16a34a" font-size="12" font-weight="600">Δt</text>
+      <text x="185" y="90" fill="#16a34a" font-size="12" font-weight="600">Δy</text>
+    </svg>
+    <div class="text">
+      <p><strong>Vekst</strong> mellom to tidspunkt:</p>
+      <div class="formula-box">
+        Δy = y(t₂) − y(t₁)
+      </div>
+      <p><strong>Vekstfart</strong> = vekst per tidsenhet:</p>
+      <div class="formula-box green">
+        Vekstfart = Δy / Δt
+      </div>
+      <p>Tenk fart i bil: y er strekning, t er tid. Δy/Δt er gjennomsnittlig fart.</p>
+    </div>
+  </div>
+
+  <h3>Eksempel</h3>
+  <p>En plante er 5 cm høy ved start (t = 0) og 17 cm etter 4 uker.</p>
+  <div class="steps">
+    <div class="step">
+      <strong>Vekst:</strong>
+      <span class="calc">Δy = 17 − 5 = 12 cm</span>
+    </div>
+    <div class="step">
+      <strong>Vekstfart:</strong>
+      <span class="calc">Δy/Δt = 12 cm / 4 uker = 3 cm/uke</span>
+    </div>
+    <div class="step">
+      <strong>Tolkning:</strong> i gjennomsnitt vokste planten 3 cm per uke.
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>Enheter teller!</strong> En vekstfart har alltid en enhet — kr/dag, m/s, cm/uke. Ta enheten med i svaret.
+  </div>
+</div>
+
+<!-- ============ 5.2 GJENNOMSNITTLIG VEKSTFART ============ -->
+<div class="card" id="gjennomsnittlig">
+  <h2><span class="section-num">5.2</span>Gjennomsnittlig vekstfart</h2>
+  <p>Den gjennomsnittlige vekstfarten til en funksjon <em>f</em> mellom to x-verdier er stigningstallet til <strong>sekanten</strong> gjennom de to punktene.</p>
+
+  <div class="formula-box">
+    Gj.snittlig vekstfart = (f(b) − f(a)) / (b − a)
+  </div>
+
+  <div class="diagram-row">
+    <svg viewBox="0 0 260 200" width="260">
+      <line x1="20" y1="180" x2="240" y2="180" stroke="#94a3b8" stroke-width="1.5"/>
+      <line x1="40" y1="20" x2="40" y2="190" stroke="#94a3b8" stroke-width="1.5"/>
+      <!-- kurve f(x)=x²/8 -->
+      <path d="M 40,180 Q 130,200 230,30" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+      <!-- to punkter -->
+      <circle cx="90" cy="150" r="5" fill="#dc2626"/>
+      <circle cx="200" cy="60" r="5" fill="#dc2626"/>
+      <text x="65" y="148" fill="#dc2626" font-size="12" font-weight="600">(a, f(a))</text>
+      <text x="170" y="55" fill="#dc2626" font-size="12" font-weight="600">(b, f(b))</text>
+      <!-- sekant -->
+      <line x1="60" y1="167" x2="225" y2="32" stroke="#16a34a" stroke-width="2.5"/>
+      <text x="130" y="105" fill="#16a34a" font-size="13" font-weight="600">sekant</text>
+    </svg>
+    <div class="text">
+      <p>Sekanten er linjen som <strong>kutter gjennom kurven</strong> i de to punktene. Stigningstallet til sekanten = gjennomsnittlig vekstfart.</p>
+      <p>Andre vanlige skrivemåter:</p>
+      <div class="formula-box green">
+        Δf/Δx = (f(x + h) − f(x)) / h
+      </div>
+    </div>
+  </div>
+
+  <h3>Eksempel</h3>
+  <p>For f(x) = x², finn den gjennomsnittlige vekstfarten fra x = 1 til x = 4.</p>
+  <div class="steps">
+    <div class="step">
+      <strong>Regn ut f(1) og f(4).</strong>
+      <span class="calc">f(1) = 1,    f(4) = 16</span>
+    </div>
+    <div class="step">
+      <strong>Sett inn i formelen.</strong>
+      <span class="calc">(f(4) − f(1)) / (4 − 1) = (16 − 1) / 3</span>
+    </div>
+    <div class="step">
+      <strong>Regn ut.</strong>
+      <span class="calc">15 / 3 = 5</span>
+    </div>
+    <div class="step">
+      <strong>Svar:</strong> gjennomsnittlig vekstfart er <strong>5</strong>.
+    </div>
+  </div>
+</div>
+
+<!-- ============ 5.3 MOMENTAN VEKSTFART ============ -->
+<div class="card" id="momentan">
+  <h2><span class="section-num">5.3</span>Momentan vekstfart</h2>
+  <p><strong>Momentan vekstfart</strong> er vekstfarten i <em>ett bestemt øyeblikk</em>. Geometrisk: stigningstallet til <strong>tangenten</strong> i punktet.</p>
+
+  <div class="diagram-row">
+    <svg viewBox="0 0 260 200" width="260">
+      <line x1="20" y1="180" x2="240" y2="180" stroke="#94a3b8" stroke-width="1.5"/>
+      <line x1="40" y1="20" x2="40" y2="190" stroke="#94a3b8" stroke-width="1.5"/>
+      <!-- kurve -->
+      <path d="M 40,180 Q 130,200 230,30" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+      <!-- punkt -->
+      <circle cx="160" cy="115" r="6" fill="#ea580c"/>
+      <text x="167" y="113" fill="#ea580c" font-size="12" font-weight="600">P</text>
+      <!-- tangent -->
+      <line x1="80" y1="180" x2="240" y2="55" stroke="#dc2626" stroke-width="2.5"/>
+      <text x="180" y="80" fill="#dc2626" font-size="13" font-weight="600">tangent</text>
+    </svg>
+    <div class="text">
+      <p>Tangenten er linjen som <strong>«kysser»</strong> kurven i ett punkt. Den har samme stigning som kurven der.</p>
+      <p>Vi finner momentan vekstfart ved å la avstanden mellom de to sekant-punktene gå mot 0:</p>
+      <div class="formula-box red">
+        f'(a) = lim<sub>h→0</sub> (f(a+h) − f(a)) / h
+      </div>
+      <p>Når h er veldig liten, blir sekanten praktisk talt en tangent.</p>
+    </div>
+  </div>
+
+  <h3>Sekant blir tangent — interaktivt</h3>
+  <p>Dra glidebryteren for å se hvordan sekanten nærmer seg tangenten når <strong>h → 0</strong>:</p>
+
+  <div class="secant-tool">
+    <canvas id="secantCanvas" width="640" height="380"></canvas>
+    <div class="secant-controls">
+      <label for="hSlider">h =</label>
+      <input type="range" id="hSlider" min="0.05" max="3" step="0.05" value="2">
+      <span id="hVal" style="font-family:monospace;font-weight:700;">2.00</span>
+    </div>
+    <div class="secant-readout">
+      <div class="item"><span class="label">Sekantens stigning</span><span class="val" id="secSlope">—</span></div>
+      <div class="item"><span class="label">Tangentens stigning (f'(1))</span><span class="val" style="color:var(--red);">2.00</span></div>
+      <div class="item"><span class="label">Funksjon</span><span class="val">f(x) = x²</span></div>
+    </div>
+    <p style="margin-top:0.6rem; color:var(--muted); font-size:0.9rem;">Når h er stor, kutter sekanten gjennom kurven. Når h → 0, faller sekanten sammen med tangenten i punktet (1, 1) — og stigningen nærmer seg <strong>2</strong>, den momentane vekstfarten.</p>
+  </div>
+</div>
+
+<!-- ============ 5.4 DEN DERIVERTE ============ -->
+<div class="card" id="deriverte">
+  <h2><span class="section-num">5.4</span>Den deriverte – stigningstallsfunksjonen</h2>
+  <p>Den deriverte <strong>f'(x)</strong> er en <em>ny funksjon</em> som for hvert tall x gir stigningstallet til tangenten i (x, f(x)).</p>
+
+  <div class="formula-box purple">
+    f'(x) = stigningstallet til f i punktet x
+  </div>
+
+  <h3>Sammenheng mellom f og f'</h3>
+  <p>Tegn først f, så f' rett under. Da ser du hvordan de henger sammen:</p>
+
+  <div class="derive-pair">
+    <div class="derive-card">
+      <canvas id="dvCurveF" width="320" height="220"></canvas>
+      <div class="lbl" style="color:var(--blue);">f(x) = x³ − 3x</div>
+    </div>
+    <div class="derive-card">
+      <canvas id="dvCurveFp" width="320" height="220"></canvas>
+      <div class="lbl" style="color:var(--red);">f'(x) = 3x² − 3</div>
+    </div>
+  </div>
+
+  <ul>
+    <li>Der <strong>f stiger</strong> → f' er <strong>positiv</strong>.</li>
+    <li>Der <strong>f synker</strong> → f' er <strong>negativ</strong>.</li>
+    <li>Der <strong>f har topp- eller bunnpunkt</strong> → f' er <strong>0</strong>.</li>
+    <li>Jo brattere f er, jo lenger fra 0 ligger f'.</li>
+  </ul>
+
+  <h3>Interaktivt: dra punktet og se hva som skjer</h3>
+  <p>Beveg punktet langs grafen til f. Den oransje prikken på f'-grafen følger med og viser stigningstallet (= verdien til f') på samme x. Tangenten på f viser samme stigning visuelt.</p>
+  <div class="sync-tool">
+    <div class="sync-grid">
+      <div class="sync-card">
+        <canvas id="syncCanvasF" width="400" height="280"></canvas>
+        <div class="sync-label" style="color:var(--blue);">f(x) = x³ − 3x</div>
+      </div>
+      <div class="sync-card">
+        <canvas id="syncCanvasFp" width="400" height="280"></canvas>
+        <div class="sync-label" style="color:var(--red);">f'(x) = 3x² − 3</div>
+      </div>
+    </div>
+    <div class="sync-controls">
+      <label for="syncX">x =</label>
+      <input type="range" id="syncX" min="-2.2" max="2.2" step="0.05" value="-1">
+      <span id="syncXVal" style="font-family:monospace;font-weight:700;">−1.00</span>
+    </div>
+    <div class="sync-readout">
+      <div class="item"><span class="label">f(x)</span><span class="val" id="syncFVal" style="color:var(--blue);">2.00</span></div>
+      <div class="item"><span class="label">f'(x) = stigning</span><span class="val" id="syncFpVal" style="color:var(--red);">0.00</span></div>
+      <div class="item"><span class="label">Tolkning</span><span class="val" id="syncStatus" style="font-size:0.9rem;">topp</span></div>
+    </div>
+  </div>
+
+  <h3>Lesbar tolkning</h3>
+  <div class="formula-box">
+    f'(a) &gt; 0 ⇒ f vokser ved x = a<br>
+    f'(a) &lt; 0 ⇒ f avtar ved x = a<br>
+    f'(a) = 0 ⇒ f har topp-, bunn- eller terrassepunkt
+  </div>
+
+  <h3>Notasjon</h3>
+  <p>Disse betyr alle det samme:</p>
+  <table class="value-table" style="font-size:0.95rem;">
+    <thead><tr><th>Notasjon</th><th>Lest som</th><th>Når brukes</th></tr></thead>
+    <tbody>
+      <tr><td>f'(x)</td><td>«f-prim av x»</td><td>Vanlig i 1T</td></tr>
+      <tr><td>y'</td><td>«y-prim»</td><td>Når funksjonen heter y</td></tr>
+      <tr><td>dy/dx</td><td>«dy over dx»</td><td>Leibniz-notasjon</td></tr>
+      <tr><td>df/dx</td><td>—</td><td>Samme som over</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============ 5.5 NUMERISK DERIVASJON ============ -->
+<div class="card" id="numerisk">
+  <h2><span class="section-num">5.5</span>Numerisk derivasjon</h2>
+  <p>Av og til kan vi ikke regne ut den deriverte eksakt. Da bruker vi en <strong>numerisk tilnærming</strong>: vi velger en liten h og regner ut sekantens stigning.</p>
+
+  <h3>Sentral differansekvotient</h3>
+  <div class="formula-box orange">
+    f'(a) ≈ (f(a + h) − f(a − h)) / (2h)
+  </div>
+  <p>Dette gir bedre nøyaktighet enn å bare bruke høyresiden, fordi feilen «kanselleres».</p>
+
+  <h3>Eksempel: estimer f'(2) for f(x) = x³</h3>
+  <div class="steps">
+    <div class="step">
+      <strong>Velg en liten h.</strong> For eksempel h = 0.01.
+    </div>
+    <div class="step">
+      <strong>Regn ut f(2.01) og f(1.99).</strong>
+      <span class="calc">f(2.01) = 2.01³ = 8.120601</span>
+      <span class="calc">f(1.99) = 1.99³ = 7.880599</span>
+    </div>
+    <div class="step">
+      <strong>Sett inn i formelen.</strong>
+      <span class="calc">f'(2) ≈ (8.120601 − 7.880599) / (2 · 0.01) = 0.240002 / 0.02 = 12.0001</span>
+    </div>
+    <div class="step">
+      <strong>Svar:</strong> f'(2) ≈ <strong>12</strong>. (Den eksakte verdien er 3·2² = 12 ✓)
+    </div>
+  </div>
+
+  <h3>I GeoGebra</h3>
+  <div class="gb-example">
+    <span class="comment">// Numerisk derivert i et bestemt punkt</span><br>
+    f(x) := x^3<br>
+    a := 2<br>
+    h := 0.01<br>
+    (f(a + h) - f(a - h)) / (2h)<br>
+    <span class="result">→ 12.0001</span><br><br>
+    <span class="comment">// Eller bruk innebygd kommando</span><br>
+    Derivert(f, 2)<br>
+    <span class="result">→ 12</span>
+  </div>
+
+  <div class="note">
+    <strong>For liten h?</strong> Hvis h er ekstremt liten kan vi få avrundingsfeil i kalkulatoren. h ≈ 0.001 til 0.01 fungerer som regel godt.
+  </div>
+</div>
+
+<!-- ============ 5.6 PRAKTISK BRUK AV DERIVASJON ============ -->
+<div class="card" id="praktisk">
+  <h2><span class="section-num">5.6</span>Praktisk bruk av derivasjon</h2>
+  <p>Den deriverte er nøkkelen til å finne <strong>topp- og bunnpunkter</strong>, <strong>bratteste punkt</strong>, og hvordan funksjonen oppfører seg.</p>
+
+  <h3>Finne topp- og bunnpunkt</h3>
+  <div class="steps">
+    <div class="step">
+      <strong>Deriver funksjonen.</strong>
+      <span class="calc">f(x) → f'(x)</span>
+    </div>
+    <div class="step">
+      <strong>Sett f'(x) = 0 og løs.</strong> Disse x-ene er kandidater til topp/bunn.
+    </div>
+    <div class="step">
+      <strong>Lag fortegnsskjema for f'(x).</strong>
+      <ul>
+        <li>f' går fra <strong>+ til −</strong>: <em>toppunkt</em></li>
+        <li>f' går fra <strong>− til +</strong>: <em>bunnpunkt</em></li>
+        <li>f' beholder samme fortegn: <em>terrassepunkt</em></li>
+      </ul>
+    </div>
+    <div class="step">
+      <strong>Sett x tilbake i f for å finne y-koordinaten.</strong>
+    </div>
+  </div>
+
+  <h3>Eksempel: f(x) = x³ − 3x</h3>
+  <div class="steps">
+    <div class="step">
+      <strong>Deriver.</strong>
+      <span class="calc">f'(x) = 3x² − 3</span>
+    </div>
+    <div class="step">
+      <strong>Sett f'(x) = 0.</strong>
+      <span class="calc">3x² − 3 = 0 ⇒ x² = 1 ⇒ x = ±1</span>
+    </div>
+    <div class="step">
+      <strong>Fortegnsskjema for f'(x) = 3(x − 1)(x + 1):</strong>
+    </div>
+  </div>
+
+  <table class="fortegn">
+    <thead><tr><th>Intervall</th><th>x &lt; −1</th><th>−1 &lt; x &lt; 1</th><th>x &gt; 1</th></tr></thead>
+    <tbody>
+      <tr><td>f'(x)</td><td style="color:var(--green);"><strong>+</strong></td><td style="color:var(--red);"><strong>−</strong></td><td style="color:var(--green);"><strong>+</strong></td></tr>
+      <tr style="background:#fef9c3;"><td>f(x)</td><td>vokser</td><td>avtar</td><td>vokser</td></tr>
+    </tbody>
+  </table>
+
+  <div class="steps">
+    <div class="step">
+      <strong>Tolk:</strong> f' går fra + til − ved x = −1 → toppunkt. f' går fra − til + ved x = 1 → bunnpunkt.
+    </div>
+    <div class="step">
+      <strong>Y-koordinater:</strong>
+      <span class="calc">f(−1) = (−1)³ − 3(−1) = −1 + 3 = 2</span>
+      <span class="calc">f(1) = 1 − 3 = −2</span>
+    </div>
+    <div class="step">
+      <strong>Svar:</strong> Toppunkt (−1, 2), bunnpunkt (1, −2).
+    </div>
+  </div>
+
+  <h3>Tangentlikning</h3>
+  <p>Linjen som tangerer grafen i punktet (a, f(a)) har stigning f'(a) og går gjennom punktet. Med ettpunktformelen:</p>
+  <div class="formula-box">
+    y − f(a) = f'(a) · (x − a)
+  </div>
+
+  <h3>Optimering</h3>
+  <p>Mange tekstoppgaver spør: «Hva er det største/minste …?» Det er optimering. Strategi:</p>
+  <ol style="padding-left:1.3rem;">
+    <li>Skriv et uttrykk for det du vil maksimere/minimere som funksjon av én variabel.</li>
+    <li>Skriv ned definisjonsmengden — hva er fysisk mulige verdier?</li>
+    <li>Deriver.</li>
+    <li>Sett den deriverte = 0, finn kandidatene.</li>
+    <li>Sjekk at det er topp- eller bunnpunkt (fortegnsskjema).</li>
+    <li><strong>Sjekk også endepunktene</strong> på definisjonsmengden — maks/min kan ligge der!</li>
+  </ol>
+
+  <div class="formula-box red">
+    <strong>Glem ikke endepunktene!</strong> Maksimum kan ligge der den deriverte = 0, eller på en kant av definisjonsmengden.
+  </div>
+
+  <h3>Eksempel 1: maksimere areal (bonden med 100 m gjerde)</h3>
+  <p>En bonde har 100 m gjerde og vil lage et rektangulært jorde. Hvor stort kan det bli?</p>
+  <div class="steps">
+    <div class="step">
+      <strong>Variabler:</strong> lengde l, bredde b. Omkrets: 2l + 2b = 100, så b = 50 − l.
+    </div>
+    <div class="step">
+      <strong>Definisjonsmengde:</strong> 0 &lt; l &lt; 50 (begge sider må være positive).
+    </div>
+    <div class="step">
+      <strong>Areal som funksjon av l:</strong>
+      <span class="calc">A(l) = l·(50 − l) = 50l − l²</span>
+    </div>
+    <div class="step">
+      <strong>Deriver:</strong>
+      <span class="calc">A'(l) = 50 − 2l</span>
+    </div>
+    <div class="step">
+      <strong>Sett A' = 0:</strong>
+      <span class="calc">50 − 2l = 0 ⇒ l = 25</span>
+    </div>
+    <div class="step">
+      <strong>Sjekk:</strong> A'(20) = 10 &gt; 0, A'(30) = −10 &lt; 0. Skifter fra + til − → toppunkt.
+    </div>
+    <div class="step">
+      <strong>Sjekk endepunktene:</strong> ved l = 0 og l = 50 blir arealet 0. Toppunktet inni intervallet vinner.
+    </div>
+    <div class="step">
+      <strong>Svar:</strong> kvadrat 25 × 25 m gir største areal = <strong>625 m²</strong>.
+    </div>
+  </div>
+
+  <h3>Eksempel 2: minimere materialforbruk</h3>
+  <p>Et åpent rektangulært kar med kvadratisk bunn skal romme 32 liter. Hva er minste mulige overflate? (Bunn + 4 sider.)</p>
+  <div class="steps">
+    <div class="step">
+      <strong>Variabler:</strong> bunnside x dm, høyde h dm. Volum: x²·h = 32, så h = 32/x².
+    </div>
+    <div class="step">
+      <strong>Overflate</strong> (én bunn + fire sider):
+      <span class="calc">O(x) = x² + 4xh = x² + 4x · 32/x² = x² + 128/x</span>
+    </div>
+    <div class="step">
+      <strong>Definisjonsmengde:</strong> x &gt; 0.
+    </div>
+    <div class="step">
+      <strong>Deriver</strong> (her må vi bruke at d/dx(1/x) = −1/x²):
+      <span class="calc">O'(x) = 2x − 128/x²</span>
+    </div>
+    <div class="step">
+      <strong>Sett O' = 0:</strong>
+      <span class="calc">2x = 128/x² ⇒ 2x³ = 128 ⇒ x³ = 64 ⇒ x = 4</span>
+    </div>
+    <div class="step">
+      <strong>Bunnpunkt-sjekk:</strong> O'(2) = 4 − 32 = −28 &lt; 0, O'(6) = 12 − 128/36 ≈ 8,4 &gt; 0. Skifter fra − til + → bunnpunkt.
+    </div>
+    <div class="step">
+      <strong>Svar:</strong> bunnen er 4 × 4 dm, høyden h = 32/16 = 2 dm. Minste overflate = 16 + 32 = <strong>48 dm²</strong>.
+    </div>
+  </div>
+</div>
+
+<!-- ============ 5.7 DERIVASJON AV POLYNOMFUNKSJONER ============ -->
+<div class="card" id="polynomderivasjon">
+  <h2><span class="section-num">5.7</span>Derivasjon av polynomfunksjoner</h2>
+  <p>For polynomer trenger du bare disse reglene:</p>
+
+  <div class="rule-grid">
+    <div class="rule-card">
+      <div class="name">Konstantregelen</div>
+      <div class="formula">(c)' = 0</div>
+      <div class="ex">Ex: (7)' = 0</div>
+    </div>
+    <div class="rule-card">
+      <div class="name">x-regelen</div>
+      <div class="formula">(x)' = 1</div>
+      <div class="ex">Ex: y = x ⇒ y' = 1</div>
+    </div>
+    <div class="rule-card">
+      <div class="name">Potensregelen</div>
+      <div class="formula">(xⁿ)' = n · xⁿ⁻¹</div>
+      <div class="ex">Ex: (x⁵)' = 5x⁴</div>
+    </div>
+    <div class="rule-card">
+      <div class="name">Konstant ganger</div>
+      <div class="formula">(c · f)' = c · f'</div>
+      <div class="ex">Ex: (4x³)' = 4·3x² = 12x²</div>
+    </div>
+    <div class="rule-card">
+      <div class="name">Sumregelen</div>
+      <div class="formula">(f + g)' = f' + g'</div>
+      <div class="ex">Deriver ledd for ledd</div>
+    </div>
+    <div class="rule-card">
+      <div class="name">Differanseregelen</div>
+      <div class="formula">(f − g)' = f' − g'</div>
+      <div class="ex">Også ledd for ledd</div>
+    </div>
+  </div>
+
+  <h3>Slik gjør du det i praksis</h3>
+  <p>Deriver hvert ledd for seg, etter potensregelen:</p>
+  <div class="steps">
+    <div class="step">
+      <strong>Ta tallet foran (eksponenten) ned som faktor.</strong>
+    </div>
+    <div class="step">
+      <strong>Reduser eksponenten med 1.</strong>
+    </div>
+    <div class="step">
+      <strong>Konstantleddet forsvinner.</strong>
+    </div>
+  </div>
+
+  <h3>Eksempler</h3>
+  <table class="value-table" style="font-size:1rem;">
+    <thead><tr><th>f(x)</th><th>f'(x)</th></tr></thead>
+    <tbody>
+      <tr><td>5</td><td>0</td></tr>
+      <tr><td>x</td><td>1</td></tr>
+      <tr><td>x²</td><td>2x</td></tr>
+      <tr><td>x³</td><td>3x²</td></tr>
+      <tr><td>4x³</td><td>12x²</td></tr>
+      <tr><td>x³ − 3x + 5</td><td>3x² − 3</td></tr>
+      <tr><td>2x⁴ − 7x² + x − 1</td><td>8x³ − 14x + 1</td></tr>
+      <tr><td>(1/2)x² + 3x</td><td>x + 3</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Steg for steg: deriver f(x) = 2x⁴ − 7x² + x − 1</h3>
+  <div class="steps">
+    <div class="step">
+      <strong>Deriver hvert ledd.</strong>
+      <span class="calc">(2x⁴)' = 2 · 4x³ = 8x³</span>
+      <span class="calc">(−7x²)' = −7 · 2x = −14x</span>
+      <span class="calc">(x)' = 1</span>
+      <span class="calc">(−1)' = 0</span>
+    </div>
+    <div class="step">
+      <strong>Sett sammen.</strong>
+      <span class="calc">f'(x) = 8x³ − 14x + 1</span>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>Vanlig feil:</strong> å glemme å gange med eksponenten. (x⁵)' er <em>ikke</em> x⁴ — det er <strong>5x⁴</strong>.
+  </div>
+
+  <div class="formula-box red">
+    <strong>Disse reglene gjelder kun polynom!</strong>
+  </div>
+  <p>Funksjoner som <em>sin x</em>, <em>cos x</em>, <em>e<sup>x</sup></em>, <em>ln x</em>, brøker (f/g) og sammensatte funksjoner (f.eks. (2x+1)<sup>5</sup>) har <strong>egne deriveringsregler</strong>. Du møter dem i R1 og R2. I 1T trenger du bare polynom-reglene over — og GeoGebra (kommandoen <code>Derivert</code>) for resten.</p>
+</div>
+
+<!-- ============ MØNSTER OG OVERSIKT ============ -->
+<div class="card" id="oversikt">
+  <h2>Mønster og oversikt</h2>
+  <p>Hele kapittelet i et bilde:</p>
+
+  <table class="value-table" style="font-size:0.95rem;">
+    <thead><tr><th>Du skal …</th><th>Bruk</th></tr></thead>
+    <tbody>
+      <tr><td>Finne vekst mellom to tidspunkter</td><td>Δy = y₂ − y₁</td></tr>
+      <tr><td>Finne gjennomsnittlig vekstfart</td><td>(f(b) − f(a)) / (b − a)</td></tr>
+      <tr><td>Finne momentan vekstfart</td><td>f'(x) i punktet</td></tr>
+      <tr><td>Tolke f'</td><td>Stigningstall til tangenten</td></tr>
+      <tr><td>Finne topp- og bunnpunkt</td><td>Sett f'(x) = 0, fortegnsskjema</td></tr>
+      <tr><td>Sjekke om f vokser/avtar</td><td>Fortegnet til f'</td></tr>
+      <tr><td>Tilnærme f' når regning er vrient</td><td>(f(a+h) − f(a−h)) / (2h)</td></tr>
+      <tr><td>Skrive tangentlinje</td><td>y − f(a) = f'(a)(x − a)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Tre raske huskeregler</h3>
+  <ul>
+    <li><strong>Sekant = gjennomsnitt, tangent = momentan.</strong></li>
+    <li><strong>Potensregelen:</strong> (xⁿ)' = n · xⁿ⁻¹. Gang ned, og senk eksponenten med 1.</li>
+    <li><strong>Topp/bunn:</strong> der f'(x) skifter fortegn.</li>
+  </ul>
+</div>
+
+<!-- ============ GEOGEBRA ============ -->
+<div class="card" id="geogebra">
+  <h2>GeoGebra-guide for derivasjon</h2>
+  <p>Ferdige kommandoer for kapittel 5.</p>
+
+  <div class="gb-section">
+    <h3>Derivere</h3>
+    <table class="gb-cmd-table">
+      <thead><tr><th>Du vil</th><th>Skriv</th><th>Resultat</th></tr></thead>
+      <tbody>
+        <tr><td>Definere funksjonen</td><td><code>f(x) = x^3 - 3x</code></td><td>tegnet</td></tr>
+        <tr><td>Finne den deriverte</td><td><code>f'(x)</code> eller <code>Derivert(f)</code></td><td>3x² − 3</td></tr>
+        <tr><td>Verdien av f' i et punkt</td><td><code>f'(2)</code></td><td>9</td></tr>
+        <tr><td>Numerisk derivert</td><td><code>Derivert(f, 2)</code></td><td>9</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="gb-section">
+    <h3>Topp- og bunnpunkt</h3>
+    <div class="gb-example">
+      <span class="comment">// Direkte med ekstremalpunkt</span><br>
+      Ekstremalpunkt(f)<br>
+      <span class="result">→ punktene (−1, 2) og (1, −2)</span><br><br>
+      <span class="comment">// Eller via den deriverte</span><br>
+      Løs(f'(x) = 0, x)<br>
+      <span class="result">→ x = ±1</span>
+    </div>
+  </div>
+
+  <div class="gb-section">
+    <h3>Tangenter</h3>
+    <div class="gb-example">
+      <span class="comment">// Tangent i punktet x = 2</span><br>
+      Tangent(2, f)<br>
+      <span class="result">→ y = 9x − 16</span><br><br>
+      <span class="comment">// Tegn også selve punktet</span><br>
+      P = (2, f(2))
+    </div>
+  </div>
+
+  <div class="gb-section">
+    <h3>Skjæringspunkter med x-aksen</h3>
+    <div class="gb-example">
+      <span class="comment">// Hvor er f' = 0?</span><br>
+      Nullpunkt(f')<br>
+      <span class="result">→ punktene der grafen til f' krysser x-aksen</span><br><br>
+      <span class="comment">// Praktisk når du leter etter topp/bunn</span>
+    </div>
+  </div>
+
+  <div class="gb-section">
+    <h3>Vanlige feil</h3>
+    <div class="calc-tip">
+      <div class="icon">1</div>
+      <div>
+        <strong>Skrev <code>derivert(x³)</code>.</strong> Du må ha en <em>funksjon</em>, ikke et uttrykk: definer f først med <code>f(x) := x^3</code>, så <code>Derivert(f)</code>.
+      </div>
+    </div>
+    <div class="calc-tip">
+      <div class="icon">2</div>
+      <div>
+        <strong>Glemte <code>:=</code> ved definisjon.</strong> Bruk <code>f(x) := …</code> i CAS-feltet for å få noe du kan derivere.
+      </div>
+    </div>
+    <div class="calc-tip">
+      <div class="icon">3</div>
+      <div>
+        <strong>Forvirret f'(2) og f(2).</strong> f'(2) er stigningstallet i x = 2. f(2) er funksjonsverdien. Ikke det samme!
+      </div>
+    </div>
+    <div class="calc-tip">
+      <div class="icon">4</div>
+      <div>
+        <strong>Tangent-kommandoen.</strong> Skriv x-verdien <em>først</em>: <code>Tangent(2, f)</code>, ikke <code>Tangent(f, 2)</code>.
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<script>
+// ============ Felles graf-tegner ============
+function plotFunc(canvasId, fn, opts) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return null;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const o = Object.assign({
+    xMin: -5, xMax: 5, yMin: -5, yMax: 5,
+    color: '#2563eb', lineWidth: 2.5,
+    showAxes: true, gridStep: 1,
+    pad: { l: 30, r: 10, t: 10, b: 25 }
+  }, opts || {});
+  const pad = o.pad;
+  const gw = W - pad.l - pad.r;
+  const gh = H - pad.t - pad.b;
+  const px = x => pad.l + (x - o.xMin) / (o.xMax - o.xMin) * gw;
+  const py = y => pad.t + (o.yMax - y) / (o.yMax - o.yMin) * gh;
+
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0, 0, W, H);
+
+  ctx.strokeStyle = '#e2e8f0';
+  ctx.lineWidth = 0.7;
+  for (let x = Math.ceil(o.xMin); x <= o.xMax; x += o.gridStep) {
+    ctx.beginPath(); ctx.moveTo(px(x), pad.t); ctx.lineTo(px(x), H - pad.b); ctx.stroke();
+  }
+  for (let y = Math.ceil(o.yMin); y <= o.yMax; y += o.gridStep) {
+    ctx.beginPath(); ctx.moveTo(pad.l, py(y)); ctx.lineTo(W - pad.r, py(y)); ctx.stroke();
+  }
+
+  if (o.showAxes) {
+    ctx.strokeStyle = '#94a3b8';
+    ctx.lineWidth = 1.3;
+    if (o.yMin <= 0 && o.yMax >= 0) {
+      ctx.beginPath(); ctx.moveTo(pad.l, py(0)); ctx.lineTo(W - pad.r, py(0)); ctx.stroke();
+    }
+    if (o.xMin <= 0 && o.xMax >= 0) {
+      ctx.beginPath(); ctx.moveTo(px(0), pad.t); ctx.lineTo(px(0), H - pad.b); ctx.stroke();
+    }
+    ctx.fillStyle = '#64748b';
+    ctx.font = '10px sans-serif';
+    ctx.textAlign = 'center';
+    for (let x = Math.ceil(o.xMin); x <= o.xMax; x += o.gridStep) {
+      if (x === 0) continue;
+      ctx.fillText(x, px(x), H - pad.b + 13);
+    }
+    ctx.textAlign = 'right';
+    for (let y = Math.ceil(o.yMin); y <= o.yMax; y += o.gridStep) {
+      if (y === 0) continue;
+      ctx.fillText(y, pad.l - 4, py(y) + 3);
+    }
+  }
+
+  if (typeof fn === 'function') {
+    ctx.strokeStyle = o.color;
+    ctx.lineWidth = o.lineWidth;
+    ctx.beginPath();
+    let started = false;
+    const N = gw * 2;
+    for (let i = 0; i <= N; i++) {
+      const x = o.xMin + i / N * (o.xMax - o.xMin);
+      let y;
+      try { y = fn(x); } catch (e) { started = false; continue; }
+      if (!isFinite(y) || y > o.yMax + 50 || y < o.yMin - 50) { started = false; continue; }
+      const X = px(x), Y = py(y);
+      if (!started) { ctx.moveTo(X, Y); started = true; }
+      else ctx.lineTo(X, Y);
+    }
+    ctx.stroke();
+  }
+
+  return { px, py, ctx, opts: o };
+}
+
+// ============ Sekant/tangent visualizer ============
+function drawSecant() {
+  const canvas = document.getElementById('secantCanvas');
+  const W = canvas.width, H = canvas.height;
+  const opts = {
+    xMin: -1, xMax: 5, yMin: -2, yMax: 16,
+    color: '#2563eb', gridStep: 1,
+    pad: { l: 45, r: 15, t: 15, b: 35 }
+  };
+  const ctx = canvas.getContext('2d');
+  // tegn kurve f(x)=x²
+  plotFunc('secantCanvas', x => x*x, opts);
+
+  const pad = opts.pad;
+  const gw = W - pad.l - pad.r;
+  const gh = H - pad.t - pad.b;
+  const px = x => pad.l + (x - opts.xMin) / (opts.xMax - opts.xMin) * gw;
+  const py = y => pad.t + (opts.yMax - y) / (opts.yMax - opts.yMin) * gh;
+
+  const a = 1;
+  const h = parseFloat(document.getElementById('hSlider').value);
+  document.getElementById('hVal').textContent = h.toFixed(2);
+
+  const xa = a, ya = a*a;
+  const xb = a + h, yb = (a + h)*(a + h);
+
+  const slope = (yb - ya) / h;
+  document.getElementById('secSlope').textContent = slope.toFixed(2);
+
+  // Tangent (stigning 2)
+  const tanY = x => 2*(x - 1) + 1;
+  ctx.strokeStyle = '#dc2626';
+  ctx.lineWidth = 2;
+  ctx.setLineDash([6, 4]);
+  ctx.beginPath();
+  ctx.moveTo(px(opts.xMin), py(tanY(opts.xMin)));
+  ctx.lineTo(px(opts.xMax), py(tanY(opts.xMax)));
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Sekant gjennom (xa, ya) og (xb, yb)
+  // Forleng linjen til kanten
+  const m = slope;
+  const b = ya - m * xa;
+  const secY = x => m*x + b;
+  ctx.strokeStyle = '#16a34a';
+  ctx.lineWidth = 2.5;
+  ctx.beginPath();
+  ctx.moveTo(px(opts.xMin), py(secY(opts.xMin)));
+  ctx.lineTo(px(opts.xMax), py(secY(opts.xMax)));
+  ctx.stroke();
+
+  // Punkter
+  ctx.fillStyle = '#16a34a';
+  ctx.beginPath(); ctx.arc(px(xa), py(ya), 6, 0, 2*Math.PI); ctx.fill();
+  ctx.beginPath(); ctx.arc(px(xb), py(yb), 6, 0, 2*Math.PI); ctx.fill();
+
+  // Labels
+  ctx.font = 'bold 12px sans-serif';
+  ctx.fillStyle = '#16a34a';
+  ctx.textAlign = 'right';
+  ctx.fillText('sekant', px(opts.xMax) - 6, py(secY(opts.xMax)) - 6);
+  ctx.fillStyle = '#dc2626';
+  ctx.fillText('tangent (f\'(1)=2)', px(opts.xMax) - 6, py(tanY(opts.xMax)) + 14);
+
+  // Punkt-labels
+  ctx.fillStyle = '#1e293b';
+  ctx.font = '11px sans-serif';
+  ctx.textAlign = 'left';
+  ctx.fillText(`(${xa}, ${ya})`, px(xa) + 9, py(ya) + 4);
+  ctx.fillText(`(${xb.toFixed(2)}, ${yb.toFixed(2)})`, px(xb) + 9, py(yb) - 6);
+}
+document.getElementById('hSlider').addEventListener('input', drawSecant);
+drawSecant();
+
+// ============ f og f' tegnet sammen ============
+plotFunc('dvCurveF', x => x*x*x - 3*x, {
+  color: '#2563eb', xMin: -3, xMax: 3, yMin: -4, yMax: 4, gridStep: 1
+});
+// merker topp-/bunnpunkt
+(() => {
+  const c = document.getElementById('dvCurveF');
+  const ctx = c.getContext('2d');
+  const opts = { xMin: -3, xMax: 3, yMin: -4, yMax: 4, pad: { l: 30, r: 10, t: 10, b: 25 } };
+  const pad = opts.pad;
+  const gw = c.width - pad.l - pad.r;
+  const gh = c.height - pad.t - pad.b;
+  const px = x => pad.l + (x - opts.xMin) / (opts.xMax - opts.xMin) * gw;
+  const py = y => pad.t + (opts.yMax - y) / (opts.yMax - opts.yMin) * gh;
+  ctx.fillStyle = '#dc2626';
+  ctx.beginPath(); ctx.arc(px(-1), py(2), 5, 0, 2*Math.PI); ctx.fill();
+  ctx.beginPath(); ctx.arc(px(1), py(-2), 5, 0, 2*Math.PI); ctx.fill();
+  ctx.font = 'bold 11px sans-serif';
+  ctx.textAlign = 'left';
+  ctx.fillText('topp', px(-1) + 7, py(2) - 4);
+  ctx.fillText('bunn', px(1) + 7, py(-2) - 4);
+})();
+
+plotFunc('dvCurveFp', x => 3*x*x - 3, {
+  color: '#dc2626', xMin: -3, xMax: 3, yMin: -4, yMax: 8, gridStep: 1
+});
+(() => {
+  const c = document.getElementById('dvCurveFp');
+  const ctx = c.getContext('2d');
+  const opts = { xMin: -3, xMax: 3, yMin: -4, yMax: 8, pad: { l: 30, r: 10, t: 10, b: 25 } };
+  const pad = opts.pad;
+  const gw = c.width - pad.l - pad.r;
+  const gh = c.height - pad.t - pad.b;
+  const px = x => pad.l + (x - opts.xMin) / (opts.xMax - opts.xMin) * gw;
+  const py = y => pad.t + (opts.yMax - y) / (opts.yMax - opts.yMin) * gh;
+  ctx.fillStyle = '#dc2626';
+  ctx.beginPath(); ctx.arc(px(-1), py(0), 5, 0, 2*Math.PI); ctx.fill();
+  ctx.beginPath(); ctx.arc(px(1), py(0), 5, 0, 2*Math.PI); ctx.fill();
+  ctx.font = 'bold 11px sans-serif';
+  ctx.fillStyle = '#1e293b';
+  ctx.textAlign = 'left';
+  ctx.fillText('f\'(−1) = 0', px(-1) + 7, py(0) - 4);
+  ctx.fillText('f\'(1) = 0', px(1) + 7, py(0) - 4);
+})();
+
+// ============ Sync-tool: f og f' synkronisert ============
+(function() {
+  const canvasF = document.getElementById('syncCanvasF');
+  const canvasFp = document.getElementById('syncCanvasFp');
+  if (!canvasF || !canvasFp) return;
+
+  const slider = document.getElementById('syncX');
+  const xValEl = document.getElementById('syncXVal');
+  const fValEl = document.getElementById('syncFVal');
+  const fpValEl = document.getElementById('syncFpVal');
+  const statusEl = document.getElementById('syncStatus');
+
+  const f = x => x * x * x - 3 * x;
+  const fp = x => 3 * x * x - 3;
+
+  const optsF = { xMin: -2.5, xMax: 2.5, yMin: -3, yMax: 3, pad: { l: 35, r: 12, t: 15, b: 28 } };
+  const optsFp = { xMin: -2.5, xMax: 2.5, yMin: -3, yMax: 6, pad: { l: 35, r: 12, t: 15, b: 28 } };
+
+  function drawBase(canvas, opts, fn, color) {
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    const pad = opts.pad;
+    const gw = W - pad.l - pad.r;
+    const gh = H - pad.t - pad.b;
+    const px = x => pad.l + (x - opts.xMin) / (opts.xMax - opts.xMin) * gw;
+    const py = y => pad.t + (opts.yMax - y) / (opts.yMax - opts.yMin) * gh;
+
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, W, H);
+
+    // Rutenett
+    ctx.strokeStyle = '#e2e8f0';
+    ctx.lineWidth = 0.7;
+    for (let x = Math.ceil(opts.xMin); x <= opts.xMax; x++) {
+      ctx.beginPath(); ctx.moveTo(px(x), pad.t); ctx.lineTo(px(x), H - pad.b); ctx.stroke();
+    }
+    for (let y = Math.ceil(opts.yMin); y <= opts.yMax; y++) {
+      ctx.beginPath(); ctx.moveTo(pad.l, py(y)); ctx.lineTo(W - pad.r, py(y)); ctx.stroke();
+    }
+
+    // Akser
+    ctx.strokeStyle = '#94a3b8';
+    ctx.lineWidth = 1.2;
+    if (opts.yMin <= 0 && opts.yMax >= 0) {
+      ctx.beginPath(); ctx.moveTo(pad.l, py(0)); ctx.lineTo(W - pad.r, py(0)); ctx.stroke();
+    }
+    if (opts.xMin <= 0 && opts.xMax >= 0) {
+      ctx.beginPath(); ctx.moveTo(px(0), pad.t); ctx.lineTo(px(0), H - pad.b); ctx.stroke();
+    }
+
+    // Akse-labels
+    ctx.fillStyle = '#64748b';
+    ctx.font = '10px sans-serif';
+    ctx.textAlign = 'center';
+    for (let x = Math.ceil(opts.xMin); x <= opts.xMax; x++) {
+      if (x === 0) continue;
+      ctx.fillText(x, px(x), H - pad.b + 13);
+    }
+    ctx.textAlign = 'right';
+    for (let y = Math.ceil(opts.yMin); y <= opts.yMax; y++) {
+      if (y === 0) continue;
+      ctx.fillText(y, pad.l - 4, py(y) + 3);
+    }
+
+    // Graf
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    let started = false;
+    const N = gw * 2;
+    for (let i = 0; i <= N; i++) {
+      const x = opts.xMin + i / N * (opts.xMax - opts.xMin);
+      const y = fn(x);
+      if (!isFinite(y) || y > opts.yMax + 30 || y < opts.yMin - 30) { started = false; continue; }
+      const X = px(x), Y = py(y);
+      if (!started) { ctx.moveTo(X, Y); started = true; }
+      else ctx.lineTo(X, Y);
+    }
+    ctx.stroke();
+
+    return { px, py };
+  }
+
+  function update() {
+    const x = parseFloat(slider.value);
+    const fy = f(x);
+    const fpy = fp(x);
+
+    xValEl.textContent = x.toFixed(2).replace('-', '−');
+    fValEl.textContent = fy.toFixed(2).replace('-', '−');
+    fpValEl.textContent = fpy.toFixed(2).replace('-', '−');
+
+    if (Math.abs(fpy) < 0.05) {
+      statusEl.textContent = 'topp/bunn (f\'=0)';
+      statusEl.style.color = '#9333ea';
+    } else if (fpy > 0) {
+      statusEl.textContent = 'f stiger';
+      statusEl.style.color = '#16a34a';
+    } else {
+      statusEl.textContent = 'f synker';
+      statusEl.style.color = '#dc2626';
+    }
+
+    // Tegn f med tangent og punkt
+    const pf = drawBase(canvasF, optsF, f, '#2563eb');
+    const ctxF = canvasF.getContext('2d');
+    // Tangent: y = fpy*(t - x) + fy
+    const t1 = optsF.xMin, t2 = optsF.xMax;
+    const y1 = fpy * (t1 - x) + fy;
+    const y2 = fpy * (t2 - x) + fy;
+    ctxF.strokeStyle = '#dc2626';
+    ctxF.lineWidth = 2;
+    ctxF.setLineDash([6, 4]);
+    ctxF.beginPath();
+    ctxF.moveTo(pf.px(t1), pf.py(y1));
+    ctxF.lineTo(pf.px(t2), pf.py(y2));
+    ctxF.stroke();
+    ctxF.setLineDash([]);
+    // Punkt på f
+    ctxF.fillStyle = '#ea580c';
+    ctxF.beginPath(); ctxF.arc(pf.px(x), pf.py(fy), 7, 0, 2*Math.PI); ctxF.fill();
+    ctxF.fillStyle = '#fff';
+    ctxF.beginPath(); ctxF.arc(pf.px(x), pf.py(fy), 3, 0, 2*Math.PI); ctxF.fill();
+
+    // Tegn f' med vannrett linje på y = fpy + punkt
+    const pfp = drawBase(canvasFp, optsFp, fp, '#dc2626');
+    const ctxFp = canvasFp.getContext('2d');
+    // Vannrett linje y = fpy
+    if (fpy >= optsFp.yMin && fpy <= optsFp.yMax) {
+      ctxFp.strokeStyle = '#ea580c';
+      ctxFp.lineWidth = 1.5;
+      ctxFp.setLineDash([5, 4]);
+      ctxFp.beginPath();
+      ctxFp.moveTo(pfp.px(optsFp.xMin), pfp.py(fpy));
+      ctxFp.lineTo(pfp.px(optsFp.xMax), pfp.py(fpy));
+      ctxFp.stroke();
+      ctxFp.setLineDash([]);
+    }
+    // Loddrett linje x = x
+    ctxFp.strokeStyle = '#ea580c';
+    ctxFp.lineWidth = 1.2;
+    ctxFp.setLineDash([4, 3]);
+    ctxFp.beginPath();
+    ctxFp.moveTo(pfp.px(x), optsFp.pad.t);
+    ctxFp.lineTo(pfp.px(x), canvasFp.height - optsFp.pad.b);
+    ctxFp.stroke();
+    ctxFp.setLineDash([]);
+    // Punkt på f'
+    ctxFp.fillStyle = '#ea580c';
+    ctxFp.beginPath(); ctxFp.arc(pfp.px(x), pfp.py(fpy), 7, 0, 2*Math.PI); ctxFp.fill();
+    ctxFp.fillStyle = '#fff';
+    ctxFp.beginPath(); ctxFp.arc(pfp.px(x), pfp.py(fpy), 3, 0, 2*Math.PI); ctxFp.fill();
+  }
+
+  // Klikk/dra på f-canvas for å sette x
+  function setXFromCanvas(canvas, opts, e) {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const mx = (e.clientX - rect.left) * scaleX;
+    const gw = canvas.width - opts.pad.l - opts.pad.r;
+    let x = opts.xMin + (mx - opts.pad.l) / gw * (opts.xMax - opts.xMin);
+    x = Math.max(parseFloat(slider.min), Math.min(parseFloat(slider.max), x));
+    slider.value = x;
+    update();
+  }
+  let dragging = false;
+  canvasF.addEventListener('mousedown', e => { dragging = true; setXFromCanvas(canvasF, optsF, e); });
+  canvasF.addEventListener('mousemove', e => { if (dragging) setXFromCanvas(canvasF, optsF, e); });
+  canvasFp.addEventListener('mousedown', e => { dragging = true; setXFromCanvas(canvasFp, optsFp, e); });
+  canvasFp.addEventListener('mousemove', e => { if (dragging) setXFromCanvas(canvasFp, optsFp, e); });
+  window.addEventListener('mouseup', () => { dragging = false; });
+  // Touch
+  canvasF.addEventListener('touchstart', e => { dragging = true; setXFromCanvas(canvasF, optsF, e.touches[0]); e.preventDefault(); }, { passive: false });
+  canvasF.addEventListener('touchmove', e => { if (dragging) { setXFromCanvas(canvasF, optsF, e.touches[0]); e.preventDefault(); } }, { passive: false });
+  window.addEventListener('touchend', () => { dragging = false; });
+
+  slider.addEventListener('input', update);
+  update();
+})();
+
+// ============ QUIZ ============
+const allQuestions = [
+  {
+    q: "Gjennomsnittlig vekstfart for f på [a, b] er …",
+    opts: [
+      "f(b) · (b − a)",
+      "(f(b) − f(a)) / (b − a)",
+      "f(a) − f(b)",
+      "(b − a) / (f(b) − f(a))"
+    ],
+    ans: 1,
+    tip: "Sekantens stigning: forskjellen i y delt på forskjellen i x."
+  },
+  {
+    q: "Hva betyr f'(3) = 5?",
+    opts: [
+      "f(3) = 5",
+      "Stigningstallet til tangenten i x = 3 er 5",
+      "Funksjonen vokser med 5 totalt",
+      "f krysser x-aksen i 5"
+    ],
+    ans: 1,
+    tip: "f'(a) er stigningstallet til tangenten i punktet (a, f(a))."
+  },
+  {
+    q: "Den deriverte av x⁴ er:",
+    opts: ["x³", "4x³", "4x⁵", "x⁴"],
+    ans: 1,
+    tip: "Potensregelen: (xⁿ)' = n·xⁿ⁻¹. Her: 4x³."
+  },
+  {
+    q: "Den deriverte av en konstant (f.eks. 7) er:",
+    opts: ["7", "7x", "1", "0"],
+    ans: 3,
+    tip: "Konstanter har deriverte lik 0."
+  },
+  {
+    q: "f(x) = 3x² − 6x + 4. Hva er f'(x)?",
+    opts: ["6x − 6", "3x − 6", "6x + 4", "6x² − 6x"],
+    ans: 0,
+    tip: "Deriver hvert ledd: 3·2x − 6·1 + 0 = 6x − 6."
+  },
+  {
+    q: "Hvor har f(x) = x² − 4x + 1 sitt bunnpunkt?",
+    opts: ["x = 0", "x = 1", "x = 2", "x = 4"],
+    ans: 2,
+    tip: "f'(x) = 2x − 4 = 0 ⇒ x = 2. Det er bunnpunkt fordi koeffisienten foran x² er positiv."
+  },
+  {
+    q: "Hvis f' er positiv på et intervall, så …",
+    opts: [
+      "synker f",
+      "vokser f",
+      "har f et toppunkt",
+      "er f konstant"
+    ],
+    ans: 1,
+    tip: "Positiv stigning betyr at f vokser."
+  },
+  {
+    q: "I hvilket punkt er f' = 0 for et toppunkt?",
+    opts: [
+      "f' = 0 og skifter fra + til −",
+      "f' = 0 og skifter fra − til +",
+      "f' er alltid positiv",
+      "f'' = 0"
+    ],
+    ans: 0,
+    tip: "Toppunkt: stigningen går fra positiv til negativ — funksjonen slutter å vokse og begynner å synke."
+  },
+  {
+    q: "Hvilken GeoGebra-kommando finner topp- og bunnpunkter?",
+    opts: ["Maks(f)", "Topp(f)", "Ekstremalpunkt(f)", "Derivert(f, 0)"],
+    ans: 2,
+    tip: "Ekstremalpunkt(f) finner alle topp- og bunnpunkter."
+  },
+  {
+    q: "Sentral differansekvotient for å estimere f'(a):",
+    opts: [
+      "(f(a+h) − f(a)) / h",
+      "(f(a+h) − f(a−h)) / (2h)",
+      "(f(a) − f(a−h)) / h",
+      "f(a+h) · f(a−h)"
+    ],
+    ans: 1,
+    tip: "Sentral differanse er nøyaktigere fordi feilen kanselleres."
+  },
+  {
+    q: "Tangentlinjen til f i punktet x = a har stigning …",
+    opts: ["f(a)", "f(a)/a", "f'(a)", "1/f'(a)"],
+    ans: 2,
+    tip: "Tangentens stigning er den deriverte i punktet."
+  },
+  {
+    q: "f(x) = x³ − 12x. Hvor mange topp-/bunnpunkter har f?",
+    opts: ["0", "1", "2", "3"],
+    ans: 2,
+    tip: "f'(x) = 3x² − 12 = 0 ⇒ x = ±2. Toppunkt og bunnpunkt — 2 til sammen."
+  }
+];
+
+let questions = [];
+let qIdx = 0, score = 0;
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function startQuiz() {
+  questions = shuffle(allQuestions);
+  qIdx = 0; score = 0;
+  document.getElementById('quizResult').style.display = 'none';
+  document.getElementById('quizBody').style.display = 'block';
+  document.getElementById('qTotal').textContent = questions.length;
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[qIdx];
+  document.getElementById('qNum').textContent = qIdx + 1;
+  document.getElementById('qBar').style.width = ((qIdx + 1) / questions.length * 100) + '%';
+  document.getElementById('qText').innerHTML = q.q;
+  const optsEl = document.getElementById('qOptions');
+  optsEl.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-option';
+    btn.innerHTML = opt;
+    btn.onclick = () => answer(i, btn);
+    optsEl.appendChild(btn);
+  });
+  const fb = document.getElementById('qFeedback');
+  fb.className = 'quiz-feedback';
+  fb.textContent = '';
+  document.getElementById('qNext').classList.remove('show');
+}
+
+function answer(i, btn) {
+  const q = questions[qIdx];
+  const opts = document.querySelectorAll('.quiz-option');
+  opts.forEach((o, j) => {
+    o.disabled = true;
+    if (j === q.ans) o.classList.add('correct');
+    else if (j === i) o.classList.add('wrong');
+  });
+  const fb = document.getElementById('qFeedback');
+  fb.classList.add('show');
+  if (i === q.ans) {
+    score++;
+    fb.classList.add('is-correct');
+    fb.textContent = 'Riktig! ' + q.tip;
+  } else {
+    fb.classList.add('is-wrong');
+    fb.textContent = 'Feil. ' + q.tip;
+  }
+  document.getElementById('qNext').classList.add('show');
+}
+
+function nextQuestion() {
+  qIdx++;
+  if (qIdx >= questions.length) finishQuiz();
+  else showQuestion();
+}
+
+function finishQuiz() {
+  document.getElementById('quizBody').style.display = 'none';
+  const r = document.getElementById('quizResult');
+  r.style.display = 'block';
+  document.getElementById('rScore').textContent = score + ' / ' + questions.length;
+  const pct = score / questions.length;
+  let grade;
+  if (pct === 1) grade = 'Perfekt! Du er en derivasjons-mester!';
+  else if (pct >= 0.8) grade = 'Veldig bra!';
+  else if (pct >= 0.6) grade = 'Bra jobbet — fortsett å øve.';
+  else if (pct >= 0.4) grade = 'På god vei. Repeter potensregelen!';
+  else grade = 'Ta en titt på kapittelet og prøv igjen.';
+  document.getElementById('rGrade').textContent = grade;
+}
+
+function openQuiz() {
+  startQuiz();
+  document.getElementById('quizOverlay').classList.add('open');
+}
+function closeQuiz() {
+  document.getElementById('quizOverlay').classList.remove('open');
+}
+
+document.getElementById('quizOverlay').addEventListener('click', e => {
+  if (e.target.id === 'quizOverlay') closeQuiz();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeQuiz();
+});
+</script>
+</body>
+</html>
