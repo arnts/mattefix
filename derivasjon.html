@@ -667,6 +667,7 @@
 <div class="container">
 
 <a href="index.html" class="home-link">&larr; Tilbake til forsiden</a>
+<a href="mestring.html" class="home-link" style="margin-left:1rem;">Min mestring &rarr;</a>
 
 <h1>Vekstfart og derivasjon</h1>
 <p class="subtitle">Kapittel 5 – fra gjennomsnittlig vekst til den deriverte og praktisk bruk</p>
@@ -1345,7 +1346,10 @@
 
 </div><!-- /container -->
 
+<script src="mattepilot-progress.js"></script>
 <script>
+const CHAPTER_KEY = 'derivasjon';
+const CHAPTER_TITLE = '5. Vekstfart og derivasjon';
 // ============ Felles graf-tegner ============
 function plotFunc(canvasId, fn, opts) {
   const canvas = document.getElementById(canvasId);
@@ -1822,7 +1826,15 @@ const allQuestions = [
 ];
 
 let questions = [];
-let qIdx = 0, score = 0;
+let qIdx = 0, score = 0, quizMode = 'normal';
+
+if (window.MattepilotProgress) {
+  MattepilotProgress.registerChapter(CHAPTER_KEY, {
+    title: CHAPTER_TITLE,
+    url: 'derivasjon.html',
+    questions: allQuestions
+  });
+}
 
 function shuffle(arr) {
   const a = arr.slice();
@@ -1834,7 +1846,13 @@ function shuffle(arr) {
 }
 
 function startQuiz() {
-  questions = shuffle(allQuestions);
+  if (window.MattepilotProgress) {
+    questions = MattepilotProgress.selectQuestions(CHAPTER_KEY, allQuestions, 12, {
+      onlyStruggling: quizMode === 'struggling'
+    });
+  } else {
+    questions = shuffle(allQuestions).slice(0, 12);
+  }
   qIdx = 0; score = 0;
   document.getElementById('quizResult').style.display = 'none';
   document.getElementById('quizBody').style.display = 'block';
@@ -1872,7 +1890,11 @@ function answer(i, btn) {
   });
   const fb = document.getElementById('qFeedback');
   fb.classList.add('show');
-  if (i === q.ans) {
+  const correct = (i === q.ans);
+  if (window.MattepilotProgress) {
+    MattepilotProgress.recordAnswer(CHAPTER_KEY, q.q, correct);
+  }
+  if (correct) {
     score++;
     fb.classList.add('is-correct');
     fb.textContent = 'Riktig! ' + q.tip;
@@ -1904,10 +1926,17 @@ function finishQuiz() {
   document.getElementById('rGrade').textContent = grade;
 }
 
-function openQuiz() {
+function openQuiz(mode) {
+  quizMode = mode || 'normal';
   startQuiz();
   document.getElementById('quizOverlay').classList.add('open');
 }
+
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('quiz') === 'struggling') openQuiz('struggling');
+  else if (params.get('quiz') === 'open') openQuiz('normal');
+})();
 function closeQuiz() {
   document.getElementById('quizOverlay').classList.remove('open');
 }

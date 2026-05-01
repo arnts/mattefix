@@ -465,6 +465,7 @@
 <div class="container">
 
 <a href="index.html" class="home-link">&larr; Tilbake til forsiden</a>
+<a href="mestring.html" class="home-link" style="margin-left:1rem;">Min mestring &rarr;</a>
 
 <h1>Tall, tallmengder og regning</h1>
 <p class="subtitle">Kompakt hjelpeside – VG1 Kapittel 1</p>
@@ -1537,8 +1538,11 @@
 
 </div><!-- /container -->
 
+<script src="mattepilot-progress.js"></script>
 <script>
 // ===== QUIZ =====
+const CHAPTER_KEY = 'tall-og-regning';
+const CHAPTER_TITLE = '1. Tall, tallmengder og regning';
 const allQuestions = [
   {
     q: "Hvilket tall er et naturlig tall?",
@@ -1746,7 +1750,16 @@ const allQuestions = [
   }
 ];
 
-let quizQuestions, currentQ, score;
+let quizQuestions, currentQ, score, quizMode;
+
+// Registrer kapittelet hos progresjonsmodulen
+if (window.MattepilotProgress) {
+  MattepilotProgress.registerChapter(CHAPTER_KEY, {
+    title: CHAPTER_TITLE,
+    url: 'tall-og-regning.html',
+    questions: allQuestions
+  });
+}
 
 function shuffle(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
@@ -1756,7 +1769,8 @@ function shuffle(arr) {
   return arr;
 }
 
-function openQuiz() {
+function openQuiz(mode) {
+  quizMode = mode || 'normal';
   document.getElementById('quizOverlay').classList.add('open');
   startQuiz();
 }
@@ -1766,12 +1780,25 @@ function closeQuiz() {
 function startQuiz() {
   currentQ = 0;
   score = 0;
-  quizQuestions = shuffle([...allQuestions]).slice(0, 10);
+  if (window.MattepilotProgress) {
+    quizQuestions = MattepilotProgress.selectQuestions(CHAPTER_KEY, allQuestions, 10, {
+      onlyStruggling: quizMode === 'struggling'
+    });
+  } else {
+    quizQuestions = shuffle([...allQuestions]).slice(0, 10);
+  }
   document.getElementById('quizBody').style.display = '';
   document.getElementById('quizResult').style.display = 'none';
   document.getElementById('qTotal').textContent = quizQuestions.length;
   showQuestion();
 }
+
+// Sjekk URL for ?quiz=struggling for å åpne mestring-modus direkte
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('quiz') === 'struggling') openQuiz('struggling');
+  else if (params.get('quiz') === 'open') openQuiz('normal');
+})();
 
 function showQuestion() {
   const q = quizQuestions[currentQ];
@@ -1799,8 +1826,14 @@ function pickAnswer(idx) {
   btns.forEach(b => b.disabled = true);
 
   const fb = document.getElementById('qFeedback');
+  const correct = (idx === q.ans);
 
-  if (idx === q.ans) {
+  // Lagre svar i progresjons-modulen
+  if (window.MattepilotProgress) {
+    MattepilotProgress.recordAnswer(CHAPTER_KEY, q.q, correct);
+  }
+
+  if (correct) {
     btns[idx].classList.add('correct');
     fb.className = 'quiz-feedback show is-correct';
     fb.textContent = 'Riktig! ' + q.tip;

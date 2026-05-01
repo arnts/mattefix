@@ -514,6 +514,7 @@
 <div class="container">
 
 <a href="index.html" class="home-link">&larr; Tilbake til forsiden</a>
+<a href="mestring.html" class="home-link" style="margin-left:1rem;">Min mestring &rarr;</a>
 
 <h1>Likninger og andregradsuttrykk</h1>
 <p class="subtitle">Kompakt hjelpeside – VG1 Kapittel 2</p>
@@ -1491,7 +1492,10 @@
 
 </div><!-- /container -->
 
+<script src="mattepilot-progress.js"></script>
 <script>
+const CHAPTER_KEY = 'ligninger';
+const CHAPTER_TITLE = '2. Likninger og andregradsuttrykk';
 // ===== DISKRIMINANT-UTFORSKER =====
 (function() {
   const canvas = document.getElementById('discCanvas');
@@ -1879,7 +1883,15 @@ const allQuestions = [
   }
 ];
 
-let quizQuestions, currentQ, score;
+let quizQuestions, currentQ, score, quizMode;
+
+if (window.MattepilotProgress) {
+  MattepilotProgress.registerChapter(CHAPTER_KEY, {
+    title: CHAPTER_TITLE,
+    url: 'ligninger.html',
+    questions: allQuestions
+  });
+}
 
 function shuffle(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
@@ -1889,7 +1901,8 @@ function shuffle(arr) {
   return arr;
 }
 
-function openQuiz() {
+function openQuiz(mode) {
+  quizMode = mode || 'normal';
   document.getElementById('quizOverlay').classList.add('open');
   startQuiz();
 }
@@ -1899,12 +1912,24 @@ function closeQuiz() {
 function startQuiz() {
   currentQ = 0;
   score = 0;
-  quizQuestions = shuffle([...allQuestions]).slice(0, 10);
+  if (window.MattepilotProgress) {
+    quizQuestions = MattepilotProgress.selectQuestions(CHAPTER_KEY, allQuestions, 10, {
+      onlyStruggling: quizMode === 'struggling'
+    });
+  } else {
+    quizQuestions = shuffle([...allQuestions]).slice(0, 10);
+  }
   document.getElementById('quizBody').style.display = '';
   document.getElementById('quizResult').style.display = 'none';
   document.getElementById('qTotal').textContent = quizQuestions.length;
   showQuestion();
 }
+
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('quiz') === 'struggling') openQuiz('struggling');
+  else if (params.get('quiz') === 'open') openQuiz('normal');
+})();
 
 function showQuestion() {
   const q = quizQuestions[currentQ];
@@ -1932,8 +1957,13 @@ function pickAnswer(idx) {
   btns.forEach(b => b.disabled = true);
 
   const fb = document.getElementById('qFeedback');
+  const correct = (idx === q.ans);
 
-  if (idx === q.ans) {
+  if (window.MattepilotProgress) {
+    MattepilotProgress.recordAnswer(CHAPTER_KEY, q.q, correct);
+  }
+
+  if (correct) {
     btns[idx].classList.add('correct');
     fb.className = 'quiz-feedback show is-correct';
     fb.textContent = 'Riktig! ' + q.tip;

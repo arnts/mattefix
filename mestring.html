@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Min mestring – Lillys Mattepilot</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='80'>π</text></svg>">
+<style>
+  :root {
+    --blue: #2563eb;
+    --red: #dc2626;
+    --green: #16a34a;
+    --orange: #ea580c;
+    --purple: #9333ea;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 2rem 1rem;
+  }
+  .container { max-width: 800px; margin: 0 auto; }
+
+  .home-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: var(--blue);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .home-link:hover { text-decoration: underline; }
+
+  h1 {
+    text-align: center;
+    font-size: 2.2rem;
+    margin-bottom: 0.3rem;
+    color: var(--blue);
+  }
+  .subtitle {
+    text-align: center;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    font-size: 1.05rem;
+  }
+
+  .summary {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+    text-align: center;
+  }
+  .summary-item .num {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--blue);
+    line-height: 1;
+  }
+  .summary-item .lbl {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-top: 0.3rem;
+  }
+
+  .chapter-card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .chapter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 0.6rem;
+  }
+  .chapter-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .chapter-stats {
+    font-size: 0.9rem;
+    color: var(--muted);
+    font-family: 'Courier New', monospace;
+  }
+  .progress-bar {
+    height: 14px;
+    background: var(--border);
+    border-radius: 7px;
+    overflow: hidden;
+    position: relative;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 7px;
+    transition: width 0.6s ease;
+    background: linear-gradient(90deg, #16a34a, #4ade80);
+  }
+  .progress-fill.low { background: linear-gradient(90deg, #dc2626, #f87171); }
+  .progress-fill.medium { background: linear-gradient(90deg, #ea580c, #fb923c); }
+  .progress-fill.high { background: linear-gradient(90deg, #2563eb, #60a5fa); }
+  .progress-fill.full { background: linear-gradient(90deg, #16a34a, #4ade80); }
+
+  .chapter-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.8rem;
+    flex-wrap: wrap;
+  }
+  .chapter-actions a, .chapter-actions button {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.4rem 0.9rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    text-decoration: none;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .chapter-actions a:hover, .chapter-actions button:hover {
+    border-color: var(--blue);
+    background: #eff6ff;
+  }
+  .chapter-actions .primary {
+    background: var(--blue);
+    color: #fff;
+    border-color: var(--blue);
+  }
+  .chapter-actions .primary:hover {
+    opacity: 0.9;
+    background: var(--blue);
+  }
+  .chapter-actions .focus {
+    background: var(--orange);
+    color: #fff;
+    border-color: var(--orange);
+  }
+  .chapter-actions .focus:hover {
+    opacity: 0.9;
+    background: var(--orange);
+  }
+
+  .empty-state {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    border: 1px dashed var(--border);
+    color: var(--muted);
+  }
+  .empty-state h3 {
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  .empty-state a {
+    color: var(--blue);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .danger-zone {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    margin-top: 2rem;
+    text-align: center;
+  }
+  .danger-zone button {
+    background: var(--bg);
+    border: 1px solid var(--red);
+    color: var(--red);
+    padding: 0.5rem 1.2rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .danger-zone button:hover {
+    background: var(--red);
+    color: #fff;
+  }
+  .danger-zone .desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 0.5rem;
+  }
+
+  .info-note {
+    background: #fefce8;
+    border: 1px solid #fde68a;
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    margin: 1rem 0;
+    font-size: 0.95rem;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<a href="index.html" class="home-link">&larr; Tilbake til forsiden</a>
+
+<h1>Min mestring</h1>
+<p class="subtitle">Hva du har lært, og hva du bør repetere</p>
+
+<div id="content"></div>
+
+</div>
+
+<script src="mattepilot-progress.js"></script>
+<script>
+function render() {
+  const root = document.getElementById('content');
+  const chapters = MattepilotProgress.getRegisteredChapters();
+  const keys = Object.keys(chapters);
+
+  if (keys.length === 0) {
+    root.innerHTML = `
+      <div class="empty-state">
+        <h3>Ingen progresjon registrert ennå</h3>
+        <p>Besøk kapitlene og ta quizene, så vises mestringen din her.</p>
+        <p style="margin-top:1rem;">
+          <a href="index.html">→ Gå til kapitlene</a>
+        </p>
+      </div>
+    `;
+    return;
+  }
+
+  // Beregn totaler
+  let totalMastered = 0, totalSeen = 0, totalQuestions = 0;
+  const chapterData = keys.map(key => {
+    const ch = chapters[key];
+    const m = MattepilotProgress.getChapterMastery(key, ch.questions);
+    totalMastered += m.mastered;
+    totalSeen += m.seen;
+    totalQuestions += m.total;
+    return { key, ch, m };
+  });
+
+  // Sorter etter pensums-rekkefølge: bruk tittel (begynner med tall, deretter "Tentamen")
+  chapterData.sort((a, b) => {
+    const ta = a.ch.title || '';
+    const tb = b.ch.title || '';
+    return ta.localeCompare(tb, 'nb');
+  });
+
+  const overallPct = totalQuestions > 0 ? Math.round(totalMastered / totalQuestions * 100) : 0;
+
+  let html = `
+    <div class="summary">
+      <div class="summary-grid">
+        <div class="summary-item">
+          <div class="num">${totalMastered}</div>
+          <div class="lbl">spørsmål mestret</div>
+        </div>
+        <div class="summary-item">
+          <div class="num">${totalSeen}</div>
+          <div class="lbl">spørsmål besvart</div>
+        </div>
+        <div class="summary-item">
+          <div class="num">${totalQuestions}</div>
+          <div class="lbl">totalt tilgjengelig</div>
+        </div>
+        <div class="summary-item">
+          <div class="num">${overallPct}%</div>
+          <div class="lbl">samlet mestring</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-note">
+      <strong>Hvordan virker det?</strong> Et spørsmål er <em>mestret</em> når du har svart riktig på det 3 ganger på rad. Quiz-en prioriterer spørsmål du strever med, så jo oftere du øver, jo smartere blir den.
+    </div>
+  `;
+
+  chapterData.forEach(({ key, ch, m }) => {
+    const pct = Math.round(m.pct * 100);
+    let cls = 'low';
+    if (pct >= 80) cls = 'full';
+    else if (pct >= 50) cls = 'high';
+    else if (pct >= 20) cls = 'medium';
+
+    const hasStruggling = m.seen > m.mastered;
+    const seenText = m.seen === 0
+      ? 'Ikke besvart ennå'
+      : `${m.mastered} av ${m.total} mestret · ${m.seen} besvart`;
+
+    html += `
+      <div class="chapter-card">
+        <div class="chapter-header">
+          <div class="chapter-title">${ch.title}</div>
+          <div class="chapter-stats">${pct}%</div>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill ${cls}" style="width:${Math.max(pct, 2)}%"></div>
+        </div>
+        <div class="chapter-stats" style="margin-top:0.5rem;">${seenText}</div>
+        <div class="chapter-actions">
+          <a href="${ch.url}" class="primary">Åpne kapittelet</a>
+          <a href="${ch.url}?quiz=open">Start quiz</a>
+          ${hasStruggling ? `<a href="${ch.url}?quiz=struggling" class="focus">Repeter feilsvar</a>` : ''}
+          <button onclick="resetChapter('${key}', '${ch.title.replace(/'/g, "\\'")}')">Nullstill kapittel</button>
+        </div>
+      </div>
+    `;
+  });
+
+  html += `
+    <div class="danger-zone">
+      <button onclick="resetAll()">Nullstill all progresjon</button>
+      <div class="desc">Sletter alle quiz-svar og mestringsdata. Kapittelregistreringen beholdes.</div>
+    </div>
+  `;
+
+  root.innerHTML = html;
+}
+
+function resetChapter(key, title) {
+  if (confirm(`Er du sikker på at du vil nullstille progresjonen for «${title}»?`)) {
+    MattepilotProgress.resetChapter(key);
+    render();
+  }
+}
+
+function resetAll() {
+  if (confirm('Er du sikker på at du vil nullstille ALL progresjon? Dette kan ikke angres.')) {
+    MattepilotProgress.resetProgress();
+    render();
+  }
+}
+
+render();
+</script>
+</body>
+</html>

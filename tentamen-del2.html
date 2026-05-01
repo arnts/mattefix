@@ -393,6 +393,7 @@
 <body>
 <div class="container">
 <a href="index.html" class="home-link">&larr; Tilbake til forsiden</a>
+<a href="mestring.html" class="home-link" style="margin-left:1rem;">Min mestring &rarr;</a>
 
 <h1>Tentamen Del 2 – 1T</h1>
 <p class="subtitle">Alt du trenger med hjelpemidler: GeoGebra, CAS, regresjon, trigonometri, optimering og Python</p>
@@ -1208,8 +1209,11 @@ Tangent(3, f)
 
 </div><!-- /container -->
 
+<script src="mattepilot-progress.js"></script>
 <script>
 // ===== QUIZ =====
+const CHAPTER_KEY = 'tentamen';
+const CHAPTER_TITLE = 'Tentamen Del 2';
 const allQuestions = [
   // ----- Regresjon -----
   {
@@ -1591,7 +1595,15 @@ const allQuestions = [
   }
 ];
 
-let quizQuestions, currentQ, score;
+let quizQuestions, currentQ, score, quizMode = 'normal';
+
+if (window.MattepilotProgress) {
+  MattepilotProgress.registerChapter(CHAPTER_KEY, {
+    title: CHAPTER_TITLE,
+    url: 'tentamen-del2.html',
+    questions: allQuestions
+  });
+}
 
 function shuffle(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
@@ -1601,7 +1613,8 @@ function shuffle(arr) {
   return arr;
 }
 
-function openQuiz() {
+function openQuiz(mode) {
+  quizMode = mode || 'normal';
   startQuiz();
   document.getElementById('quizOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -1615,7 +1628,13 @@ document.getElementById('quizOverlay').addEventListener('click', function(e) {
 });
 
 function startQuiz() {
-  quizQuestions = shuffle([...allQuestions]).slice(0, 12);
+  if (window.MattepilotProgress) {
+    quizQuestions = MattepilotProgress.selectQuestions(CHAPTER_KEY, allQuestions, 12, {
+      onlyStruggling: quizMode === 'struggling'
+    });
+  } else {
+    quizQuestions = shuffle([...allQuestions]).slice(0, 12);
+  }
   currentQ = 0;
   score = 0;
   document.getElementById('quizBody').style.display = '';
@@ -1623,6 +1642,12 @@ function startQuiz() {
   document.getElementById('qTotal').textContent = quizQuestions.length;
   showQuestion();
 }
+
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('quiz') === 'struggling') openQuiz('struggling');
+  else if (params.get('quiz') === 'open') openQuiz('normal');
+})();
 
 function showQuestion() {
   const q = quizQuestions[currentQ];
@@ -1650,7 +1675,11 @@ function pickAnswer(idx) {
   btns.forEach(b => b.disabled = true);
 
   const fb = document.getElementById('qFeedback');
-  if (idx === q.ans) {
+  const correct = (idx === q.ans);
+  if (window.MattepilotProgress) {
+    MattepilotProgress.recordAnswer(CHAPTER_KEY, q.q, correct);
+  }
+  if (correct) {
     btns[idx].classList.add('correct');
     fb.className = 'quiz-feedback show is-correct';
     fb.textContent = 'Riktig! ' + q.tip;
