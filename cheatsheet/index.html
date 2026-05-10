@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="no" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1T Cheat Sheet — eksamenshjelp</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='80'>π</text></svg>">
+
+<!-- KaTeX CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="page-header">
+  <div class="header-inner">
+    <a href="../index.html" class="back-link" title="Tilbake til Lillys Mattepilot">&larr; Mattepilot</a>
+    <h1>1T Cheat Sheet</h1>
+    <p class="tagline">Rask repetisjon før eksamen — særlig <strong>Del 1 uten hjelpemidler</strong></p>
+    <div class="header-actions">
+      <button id="themeToggle" class="btn-action" title="Bytt mørk/lys">
+        <span class="icon-light">☀</span>
+        <span class="icon-dark">☾</span>
+      </button>
+      <button id="printBtn" class="btn-action" title="Skriv ut">⎙ Skriv ut</button>
+      <button id="expandAll" class="btn-action" title="Fold ut/inn alle">⤢ Alle</button>
+    </div>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Innholdsmeny">
+  <a href="#algebra" class="toc-link" data-section="algebra">Algebra</a>
+  <a href="#likninger" class="toc-link" data-section="likninger">Likninger</a>
+  <a href="#funksjoner" class="toc-link" data-section="funksjoner">Funksjoner</a>
+  <a href="#derivasjon" class="toc-link" data-section="derivasjon">Derivasjon</a>
+  <a href="#trigonometri" class="toc-link" data-section="trigonometri">Trigonometri</a>
+  <a href="#geometri" class="toc-link" data-section="geometri">Geometri</a>
+  <a href="#prosent" class="toc-link" data-section="prosent">Prosent &amp; fart</a>
+  <a href="#eksamensfeller" class="toc-link" data-section="eksamensfeller">Eksamensfeller</a>
+  <a href="#quiz" class="toc-link" data-section="quiz">Quiz</a>
+  <a href="#siste-liten" class="toc-link" data-section="siste-liten">Siste liten</a>
+  <a href="#python" class="toc-link" data-section="python">Python</a>
+  <a href="#geogebra" class="toc-link" data-section="geogebra">GeoGebra</a>
+</nav>
+
+<div class="search-bar">
+  <input type="search" id="searchInput" placeholder="Søk: kvadratsetning, abc, sinus, asymptote …" aria-label="Søk i temaer">
+  <button id="clearSearch" class="btn-clear" aria-label="Tøm søk">✕</button>
+</div>
+
+<main class="container">
+
+<!-- ================ ALGEBRA ================ -->
+<details class="section section-algebra" open id="algebra">
+  <summary><h2>1. Algebra</h2><span class="fold-hint">▾</span></summary>
+  <div class="card-grid">
+
+    <article class="card">
+      <header><h3>Kvadratsetningene</h3><span class="badge badge-del1">Del 1</span></header>
+      <div class="formula">$$(a+b)^2 = a^2 + 2ab + b^2$$</div>
+      <div class="formula">$$(a-b)^2 = a^2 - 2ab + b^2$$</div>
+      <div class="example"><strong>Eks:</strong> $(x+3)^2 = x^2 + 6x + 9$</div>
+      <div class="warn">Husk dobbeltproduktet $2ab$!</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Konjugatsetningen</h3><span class="badge badge-del1">Del 1</span></header>
+      <div class="formula">$$(a+b)(a-b) = a^2 - b^2$$</div>
+      <div class="example"><strong>Eks:</strong> $(x+5)(x-5) = x^2 - 25$</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Faktorisering</h3><span class="badge badge-del1">Del 1</span></header>
+      <ul class="cmpct">
+        <li>Felles faktor: $ab + ac = a(b+c)$</li>
+        <li>Konjugat: $a^2 - b^2 = (a+b)(a-b)$</li>
+        <li>Kvadrat: $a^2 \pm 2ab + b^2 = (a \pm b)^2$</li>
+        <li>$x^2 + (p+q)x + pq = (x+p)(x+q)$</li>
+      </ul>
+      <div class="example"><strong>Eks:</strong> $x^2 - 5x + 6 = (x-2)(x-3)$</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Brøkregning</h3><span class="badge badge-del1">Del 1</span></header>
+      <div class="formula">$$\frac{a}{b} \cdot \frac{c}{d} = \frac{ac}{bd}$$</div>
+      <div class="formula">$$\frac{a}{b} : \frac{c}{d} = \frac{a}{b} \cdot \frac{d}{c} = \frac{ad}{bc}$$</div>
+      <div class="formula">$$\frac{a}{c} + \frac{b}{c} = \frac{a+b}{c}$$</div>
+      <div class="formula">$$\frac{a}{b} + \frac{c}{d} = \frac{ad+bc}{bd}$$</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Potensregler</h3><span class="badge badge-del1">Del 1</span></header>
+      <ul class="cmpct">
+        <li>$a^m \cdot a^n = a^{m+n}$</li>
+        <li>$\dfrac{a^m}{a^n} = a^{m-n}$</li>
+        <li>$(a^m)^n = a^{mn}$</li>
+        <li>$(ab)^n = a^n b^n$</li>
+        <li>$a^0 = 1 \quad (a \neq 0)$</li>
+        <li>$a^{-n} = \dfrac{1}{a^n}$</li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <header><h3>Røtter</h3></header>
+      <ul class="cmpct">
+        <li>$a^{1/2} = \sqrt{a}$</li>
+        <li>$a^{1/n} = \sqrt[n]{a}$</li>
+        <li>$a^{m/n} = \sqrt[n]{a^m}$</li>
+        <li>$\sqrt{ab} = \sqrt{a} \cdot \sqrt{b}$</li>
+        <li>$\sqrt{\dfrac{a}{b}} = \dfrac{\sqrt{a}}{\sqrt{b}}$</li>
+        <li>$\sqrt{a} \cdot \sqrt{a} = a$</li>
+      </ul>
+      <div class="example"><strong>Rasjonaliser:</strong> $\dfrac{1}{\sqrt{3}} = \dfrac{\sqrt{3}}{3}$</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Polynomdivisjon</h3></header>
+      <p>Del polynom på $(x-a)$ slik som vanlig deling.</p>
+      <div class="formula">Dividend = Kvotient · Divisor + Rest</div>
+      <p><strong>Faktorsetningen:</strong></p>
+      <div class="formula">$$f(a) = 0 \;\Leftrightarrow\; (x - a) \text{ er en faktor i } f(x)$$</div>
+      <div class="example"><strong>Strategi:</strong> test $\pm 1, \pm 2, \pm 3 \ldots$ (delere av konstantleddet) til du finner $a$ med $f(a) = 0$.</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Standardform</h3></header>
+      <p>Skriv tall som $a \cdot 10^n$ der $1 \leq a < 10$.</p>
+      <ul class="cmpct">
+        <li>$4\,500\,000 = 4{,}5 \cdot 10^6$</li>
+        <li>$0{,}000\,32 = 3{,}2 \cdot 10^{-4}$</li>
+      </ul>
+      <div class="example">Komma flytter <em>til venstre</em> → $n$ positiv. Komma <em>til høyre</em> → $n$ negativ.</div>
+    </article>
+
+  </div>
+</details>
+
+<!-- ================ LIKNINGER ================ -->
+<details class="section section-likninger" open id="likninger">
+  <summary><h2>2. Likninger og ulikheter</h2><span class="fold-hint">▾</span></summary>
+  <div class="card-grid">
+
+    <article class="card">
+      <header><h3>Lineær likning</h3><span class="badge badge-del1">Del 1</span></header>
+      <div class="formula">$$ax + b = 0 \;\Rightarrow\; x = -\frac{b}{a}$$</div>
+      <p>Samle x-ledd på én side, tall på den andre.</p>
+      <div class="example"><strong>Eks:</strong> $3x - 5 = 7 \Rightarrow x = 4$</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Andregradslikning</h3><span class="badge badge-del1">Del 1</span></header>
+      <div class="formula">$$ax^2 + bx + c = 0$$</div>
+      <p><strong>Spesialtilfeller:</strong></p>
+      <ul class="cmpct">
+        <li>$b=0$: $x^2 = -c/a \Rightarrow x = \pm\sqrt{-c/a}$</li>
+        <li>$c=0$: $x(ax+b)=0 \Rightarrow x=0$ eller $x=-b/a$</li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <header><h3>ABC-formelen</h3><span class="badge badge-del1">Del 1</span></header>
+      <div class="formula">$$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$</div>
+      <div class="example"><strong>Eks:</strong> $x^2 - 5x + 6 = 0 \Rightarrow x = 2$ eller $x = 3$</div>
+      <div class="warn">Glem ikke parentes om $-b$ når $b$ er negativ.</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Diskriminant</h3><span class="badge badge-del1">Del 1</span></header>
+      <div class="formula">$$D = b^2 - 4ac$$</div>
+      <ul class="cmpct">
+        <li>$D > 0$: <strong>2 løsninger</strong> (graf krysser x-aksen)</li>
+        <li>$D = 0$: <strong>1 løsning</strong> (tangerer x-aksen)</li>
+        <li>$D < 0$: <strong>ingen reelle</strong> (slipper over)</li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <header><h3>Sum og produkt</h3></header>
+      <p>Når $a = 1$, dvs. $x^2 + bx + c = 0$:</p>
+      <div class="formula">$$x_1 + x_2 = -b, \qquad x_1 \cdot x_2 = c$$</div>
+      <div class="example"><strong>Eks:</strong> $x^2 - 7x + 12 = 0$. Sum 7, produkt 12 → $x = 3$ eller $x = 4$.</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Fortegnsanalyse</h3></header>
+      <ol class="cmpct">
+        <li>Faktoriser uttrykket.</li>
+        <li>Marker nullpunkter på tallinje.</li>
+        <li>Test ett tall i hvert intervall.</li>
+        <li>Multipliser fortegn for produktet.</li>
+      </ol>
+      <div class="example"><strong>Eks:</strong> $(x-2)(x+3) < 0 \Rightarrow -3 < x < 2$</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Likningssystemer</h3></header>
+      <p>Tre metoder:</p>
+      <ul class="cmpct">
+        <li><strong>Innsetning:</strong> løs for én variabel og sett inn</li>
+        <li><strong>Addisjon:</strong> legg sammen så én variabel forsvinner</li>
+        <li><strong>Grafisk:</strong> tegn linjene, finn skjæring</li>
+      </ul>
+      <div class="example"><strong>$0=0$ underveis</strong> → uendelig mange. <strong>$0=5$</strong> → ingen løsning.</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Ulikheter</h3><span class="badge badge-del1">Del 1</span></header>
+      <p>Som likninger, men:</p>
+      <div class="warn"><strong>Snu tegnet</strong> ved gange/dele med <em>negativt</em> tall!</div>
+      <div class="example"><strong>Eks:</strong> $-2x < 6 \Rightarrow x > -3$</div>
+    </article>
+
+  </div>
+</details>
+
+<!-- ================ FUNKSJONER ================ -->
+<details class="section section-funksjoner" open id="funksjoner">
+  <summary><h2>3. Funksjoner</h2><span class="fold-hint">▾</span></summary>
+  <div class="card-grid">
+
+    <article class="card">
+      <header><h3>Lineær funksjon</h3><span class="badge badge-del1">Del 1</span></header>
+      <div class="formula">$$f(x) = ax + b$$</div>
+      <ul class="cmpct">
+        <li>$a$ = stigningstall = $\dfrac{y_2 - y_1}{x_2 - x_1}$</li>
+        <li>$b$ = y-skjæring ($f(0) = b$)</li>
+        <li>Ettpunktformel: $y - y_1 = a(x - x_1)$</li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <header><h3>Andregradsfunksjon</h3><span class="badge badge-del1">Del 1</span></header>
+      <div class="formula">$$f(x) = ax^2 + bx + c$$</div>
+      <ul class="cmpct">
+        <li>Topp/bunnpunkt ved $x = -\dfrac{b}{2a}$</li>
+        <li>$a > 0$: bunnpunkt (parabel åpner opp)</li>
+        <li>$a < 0$: toppunkt (åpner ned)</li>
+        <li>Symmetrisk om $x = -\dfrac{b}{2a}$</li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <header><h3>Toppunktsform</h3></header>
+      <p>Andregrad kan også skrives slik:</p>
+      <div class="formula">$$f(x) = a(x - x_0)^2 + y_0$$</div>
+      <p>$(x_0, y_0)$ leses direkte som <strong>topp/bunnpunkt</strong>.</p>
+      <div class="example"><strong>Eks:</strong> $f(x) = 2(x-3)^2 - 4$ har bunnpunkt $(3, -4)$.</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Polynomfunksjon</h3></header>
+      <div class="formula">$$f(x) = a_n x^n + \ldots + a_1 x + a_0$$</div>
+      <ul class="cmpct">
+        <li>Grad $n$ → opptil $n$ nullpunkter</li>
+        <li>Faktorisert: $a(x-r_1)(x-r_2)\cdots$</li>
+        <li>Konstantleddet = produkt av nullpunkter (med fortegn)</li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <header><h3>Rasjonal funksjon</h3></header>
+      <div class="formula">$$f(x) = \frac{P(x)}{Q(x)}$$</div>
+      <ul class="cmpct">
+        <li><strong>D<sub>f</sub>:</strong> alle $x$ der $Q(x) \neq 0$</li>
+        <li><strong>Loddrett asymptote:</strong> der $Q(x) = 0$</li>
+        <li><strong>Vannrett asymptote:</strong> verdien grafen nærmer seg når $x \to \pm\infty$</li>
+      </ul>
+      <div class="example"><strong>Eks:</strong> $f(x) = \dfrac{1}{x-2}$ har asymptoter $x=2$ og $y=0$.</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Eksponentialfunksjon</h3><span class="badge badge-del1">Del 1</span></header>
+      <div class="formula">$$f(x) = a \cdot b^x \quad (b > 0,\, b \neq 1)$$</div>
+      <ul class="cmpct">
+        <li>$a$ = startverdi, $f(0) = a$</li>
+        <li>$b$ = vekstfaktor</li>
+        <li>$b > 1$: vekst &nbsp; $0 < b < 1$: nedgang</li>
+        <li>$b - 1$ = prosentvis endring per periode</li>
+      </ul>
+      <div class="example"><strong>Doblingstid:</strong> $b^x = 2 \Rightarrow x = \dfrac{\log 2}{\log b}$</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Nullpunkter</h3><span class="badge badge-del1">Del 1</span></header>
+      <p>Sett $f(x) = 0$ og løs:</p>
+      <ul class="cmpct">
+        <li>Lineær: $x = -b/a$</li>
+        <li>Andregrad: ABC-formel</li>
+        <li>Faktorisert form: hver faktor $= 0$</li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <header><h3>Nullpunktsetningen</h3></header>
+      <p>Hvis $f$ er kontinuerlig på $[a, b]$ og</p>
+      <div class="formula">$$f(a) \cdot f(b) < 0$$</div>
+      <p>(altså motsatt fortegn), finnes det <strong>minst ett nullpunkt</strong> mellom $a$ og $b$.</p>
+      <div class="example"><strong>Eks:</strong> $f(x) = x^3 - 2x - 5$. $f(1) = -6$, $f(3) = 16$. Motsatt fortegn → nullpunkt mellom $1$ og $3$.</div>
+      <div class="warn">Brukes når likningen ikke kan løses algebraisk — kobling til <em>halveringsmetoden</em> (se Python).</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Topp- og bunnpunkt</h3></header>
+      <p>For andregradsfunksjon:</p>
+      <div class="formula">$$x_t = -\frac{b}{2a}, \quad y_t = f(x_t)$$</div>
+      <p>Eller deriver og sett $f'(x) = 0$.</p>
+    </article>
+
+    <article class="card">
+      <header><h3>Stigningstall</h3><span class="badge badge-del1">Del 1</span></header>
+      <ul class="cmpct">
+        <li>Lineær: $a$</li>
+        <li>To punkter: $\dfrac{\Delta y}{\Delta x}$</li>
+        <li>Tangent i $x = x_0$: $f'(x_0)$</li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <header><h3>Definisjonsmengde</h3></header>
+      <p>Hvilke $x$ er tillatt?</p>
+      <ul class="cmpct">
+        <li>Brøk: $x$ der nevner $\neq 0$</li>
+        <li>Kvadratrot: $\sqrt{f(x)}$ krever $f(x) \geq 0$</li>
+        <li>Logaritme: $\ln(f(x))$ krever $f(x) > 0$</li>
+        <li>Polynom/eksp: alle reelle tall</li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <header><h3>Asymptoter</h3></header>
+      <ul class="cmpct">
+        <li><strong>Loddrett:</strong> $x = a$ der nevneren = 0</li>
+        <li><strong>Vannrett:</strong> $y = $ grenseverdien når $x \to \pm\infty$</li>
+        <li>Sjekk grader: lavere teller → $y = 0$; lik grad → forhold mellom ledende koeffisienter</li>
+      </ul>
+    </article>
+
+  </div>
+</details>
+
+<!-- ================ DERIVASJON ================ -->
+<details class="section section-derivasjon" open id="derivasjon">
+  <summary><h2>4. Derivasjon</h2><span class="fold-hint">▾</span></summary>
+  <div class="card-grid">
+
+    <article class="card">
+      <header><h3>Gjennomsnittlig vekstfart</h3><span class="badge badge-del1">Del 1</span></header>
+      <p>Stigningstall til <strong>sekanten</strong> mellom to punkter:</p>
+      <div class="formula">$$\frac{f(b) - f(a)}{b - a}$$</div>
+      <div class="example"><strong>Eks:</strong> $f(x) = x^2$ fra $x=1$ til $x=4$: $(16-1)/3 = 5$.</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Momentan vekstfart</h3><span class="badge badge-del1">Del 1</span></header>
+      <p>Stigningstall til <strong>tangenten</strong> i ett punkt — det er <em>den deriverte</em>:</p>
+      <div class="formula">$$f'(a) = \text{stigning til tangent i } x = a$$</div>
+      <ul class="cmpct">
+        <li>$f'(a) > 0$: $f$ vokser ved $x = a$</li>
+        <li>$f'(a) < 0$: $f$ avtar ved $x = a$</li>
+        <li>$f'(a) = 0$: topp-, bunn- eller terrassepunkt</li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <header><h3>Derivasjonsregler</h3><span class="badge badge-del1">Del 1</span></header>
+      <ul class="cmpct">
+        <li>$(c)' = 0$ &nbsp; (konstant)</li>
+        <li>$(x)' = 1$</li>
+        <li>$(x^n)' = n \cdot x^{n-1}$ &nbsp; (potens)</li>
+        <li>$(c \cdot f)' = c \cdot f'$</li>
+        <li>$(f + g)' = f' + g'$</li>
+        <li>$(f - g)' = f' - g'$</li>
+      </ul>
+      <div class="example"><strong>Eks:</strong> $(2x^4 - 7x^2 + x - 1)' = 8x^3 - 14x + 1$</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Topp- og bunnpunkt</h3><span class="badge badge-del1">Del 1</span></header>
+      <ol class="cmpct">
+        <li>Deriver: finn $f'(x)$.</li>
+        <li>Sett $f'(x) = 0$, finn kandidatene.</li>
+        <li>Lag fortegnsskjema for $f'$.
+          <ul class="cmpct">
+            <li>$+ \to -$: toppunkt</li>
+            <li>$- \to +$: bunnpunkt</li>
+          </ul>
+        </li>
+        <li>Sett $x$ i $f$ for $y$-koord.</li>
+      </ol>
+    </article>
+
+    <article class="card">
+      <header><h3>Tangentlikning</h3></header>
+      <p>Tangenten til $f$ i punktet $x = a$:</p>
+      <div class="formula">$$y - f(a) = f'(a) \cdot (x - a)$$</div>
+      <div class="example"><strong>Eks:</strong> $f(x) = x^2 - 4x + 5$ ved $x=3$. $f(3)=2$, $f'(3)=2$. Tangent: $y = 2x - 4$.</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Optimering</h3></header>
+      <p>«Hva er det største/minste …?»</p>
+      <ol class="cmpct">
+        <li>Skriv et uttrykk av <em>én variabel</em> ved hjelp av begrensningen.</li>
+        <li>Skriv ned definisjonsmengden.</li>
+        <li>Deriver, sett $f'(x) = 0$.</li>
+        <li>Sjekk topp/bunn med fortegnsskjema.</li>
+        <li><strong>Sjekk også endepunktene</strong> på definisjonsmengden.</li>
+      </ol>
+      <div class="example"><strong>Klassiker:</strong> $100$ m gjerde → største areal er kvadrat $25 \times 25 = 625$ m².</div>
+    </article>
+
+  </div>
+</details>
+
+<!-- ================ TRIGONOMETRI ================ -->
+<details class="section section-trigonometri" open id="trigonometri">
+  <summary><h2>5. Trigonometri</h2><span class="fold-hint">▾</span></summary>
+  <div class="card-grid">
+
+    <article class="card">
+      <header><h3>sin, cos, tan</h3><span class="badge badge-del1">Del 1</span></header>
+      <p>I rettvinklet trekant med vinkel $u$:</p>
+      <div class="formula">$$\sin u = \frac{\text{motst}}{\text{hyp}}, \quad \cos u = \frac{\text{hosl}}{\text{hyp}}$$</div>
+      <div class="formula">$$\tan u = \frac{\text{motst}}{\text{hosl}} = \frac{\sin u}{\cos u}$$</div>
+      <div class="example"><strong>SOH-CAH-TOA</strong> — si det ut høyt!</div>
+    </article>
+
+    <article class="card card-wide">
+      <header><h3>Eksakte verdier</h3><span class="badge badge-del1">Del 1</span></header>
+      <table class="trigtable">
+        <thead>
+          <tr><th>$u$</th><th>$0°$</th><th>$30°$</th><th>$45°$</th><th>$60°$</th><th>$90°$</th></tr>
+        </thead>
+        <tbody>
+          <tr><th>$\sin u$</th><td>$0$</td><td>$\tfrac{1}{2}$</td><td>$\tfrac{\sqrt{2}}{2}$</td><td>$\tfrac{\sqrt{3}}{2}$</td><td>$1$</td></tr>
+          <tr><th>$\cos u$</th><td>$1$</td><td>$\tfrac{\sqrt{3}}{2}$</td><td>$\tfrac{\sqrt{2}}{2}$</td><td>$\tfrac{1}{2}$</td><td>$0$</td></tr>
+          <tr><th>$\tan u$</th><td>$0$</td><td>$\tfrac{\sqrt{3}}{3}$</td><td>$1$</td><td>$\sqrt{3}$</td><td>udef.</td></tr>
+        </tbody>
+      </table>
+      <div class="warn">Husk: tan(90°) er ikke definert (cos = 0).</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Enhetssirkelen</h3></header>
+      <p>Sirkel med radius 1 og sentrum i origo.</p>
+      <ul class="cmpct">
+        <li>Punkt på sirkel: $(\cos u, \sin u)$</li>
+        <li>$\sin^2 u + \cos^2 u = 1$ (Pytagoras)</li>
+        <li>$\sin(180° - u) = \sin u$</li>
+        <li>$\cos(180° - u) = -\cos u$</li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <header><h3>Tegnregel — kvadranter</h3></header>
+      <p>Husk <strong>ASTC</strong> mot klokka:</p>
+      <ul class="cmpct">
+        <li><strong>A</strong>lle (1. kvadrant, 0–90°): alle positive</li>
+        <li><strong>S</strong>in (2., 90–180°): bare sin positiv</li>
+        <li><strong>T</strong>an (3., 180–270°): bare tan positiv</li>
+        <li><strong>C</strong>os (4., 270–360°): bare cos positiv</li>
+      </ul>
+      <div class="example"><strong>Eks:</strong> $\cos(120°) = -\tfrac{1}{2}$ (2. kvadrant → cos negativ).</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Radianer</h3></header>
+      <ul class="cmpct">
+        <li>$360° = 2\pi$ rad</li>
+        <li>$180° = \pi$, $\;90° = \pi/2$</li>
+        <li>$60° = \pi/3$, $\;45° = \pi/4$, $\;30° = \pi/6$</li>
+      </ul>
+      <div class="warn">På 1T jobber vi i grader. Sjekk kalkulator i DEG.</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Pytagoras</h3><span class="badge badge-del1">Del 1</span></header>
+      <p>I rettvinklet trekant:</p>
+      <div class="formula">$$a^2 + b^2 = c^2$$</div>
+      <p>$c$ = hypotenus (mot rett vinkel), $a, b$ = kateter.</p>
+      <div class="example"><strong>Eks:</strong> $3^2 + 4^2 = 5^2$, så $(3,4,5)$ er rettvinklet.</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Sinussetningen</h3></header>
+      <div class="formula">$$\frac{a}{\sin A} = \frac{b}{\sin B} = \frac{c}{\sin C}$$</div>
+      <p><strong>Når brukes hva?</strong></p>
+      <ul class="cmpct">
+        <li>Finne <strong>side</strong>: sider oppe (som over)</li>
+        <li>Finne <strong>vinkel</strong>: snu — $\dfrac{\sin A}{a} = \dfrac{\sin B}{b}$</li>
+      </ul>
+      <p>Brukes ved VSV eller SSV.</p>
+    </article>
+
+    <article class="card">
+      <header><h3>Cosinussetningen</h3></header>
+      <div class="formula">$$c^2 = a^2 + b^2 - 2ab\cos C$$</div>
+      <p>For å finne en vinkel når du har tre sider:</p>
+      <div class="formula">$$\cos C = \frac{a^2 + b^2 - c^2}{2ab}$$</div>
+      <p>Brukes ved SSS eller SVS.</p>
+    </article>
+
+    <article class="card">
+      <header><h3>Arealsetningen</h3></header>
+      <div class="formula">$$A = \tfrac{1}{2} \cdot a \cdot b \cdot \sin C$$</div>
+      <p>$C$ er vinkelen <em>mellom</em> sidene $a$ og $b$.</p>
+      <div class="example"><strong>Eks:</strong> $a=8, b=6, C=60°$. $A = \tfrac{1}{2} \cdot 48 \cdot \tfrac{\sqrt 3}{2} = 12\sqrt{3}$.</div>
+    </article>
+
+  </div>
+</details>
+
+<!-- ================ GEOMETRI ================ -->
+<details class="section section-geometri" open id="geometri">
+  <summary><h2>6. Geometri</h2><span class="fold-hint">▾</span></summary>
+  <div class="card-grid">
+
+    <article class="card">
+      <header><h3>Areal — flate figurer</h3><span class="badge badge-del1">Del 1</span></header>
+      <ul class="cmpct">
+        <li>Rektangel: $A = l \cdot b$</li>
+        <li>Kvadrat: $A = s^2$</li>
+        <li>Trekant: $A = \tfrac{1}{2} g h$</li>
+        <li>Parallellogram: $A = g \cdot h$</li>
+        <li>Trapes: $A = \tfrac{(a+b)h}{2}$</li>
+        <li>Sirkel: $A = \pi r^2$</li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <header><h3>Omkrets</h3><span class="badge badge-del1">Del 1</span></header>
+      <ul class="cmpct">
+        <li>Rektangel: $O = 2(l + b)$</li>
+        <li>Kvadrat: $O = 4s$</li>
+        <li>Trekant: $O = a + b + c$</li>
+        <li>Sirkel: $O = 2\pi r$</li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <header><h3>Trekant</h3></header>
+      <ul class="cmpct">
+        <li>Vinkelsum = $180°$</li>
+        <li>Areal: $A = \tfrac{1}{2} g h$</li>
+        <li>Areal (SVS): $A = \tfrac{1}{2} ab \sin C$</li>
+        <li>Rettvinklet: Pytagoras, sin/cos/tan</li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <header><h3>Sirkel</h3></header>
+      <ul class="cmpct">
+        <li>Areal: $A = \pi r^2$</li>
+        <li>Omkrets: $O = 2\pi r$</li>
+        <li>Diameter: $d = 2r$</li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <header><h3>Formlikhet</h3></header>
+      <p>To trekanter er <strong>formlike</strong> hvis de har samme vinkler.</p>
+      <ul class="cmpct">
+        <li>Sider er <em>proporsjonale</em>: $\dfrac{a_1}{a_2} = \dfrac{b_1}{b_2} = \dfrac{c_1}{c_2}$</li>
+        <li>Areal-forhold: $k^2$</li>
+        <li>Volum-forhold: $k^3$</li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <header><h3>Volum</h3></header>
+      <ul class="cmpct">
+        <li>Boks: $V = l \cdot b \cdot h$</li>
+        <li>Kube: $V = s^3$</li>
+        <li>Sylinder: $V = \pi r^2 h$</li>
+        <li>Kjegle: $V = \tfrac{1}{3}\pi r^2 h$</li>
+        <li>Pyramide: $V = \tfrac{1}{3}Gh$</li>
+        <li>Kule: $V = \tfrac{4}{3}\pi r^3$</li>
+      </ul>
+    </article>
+
+  </div>
+</details>
+
+<!-- ================ PROSENT, VEKSTFAKTOR OG FART ================ -->
+<details class="section section-prosent" open id="prosent">
+  <summary><h2>7. Prosent, vekstfaktor og fart</h2><span class="fold-hint">▾</span></summary>
+  <div class="card-grid">
+
+    <article class="card">
+      <header><h3>Prosent — det grunnleggende</h3><span class="badge badge-del1">Del 1</span></header>
+      <ul class="cmpct">
+        <li>$p\%$ av $K$: $\;\dfrac{p}{100} \cdot K$</li>
+        <li>Andel: $\dfrac{\text{del}}{\text{hele}} \cdot 100\%$</li>
+      </ul>
+      <div class="example"><strong>Eks:</strong> $25\%$ av $200 = 50$. &nbsp; $15$ av $60 = 25\%$.</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Vekstfaktor</h3><span class="badge badge-del1">Del 1</span></header>
+      <p>Tallet du <strong>ganger med</strong> for å gå fra gammel til ny verdi.</p>
+      <ul class="cmpct">
+        <li>Økning $p\%$: $\;v = 1 + \dfrac{p}{100}$</li>
+        <li>Reduksjon $p\%$: $\;v = 1 - \dfrac{p}{100}$</li>
+      </ul>
+      <div class="example"><strong>Eks:</strong> $20\%$ økning → $v = 1{,}20$. &nbsp; $30\%$ ned → $v = 0{,}70$.</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Sammensatt vekst</h3></header>
+      <p>Flere endringer etter hverandre — gang vekstfaktorene:</p>
+      <div class="formula">$$v_{\text{tot}} = v_1 \cdot v_2 \cdot v_3 \cdots$$</div>
+      <p>Samme $p\%$ over $n$ perioder:</p>
+      <div class="formula">$$\text{Ny verdi} = \text{startverdi} \cdot v^n$$</div>
+      <div class="example"><strong>Eks:</strong> $10\,000$ kr i $3$ år, $5\%$ rente: $10\,000 \cdot 1{,}05^3 \approx 11\,576$.</div>
+    </article>
+
+    <article class="card card-warn">
+      <header><h3>Prosentpoeng vs. prosent</h3></header>
+      <p>Renta gikk fra $3\%$ til $5\%$:</p>
+      <ul class="cmpct">
+        <li>Økning: <strong>2 prosentpoeng</strong></li>
+        <li>Prosentvis økning: $\dfrac{2}{3} \cdot 100\% \approx 66{,}7\%$</li>
+      </ul>
+      <p>Ikke bland sammen!</p>
+    </article>
+
+    <article class="card">
+      <header><h3>Strekning, fart, tid</h3><span class="badge badge-del1">Del 1</span></header>
+      <div class="formula">$$s = v \cdot t, \quad v = \dfrac{s}{t}, \quad t = \dfrac{s}{v}$$</div>
+      <div class="example"><strong>Eks:</strong> $80$ km/t i $2{,}5$ t: $s = 200$ km.</div>
+    </article>
+
+    <article class="card">
+      <header><h3>km/t ↔ m/s</h3></header>
+      <ul class="cmpct">
+        <li>km/t → m/s: <strong>del på 3,6</strong></li>
+        <li>m/s → km/t: <strong>gang med 3,6</strong></li>
+      </ul>
+      <div class="example">
+        $90$ km/t $= 25$ m/s &nbsp; · &nbsp; $12$ m/s $= 43{,}2$ km/t
+      </div>
+      <div class="warn">Når oppgaven blander enheter — gjør om til samme system <em>først</em>.</div>
+    </article>
+
+  </div>
+</details>
+
+<!-- ================ EKSAMENSFELLER ================ -->
+<details class="section section-eksamensfeller" open id="eksamensfeller">
+  <summary><h2>8. Eksamensfeller — pass på!</h2><span class="fold-hint">▾</span></summary>
+  <div class="card-grid">
+
+    <article class="card card-warn">
+      <header><h3>Fortegnsfeil</h3></header>
+      <p><strong>Riktig:</strong> $-(2x - 3) = -2x + 3$</p>
+      <p><strong>Feil:</strong> $-(2x - 3) = -2x - 3$</p>
+      <p>Hvert ledd inne i parentesen <em>bytter fortegn</em>.</p>
+    </article>
+
+    <article class="card card-warn">
+      <header><h3>Parentesfeil</h3></header>
+      <p><strong>Riktig:</strong> $(a+b)^2 = a^2 + 2ab + b^2$</p>
+      <p><strong>Feil:</strong> $(a+b)^2 = a^2 + b^2$</p>
+      <p>Glem aldri dobbeltproduktet $2ab$.</p>
+    </article>
+
+    <article class="card card-warn">
+      <header><h3>Forkorting over +/−</h3></header>
+      <p><strong>Du kan IKKE skrive:</strong> $\dfrac{a+b}{a} = 1 + b$</p>
+      <p>Det skal være $\dfrac{a+b}{a} = 1 + \dfrac{b}{a}$.</p>
+      <p>Forkort bare når både teller og nevner har samme faktor som ganges.</p>
+    </article>
+
+    <article class="card card-warn">
+      <header><h3>Glemt definisjonsmengde</h3></header>
+      <p>Kontroller alltid:</p>
+      <ul class="cmpct">
+        <li>Brøk: nevner $\neq 0$</li>
+        <li>$\sqrt{x}$: $x \geq 0$</li>
+        <li>Praktisk: tid $\geq 0$, lengde $> 0$</li>
+      </ul>
+    </article>
+
+    <article class="card card-warn">
+      <header><h3>Null i nevner</h3></header>
+      <p>Hvis du ganger bort en nevner $(x - a)$ må du sjekke om $x = a$ er gyldig svar.</p>
+      <p>Bryter løsningen kravet → <strong>falsk løsning</strong>, forkast.</p>
+    </article>
+
+    <article class="card card-warn">
+      <header><h3>Nullpunkt vs. asymptote</h3></header>
+      <p><strong>Nullpunkt:</strong> $f(x) = 0$ — der grafen krysser x-aksen.</p>
+      <p><strong>Asymptote:</strong> linje grafen nærmer seg uten å nå.</p>
+      <p>Disse er <em>ikke</em> det samme. En rasjonal funksjon har ofte begge.</p>
+    </article>
+
+    <article class="card card-warn">
+      <header><h3>Glemt grader (°)</h3></header>
+      <p>I GeoGebra: $\sin(60)$ regner i radianer ≈ $-0{,}305$.</p>
+      <p>Du vil ha $\sin(60°) ≈ 0{,}866$. Skriv alltid $°$.</p>
+    </article>
+
+    <article class="card card-warn">
+      <header><h3>Ulikhet og negativt tall</h3></header>
+      <p>Når du ganger eller deler med et negativt tall:</p>
+      <p><strong>Snu ulikhetstegnet!</strong> $-2x < 6 \Rightarrow x > -3$</p>
+    </article>
+
+    <article class="card card-warn">
+      <header><h3>Avrunding for tidlig</h3></header>
+      <p>La kalkulatoren beholde alle desimaler underveis. Rund av <strong>kun til slutt</strong>.</p>
+      <p>Eks: bruk $\sin^{-1}(7\sin 80° / 10)$ direkte, ikke avrundet 0,69.</p>
+    </article>
+
+  </div>
+</details>
+
+<!-- ================ MINI-QUIZ ================ -->
+<details class="section section-quiz" open id="quiz">
+  <summary><h2>Mini-quiz — 15 raske</h2><span class="fold-hint">▾</span></summary>
+  <p class="quiz-intro">Dekk over fasit, prøv selv, klikk «Vis fasit» for å sjekke.</p>
+  <ol class="quiz-list" id="quizList">
+    <li class="quiz-item">
+      <p class="quiz-q">$(x+5)^2 = ?$</p>
+      <button class="btn-show">Vis fasit</button>
+      <p class="quiz-a hidden">$x^2 + 10x + 25$ — første kvadratsetning.</p>
+    </li>
+    <li class="quiz-item">
+      <p class="quiz-q">Faktoriser $x^2 - 16$.</p>
+      <button class="btn-show">Vis fasit</button>
+      <p class="quiz-a hidden">$(x+4)(x-4)$ — konjugatsetningen baklengs.</p>
+    </li>
+    <li class="quiz-item">
+      <p class="quiz-q">Diskriminanten til $x^2 - 5x + 6 = 0$.</p>
+      <button class="btn-show">Vis fasit</button>
+      <p class="quiz-a hidden">$D = 25 - 24 = 1 > 0$, så to løsninger.</p>
+    </li>
+    <li class="quiz-item">
+      <p class="quiz-q">Løs $x^2 - 5x + 6 = 0$.</p>
+      <button class="btn-show">Vis fasit</button>
+      <p class="quiz-a hidden">$x = 2$ eller $x = 3$ (sum 5, produkt 6).</p>
+    </li>
+    <li class="quiz-item">
+      <p class="quiz-q">$\sin(30°) = ?$</p>
+      <button class="btn-show">Vis fasit</button>
+      <p class="quiz-a hidden">$\dfrac{1}{2}$</p>
+    </li>
+    <li class="quiz-item">
+      <p class="quiz-q">$\cos(60°) = ?$</p>
+      <button class="btn-show">Vis fasit</button>
+      <p class="quiz-a hidden">$\dfrac{1}{2}$ — merk: $\cos(60°) = \sin(30°)$.</p>
+    </li>
+    <li class="quiz-item">
+      <p class="quiz-q">$\tan(45°) = ?$</p>
+      <button class="btn-show">Vis fasit</button>
+      <p class="quiz-a hidden">$1$ (siden $\sin 45° = \cos 45°$).</p>
+    </li>
+    <li class="quiz-item">
+      <p class="quiz-q">Areal av trekant med $g = 8$, $h = 6$.</p>
+      <button class="btn-show">Vis fasit</button>
+      <p class="quiz-a hidden">$A = \tfrac{1}{2} \cdot 8 \cdot 6 = 24$</p>
+    </li>
+    <li class="quiz-item">
+      <p class="quiz-q">$f(x) = \dfrac{2}{x-3}$. Definisjonsmengde?</p>
+      <button class="btn-show">Vis fasit</button>
+      <p class="quiz-a hidden">Alle reelle tall unntatt $x = 3$ (nevner = 0 der).</p>
+    </li>
+    <li class="quiz-item">
+      <p class="quiz-q">Linje gjennom $(1, 2)$ og $(3, 8)$ — finn likningen.</p>
+      <button class="btn-show">Vis fasit</button>
+      <p class="quiz-a hidden">$a = (8-2)/(3-1) = 3$, $y - 2 = 3(x - 1) \Rightarrow y = 3x - 1$.</p>
+    </li>
+    <li class="quiz-item">
+      <p class="quiz-q">Deriver $f(x) = 3x^2 - 6x + 4$.</p>
+      <button class="btn-show">Vis fasit</button>
+      <p class="quiz-a hidden">$f'(x) = 6x - 6$ (potensregel pluss konstant blir 0).</p>
+    </li>
+    <li class="quiz-item">
+      <p class="quiz-q">Hvor er bunnpunktet til $f(x) = x^2 - 4x + 1$?</p>
+      <button class="btn-show">Vis fasit</button>
+      <p class="quiz-a hidden">$f'(x) = 2x - 4 = 0 \Rightarrow x = 2$. $f(2) = -3$. Bunnpunkt $(2, -3)$.</p>
+    </li>
+    <li class="quiz-item">
+      <p class="quiz-q">En vare øker med $20\%$ og deretter reduseres med $20\%$. Hva er samlet endring?</p>
+      <button class="btn-show">Vis fasit</button>
+      <p class="quiz-a hidden">$1{,}20 \cdot 0{,}80 = 0{,}96$. Varen er $4\%$ billigere enn opprinnelig — ikke uendret!</p>
+    </li>
+    <li class="quiz-item">
+      <p class="quiz-q">$72$ km/t i m/s?</p>
+      <button class="btn-show">Vis fasit</button>
+      <p class="quiz-a hidden">$72 / 3{,}6 = 20$ m/s.</p>
+    </li>
+  </ol>
+  <div class="quiz-controls">
+    <button id="showAllAnswers" class="btn-action">Vis alle fasiter</button>
+    <button id="hideAllAnswers" class="btn-action">Skjul alle fasiter</button>
+  </div>
+</details>
+
+<!-- ================ SISTE LITEN ================ -->
+<details class="section section-siste-liten" open id="siste-liten">
+  <summary><h2>Siste liten — sjekkliste på eksamensdagen</h2><span class="fold-hint">▾</span></summary>
+  <div class="card-grid">
+
+    <article class="card card-final">
+      <h3>Før du begynner</h3>
+      <ul class="cmpct">
+        <li>Kalkulator i <strong>DEG</strong> (grader), ikke RAD</li>
+        <li>Skrive- og tegneutstyr klart</li>
+        <li>Pust dypt 3 ganger</li>
+        <li>Les hele oppgavesettet først, kryss av enkle</li>
+      </ul>
+    </article>
+
+    <article class="card card-final">
+      <h3>Strategi i Del 1</h3>
+      <ul class="cmpct">
+        <li>Hopp over om du står fast — kom tilbake</li>
+        <li>Tegn alltid en figur i geometri</li>
+        <li>Kontroller med innsetting der mulig</li>
+        <li>Skriv eksakte verdier ($\sqrt{2}$, $\pi$), ikke desimaler</li>
+      </ul>
+    </article>
+
+    <article class="card card-final">
+      <h3>Strategi i Del 2</h3>
+      <ul class="cmpct">
+        <li>Skriv hvilken kommando du brukte</li>
+        <li>Skriv tolkning i kontekst med enhet</li>
+        <li>Oppgi gyldighetsområde</li>
+        <li>Skjermbilder fra GeoGebra</li>
+      </ul>
+    </article>
+
+    <article class="card card-final">
+      <h3>Klassiske «poeng-tyver»</h3>
+      <ul class="cmpct">
+        <li>Manglende enhet (cm, kr, sek)</li>
+        <li>Glemt $\pm$ ved kvadratrot</li>
+        <li>Avrundet for tidlig</li>
+        <li>Glemt at $-(a-b) = -a+b$</li>
+        <li>Sett inn negativt $b$ uten parentes i ABC</li>
+      </ul>
+    </article>
+
+    <article class="card card-final">
+      <h3>Hvis du står fast</h3>
+      <ul class="cmpct">
+        <li>Tegn det opp</li>
+        <li>Sett inn et tall og test</li>
+        <li>Skriv ned alt du vet, og hva du skal finne</li>
+        <li>Hopp videre — kom tilbake</li>
+      </ul>
+    </article>
+
+    <article class="card card-final">
+      <h3>Til slutt</h3>
+      <ul class="cmpct">
+        <li>Skriv svar i hele setninger</li>
+        <li>Kontroller fortegn og enheter</li>
+        <li>Sjekk at svaret er rimelig</li>
+        <li>Bruk all tiden — sjekk om igjen</li>
+      </ul>
+    </article>
+
+  </div>
+</details>
+
+<!-- ================ PYTHON ================ -->
+<details class="section section-python" open id="python">
+  <summary><h2>Python — programmering i 1T</h2><span class="fold-hint">▾</span></summary>
+  <p class="quiz-intro">Eksempler på typiske oppgaver. Klassiske Del 2-mønstre.</p>
+  <div class="card-grid">
+
+    <article class="card">
+      <header><h3>Variabler og utskrift</h3></header>
+      <p>Lagre en verdi og skrive den ut.</p>
+      <pre class="code-block"><span class="kw">pris</span> = <span class="num">20</span>
+<span class="kw">antall</span> = <span class="num">5</span>
+<span class="kw">total</span> = pris * antall
+<span class="fn">print</span>(total)   <span class="com"># → 100</span></pre>
+    </article>
+
+    <article class="card">
+      <header><h3>For-løkke (kjent antall)</h3></header>
+      <p>Summer tallene 1 til 10.</p>
+      <pre class="code-block"><span class="kw">sum</span> = <span class="num">0</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, <span class="num">11</span>):
+    sum = sum + i
+<span class="fn">print</span>(sum)    <span class="com"># → 55</span></pre>
+      <div class="example"><code>range(1,11)</code> gir 1, 2, …, <strong>10</strong> (stopper FØR 11).</div>
+    </article>
+
+    <article class="card">
+      <header><h3>While-løkke (til betingelse)</h3></header>
+      <p>Hvor mange år før beløpet passerer 2000 kr (5 % rente)?</p>
+      <pre class="code-block"><span class="kw">belop</span> = <span class="num">1000</span>
+<span class="kw">ar</span> = <span class="num">0</span>
+<span class="kw">while</span> belop &lt; <span class="num">2000</span>:
+    belop = belop * <span class="num">1.05</span>
+    ar = ar + <span class="num">1</span>
+<span class="fn">print</span>(ar)    <span class="com"># → 15</span></pre>
+      <div class="warn">Glemmer du å endre variabelen → uendelig løkke!</div>
+    </article>
+
+    <article class="card">
+      <header><h3>If-test</h3></header>
+      <p>Sjekk om en verdi er over en grense.</p>
+      <pre class="code-block"><span class="kw">hoyde</span> = <span class="num">87</span>
+<span class="kw">if</span> hoyde &gt; <span class="num">100</span>:
+    <span class="fn">print</span>(<span class="str">"Over 1 m"</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="str">"Under 1 m"</span>)</pre>
+    </article>
+
+    <article class="card">
+      <header><h3>Egen funksjon (def)</h3></header>
+      <p>Definer en matematisk funksjon.</p>
+      <pre class="code-block"><span class="kw">def</span> <span class="fn">hoyde</span>(t):
+    <span class="kw">return</span> -<span class="num">5</span>*t**<span class="num">2</span> + <span class="num">20</span>*t
+
+<span class="fn">print</span>(<span class="fn">hoyde</span>(<span class="num">2</span>))   <span class="com"># → 20</span>
+<span class="fn">print</span>(<span class="fn">hoyde</span>(<span class="num">4</span>))   <span class="com"># → 0</span></pre>
+    </article>
+
+    <article class="card">
+      <header><h3>Finn bunnpunkt med små skritt</h3><span class="badge badge-del1">Del 2</span></header>
+      <p>Klassisk eksamensoppgave: bruk en løkke til å finne bunnpunktet til $f(x) = x^2 - 4x + 1$ <em>uten å derivere</em>.</p>
+      <pre class="code-block"><span class="kw">def</span> <span class="fn">f</span>(x):
+    <span class="kw">return</span> x**<span class="num">2</span> - <span class="num">4</span>*x + <span class="num">1</span>
+
+<span class="kw">x</span> = -<span class="num">10</span>            <span class="com"># startverdi til venstre for bunnpunktet</span>
+<span class="kw">delta</span> = <span class="num">0.001</span>      <span class="com"># liten økning</span>
+
+<span class="com"># Gå til høyre så lenge f fortsatt synker</span>
+<span class="kw">while</span> <span class="fn">f</span>(x + delta) &lt; <span class="fn">f</span>(x):
+    x = x + delta
+
+<span class="fn">print</span>(<span class="str">f"Bunnpunkt: x = &#123;x:.3f&#125;, y = &#123;</span><span class="fn">f</span><span class="str">(x):.3f&#125;"</span>)
+<span class="com"># → Bunnpunkt: x = 2.000, y = -3.000</span></pre>
+      <div class="example"><strong>Idé:</strong> Når $f(x+\delta)$ <em>ikke lenger</em> er mindre enn $f(x)$, har vi passert bunnpunktet. Mindre $\delta$ = mer nøyaktig svar, men tregere.</div>
+      <div class="warn">For toppunkt: snu ulikheten til <code>f(x + delta) &gt; f(x)</code>.</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Halveringsmetoden — finn nullpunkt</h3><span class="badge badge-del1">Del 2</span></header>
+      <p>Bruker <strong>nullpunktsetningen</strong>: hvis $f(a)$ og $f(b)$ har motsatt fortegn, ligger nullpunktet mellom dem. Vi halverer intervallet om og om igjen.</p>
+      <pre class="code-block"><span class="kw">def</span> <span class="fn">f</span>(x):
+    <span class="kw">return</span> x**<span class="num">3</span> - <span class="num">2</span>*x - <span class="num">5</span>
+
+<span class="kw">a</span> = <span class="num">1</span>      <span class="com"># f(1) = -6  (negativ)</span>
+<span class="kw">b</span> = <span class="num">3</span>      <span class="com"># f(3) = 16  (positiv)</span>
+
+<span class="kw">while</span> b - a &gt; <span class="num">0.001</span>:
+    m = (a + b) / <span class="num">2</span>
+    <span class="kw">if</span> <span class="fn">f</span>(m) * <span class="fn">f</span>(a) &lt; <span class="num">0</span>:
+        b = m            <span class="com"># nullpunkt i venstre halvdel</span>
+    <span class="kw">else</span>:
+        a = m            <span class="com"># nullpunkt i høyre halvdel</span>
+
+<span class="fn">print</span>(<span class="str">f"Nullpunkt: x ≈ &#123;(a+b)/2:.3f&#125;"</span>)
+<span class="com"># → Nullpunkt: x ≈ 2.095</span></pre>
+      <div class="example"><strong>Krav:</strong> Du må vite at $f(a)$ og $f(b)$ har <em>motsatt fortegn</em> før du starter. Sjekk dette først.</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Geometrisk rekke</h3></header>
+      <p>Sum av 10 ledd, $a = 2$, $k = 3$.</p>
+      <pre class="code-block"><span class="kw">a</span> = <span class="num">2</span>
+<span class="kw">k</span> = <span class="num">3</span>
+<span class="kw">s</span> = <span class="num">0</span>
+<span class="kw">ledd</span> = a
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">10</span>):
+    s = s + ledd
+    ledd = ledd * k
+<span class="fn">print</span>(s)    <span class="com"># → 59048</span></pre>
+    </article>
+
+    <article class="card">
+      <header><h3>Figurmønster</h3></header>
+      <p>Figur $n$ har $2n + 1$ prikker. Skriv ut figur 1 til 10.</p>
+      <pre class="code-block"><span class="kw">for</span> n <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, <span class="num">11</span>):
+    prikker = <span class="num">2</span>*n + <span class="num">1</span>
+    <span class="fn">print</span>(<span class="str">"Figur"</span>, n, <span class="str">":"</span>, prikker)</pre>
+    </article>
+
+    <article class="card">
+      <header><h3>Lister og f-string</h3></header>
+      <p>Pen utskrift med variabler i.</p>
+      <pre class="code-block"><span class="kw">tider</span> = [<span class="num">0</span>, <span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>, <span class="num">4</span>]
+<span class="kw">for</span> t <span class="kw">in</span> tider:
+    h = -<span class="num">5</span>*t**<span class="num">2</span> + <span class="num">20</span>*t
+    <span class="fn">print</span>(<span class="str">f"Etter &#123;t&#125; s: &#123;h&#125; m"</span>)</pre>
+      <div class="example"><code>f"&#123;x:.2f&#125;"</code> = avrund til 2 desimaler.</div>
+    </article>
+
+    <article class="card card-warn">
+      <header><h3>Vanligste feil</h3></header>
+      <ul class="cmpct">
+        <li>Glemt kolon (<code>:</code>) etter <code>for</code>, <code>if</code>, <code>def</code>, <code>while</code></li>
+        <li>Feil innrykk (Python er strengt!)</li>
+        <li><code>=</code> (tildeling) vs. <code>==</code> (sammenligning)</li>
+        <li>Glemt å endre variabel i <code>while</code> → uendelig løkke</li>
+        <li>Skriv <code>2*x</code>, ikke <code>2x</code></li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <header><h3>Tilpasse et program</h3></header>
+      <p>På eksamen får du ofte ferdig kode. Strategi:</p>
+      <ol class="cmpct">
+        <li>Les linje for linje, skriv hva hver linje gjør på norsk</li>
+        <li>Finn hva som må endres (start, betingelse, regel)</li>
+        <li>Bytt ut minst mulig</li>
+        <li>Test med en liten verdi du kan regne i hodet</li>
+        <li>Skriv en setning på norsk om <em>hva</em> programmet gjør</li>
+      </ol>
+    </article>
+
+  </div>
+</details>
+
+<!-- ================ GEOGEBRA ================ -->
+<details class="section section-geogebra" open id="geogebra">
+  <summary><h2>GeoGebra — kommando-oppslag</h2><span class="fold-hint">▾</span></summary>
+  <p class="quiz-intro">Skriv kommandoer i CAS-feltet (linjen merket <code>fx</code> eller ÷). Bruk <code>:=</code> for å definere funksjon, <code>=</code> i likninger.</p>
+  <div class="card-grid">
+
+    <article class="card">
+      <header><h3>Definere funksjoner</h3><span class="badge badge-del1">Del 2</span></header>
+      <pre class="gb-block"><span class="cmd">f(x) := x^2 - 5x + 6</span>
+<span class="cmd">g(x) := 2*1.05^x</span>
+<span class="cmd">f(3)</span>           <span class="com"># regne ut f(3)</span>
+<span class="res">→ 0</span></pre>
+      <div class="warn">Bruk <code>:=</code> ved definisjon, ellers blir det bare en likning.</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Løse likninger</h3></header>
+      <pre class="gb-block"><span class="cmd">Løs(x^2 - 5x + 6 = 0, x)</span>
+<span class="res">→ x = 2, x = 3</span>
+
+<span class="cmd">NLøs(exp(x) = 5x, x = 0)</span>
+<span class="res">→ x ≈ 0,259</span></pre>
+      <div class="example"><strong>Løs</strong> = eksakt. <strong>NLøs</strong> = numerisk (når Løs ikke får til).</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Likningssett</h3></header>
+      <pre class="gb-block"><span class="cmd">Løs({2x + 3y = 12, 4x - 3y = 6}, {x, y})</span>
+<span class="res">→ {x = 3, y = 2}</span></pre>
+      <div class="warn">Husk krøllparenteser <code>{ }</code> rundt både likninger og variabel-listen.</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Faktorisere og forenkle</h3></header>
+      <pre class="gb-block"><span class="cmd">Faktoriser(x^2 - 5x + 6)</span>
+<span class="res">→ (x - 2)(x - 3)</span>
+
+<span class="cmd">Forenkle((x^2 - 9) / (x + 3))</span>
+<span class="res">→ x - 3</span></pre>
+    </article>
+
+    <article class="card">
+      <header><h3>Nullpunkt og skjæring</h3><span class="badge badge-del1">Del 2</span></header>
+      <pre class="gb-block"><span class="cmd">Nullpunkt(f)</span>
+<span class="res">→ alle nullpunkter til f</span>
+
+<span class="cmd">Skjæring(f, g)</span>
+<span class="res">→ punkter der f(x) = g(x)</span></pre>
+    </article>
+
+    <article class="card">
+      <header><h3>Topp- og bunnpunkt</h3><span class="badge badge-del1">Del 2</span></header>
+      <pre class="gb-block"><span class="cmd">Ekstremalpunkt(f)</span>
+<span class="res">→ topp- og bunnpunkter</span>
+
+<span class="cmd">Ekstremalpunkt(f, 0, 10)</span>
+<span class="res">→ kun i intervallet [0, 10]</span></pre>
+      <div class="example">Hvis Ekstremalpunkt feiler: <code>Løs(f'(x) = 0, x)</code>.</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Derivasjon</h3></header>
+      <pre class="gb-block"><span class="cmd">f'(x)</span>           <span class="com"># den deriverte</span>
+<span class="cmd">f'(2)</span>           <span class="com"># stigning i x = 2</span>
+<span class="cmd">Derivert(f)</span>    <span class="com"># samme som f'(x)</span></pre>
+    </article>
+
+    <article class="card">
+      <header><h3>Tangent</h3></header>
+      <pre class="gb-block"><span class="cmd">Tangent(2, f)</span>
+<span class="res">→ likningen til tangenten i x = 2</span></pre>
+      <div class="warn">Skriv <em>x-verdien først</em>, så funksjonen.</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Regresjon</h3><span class="badge badge-del1">Del 2</span></header>
+      <pre class="gb-block"><span class="cmd">L = {(1,5), (2,9), (3,13), (4,16), (5,20)}</span>
+<span class="cmd">f(x) := RegLin(L)</span>
+<span class="res">→ f(x) = 3.7x + 1.5</span></pre>
+      <ul class="cmpct">
+        <li><code>RegLin</code> — lineær</li>
+        <li><code>RegPoly2</code> — andregrad</li>
+        <li><code>RegEksp</code> — eksponentiell</li>
+        <li><code>RegPot</code> — potens</li>
+      </ul>
+      <div class="warn">Bruk aldri årstall direkte! Sett startår = 0.</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Trigonometri</h3></header>
+      <pre class="gb-block"><span class="cmd">sin(60°)</span>           <span class="res">→ √3/2</span>
+<span class="cmd">arcsin(0.5)</span>        <span class="res">→ 30°</span>
+<span class="cmd">Vinkel(B, A, C)</span>    <span class="com"># vinkel i punkt A</span>
+<span class="cmd">Avstand(A, B)</span>      <span class="com"># lengde AB</span></pre>
+      <div class="warn">Glemmer du <code>°</code>, regner GeoGebra i radianer (helt feil svar!).</div>
+    </article>
+
+    <article class="card">
+      <header><h3>Asymptoter</h3></header>
+      <pre class="gb-block"><span class="cmd">Asymptote(f)</span>
+<span class="res">→ alle asymptotene til f</span></pre>
+      <div class="example"><strong>Eks:</strong> $f(x) = (3x+1)/(x-2)$ → asymptoter $x = 2$ og $y = 3$.</div>
+    </article>
+
+    <article class="card card-warn">
+      <header><h3>Vanlige CAS-feil</h3></header>
+      <ul class="cmpct">
+        <li>Glemt <code>:=</code> ved definisjon</li>
+        <li>Glemt <code>°</code> for vinkler</li>
+        <li>Glemt gangetegn: skriv <code>2*x</code> eller <code>2x</code>, ikke <code>2 x</code></li>
+        <li>Glemt variabel i Løs: <code>Løs(x+y=4, {x,y})</code></li>
+        <li>Glemt krøllparenteser i likningssett</li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <header><h3>Hva sensor vil se</h3></header>
+      <ul class="cmpct">
+        <li>Skriv hvilken kommando du brukte: <em>«Jeg brukte <strong>Løs</strong> i CAS»</em></li>
+        <li>Ta med skjermbilde</li>
+        <li>Tolk svaret i kontekst <em>med enhet</em></li>
+        <li>Oppgi gyldighetsområde</li>
+      </ul>
+    </article>
+
+  </div>
+</details>
+
+</main>
+
+<footer>
+  <p>1T Cheat Sheet · Del fritt · 2026</p>
+</footer>
+
+<!-- KaTeX JS -->
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="script.js"></script>
+</body>
+</html>

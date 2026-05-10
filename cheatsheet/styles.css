@@ -1,0 +1,704 @@
+/* =====================================================
+   1T CHEAT SHEET — Stylesheet
+   Lyse/mørke variabler, responsivt grid, fargekodede
+   seksjoner, print-vennlig.
+   ===================================================== */
+
+:root {
+  --bg: #f8fafc;
+  --bg-alt: #ffffff;
+  --text: #0f172a;
+  --text-soft: #475569;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --shadow: 0 1px 3px rgba(15,23,42,0.06);
+  --shadow-strong: 0 4px 14px rgba(15,23,42,0.10);
+  --focus: #2563eb;
+
+  /* Tema-farger per seksjon */
+  --algebra: #2563eb;
+  --algebra-soft: #eff6ff;
+  --likninger: #dc2626;
+  --likninger-soft: #fef2f2;
+  --funksjoner: #16a34a;
+  --funksjoner-soft: #f0fdf4;
+  --trigonometri: #9333ea;
+  --trigonometri-soft: #faf5ff;
+  --geometri: #0891b2;
+  --geometri-soft: #ecfeff;
+  --eksamensfeller: #d97706;
+  --eksamensfeller-soft: #fffbeb;
+  --quiz: #ea580c;
+  --quiz-soft: #fff7ed;
+  --siste-liten: #7c3aed;
+  --siste-liten-soft: #f5f3ff;
+  --derivasjon: #be185d;
+  --derivasjon-soft: #fdf2f8;
+  --prosent: #65a30d;
+  --prosent-soft: #f7fee7;
+  --python: #1e3a8a;
+  --python-soft: #eef2ff;
+  --geogebra: #0d9488;
+  --geogebra-soft: #f0fdfa;
+
+  --warn-bg: #fef3c7;
+  --warn-border: #fde68a;
+  --warn-text: #92400e;
+
+  --del1-bg: #fee2e2;
+  --del1-text: #991b1b;
+  --del1-border: #fecaca;
+}
+
+[data-theme="dark"] {
+  --bg: #0f172a;
+  --bg-alt: #1e293b;
+  --text: #f1f5f9;
+  --text-soft: #cbd5e1;
+  --text-muted: #94a3b8;
+  --border: #334155;
+  --shadow: 0 1px 3px rgba(0,0,0,0.3);
+  --shadow-strong: 0 4px 14px rgba(0,0,0,0.4);
+
+  --algebra-soft: #1e293b;
+  --likninger-soft: #1e293b;
+  --funksjoner-soft: #1e293b;
+  --trigonometri-soft: #1e293b;
+  --geometri-soft: #1e293b;
+  --eksamensfeller-soft: #1e293b;
+  --quiz-soft: #1e293b;
+  --siste-liten-soft: #1e293b;
+  --derivasjon-soft: #1e293b;
+  --prosent-soft: #1e293b;
+  --python-soft: #0f172a;
+  --geogebra-soft: #1e293b;
+
+  --warn-bg: #422006;
+  --warn-border: #92400e;
+  --warn-text: #fde68a;
+
+  --del1-bg: #450a0a;
+  --del1-text: #fecaca;
+  --del1-border: #7f1d1d;
+}
+
+/* ============ Reset/grunn ============ */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+  font-size: 16px;
+  transition: background 0.2s, color 0.2s;
+}
+
+/* ============ Header ============ */
+
+.page-header {
+  background: var(--bg-alt);
+  border-bottom: 1px solid var(--border);
+  padding: 1.2rem 1rem;
+  box-shadow: var(--shadow);
+}
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+}
+.back-link {
+  display: inline-block;
+  color: var(--text-soft);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  padding: 0.25rem 0.55rem;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  transition: all 0.15s;
+}
+.back-link:hover {
+  color: var(--algebra);
+  background: var(--algebra-soft);
+  border-color: var(--algebra);
+}
+.page-header h1 {
+  font-size: 1.8rem;
+  color: var(--algebra);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.page-header .tagline {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-top: 0.15rem;
+}
+.header-actions {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.btn-action {
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 0.45rem 0.8rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-weight: 500;
+}
+.btn-action:hover {
+  border-color: var(--focus);
+  background: var(--algebra-soft);
+}
+#themeToggle {
+  width: 2.4rem;
+  padding: 0.45rem 0;
+  text-align: center;
+  font-size: 1.1rem;
+}
+.icon-light { display: none; }
+.icon-dark { display: inline; }
+[data-theme="dark"] .icon-light { display: inline; }
+[data-theme="dark"] .icon-dark { display: none; }
+
+@media (max-width: 600px) {
+  .header-actions {
+    position: static;
+    margin-top: 0.6rem;
+  }
+}
+
+/* ============ TOC ============ */
+
+.toc {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--bg-alt);
+  border-bottom: 1px solid var(--border);
+  padding: 0.6rem 1rem;
+  display: flex;
+  gap: 0.4rem;
+  overflow-x: auto;
+  white-space: nowrap;
+  box-shadow: var(--shadow);
+  -webkit-overflow-scrolling: touch;
+}
+.toc-link {
+  flex-shrink: 0;
+  padding: 0.4rem 0.9rem;
+  border-radius: 20px;
+  background: var(--bg);
+  color: var(--text-soft);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  transition: all 0.15s;
+}
+.toc-link:hover {
+  background: var(--algebra);
+  color: #fff;
+  border-color: var(--algebra);
+}
+.toc-link[data-section="algebra"]:hover { background: var(--algebra); border-color: var(--algebra); }
+.toc-link[data-section="likninger"]:hover { background: var(--likninger); border-color: var(--likninger); }
+.toc-link[data-section="funksjoner"]:hover { background: var(--funksjoner); border-color: var(--funksjoner); }
+.toc-link[data-section="trigonometri"]:hover { background: var(--trigonometri); border-color: var(--trigonometri); }
+.toc-link[data-section="geometri"]:hover { background: var(--geometri); border-color: var(--geometri); }
+.toc-link[data-section="eksamensfeller"]:hover { background: var(--eksamensfeller); border-color: var(--eksamensfeller); }
+.toc-link[data-section="quiz"]:hover { background: var(--quiz); border-color: var(--quiz); }
+.toc-link[data-section="siste-liten"]:hover { background: var(--siste-liten); border-color: var(--siste-liten); }
+.toc-link[data-section="derivasjon"]:hover { background: var(--derivasjon); border-color: var(--derivasjon); }
+.toc-link[data-section="prosent"]:hover { background: var(--prosent); border-color: var(--prosent); }
+.toc-link[data-section="python"]:hover { background: var(--python); border-color: var(--python); }
+.toc-link[data-section="geogebra"]:hover { background: var(--geogebra); border-color: var(--geogebra); }
+
+/* ============ Søk ============ */
+
+.search-bar {
+  max-width: 1100px;
+  margin: 1rem auto 0;
+  padding: 0 1rem;
+  position: relative;
+}
+.search-bar input {
+  width: 100%;
+  padding: 0.7rem 2.5rem 0.7rem 1rem;
+  font-size: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-alt);
+  color: var(--text);
+  font-family: inherit;
+}
+.search-bar input:focus {
+  outline: none;
+  border-color: var(--focus);
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+}
+.btn-clear {
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  font-size: 1rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0.3rem 0.5rem;
+  display: none;
+}
+.search-bar.has-text .btn-clear { display: block; }
+
+/* ============ Container ============ */
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* ============ Sections ============ */
+
+.section {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.section summary {
+  cursor: pointer;
+  padding: 1rem 1.5rem;
+  background: var(--bg-alt);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+  user-select: none;
+  border-left: 5px solid var(--border);
+  transition: background 0.15s;
+}
+.section summary::-webkit-details-marker { display: none; }
+.section summary::marker { display: none; }
+.section summary:hover { background: var(--bg); }
+
+.section summary h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.fold-hint {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  transition: transform 0.2s;
+}
+.section[open] .fold-hint { transform: rotate(180deg); }
+
+/* Fargekoding per seksjon */
+.section-algebra summary { border-left-color: var(--algebra); }
+.section-algebra summary h2 { color: var(--algebra); }
+.section-likninger summary { border-left-color: var(--likninger); }
+.section-likninger summary h2 { color: var(--likninger); }
+.section-funksjoner summary { border-left-color: var(--funksjoner); }
+.section-funksjoner summary h2 { color: var(--funksjoner); }
+.section-trigonometri summary { border-left-color: var(--trigonometri); }
+.section-trigonometri summary h2 { color: var(--trigonometri); }
+.section-geometri summary { border-left-color: var(--geometri); }
+.section-geometri summary h2 { color: var(--geometri); }
+.section-eksamensfeller summary { border-left-color: var(--eksamensfeller); }
+.section-eksamensfeller summary h2 { color: var(--eksamensfeller); }
+.section-quiz summary { border-left-color: var(--quiz); }
+.section-quiz summary h2 { color: var(--quiz); }
+.section-siste-liten summary { border-left-color: var(--siste-liten); }
+.section-siste-liten summary h2 { color: var(--siste-liten); }
+.section-derivasjon summary { border-left-color: var(--derivasjon); }
+.section-derivasjon summary h2 { color: var(--derivasjon); }
+.section-prosent summary { border-left-color: var(--prosent); }
+.section-prosent summary h2 { color: var(--prosent); }
+.section-python summary { border-left-color: var(--python); }
+.section-python summary h2 { color: var(--python); }
+.section-geogebra summary { border-left-color: var(--geogebra); }
+.section-geogebra summary h2 { color: var(--geogebra); }
+
+/* ============ Kort-grid ============ */
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+  padding: 1rem 1.5rem 1.5rem;
+}
+
+@media (max-width: 600px) {
+  .card-grid {
+    grid-template-columns: 1fr;
+    padding: 0.8rem 1rem 1rem;
+  }
+}
+
+.card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  transition: transform 0.15s, box-shadow 0.15s;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+.card:hover {
+  box-shadow: var(--shadow-strong);
+  transform: translateY(-1px);
+}
+.card.card-wide {
+  grid-column: 1 / -1;
+}
+.card header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.card h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.card p { color: var(--text-soft); font-size: 0.95rem; }
+.card ul, .card ol {
+  padding-left: 1.2rem;
+  font-size: 0.95rem;
+  color: var(--text-soft);
+}
+.card ul.cmpct li, .card ol.cmpct li {
+  padding: 0.15rem 0;
+  line-height: 1.5;
+}
+
+/* Fargekant per seksjon */
+.section-algebra .card { border-top: 3px solid var(--algebra); }
+.section-likninger .card { border-top: 3px solid var(--likninger); }
+.section-funksjoner .card { border-top: 3px solid var(--funksjoner); }
+.section-trigonometri .card { border-top: 3px solid var(--trigonometri); }
+.section-geometri .card { border-top: 3px solid var(--geometri); }
+.section-eksamensfeller .card { border-top: 3px solid var(--eksamensfeller); }
+.section-quiz .card { border-top: 3px solid var(--quiz); }
+.section-siste-liten .card { border-top: 3px solid var(--siste-liten); }
+.section-derivasjon .card { border-top: 3px solid var(--derivasjon); }
+.section-prosent .card { border-top: 3px solid var(--prosent); }
+.section-python .card { border-top: 3px solid var(--python); }
+.section-geogebra .card { border-top: 3px solid var(--geogebra); }
+
+/* ============ Formel-bokser ============ */
+
+.formula {
+  background: var(--algebra-soft);
+  border-left: 3px solid var(--algebra);
+  padding: 0.6rem 0.9rem;
+  border-radius: 0 8px 8px 0;
+  margin: 0.2rem 0;
+  font-size: 1.05rem;
+  overflow-x: auto;
+}
+.section-likninger .formula { background: var(--likninger-soft); border-left-color: var(--likninger); }
+.section-funksjoner .formula { background: var(--funksjoner-soft); border-left-color: var(--funksjoner); }
+.section-trigonometri .formula { background: var(--trigonometri-soft); border-left-color: var(--trigonometri); }
+.section-geometri .formula { background: var(--geometri-soft); border-left-color: var(--geometri); }
+.section-derivasjon .formula { background: var(--derivasjon-soft); border-left-color: var(--derivasjon); }
+.section-prosent .formula { background: var(--prosent-soft); border-left-color: var(--prosent); }
+.section-python .formula { background: var(--python-soft); border-left-color: var(--python); }
+.section-geogebra .formula { background: var(--geogebra-soft); border-left-color: var(--geogebra); }
+
+/* ============ Eksempel-bokser ============ */
+
+.example {
+  background: var(--bg-alt);
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  padding: 0.55rem 0.8rem;
+  font-size: 0.92rem;
+  color: var(--text-soft);
+}
+.example strong {
+  color: var(--text);
+}
+
+/* ============ Advarsel-bokser ============ */
+
+.warn {
+  background: var(--warn-bg);
+  border: 1px solid var(--warn-border);
+  color: var(--warn-text);
+  border-radius: 8px;
+  padding: 0.55rem 0.8rem;
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+/* ============ Badges ============ */
+
+.badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.15rem 0.55rem;
+  border-radius: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.badge-del1 {
+  background: var(--del1-bg);
+  color: var(--del1-text);
+  border: 1px solid var(--del1-border);
+}
+
+/* ============ Trigonometri-tabell ============ */
+
+.trigtable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+  margin: 0.3rem 0;
+}
+.trigtable th, .trigtable td {
+  padding: 0.5rem 0.4rem;
+  border: 1px solid var(--border);
+  text-align: center;
+}
+.trigtable thead th {
+  background: var(--trigonometri);
+  color: #fff;
+  font-weight: 600;
+}
+.trigtable tbody th {
+  background: var(--trigonometri-soft);
+  color: var(--trigonometri);
+  font-weight: 700;
+}
+.trigtable tbody tr:nth-child(even) td { background: var(--bg-alt); }
+
+/* ============ Eksamensfeller-kort ============ */
+
+.card-warn {
+  background: var(--eksamensfeller-soft);
+}
+[data-theme="dark"] .card-warn { background: var(--bg); }
+
+/* ============ Siste liten ============ */
+
+.card-final {
+  background: var(--siste-liten-soft);
+}
+[data-theme="dark"] .card-final { background: var(--bg); }
+.card-final h3 { color: var(--siste-liten); }
+
+/* ============ Quiz ============ */
+
+.quiz-intro {
+  padding: 0 1.5rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+.quiz-list {
+  list-style: none;
+  padding: 1rem 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 0.8rem;
+}
+.quiz-item {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--quiz);
+  border-radius: 10px;
+  padding: 0.8rem 1rem;
+  counter-increment: quizn;
+  position: relative;
+}
+.quiz-item::before {
+  content: counter(quizn) ".";
+  position: absolute;
+  top: 0.7rem;
+  left: -0.5rem;
+  background: var(--quiz);
+  color: #fff;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+  box-shadow: var(--shadow);
+}
+.quiz-list { counter-reset: quizn; }
+
+.quiz-q {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+.quiz-a {
+  margin-top: 0.5rem;
+  background: var(--funksjoner-soft);
+  border-left: 3px solid var(--funksjoner);
+  padding: 0.5rem 0.7rem;
+  border-radius: 0 6px 6px 0;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+[data-theme="dark"] .quiz-a {
+  background: rgba(22,163,74,0.1);
+}
+.quiz-a.hidden { display: none; }
+
+.btn-show {
+  background: var(--quiz);
+  color: #fff;
+  border: none;
+  padding: 0.4rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  transition: opacity 0.15s;
+}
+.btn-show:hover { opacity: 0.85; }
+
+.quiz-controls {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0 1.5rem 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* ============ Footer ============ */
+
+footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* ============ Python-kode ============ */
+
+.code-block {
+  background: #0f172a;
+  color: #e2e8f0;
+  border-radius: 8px;
+  padding: 0.7rem 0.9rem;
+  margin: 0.4rem 0;
+  font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  overflow-x: auto;
+  white-space: pre;
+  border-left: 3px solid var(--python);
+}
+[data-theme="dark"] .code-block {
+  background: #020617;
+  border-color: var(--python);
+}
+.code-block .kw { color: #f472b6; }
+.code-block .str { color: #fde68a; }
+.code-block .num { color: #fdba74; }
+.code-block .com { color: #94a3b8; font-style: italic; }
+.code-block .fn { color: #7dd3fc; }
+.code-block .op { color: #f87171; }
+
+.gb-block {
+  background: #1e293b;
+  color: #e2e8f0;
+  border-radius: 8px;
+  padding: 0.6rem 0.85rem;
+  margin: 0.4rem 0;
+  font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  overflow-x: auto;
+  white-space: pre;
+  border-left: 3px solid var(--geogebra);
+}
+[data-theme="dark"] .gb-block {
+  background: #020617;
+}
+.gb-block .com { color: #94a3b8; font-style: italic; }
+.gb-block .res { color: #5eead4; }
+.gb-block .cmd { color: #fbbf24; }
+
+/* ============ Skjult ved søk ============ */
+
+.card.hidden-search,
+.section.hidden-search { display: none; }
+
+/* ============ Print ============ */
+
+@media print {
+  body {
+    background: #fff;
+    color: #000;
+    font-size: 11pt;
+  }
+  .page-header,
+  .toc,
+  .search-bar,
+  .header-actions,
+  .back-link,
+  .quiz-controls,
+  .btn-show,
+  .fold-hint,
+  footer {
+    display: none !important;
+  }
+  .container {
+    max-width: 100%;
+    padding: 0;
+  }
+  .section {
+    box-shadow: none;
+    border: 1px solid #ccc;
+    page-break-inside: avoid;
+    margin-bottom: 0.6rem;
+  }
+  .section[open] .card-grid { display: grid !important; }
+  .card {
+    page-break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.5rem !important;
+  }
+  .formula, .example, .warn {
+    border: 1px solid #ccc !important;
+    background: #f8f8f8 !important;
+    color: #000 !important;
+  }
+  .quiz-a { display: block !important; }
+  details { display: block; }
+  details > summary { list-style: none; }
+}
