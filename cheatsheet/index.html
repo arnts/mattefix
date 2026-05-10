@@ -87,6 +87,10 @@
       <div class="formula">$$\frac{a}{b} : \frac{c}{d} = \frac{a}{b} \cdot \frac{d}{c} = \frac{ad}{bc}$$</div>
       <div class="formula">$$\frac{a}{c} + \frac{b}{c} = \frac{a+b}{c}$$</div>
       <div class="formula">$$\frac{a}{b} + \frac{c}{d} = \frac{ad+bc}{bd}$$</div>
+      <p><strong>Forkorting:</strong> stryk felles faktor i teller og nevner.</p>
+      <div class="formula">$$\frac{k \cdot a}{k \cdot b} = \frac{a}{b}$$</div>
+      <div class="example"><strong>Eks:</strong> $\dfrac{x^2 - 9}{x + 3} = \dfrac{(x+3)(x-3)}{x+3} = x - 3$</div>
+      <div class="warn"><strong>IKKE:</strong> $\dfrac{a+b}{a} = 1 + b$. Du kan bare forkorte felles <em>faktor</em>, ikke ledd som er adderte.</div>
     </article>
 
     <article class="card">
@@ -112,6 +116,7 @@
         <li>$\sqrt{a} \cdot \sqrt{a} = a$</li>
       </ul>
       <div class="example"><strong>Rasjonaliser:</strong> $\dfrac{1}{\sqrt{3}} = \dfrac{\sqrt{3}}{3}$</div>
+      <div class="warn"><strong>IKKE:</strong> $\sqrt{a} + \sqrt{b} \neq \sqrt{a + b}$. <br>Sjekk: $\sqrt{9} + \sqrt{16} = 3 + 4 = 7$, men $\sqrt{25} = 5$.</div>
     </article>
 
     <article class="card">
@@ -162,16 +167,17 @@
       <header><h3>ABC-formelen</h3><span class="badge badge-del1">Del 1</span></header>
       <div class="formula">$$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$</div>
       <div class="example"><strong>Eks:</strong> $x^2 - 5x + 6 = 0 \Rightarrow x = 2$ eller $x = 3$</div>
-      <div class="warn">Glem ikke parentes om $-b$ når $b$ er negativ.</div>
+      <div class="warn"><strong>Pass på når $b$ er negativ:</strong><br>
+      $b = -5 \Rightarrow -b = +5$ &nbsp; og &nbsp; $b^2 = (-5)^2 = +25$ <em>(ikke $-25$)</em>.</div>
     </article>
 
     <article class="card">
       <header><h3>Diskriminant</h3><span class="badge badge-del1">Del 1</span></header>
       <div class="formula">$$D = b^2 - 4ac$$</div>
       <ul class="cmpct">
-        <li>$D > 0$: <strong>2 løsninger</strong> (graf krysser x-aksen)</li>
-        <li>$D = 0$: <strong>1 løsning</strong> (tangerer x-aksen)</li>
-        <li>$D < 0$: <strong>ingen reelle</strong> (slipper over)</li>
+        <li>$D > 0$: <strong>to ulike løsninger</strong> (graf krysser x-aksen)</li>
+        <li>$D = 0$: <strong>én dobbeltløsning</strong> (tangerer x-aksen)</li>
+        <li>$D < 0$: <strong>ingen reelle løsninger</strong> (slipper over)</li>
       </ul>
     </article>
 
@@ -254,8 +260,9 @@
       <ul class="cmpct">
         <li>Grad $n$ → opptil $n$ nullpunkter</li>
         <li>Faktorisert: $a(x-r_1)(x-r_2)\cdots$</li>
-        <li>Konstantleddet = produkt av nullpunkter (med fortegn)</li>
+        <li>Heltallsnullpunkter er <em>delere av konstantleddet</em> $a_0$</li>
       </ul>
+      <div class="example"><strong>Eks:</strong> $f(x) = x^3 - 4x^2 + x + 6$. Konstantledd $6$ → test $\pm 1, \pm 2, \pm 3, \pm 6$.</div>
     </article>
 
     <article class="card">
@@ -276,9 +283,9 @@
         <li>$a$ = startverdi, $f(0) = a$</li>
         <li>$b$ = vekstfaktor</li>
         <li>$b > 1$: vekst &nbsp; $0 < b < 1$: nedgang</li>
-        <li>$b - 1$ = prosentvis endring per periode</li>
+        <li>Prosentvis endring per periode: $(b - 1) \cdot 100\%$</li>
       </ul>
-      <div class="example"><strong>Doblingstid:</strong> $b^x = 2 \Rightarrow x = \dfrac{\log 2}{\log b}$</div>
+      <div class="example"><strong>Eks:</strong> $b = 1{,}05 \Rightarrow 5\%$ økning per periode.</div>
     </article>
 
     <article class="card">
@@ -322,18 +329,19 @@
       <ul class="cmpct">
         <li>Brøk: $x$ der nevner $\neq 0$</li>
         <li>Kvadratrot: $\sqrt{f(x)}$ krever $f(x) \geq 0$</li>
-        <li>Logaritme: $\ln(f(x))$ krever $f(x) > 0$</li>
-        <li>Polynom/eksp: alle reelle tall</li>
+        <li>Polynom og eksponentialfunksjon: alle reelle tall</li>
+        <li>Praktisk: tid $\geq 0$, lengde $> 0$</li>
       </ul>
     </article>
 
     <article class="card">
       <header><h3>Asymptoter</h3></header>
       <ul class="cmpct">
-        <li><strong>Loddrett:</strong> $x = a$ der nevneren = 0</li>
+        <li><strong>Loddrett:</strong> $x = a$ der $Q(a) = 0$ <em>og</em> $P(a) \neq 0$</li>
         <li><strong>Vannrett:</strong> $y = $ grenseverdien når $x \to \pm\infty$</li>
         <li>Sjekk grader: lavere teller → $y = 0$; lik grad → forhold mellom ledende koeffisienter</li>
       </ul>
+      <div class="warn">Hvis både $P(a) = 0$ og $Q(a) = 0$ → <strong>hull</strong> i grafen, ikke asymptote.</div>
     </article>
 
   </div>
@@ -447,9 +455,18 @@
       <ul class="cmpct">
         <li>Punkt på sirkel: $(\cos u, \sin u)$</li>
         <li>$\sin^2 u + \cos^2 u = 1$ (Pytagoras)</li>
-        <li>$\sin(180° - u) = \sin u$</li>
-        <li>$\cos(180° - u) = -\cos u$</li>
       </ul>
+    </article>
+
+    <article class="card">
+      <header><h3>Supplementvinkler</h3><span class="badge badge-del1">Del 1</span></header>
+      <p>To vinkler som summerer til $180°$ kalles <strong>supplementvinkler</strong>:</p>
+      <div class="formula">$$u + v = 180° \;\Leftrightarrow\; v = 180° - u$$</div>
+      <p>Sammenhenger:</p>
+      <div class="formula">$$\sin(180° - u) = \sin u$$</div>
+      <div class="formula">$$\cos(180° - u) = -\cos u$$</div>
+      <div class="example"><strong>Eks:</strong> $\sin(150°) = \sin(30°) = \tfrac{1}{2}$, men $\cos(150°) = -\cos(30°) = -\tfrac{\sqrt{3}}{2}$.</div>
+      <div class="warn">Sinus har <em>samme</em> verdi for supplementvinkler — derfor kan sinussetningen gi <strong>to</strong> løsninger ved SSV.</div>
     </article>
 
     <article class="card">
@@ -711,6 +728,20 @@
       <header><h3>Avrunding for tidlig</h3></header>
       <p>La kalkulatoren beholde alle desimaler underveis. Rund av <strong>kun til slutt</strong>.</p>
       <p>Eks: bruk $\sin^{-1}(7\sin 80° / 10)$ direkte, ikke avrundet 0,69.</p>
+    </article>
+
+    <article class="card card-warn">
+      <header><h3>Glemt $\pm$ ved kvadratrot</h3></header>
+      <p>Når du tar kvadratrot på begge sider av en likning, må du ha med begge fortegn:</p>
+      <div class="formula">$$x^2 = 9 \;\Rightarrow\; x = \pm 3$$</div>
+      <p>Bare $x = 3$ er et halvt svar.</p>
+      <div class="example">Husk også: $\sqrt{x^2} = |x|$, ikke alltid $x$.</div>
+    </article>
+
+    <article class="card card-warn">
+      <header><h3>Glemt endepunkter ved optimering</h3></header>
+      <p>Maks/min kan ligge der $f'(x) = 0$ — men også på <em>endene</em> av definisjonsmengden!</p>
+      <div class="example"><strong>Sjekkliste:</strong> 1) finn kandidatene $f'(x)=0$, 2) regn ut $f$ i kandidatene <em>og</em> i endepunktene, 3) velg største/minste verdi.</div>
     </article>
 
   </div>
@@ -1023,12 +1054,12 @@
 
 <!-- ================ GEOGEBRA ================ -->
 <details class="section section-geogebra" open id="geogebra">
-  <summary><h2>GeoGebra — kommando-oppslag</h2><span class="fold-hint">▾</span></summary>
-  <p class="quiz-intro">Skriv kommandoer i CAS-feltet (linjen merket <code>fx</code> eller ÷). Bruk <code>:=</code> for å definere funksjon, <code>=</code> i likninger.</p>
+  <summary><h2>GeoGebra — kommando-oppslag <span class="badge badge-del1" style="vertical-align:middle;font-size:0.55rem;margin-left:0.4rem;">Del 2</span></h2><span class="fold-hint">▾</span></summary>
+  <p class="quiz-intro">Hele denne seksjonen gjelder <strong>Del 2</strong>. Skriv kommandoer i CAS-feltet (linjen merket <code>fx</code> eller ÷). Bruk <code>:=</code> for å definere funksjon, <code>=</code> i likninger.</p>
   <div class="card-grid">
 
     <article class="card">
-      <header><h3>Definere funksjoner</h3><span class="badge badge-del1">Del 2</span></header>
+      <header><h3>Definere funksjoner</h3></header>
       <pre class="gb-block"><span class="cmd">f(x) := x^2 - 5x + 6</span>
 <span class="cmd">g(x) := 2*1.05^x</span>
 <span class="cmd">f(3)</span>           <span class="com"># regne ut f(3)</span>
@@ -1063,7 +1094,7 @@
     </article>
 
     <article class="card">
-      <header><h3>Nullpunkt og skjæring</h3><span class="badge badge-del1">Del 2</span></header>
+      <header><h3>Nullpunkt og skjæring</h3></header>
       <pre class="gb-block"><span class="cmd">Nullpunkt(f)</span>
 <span class="res">→ alle nullpunkter til f</span>
 
@@ -1072,7 +1103,7 @@
     </article>
 
     <article class="card">
-      <header><h3>Topp- og bunnpunkt</h3><span class="badge badge-del1">Del 2</span></header>
+      <header><h3>Topp- og bunnpunkt</h3></header>
       <pre class="gb-block"><span class="cmd">Ekstremalpunkt(f)</span>
 <span class="res">→ topp- og bunnpunkter</span>
 
@@ -1096,7 +1127,7 @@
     </article>
 
     <article class="card">
-      <header><h3>Regresjon</h3><span class="badge badge-del1">Del 2</span></header>
+      <header><h3>Regresjon</h3></header>
       <pre class="gb-block"><span class="cmd">L = {(1,5), (2,9), (3,13), (4,16), (5,20)}</span>
 <span class="cmd">f(x) := RegLin(L)</span>
 <span class="res">→ f(x) = 3.7x + 1.5</span></pre>
