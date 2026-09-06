@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prosent og modellering – 2P</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='80'>%</text></svg>">
+<script>
+  (() => {
+    const param = new URLSearchParams(window.location.search).get("clawpilotTheme");
+    const theme =
+      param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+<style>
+  :root {
+    color-scheme: light;
+    --cp-bg: #f7f4ef;
+    --cp-bg-elevated: #fcfbf8;
+    --cp-surface: #ffffff;
+    --cp-surface-soft: #f5f5f5;
+    --cp-border: #dedede;
+    --cp-border-strong: #919191;
+    --cp-text: #242424;
+    --cp-text-muted: #5c5c5c;
+    --cp-text-soft: #6f6f6f;
+    --cp-accent: #b11f4b;
+    --cp-accent-hover: #9a1a41;
+    --cp-accent-soft: rgba(177, 31, 75, 0.08);
+    --cp-accent-fg: #ffffff;
+    --cp-success: #16a34a;
+    --cp-danger: #dc2626;
+    --cp-warning: #f59e0b;
+    --cp-link: #0078d4;
+    --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+    --cp-overlay: rgba(255, 255, 255, 0.8);
+    --cp-panel: rgba(255, 255, 255, 0.86);
+    --cp-panel-strong: rgba(255, 255, 255, 0.96);
+    --cp-sheen: rgba(255, 255, 255, 0.55);
+    --cp-highlight: rgba(177, 31, 75, 0.12);
+  }
+  html[data-theme="dark"] {
+    color-scheme: dark;
+    --cp-bg: #3d3b3a;
+    --cp-bg-elevated: #343231;
+    --cp-surface: #292929;
+    --cp-surface-soft: #2e2e2e;
+    --cp-border: #474747;
+    --cp-border-strong: #5f5f5f;
+    --cp-text: #dedede;
+    --cp-text-muted: #919191;
+    --cp-text-soft: #b0b0b0;
+    --cp-accent: #fd8ea1;
+    --cp-accent-hover: #fb7b91;
+    --cp-accent-soft: rgba(253, 142, 161, 0.14);
+    --cp-accent-fg: #1a1a1a;
+    --cp-success: #4ade80;
+    --cp-danger: #f87171;
+    --cp-warning: #fbbf24;
+    --cp-link: #4da6ff;
+    --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+    --cp-overlay: rgba(41, 41, 41, 0.88);
+    --cp-panel: rgba(41, 41, 41, 0.72);
+    --cp-panel-strong: rgba(41, 41, 41, 0.96);
+    --cp-sheen: rgba(255, 255, 255, 0.04);
+    --cp-highlight: rgba(253, 142, 161, 0.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--cp-bg);
+    color: var(--cp-text);
+    font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.6;
+    padding: 2rem 1rem;
+  }
+  .container { margin: 0 auto; max-width: 960px; }
+  .home-link {
+    color: var(--cp-link);
+    display: inline-block;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-decoration: none;
+  }
+  .home-link:hover { text-decoration: underline; }
+  h1 {
+    color: var(--cp-accent);
+    font-size: 2.2rem;
+    margin-bottom: 0.3rem;
+    text-align: center;
+  }
+  .subtitle {
+    color: var(--cp-text-muted);
+    font-size: 1.05rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  .toc {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  .toc a, .quiz-btn {
+    background: var(--cp-accent);
+    border: 0;
+    border-radius: 20px;
+    color: var(--cp-accent-fg);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    padding: 0.4rem 1rem;
+    text-decoration: none;
+  }
+  .toc a:hover, .quiz-btn:hover { opacity: 0.82; }
+  .quiz-btn { background: var(--cp-warning); color: var(--cp-text); font-weight: 700; }
+  .card {
+    background: var(--cp-surface);
+    border: 1px solid var(--cp-border);
+    border-radius: 16px;
+    box-shadow: var(--cp-shadow);
+    margin-bottom: 1.5rem;
+    padding: 1.5rem 2rem;
+  }
+  .card h2 {
+    border-bottom: 2px solid var(--cp-accent);
+    color: var(--cp-accent);
+    font-size: 1.35rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+  }
+  .card h3 { font-size: 1.08rem; margin: 1rem 0 0.4rem; }
+  p { margin: 0.5rem 0; }
+  ul { padding-left: 1.3rem; }
+  li { margin: 0.3rem 0; }
+  .formula-box {
+    background: var(--cp-accent-soft);
+    border-left: 4px solid var(--cp-accent);
+    border-radius: 0 8px 8px 0;
+    font-size: 1.15rem;
+    margin: 0.8rem 0;
+    padding: 1rem 1.2rem;
+    text-align: center;
+  }
+  .formula-box.green { background: var(--cp-surface-soft); border-left-color: var(--cp-success); }
+  .formula-box.orange { background: var(--cp-surface-soft); border-left-color: var(--cp-warning); }
+  .formula-box.red { background: var(--cp-surface-soft); border-left-color: var(--cp-danger); }
+  .formula-box.purple { background: var(--cp-accent-soft); border-left-color: var(--cp-accent); }
+  .frac {
+    align-items: center;
+    display: inline-flex;
+    flex-direction: column;
+    line-height: 1.15;
+    margin: 0 0.15rem;
+    vertical-align: middle;
+  }
+  .frac-num { border-bottom: 1.5px solid currentColor; padding: 0 0.25rem 0.12rem; }
+  .frac-den { padding: 0.12rem 0.25rem 0; }
+  .note, .warning {
+    background: var(--cp-surface-soft);
+    border: 1px solid var(--cp-warning);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    margin-top: 0.8rem;
+    padding: 0.8rem 1rem;
+  }
+  .warning { background: var(--cp-surface-soft); border-color: var(--cp-danger); }
+  .memory {
+    background: var(--cp-accent-soft);
+    border: 1px solid var(--cp-accent);
+    border-radius: 10px;
+    font-weight: 650;
+    margin-top: 1rem;
+    padding: 1rem;
+    text-align: center;
+  }
+  .steps { counter-reset: step; margin: 1rem 0; }
+  .step {
+    background: var(--cp-bg-elevated);
+    border: 1px solid var(--cp-border);
+    border-radius: 8px;
+    margin-bottom: 0.6rem;
+    padding: 0.8rem 1rem 0.8rem 3.2rem;
+    position: relative;
+  }
+  .step::before {
+    align-items: center;
+    background: var(--cp-accent);
+    border-radius: 50%;
+    color: var(--cp-accent-fg);
+    content: counter(step);
+    counter-increment: step;
+    display: flex;
+    font-size: 0.85rem;
+    font-weight: 700;
+    height: 1.7rem;
+    justify-content: center;
+    left: 0.8rem;
+    position: absolute;
+    top: 0.75rem;
+    width: 1.7rem;
+  }
+  .calc {
+    background: var(--cp-surface-soft);
+    border-radius: 4px;
+    display: block;
+    font-family: Consolas, "Courier New", Courier, monospace;
+    font-size: 0.95rem;
+    margin-top: 0.3rem;
+    padding: 0.3rem 0.6rem;
+  }
+  .rule-grid {
+    display: grid;
+    gap: 0.8rem;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 0.8rem 0;
+  }
+  .rule-item {
+    background: var(--cp-bg-elevated);
+    border: 1px solid var(--cp-border);
+    border-radius: 8px;
+    padding: 0.9rem;
+    text-align: center;
+  }
+  .rule-name { color: var(--cp-text-muted); font-size: 0.85rem; margin-bottom: 0.3rem; }
+  .rule-formula { font-size: 1.08rem; font-weight: 700; }
+  .rule-example { color: var(--cp-text-muted); font-size: 0.9rem; margin-top: 0.3rem; }
+  .table-wrap { overflow-x: auto; }
+  table {
+    border-collapse: collapse;
+    margin: 0.8rem 0;
+    width: 100%;
+  }
+  th, td { border: 1px solid var(--cp-border); padding: 0.65rem 0.8rem; text-align: left; }
+  th { background: var(--cp-accent); color: var(--cp-accent-fg); }
+  tbody tr:nth-child(even) { background: var(--cp-surface-soft); }
+  .quick-list strong { color: var(--cp-accent); }
+
+  .quiz-overlay {
+    align-items: center;
+    backdrop-filter: blur(4px);
+    background: var(--cp-overlay);
+    display: none;
+    inset: 0;
+    justify-content: center;
+    padding: 1rem;
+    position: fixed;
+    z-index: 1000;
+  }
+  .quiz-overlay.open { display: flex; }
+  .quiz-modal {
+    animation: slideUp 0.3s ease;
+    background: var(--cp-surface);
+    border-radius: 16px;
+    box-shadow: var(--cp-shadow);
+    max-height: 90vh;
+    max-width: 560px;
+    overflow-y: auto;
+    padding: 2rem;
+    position: relative;
+    width: 100%;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .quiz-close {
+    background: none;
+    border: 0;
+    color: var(--cp-text-muted);
+    cursor: pointer;
+    font-size: 1.5rem;
+    line-height: 1;
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+  }
+  .quiz-header { margin-bottom: 1.5rem; text-align: center; }
+  .quiz-header h2 { color: var(--cp-accent); font-size: 1.5rem; }
+  .quiz-progress { color: var(--cp-text-muted); font-size: 0.9rem; }
+  .quiz-progress-bar {
+    background: var(--cp-border);
+    border-radius: 3px;
+    height: 6px;
+    margin-top: 0.5rem;
+    overflow: hidden;
+  }
+  .quiz-progress-fill {
+    background: var(--cp-warning);
+    border-radius: 3px;
+    height: 100%;
+    transition: width 0.4s ease;
+  }
+  .quiz-question { font-size: 1.15rem; font-weight: 600; margin-bottom: 1rem; }
+  .quiz-options { display: flex; flex-direction: column; gap: 0.6rem; }
+  .quiz-option {
+    background: var(--cp-bg-elevated);
+    border: 2px solid var(--cp-border);
+    border-radius: 10px;
+    color: var(--cp-text);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1.02rem;
+    padding: 0.85rem 1.1rem;
+    text-align: left;
+    width: 100%;
+  }
+  .quiz-option:hover:not(:disabled) { background: var(--cp-accent-soft); border-color: var(--cp-accent); }
+  .quiz-option.correct { background: var(--cp-surface-soft); border-color: var(--cp-success); font-weight: 600; }
+  .quiz-option.wrong { background: var(--cp-surface-soft); border-color: var(--cp-danger); opacity: 0.7; }
+  .quiz-feedback {
+    border-radius: 8px;
+    display: none;
+    font-size: 0.95rem;
+    margin-top: 1rem;
+    padding: 0.8rem 1rem;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.is-correct { background: var(--cp-surface-soft); border: 1px solid var(--cp-success); color: var(--cp-success); }
+  .quiz-feedback.is-wrong { background: var(--cp-surface-soft); border: 1px solid var(--cp-danger); color: var(--cp-danger); }
+  .quiz-next, .quiz-restart {
+    background: var(--cp-accent);
+    border: 0;
+    border-radius: 8px;
+    color: var(--cp-accent-fg);
+    cursor: pointer;
+    display: none;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 1.2rem auto 0;
+    padding: 0.7rem 2rem;
+  }
+  .quiz-next.show { display: block; }
+  .quiz-result { text-align: center; }
+  .quiz-score { color: var(--cp-accent); font-size: 3rem; font-weight: 800; }
+  .quiz-grade { font-size: 1.3rem; font-weight: 600; margin: 0.8rem 0; }
+  .quiz-restart { background: var(--cp-warning); color: var(--cp-text); display: inline-block; }
+  @media (max-width: 600px) {
+    body { padding: 1rem 0.7rem; }
+    h1 { font-size: 1.8rem; }
+    .card { padding: 1.2rem; }
+    .rule-grid { grid-template-columns: 1fr; }
+    .formula-box { font-size: 1.02rem; overflow-x: auto; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <a href="index.html" class="home-link">&larr; Tilbake til forsiden</a>
+  <a href="mestring.html" class="home-link" style="margin-left:1rem;">Min mestring &rarr;</a>
+
+  <h1>Prosent og modellering</h1>
+  <p class="subtitle">2P – Kapittel 1 · Formler, metodevalg og eksempler</p>
+
+  <nav class="toc" aria-label="Innholdsfortegnelse">
+    <a href="#jukselapp">Jukselapp</a>
+    <a href="#grunnleggende">Prosentregning</a>
+    <a href="#endring">Endring og prosentpoeng</a>
+    <a href="#vekstfaktor">Vekstfaktor</a>
+    <a href="#flere-endringer">Flere endringer</a>
+    <a href="#modell">Eksponentiell modell</a>
+    <a href="#tid">Finne tiden</a>
+    <a href="#regresjon">Regresjon</a>
+    <a href="#definisjonsmengde">Definisjonsmengde</a>
+    <a href="#metodevalg">Metodevalg</a>
+    <button class="quiz-btn" onclick="openQuiz()">Test deg selv!</button>
+  </nav>
+
+  <div class="quiz-overlay" id="quizOverlay">
+    <div class="quiz-modal" role="dialog" aria-modal="true" aria-labelledby="quizTitle">
+      <button class="quiz-close" onclick="closeQuiz()" aria-label="Lukk quiz">&times;</button>
+      <div class="quiz-header">
+        <h2 id="quizTitle">Prosent og modellering – quiz</h2>
+        <div class="quiz-progress">Spørsmål <span id="qNum">1</span> av <span id="qTotal">10</span></div>
+        <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="qBar"></div></div>
+      </div>
+      <div id="quizBody">
+        <div class="quiz-question" id="qText"></div>
+        <div class="quiz-options" id="qOptions"></div>
+        <div class="quiz-feedback" id="qFeedback"></div>
+        <button class="quiz-next" id="qNext" onclick="nextQuestion()">Neste</button>
+      </div>
+      <div id="quizResult" class="quiz-result" style="display:none;">
+        <div>Resultat</div>
+        <div class="quiz-score" id="rScore"></div>
+        <div class="quiz-grade" id="rGrade"></div>
+        <button class="quiz-restart" onclick="startQuiz()">Prøv igjen</button>
+      </div>
+    </div>
+  </div>
+
+  <section class="card" id="jukselapp">
+    <h2>Jukselappen: fem tankemønstre</h2>
+    <p>Du trenger ikke starte med å pugge mange isolerte formler. Lær disse setningene og kjenn igjen hvilken situasjon du står i:</p>
+    <div class="steps">
+      <div class="step"><strong>Del av hele, og «av» betyr gange.</strong><span class="calc">Hvor mange prosent? → del / hele · 100 · Prosent av noe? → hele · prosent som desimaltall</span></div>
+      <div class="step"><strong>Endring delt på det jeg startet med.</strong><span class="calc">Prosentvis endring → endring / gammel verdi · 100</span></div>
+      <div class="step"><strong>100 % = 1.</strong><span class="calc">5 % opp → 1,05 · 5 % ned → 0,95</span></div>
+      <div class="step"><strong>Fremover ganger jeg, bakover deler jeg.</strong><span class="calc">gammel · vekstfaktor = ny · ny / vekstfaktor = gammel</span></div>
+      <div class="step"><strong>Samme prosent flere ganger gir en eksponentiell modell.</strong><span class="calc">x i eksponenten → ln får x ned</span></div>
+    </div>
+  </section>
+
+  <section class="card" id="grunnleggende">
+    <h2>1. Grunnleggende prosentregning</h2>
+
+    <h3>Finne prosent av et tall</h3>
+    <p>Når du kjenner <strong>prosenten og hele beløpet</strong>, tenk: <strong>«av» betyr gange</strong>.</p>
+    <div class="formula-box">
+      del = hele &middot; <span class="frac"><span class="frac-num">p</span><span class="frac-den">100</span></span>
+    </div>
+    <p><strong>Eksempel:</strong> 20 % av 800 kr er 800 &middot; 0,20 = <strong>160 kr</strong>.</p>
+    <div class="note"><strong>Kjennetegn:</strong> Oppgaven spør «Hva er ... % <em>av</em> ...?» Skriv prosenten som desimaltall: 20 % = 0,20.</div>
+
+    <h3>Finne hvor mange prosent noe er</h3>
+    <p>Når du kjenner <strong>delen og det hele</strong>, tenk: <strong>del / hele</strong>.</p>
+    <div class="formula-box green">
+      prosent = <span class="frac"><span class="frac-num">del</span><span class="frac-den">hele</span></span> &middot; 100 %
+    </div>
+    <p><strong>Eksempel:</strong> 30 av 120 elever er
+      <span class="frac"><span class="frac-num">30</span><span class="frac-den">120</span></span> &middot; 100 % = <strong>25 %</strong>.
+    </p>
+    <div class="note"><strong>Kjennetegn:</strong> Oppgaven spør «Hvor mange prosent <em>av totalen</em>?»</div>
+  </section>
+
+  <section class="card" id="endring">
+    <h2>2. Prosentvis endring og prosentpoeng</h2>
+
+    <h3>Prosentvis endring</h3>
+    <p>Finn først endringen <strong>med fortegn</strong>: ny verdi &minus; gammel verdi. Sammenlign deretter endringen med det du startet med:</p>
+    <div class="formula-box orange">
+      prosentvis endring =
+      <span class="frac"><span class="frac-num">endring</span><span class="frac-den">gammel verdi</span></span>
+      &middot; 100 %
+    </div>
+    <p><strong>Eksempel:</strong> Prisen går fra 500 kr til 600 kr:</p>
+    <div class="steps">
+      <div class="step"><strong>Finn endringen med fortegn:</strong><span class="calc">ny − gammel = 600 − 500 = +100 kr</span></div>
+      <div class="step"><strong>Del på det du startet med:</strong><span class="calc">100 / 500 · 100 % = 20 %</span></div>
+    </div>
+    <div class="memory">Du deler på det du startet med. Et negativt svar betyr prosentvis nedgang.</div>
+
+    <h3>Prosentpoeng</h3>
+    <p>Prosentpoeng brukes når du sammenligner <strong>to prosenttall</strong>.</p>
+    <div class="formula-box purple">endring i prosentpoeng = ny prosent &minus; gammel prosent</div>
+    <p>Fra 12 % til 9 % er endringen 9 &minus; 12 = &minus;3 prosentpoeng, altså en nedgang på <strong>3 prosentpoeng</strong>.</p>
+    <p>Den prosentvise nedgangen er derimot:</p>
+    <div class="formula-box red">
+      <span class="frac"><span class="frac-num">9 &minus; 12</span><span class="frac-den">12</span></span>
+      &middot; 100 % = &minus;25 %
+    </div>
+    <div class="warning"><strong>Viktig skille:</strong> 12 % &rarr; 9 % er ned 3 prosentpoeng, men ned 25 prosent.</div>
+  </section>
+
+  <section class="card" id="vekstfaktor">
+    <h2>3. Vekstfaktor og én prosentendring</h2>
+    <p>Start med at <strong>100 % = 1</strong>. Legg til prosenten ved økning, og trekk den fra ved nedgang.</p>
+    <div class="rule-grid">
+      <div class="rule-item">
+        <div class="rule-name">Økning med p %</div>
+        <div class="rule-formula">1 + <span class="frac"><span class="frac-num">p</span><span class="frac-den">100</span></span></div>
+        <div class="rule-example">5 % økning &rarr; 1,05</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-name">Nedgang med p %</div>
+        <div class="rule-formula">1 &minus; <span class="frac"><span class="frac-num">p</span><span class="frac-den">100</span></span></div>
+        <div class="rule-example">7 % nedgang &rarr; 0,93</div>
+      </div>
+    </div>
+    <div class="memory">Vekstfaktor over 1 betyr økning. Vekstfaktor under 1 betyr nedgang.</div>
+
+    <h3>Husketabell</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Endring</th><th>Vekstfaktor</th><th>Regning</th></tr></thead>
+        <tbody>
+          <tr><td>+20 %</td><td>1,20</td><td>1 + 0,20</td></tr>
+          <tr><td>+5 %</td><td>1,05</td><td>1 + 0,05</td></tr>
+          <tr><td>+2 %</td><td>1,02</td><td>1 + 0,02</td></tr>
+          <tr><td>&minus;2 %</td><td>0,98</td><td>1 &minus; 0,02</td></tr>
+          <tr><td>&minus;7 %</td><td>0,93</td><td>1 &minus; 0,07</td></tr>
+          <tr><td>&minus;20 %</td><td>0,80</td><td>1 &minus; 0,20</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Finne ny verdi</h3>
+    <div class="formula-box green">ny verdi = gammel verdi &middot; vekstfaktor</div>
+    <p><strong>Eksempel:</strong> 800 kr øker med 10 %: 800 &middot; 1,10 = <strong>880 kr</strong>.</p>
+    <div class="note"><strong>Husk:</strong> Fremover = gange.</div>
+
+    <h3>Finne gammel verdi</h3>
+    <div class="formula-box orange">
+      gammel verdi = <span class="frac"><span class="frac-num">ny verdi</span><span class="frac-den">vekstfaktor</span></span>
+    </div>
+    <p><strong>Eksempel:</strong> Etter en økning på 20 % koster en vare 600 kr:</p>
+    <div class="steps">
+      <div class="step"><strong>Finn vekstfaktoren:</strong><span class="calc">1 + 0,20 = 1,20</span></div>
+      <div class="step"><strong>Del den nye verdien på vekstfaktoren:</strong><span class="calc">600 / 1,20 = 500 kr</span></div>
+    </div>
+    <div class="note"><strong>Husk:</strong> Bakover = dele.</div>
+    <div class="warning"><strong>Vanlig feil:</strong> Ikke trekk 20 % fra 600. De 20 prosentene ble beregnet av den gamle prisen.</div>
+  </section>
+
+  <section class="card" id="flere-endringer">
+    <h2>4. Flere prosentendringer etter hverandre</h2>
+    <p>Ved flere prosentendringer ganger du vekstfaktorene:</p>
+    <div class="formula-box purple">
+      ny verdi = gammel verdi &middot; b<sub>1</sub> &middot; b<sub>2</sub> &middot; ...
+    </div>
+    <p><strong>Eksempel:</strong> Først +10 %, deretter &minus;10 %:</p>
+    <div class="formula-box">
+      1000 &middot; 1,10 &middot; 0,90 = 990
+    </div>
+    <p>Du kommer ikke tilbake til 1000, fordi 1,10 &middot; 0,90 = 0,99. Det tilsvarer totalt <strong>1 % nedgang</strong>.</p>
+    <div class="note">Prosentendringer kan ikke vanligvis legges sammen. Bruk vekstfaktorer og gang dem.</div>
+  </section>
+
+  <section class="card" id="modell">
+    <h2>5. Eksponentiell modell</h2>
+    <p>Når noe endrer seg med <strong>samme prosent i hver tidsperiode</strong>, ganger vi med samme vekstfaktor flere ganger:</p>
+    <div class="steps">
+      <div class="step"><strong>Etter ett år:</strong><span class="calc">182 · 1,05</span></div>
+      <div class="step"><strong>Etter to år:</strong><span class="calc">182 · 1,05 · 1,05 = 182 · 1,05²</span></div>
+      <div class="step"><strong>Etter x år:</strong><span class="calc">startverdi · vekstfaktor^tid</span></div>
+    </div>
+    <div class="formula-box purple">f(x) = a &middot; b<sup>x</sup></div>
+    <div class="rule-grid">
+      <div class="rule-item"><div class="rule-name">a</div><div class="rule-formula">startverdi</div></div>
+      <div class="rule-item"><div class="rule-name">b</div><div class="rule-formula">vekstfaktor</div></div>
+      <div class="rule-item"><div class="rule-name">x</div><div class="rule-formula">antall perioder</div></div>
+      <div class="rule-item"><div class="rule-name">f(x)</div><div class="rule-formula">verdi etter x perioder</div></div>
+    </div>
+    <div class="memory">Startverdi &middot; vekstfaktor<sup>tid</sup></div>
+
+    <h3>Eksempel: befolkningsvekst</h3>
+    <p>En befolkning på 5000 øker med 3 % per år:</p>
+    <div class="formula-box green">f(x) = 5000 &middot; 1,03<sup>x</sup></div>
+    <p>Her er a = 5000, b = 1,03, og x er antall år.</p>
+
+    <h3>Finne prosentendringen fra modellen</h3>
+    <div class="rule-grid">
+      <div class="rule-item">
+        <div class="rule-name">f(x) = 500 &middot; 1,08<sup>x</sup></div>
+        <div class="rule-formula">1,08 &minus; 1 = 0,08</div>
+        <div class="rule-example">8 % økning per periode</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-name">f(x) = 500 &middot; 0,94<sup>x</sup></div>
+        <div class="rule-formula">1 &minus; 0,94 = 0,06</div>
+        <div class="rule-example">6 % nedgang per periode</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" id="tid">
+    <h2>6. Finne tiden x med ln</h2>
+    <p>Når den ukjente står i eksponenten, bruker du den naturlige logaritmen, <strong>ln</strong>. Først må potensen stå alene.</p>
+    <div class="formula-box">
+      a &middot; b<sup>x</sup> = c
+      &nbsp;&rArr;&nbsp;
+      x = <span class="frac"><span class="frac-num">ln(c/a)</span><span class="frac-den">ln(b)</span></span>
+    </div>
+    <h3>Eksempel: 4 &middot; 0,98<sup>x</sup> = 0,9</h3>
+    <div class="steps">
+      <div class="step"><strong>Få potensen alene:</strong><span class="calc">0,98^x = 0,9 / 4 = 0,225</span></div>
+      <div class="step"><strong>Ta ln på begge sider:</strong><span class="calc">ln(0,98^x) = ln(0,225)</span></div>
+      <div class="step"><strong>Flytt eksponenten ned:</strong><span class="calc">x · ln(0,98) = ln(0,225)</span></div>
+      <div class="step"><strong>Del på ln(0,98):</strong><span class="calc">x = ln(0,225) / ln(0,98) ≈ 73,8</span></div>
+    </div>
+    <div class="memory">x i eksponenten &rArr; tenk ln. Potensen alene &rarr; ln &rarr; eksponenten ned &rarr; del.</div>
+  </section>
+
+  <section class="card" id="regresjon">
+    <h2>7. Finne en modell med eksponentiell regresjon</h2>
+    <p>Når du får en tabell med observerte verdier og endringen ser prosentvis ut, kan GeoGebra finne en modell på formen f(x) = a &middot; b<sup>x</sup>.</p>
+    <div class="steps">
+      <div class="step"><strong>Legg inn dataene:</strong> Skriv x-verdiene i én kolonne og y-verdiene i den neste.</div>
+      <div class="step"><strong>Velg regresjonsanalyse:</strong> Marker dataene og åpne «Regresjonsanalyse med to variabler».</div>
+      <div class="step"><strong>Velg eksponentiell modell:</strong><span class="calc">y = a · b^x</span></div>
+      <div class="step"><strong>Tolk svaret:</strong> a er modellens startverdi, og b er vekstfaktoren per periode.</div>
+      <div class="step"><strong>Vurder modellen:</strong> Bruk bare modellen innenfor en fornuftig definisjonsmengde, og sjekk at grafen passer datapunktene.</div>
+    </div>
+    <div class="note"><strong>Kjennetegn:</strong> Forholdet mellom påfølgende verdier er omtrent konstant. Det betyr omtrent samme prosentvise endring per periode.</div>
+  </section>
+
+  <section class="card" id="definisjonsmengde">
+    <h2>8. Definisjonsmengde i modeller</h2>
+    <p>Definisjonsmengden forteller <strong>hvilke x-verdier modellen gjelder for</strong>.</p>
+    <div class="rule-grid">
+      <div class="rule-item">
+        <div class="rule-name">x = 0 er året 2020, modellen gjelder til 2025</div>
+        <div class="rule-formula">D<sub>f</sub> = [0, 5]</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-name">En ny modell starter i 2025 og gjelder til 2027</div>
+        <div class="rule-formula">D<sub>g</sub> = [0, 2]</div>
+      </div>
+    </div>
+    <p>Hvis g(x) = 232 &middot; 0,97<sup>x</sup> starter i 2025, betyr x = 0 <strong>året 2025</strong>, ikke år 0.</p>
+    <div class="note">Sjekk alltid hva x = 0 betyr, hvilken tidsenhet som brukes, og hvilke år modellen er ment å beskrive.</div>
+  </section>
+
+  <section class="card" id="metodevalg">
+    <h2>9. Velg riktig metode</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Hvis oppgaven spør om ...</th><th>Bruk</th></tr></thead>
+        <tbody class="quick-list">
+          <tr><td>Hva er 20 % av 500?</td><td><strong>500 &middot; 0,20</strong> (prosent som desimaltall)</td></tr>
+          <tr><td>Hvor mange prosent er 20 av 80?</td><td><strong>20 / 80 &middot; 100 %</strong></td></tr>
+          <tr><td>Hvor mange prosent økte den?</td><td><strong>(ny &minus; gammel) / gammel &middot; 100 %</strong></td></tr>
+          <tr><td>Fra 15 % til 20 %, hvor mange prosentpoeng?</td><td><strong>20 &minus; 15 = 5 prosentpoeng</strong></td></tr>
+          <tr><td>Øker med 8 %</td><td><strong>vekstfaktor 1,08</strong></td></tr>
+          <tr><td>Synker med 8 %</td><td><strong>vekstfaktor 0,92</strong></td></tr>
+          <tr><td>Ny verdi etter 8 % økning</td><td><strong>gammel verdi &middot; 1,08</strong></td></tr>
+          <tr><td>Hva var verdien før økningen?</td><td><strong>ny verdi / vekstfaktor</strong></td></tr>
+          <tr><td>Endrer seg 8 % hvert år</td><td><strong>f(x) = a &middot; 1,08<sup>x</sup></strong></td></tr>
+          <tr><td>Finn verdien etter 5 år</td><td><strong>sett x = 5 i modellen</strong></td></tr>
+          <tr><td>Når blir verdien 100?</td><td><strong>løs a &middot; b<sup>x</sup> = 100 med ln</strong></td></tr>
+          <tr><td>Finn modellen fra en tabell</td><td><strong>eksponentiell regresjon i GeoGebra</strong></td></tr>
+          <tr><td>Hvilke år gjelder modellen?</td><td><strong>definisjonsmengde</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="memory">
+      Prosent beskriver en relativ endring. Prosentpoeng er forskjellen mellom to prosenttall.
+    </div>
+    <h3>Fire formler å kunne før prøven</h3>
+    <div class="formula-box">
+      prosentvis endring =
+      <span class="frac"><span class="frac-num">ny &minus; gammel</span><span class="frac-den">gammel</span></span>
+      &middot; 100 %
+    </div>
+    <div class="formula-box green">vekstfaktor = 1 &plusmn; <span class="frac"><span class="frac-num">p</span><span class="frac-den">100</span></span></div>
+    <div class="formula-box purple">f(x) = a &middot; b<sup>x</sup></div>
+    <div class="formula-box orange">
+      a<sup>x</sup> = b
+      &nbsp;&rArr;&nbsp;
+      x = <span class="frac"><span class="frac-num">ln(b)</span><span class="frac-den">ln(a)</span></span>
+    </div>
+  </section>
+</div>
+
+<script src="mattepilot-progress.js"></script>
+<script>
+const CHAPTER_KEY = '2p-prosent';
+const CHAPTER_TITLE = '2P 1. Prosent og modellering';
+const allQuestions = [
+  {
+    q: 'Hva er 20 % av 800 kr?',
+    opts: ['16 kr', '80 kr', '160 kr', '640 kr'],
+    ans: 2,
+    tip: 'Gang hele beløpet med 0,20: 800 · 0,20 = 160 kr.'
+  },
+  {
+    q: '30 av 120 elever valgte buss. Hvor mange prosent er det?',
+    opts: ['20 %', '25 %', '30 %', '40 %'],
+    ans: 1,
+    tip: 'Del på totalen og gang med 100: 30 / 120 · 100 % = 25 %.'
+  },
+  {
+    q: 'En pris går fra 500 kr til 600 kr. Hva er den prosentvise økningen?',
+    opts: ['10 %', '16,7 %', '20 %', '100 %'],
+    ans: 2,
+    tip: 'Del endringen på gammel verdi: (600 − 500) / 500 · 100 % = 20 %.'
+  },
+  {
+    q: 'En andel går fra 12 % til 9 %. Hvor stor er nedgangen i prosentpoeng?',
+    opts: ['3 prosentpoeng', '9 prosentpoeng', '12 prosentpoeng', '25 prosentpoeng'],
+    ans: 0,
+    tip: 'Forskjellen er 12 − 9 = 3 prosentpoeng.'
+  },
+  {
+    q: 'En andel går fra 12 % til 9 %. Hva er den prosentvise nedgangen?',
+    opts: ['3 %', '9 %', '25 %', '33,3 %'],
+    ans: 2,
+    tip: 'Endringen måles mot startverdien: (12 − 9) / 12 · 100 % = 25 %.'
+  },
+  {
+    q: 'Hva er vekstfaktoren ved en økning på 7 %?',
+    opts: ['0,07', '0,93', '1,07', '1,70'],
+    ans: 2,
+    tip: 'Ved økning er vekstfaktoren 1 + 0,07 = 1,07.'
+  },
+  {
+    q: 'Hva er vekstfaktoren ved en nedgang på 18 %?',
+    opts: ['0,18', '0,82', '1,18', '1,82'],
+    ans: 1,
+    tip: 'Ved nedgang er vekstfaktoren 1 − 0,18 = 0,82.'
+  },
+  {
+    q: 'En vare koster 750 kr og øker med 8 %. Hva blir den nye prisen?',
+    opts: ['758 kr', '802 kr', '810 kr', '850 kr'],
+    ans: 2,
+    tip: 'Ny pris = 750 · 1,08 = 810 kr.'
+  },
+  {
+    q: 'Etter en økning på 20 % er prisen 600 kr. Hva var den gamle prisen?',
+    opts: ['480 kr', '500 kr', '580 kr', '720 kr'],
+    ans: 1,
+    tip: 'Del på vekstfaktoren: 600 / 1,20 = 500 kr.'
+  },
+  {
+    q: 'Hva blir samlet vekstfaktor ved først +10 % og deretter −10 %?',
+    opts: ['0,90', '0,99', '1,00', '1,10'],
+    ans: 1,
+    tip: 'Gang vekstfaktorene: 1,10 · 0,90 = 0,99, altså 1 % samlet nedgang.'
+  },
+  {
+    q: 'Hva betyr a i modellen f(x) = a · b^x?',
+    opts: ['Antall perioder', 'Prosentendringen', 'Startverdien', 'Sluttverdien'],
+    ans: 2,
+    tip: 'a er verdien når x = 0, altså startverdien.'
+  },
+  {
+    q: 'Hva betyr b i modellen f(x) = a · b^x?',
+    opts: ['Vekstfaktoren', 'Startverdien', 'Definisjonsmengden', 'Antall perioder'],
+    ans: 0,
+    tip: 'b er vekstfaktoren per periode.'
+  },
+  {
+    q: 'Modellen f(x) = 500 · 1,08^x beskriver hvilken endring per periode?',
+    opts: ['8 % nedgang', '8 % økning', '80 % økning', '108 % økning'],
+    ans: 1,
+    tip: '1,08 − 1 = 0,08, altså 8 % økning.'
+  },
+  {
+    q: 'Modellen f(x) = 500 · 0,94^x beskriver hvilken endring per periode?',
+    opts: ['6 % nedgang', '6 % økning', '94 % nedgang', '0,94 % nedgang'],
+    ans: 0,
+    tip: '1 − 0,94 = 0,06, altså 6 % nedgang.'
+  },
+  {
+    q: 'Hvilken metode bruker du for å finne x i 4 · 0,98^x = 0,9?',
+    opts: ['Pytagoras', 'Lineær regresjon', 'ln', 'Prosentpoeng'],
+    ans: 2,
+    tip: 'Når x står i eksponenten, isolerer du potensen og bruker ln.'
+  },
+  {
+    q: 'Hva er riktig formel når a · b^x = c skal løses for x?',
+    opts: ['x = ln(c/a) / ln(b)', 'x = ln(b) / ln(c/a)', 'x = c / (a · b)', 'x = (c − a) / b'],
+    ans: 0,
+    tip: 'Isoler b^x = c/a, ta ln og del på ln(b).'
+  },
+  {
+    q: 'x = 0 tilsvarer 2020, og modellen gjelder til og med 2025. Hva er definisjonsmengden?',
+    opts: ['[2020, 2025]', '[0, 5]', '[0, 2025]', '[1, 5]'],
+    ans: 1,
+    tip: 'x teller år siden 2020, så modellen gjelder fra x = 0 til x = 5.'
+  },
+  {
+    q: 'Når bør du bruke en eksponentiell modell?',
+    opts: ['Når økningen er samme antall hver periode', 'Når prosentendringen er den samme hver periode', 'Når grafen alltid er en rett linje', 'Når det bare finnes én måling'],
+    ans: 1,
+    tip: 'Eksponentielle modeller brukes ved samme prosentvise endring per periode.'
+  },
+  {
+    q: 'En tabell viser omtrent samme prosentvise endring for hver periode. Hvilken regresjon passer vanligvis best?',
+    opts: ['Lineær regresjon', 'Eksponentiell regresjon', 'Ingen modell kan brukes', 'Konstant modell'],
+    ans: 1,
+    tip: 'Omtrent samme prosentvise endring per periode er kjennetegnet på en eksponentiell modell.'
+  }
+];
+
+let quizQuestions;
+let currentQ;
+let score;
+let quizMode;
+
+if (window.MattepilotProgress) {
+  MattepilotProgress.registerChapter(CHAPTER_KEY, {
+    title: CHAPTER_TITLE,
+    url: 'prosent-2p.html',
+    questions: allQuestions
+  });
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function openQuiz(mode) {
+  quizMode = mode || 'normal';
+  document.getElementById('quizOverlay').classList.add('open');
+  startQuiz();
+}
+
+function closeQuiz() {
+  document.getElementById('quizOverlay').classList.remove('open');
+}
+
+function startQuiz() {
+  currentQ = 0;
+  score = 0;
+  if (window.MattepilotProgress) {
+    quizQuestions = MattepilotProgress.selectQuestions(CHAPTER_KEY, allQuestions, 10, {
+      onlyStruggling: quizMode === 'struggling'
+    });
+  } else {
+    quizQuestions = shuffle([...allQuestions]).slice(0, 10);
+  }
+  document.getElementById('quizBody').style.display = '';
+  document.getElementById('quizResult').style.display = 'none';
+  document.getElementById('qTotal').textContent = quizQuestions.length;
+  showQuestion();
+}
+
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('quiz') === 'struggling') openQuiz('struggling');
+  else if (params.get('quiz') === 'open') openQuiz('normal');
+})();
+
+function showQuestion() {
+  const q = quizQuestions[currentQ];
+  document.getElementById('qNum').textContent = currentQ + 1;
+  document.getElementById('qBar').style.width = ((currentQ + 1) / quizQuestions.length * 100) + '%';
+  document.getElementById('qText').textContent = q.q;
+  document.getElementById('qFeedback').className = 'quiz-feedback';
+  document.getElementById('qFeedback').textContent = '';
+  document.getElementById('qNext').className = 'quiz-next';
+
+  const options = document.getElementById('qOptions');
+  options.innerHTML = '';
+  q.opts.forEach((option, index) => {
+    const button = document.createElement('button');
+    button.className = 'quiz-option';
+    button.textContent = option;
+    button.addEventListener('click', () => pickAnswer(index));
+    options.appendChild(button);
+  });
+}
+
+function pickAnswer(index) {
+  const q = quizQuestions[currentQ];
+  const buttons = document.querySelectorAll('#qOptions .quiz-option');
+  buttons.forEach(button => button.disabled = true);
+
+  const correct = index === q.ans;
+  const feedback = document.getElementById('qFeedback');
+  if (window.MattepilotProgress) {
+    MattepilotProgress.recordAnswer(CHAPTER_KEY, q.q, correct);
+  }
+
+  if (correct) {
+    buttons[index].classList.add('correct');
+    feedback.className = 'quiz-feedback show is-correct';
+    feedback.textContent = 'Riktig! ' + q.tip;
+    score++;
+  } else {
+    buttons[index].classList.add('wrong');
+    buttons[q.ans].classList.add('correct');
+    feedback.className = 'quiz-feedback show is-wrong';
+    feedback.textContent = 'Feil. ' + q.tip;
+  }
+
+  const nextButton = document.getElementById('qNext');
+  nextButton.className = 'quiz-next show';
+  nextButton.textContent = currentQ < quizQuestions.length - 1 ? 'Neste' : 'Se resultat';
+}
+
+function nextQuestion() {
+  currentQ++;
+  if (currentQ < quizQuestions.length) showQuestion();
+  else showResult();
+}
+
+function showResult() {
+  document.getElementById('quizBody').style.display = 'none';
+  document.getElementById('quizResult').style.display = '';
+  document.getElementById('rScore').textContent = score + ' / ' + quizQuestions.length;
+
+  const pct = score / quizQuestions.length;
+  let grade;
+  let color;
+  if (pct === 1) {
+    grade = 'Perfekt! Du kan prosent og modellering!';
+    color = 'var(--cp-success)';
+  } else if (pct >= 0.8) {
+    grade = 'Veldig bra! Nesten alt riktig.';
+    color = 'var(--cp-link)';
+  } else if (pct >= 0.6) {
+    grade = 'Bra jobba! Litt mer øving.';
+    color = 'var(--cp-warning)';
+  } else {
+    grade = 'Øv litt mer – du klarer det!';
+    color = 'var(--cp-danger)';
+  }
+  const gradeElement = document.getElementById('rGrade');
+  gradeElement.textContent = grade;
+  gradeElement.style.color = color;
+}
+
+document.getElementById('quizOverlay').addEventListener('click', event => {
+  if (event.target.id === 'quizOverlay') closeQuiz();
+});
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape') closeQuiz();
+});
+</script>
+</body>
+</html>
