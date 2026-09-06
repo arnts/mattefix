@@ -241,6 +241,178 @@
   tbody tr:nth-child(even) { background: var(--cp-surface-soft); }
   .quick-list strong { color: var(--cp-accent); }
 
+  .game-panel {
+    background: var(--cp-surface);
+    border: 2px solid var(--cp-accent);
+    border-radius: 16px;
+    box-shadow: var(--cp-shadow);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+  .game-header {
+    align-items: center;
+    background: var(--cp-accent-soft);
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    padding: 1.2rem 1.5rem;
+  }
+  .game-header h2 { color: var(--cp-accent); font-size: 1.35rem; }
+  .game-header p { color: var(--cp-text-muted); font-size: 0.9rem; }
+  .game-start {
+    background: var(--cp-accent);
+    border: 0;
+    border-radius: 10px;
+    color: var(--cp-accent-fg);
+    cursor: pointer;
+    flex-shrink: 0;
+    font-family: inherit;
+    font-weight: 700;
+    padding: 0.7rem 1rem;
+  }
+  .game-body { padding: 1.25rem 1.5rem 1.5rem; }
+  .game-stats {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .game-stat {
+    background: var(--cp-bg-elevated);
+    border: 1px solid var(--cp-border);
+    border-radius: 10px;
+    padding: 0.8rem;
+    text-align: center;
+  }
+  .game-stat-value { color: var(--cp-accent); font-size: 1.5rem; font-weight: 800; line-height: 1.1; }
+  .game-stat-label { color: var(--cp-text-muted); font-size: 0.78rem; margin-top: 0.25rem; }
+  .level-row {
+    align-items: center;
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 1rem;
+  }
+  .level-label { font-size: 0.9rem; font-weight: 700; min-width: 140px; }
+  .level-track {
+    background: var(--cp-border);
+    border-radius: 999px;
+    flex: 1;
+    height: 12px;
+    overflow: hidden;
+  }
+  .level-fill {
+    background: var(--cp-accent);
+    height: 100%;
+    transition: width 0.35s ease;
+  }
+  .level-next { color: var(--cp-text-muted); font-size: 0.78rem; white-space: nowrap; }
+  .game-columns {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 1rem;
+  }
+  .game-box {
+    background: var(--cp-bg-elevated);
+    border: 1px solid var(--cp-border);
+    border-radius: 10px;
+    padding: 1rem;
+  }
+  .game-box h3 { color: var(--cp-accent); font-size: 1rem; margin: 0 0 0.65rem; }
+  .mission-progress {
+    background: var(--cp-border);
+    border-radius: 999px;
+    height: 8px;
+    margin: 0.7rem 0 0.35rem;
+    overflow: hidden;
+  }
+  .mission-fill { background: var(--cp-success); height: 100%; transition: width 0.35s ease; }
+  .mission-status { color: var(--cp-text-muted); font-size: 0.82rem; }
+  .skill-list { display: grid; gap: 0.5rem; }
+  .skill-row {
+    align-items: center;
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: minmax(115px, 1fr) 1fr auto;
+  }
+  .skill-name { font-size: 0.84rem; font-weight: 650; }
+  .skill-track {
+    background: var(--cp-border);
+    border-radius: 999px;
+    height: 7px;
+    overflow: hidden;
+  }
+  .skill-fill { background: var(--cp-warning); height: 100%; transition: width 0.35s ease; }
+  .skill-fill.mastered { background: var(--cp-success); }
+  .skill-count { color: var(--cp-text-muted); font-size: 0.76rem; min-width: 28px; text-align: right; }
+  .badge-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .badge {
+    align-items: center;
+    background: var(--cp-surface);
+    border: 1px solid var(--cp-border);
+    border-radius: 999px;
+    color: var(--cp-text-muted);
+    display: inline-flex;
+    font-size: 0.78rem;
+    gap: 0.35rem;
+    padding: 0.35rem 0.65rem;
+  }
+  .badge.earned {
+    background: var(--cp-accent-soft);
+    border-color: var(--cp-accent);
+    color: var(--cp-text);
+    font-weight: 700;
+  }
+  .boss-row {
+    align-items: center;
+    border-top: 1px solid var(--cp-border);
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    margin-top: 1rem;
+    padding-top: 1rem;
+  }
+  .boss-copy strong { color: var(--cp-accent); }
+  .boss-copy div { color: var(--cp-text-muted); font-size: 0.84rem; }
+  .boss-button, .game-reset {
+    background: var(--cp-warning);
+    border: 0;
+    border-radius: 10px;
+    color: var(--cp-text);
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 700;
+    padding: 0.6rem 0.9rem;
+  }
+  .boss-button:disabled { cursor: not-allowed; opacity: 0.45; }
+  .game-reset {
+    background: transparent;
+    color: var(--cp-text-muted);
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-top: 0.8rem;
+    padding: 0.2rem;
+    text-decoration: underline;
+  }
+  .game-toast {
+    background: var(--cp-panel-strong);
+    border: 1px solid var(--cp-accent);
+    border-radius: 10px;
+    box-shadow: var(--cp-shadow);
+    color: var(--cp-text);
+    font-weight: 750;
+    left: 50%;
+    opacity: 0;
+    padding: 0.7rem 1rem;
+    pointer-events: none;
+    position: fixed;
+    top: 1rem;
+    transform: translate(-50%, -20px);
+    transition: opacity 0.2s, transform 0.2s;
+    z-index: 1200;
+  }
+  .game-toast.show { opacity: 1; transform: translate(-50%, 0); }
+  .boss-question { font-size: 1.05rem; font-weight: 650; margin: 1rem 0; }
+
   .quiz-overlay {
     align-items: center;
     backdrop-filter: blur(4px);
@@ -347,6 +519,11 @@
     .card { padding: 1.2rem; }
     .rule-grid { grid-template-columns: 1fr; }
     .formula-box { font-size: 1.02rem; overflow-x: auto; }
+    .game-header { align-items: stretch; flex-direction: column; }
+    .game-stats { grid-template-columns: repeat(2, 1fr); }
+    .game-columns { grid-template-columns: 1fr; }
+    .level-row { align-items: stretch; flex-direction: column; gap: 0.35rem; }
+    .boss-row { align-items: stretch; flex-direction: column; }
   }
 </style>
 </head>
@@ -372,6 +549,71 @@
     <button class="quiz-btn" onclick="openQuiz()">Test deg selv!</button>
   </nav>
 
+  <section class="game-panel" aria-labelledby="gameTitle">
+    <div class="game-header">
+      <div>
+        <h2 id="gameTitle">Prosentjakten</h2>
+        <p>Prototyp: tjen XP, bygg en svarrekke og mestre ferdighetene i kapittelet.</p>
+      </div>
+      <button class="game-start" onclick="openQuiz()">Start treningsøkt</button>
+    </div>
+    <div class="game-body">
+      <div class="game-stats">
+        <div class="game-stat">
+          <div class="game-stat-value" id="gameLevel">1</div>
+          <div class="game-stat-label">nivå</div>
+        </div>
+        <div class="game-stat">
+          <div class="game-stat-value" id="gameXp">0</div>
+          <div class="game-stat-label">XP</div>
+        </div>
+        <div class="game-stat">
+          <div class="game-stat-value" id="gameStreak">0</div>
+          <div class="game-stat-label">riktige på rad</div>
+        </div>
+        <div class="game-stat">
+          <div class="game-stat-value" id="gameMastered">0/5</div>
+          <div class="game-stat-label">ferdigheter mestret</div>
+        </div>
+      </div>
+
+      <div class="level-row">
+        <div class="level-label" id="gameLevelName">Prosentlærling</div>
+        <div class="level-track" aria-label="Fremgang til neste nivå">
+          <div class="level-fill" id="gameLevelFill"></div>
+        </div>
+        <div class="level-next" id="gameLevelNext">80 XP til neste nivå</div>
+      </div>
+
+      <div class="game-columns">
+        <div class="game-box">
+          <h3>Dagens oppdrag</h3>
+          <p>Svar på 5 spørsmål, og få minst 3 riktige.</p>
+          <div class="mission-progress"><div class="mission-fill" id="missionFill"></div></div>
+          <div class="mission-status" id="missionStatus">0/5 besvart · 0/3 riktige</div>
+        </div>
+        <div class="game-box">
+          <h3>Ferdighetskart</h3>
+          <div class="skill-list" id="skillList"></div>
+        </div>
+      </div>
+
+      <div class="game-box" style="margin-top:1rem;">
+        <h3>Merker</h3>
+        <div class="badge-list" id="badgeList"></div>
+      </div>
+
+      <div class="boss-row">
+        <div class="boss-copy">
+          <strong>Bossoppgave: Prosentmesteren</strong>
+          <div id="bossStatus">Låses opp på nivå 2.</div>
+        </div>
+        <button class="boss-button" id="bossButton" onclick="openBoss()" disabled>🔒 Låst</button>
+      </div>
+      <button class="game-reset" onclick="resetGame()">Nullstill spillprototypen</button>
+    </div>
+  </section>
+
   <div class="quiz-overlay" id="quizOverlay">
     <div class="quiz-modal" role="dialog" aria-modal="true" aria-labelledby="quizTitle">
       <button class="quiz-close" onclick="closeQuiz()" aria-label="Lukk quiz">&times;</button>
@@ -394,6 +636,30 @@
       </div>
     </div>
   </div>
+
+  <div class="quiz-overlay" id="bossOverlay">
+    <div class="quiz-modal" role="dialog" aria-modal="true" aria-labelledby="bossTitle">
+      <button class="quiz-close" onclick="closeBoss()" aria-label="Lukk bossoppgave">&times;</button>
+      <div class="quiz-header">
+        <h2 id="bossTitle">Bossoppgave: Prosentmesteren</h2>
+        <div class="quiz-progress">Sammensatt utfordring · 50 XP</div>
+      </div>
+      <div id="bossBody">
+        <div class="boss-question">
+          En vare øker først med 12 % og synker deretter med 8 %. Etter begge endringene koster varen 1236,48 kr. Hva var den opprinnelige prisen, og hva er den samlede prosentvise endringen?
+        </div>
+        <div class="quiz-options" id="bossOptions">
+          <button class="quiz-option" onclick="pickBossAnswer(0)">1200 kr og 3,04 % økning</button>
+          <button class="quiz-option" onclick="pickBossAnswer(1)">1200 kr og 4 % økning</button>
+          <button class="quiz-option" onclick="pickBossAnswer(2)">1250 kr og 1 % nedgang</button>
+          <button class="quiz-option" onclick="pickBossAnswer(3)">1236,48 kr og 3,04 % økning</button>
+        </div>
+        <div class="quiz-feedback" id="bossFeedback"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="game-toast" id="gameToast" role="status" aria-live="polite"></div>
 
   <section class="card" id="jukselapp">
     <h2>Jukselappen: fem tankemønstre</h2>
@@ -652,6 +918,14 @@
 <script>
 const CHAPTER_KEY = '2p-prosent';
 const CHAPTER_TITLE = '2P 1. Prosent og modellering';
+const GAME_STORAGE_KEY = 'mattepilot-2p-prosent-game-v1';
+const SKILLS = {
+  basic: 'Del og hele',
+  change: 'Endring og prosentpoeng',
+  growth: 'Vekstfaktor',
+  model: 'Eksponentielle modeller',
+  tools: 'ln, regresjon og gyldighet'
+};
 const allQuestions = [
   {
     q: 'Hva er 20 % av 800 kr?',
@@ -768,6 +1042,17 @@ const allQuestions = [
     tip: 'Omtrent samme prosentvise endring per periode er kjennetegnet på en eksponentiell modell.'
   }
 ];
+const questionSkills = [
+  'basic', 'basic',
+  'change', 'change', 'change',
+  'growth', 'growth', 'growth', 'growth', 'growth',
+  'model', 'model', 'model', 'model',
+  'tools', 'tools', 'tools',
+  'model', 'tools'
+];
+allQuestions.forEach((question, index) => {
+  question.skill = questionSkills[index];
+});
 
 let quizQuestions;
 let currentQ;
@@ -852,6 +1137,7 @@ function pickAnswer(index) {
   if (window.MattepilotProgress) {
     MattepilotProgress.recordAnswer(CHAPTER_KEY, q.q, correct);
   }
+  recordGameAnswer(q, correct);
 
   if (correct) {
     buttons[index].classList.add('correct');
@@ -905,9 +1191,251 @@ function showResult() {
 document.getElementById('quizOverlay').addEventListener('click', event => {
   if (event.target.id === 'quizOverlay') closeQuiz();
 });
-document.addEventListener('keydown', event => {
-  if (event.key === 'Escape') closeQuiz();
+document.getElementById('bossOverlay').addEventListener('click', event => {
+  if (event.target.id === 'bossOverlay') closeBoss();
 });
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape') {
+    closeQuiz();
+    closeBoss();
+  }
+});
+
+function emptySkillStats() {
+  return Object.fromEntries(Object.keys(SKILLS).map(key => [key, { answered: 0, correct: 0 }]));
+}
+
+function todayKey() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function createGameState() {
+  return {
+    xp: 0,
+    currentStreak: 0,
+    bestStreak: 0,
+    totalAnswered: 0,
+    totalCorrect: 0,
+    skills: emptySkillStats(),
+    mission: { date: todayKey(), answered: 0, correct: 0, rewarded: false },
+    bossCompleted: false
+  };
+}
+
+function loadGameState() {
+  let state;
+  try {
+    state = JSON.parse(localStorage.getItem(GAME_STORAGE_KEY)) || createGameState();
+  } catch (error) {
+    console.warn('Mattepilot: kunne ikke lese spillprogresjon', error);
+    state = createGameState();
+  }
+  state.skills = { ...emptySkillStats(), ...(state.skills || {}) };
+  if (!state.mission || state.mission.date !== todayKey()) {
+    state.mission = { date: todayKey(), answered: 0, correct: 0, rewarded: false };
+  }
+  return state;
+}
+
+function saveGameState(state) {
+  try {
+    localStorage.setItem(GAME_STORAGE_KEY, JSON.stringify(state));
+  } catch (error) {
+    console.warn('Mattepilot: kunne ikke lagre spillprogresjon', error);
+  }
+}
+
+function levelForXp(xp) {
+  const levels = [
+    { level: 1, name: 'Prosentlærling', min: 0, next: 80 },
+    { level: 2, name: 'Vekstfaktorbruker', min: 80, next: 200 },
+    { level: 3, name: 'Modellbygger', min: 200, next: 380 },
+    { level: 4, name: 'Logaritmejeger', min: 380, next: 600 },
+    { level: 5, name: 'Prosentmester', min: 600, next: null }
+  ];
+  return [...levels].reverse().find(level => xp >= level.min);
+}
+
+function earnedBadges(state) {
+  const practicedAll = Object.values(state.skills).every(skill => skill.answered > 0);
+  return {
+    first: state.totalCorrect >= 1,
+    streak: state.bestStreak >= 5,
+    explorer: practicedAll,
+    model: state.skills.model.correct >= 3,
+    mission: state.mission.rewarded,
+    boss: state.bossCompleted
+  };
+}
+
+function showGameToast(message) {
+  const toast = document.getElementById('gameToast');
+  toast.textContent = message;
+  toast.classList.add('show');
+  window.clearTimeout(showGameToast.timeout);
+  showGameToast.timeout = window.setTimeout(() => toast.classList.remove('show'), 1800);
+}
+
+function recordGameAnswer(question, correct) {
+  const state = loadGameState();
+  const skill = state.skills[question.skill];
+  state.totalAnswered++;
+  state.mission.answered++;
+  skill.answered++;
+
+  let earnedXp = 0;
+  if (correct) {
+    state.totalCorrect++;
+    state.mission.correct++;
+    skill.correct++;
+    state.currentStreak++;
+    state.bestStreak = Math.max(state.bestStreak, state.currentStreak);
+    earnedXp = 10 + Math.min(state.currentStreak - 1, 5) * 2;
+    state.xp += earnedXp;
+  } else {
+    state.currentStreak = 0;
+  }
+
+  if (!state.mission.rewarded && state.mission.answered >= 5 && state.mission.correct >= 3) {
+    state.mission.rewarded = true;
+    state.xp += 30;
+    earnedXp += 30;
+    showGameToast('Dagens oppdrag fullført! +' + earnedXp + ' XP');
+  } else if (correct) {
+    showGameToast('+' + earnedXp + ' XP · ' + state.currentStreak + ' på rad');
+  } else {
+    showGameToast('Nytt forsøk – XP beholdes');
+  }
+
+  saveGameState(state);
+  renderGame();
+}
+
+function renderGame() {
+  const state = loadGameState();
+  const level = levelForXp(state.xp);
+  const mastered = Object.values(state.skills).filter(skill => skill.correct >= 3).length;
+
+  document.getElementById('gameLevel').textContent = level.level;
+  document.getElementById('gameXp').textContent = state.xp;
+  document.getElementById('gameStreak').textContent = state.currentStreak;
+  document.getElementById('gameMastered').textContent = mastered + '/5';
+  document.getElementById('gameLevelName').textContent = level.name;
+
+  const levelFill = document.getElementById('gameLevelFill');
+  const levelNext = document.getElementById('gameLevelNext');
+  if (level.next === null) {
+    levelFill.style.width = '100%';
+    levelNext.textContent = 'Maksnivå';
+  } else {
+    const progress = (state.xp - level.min) / (level.next - level.min) * 100;
+    levelFill.style.width = Math.max(0, Math.min(progress, 100)) + '%';
+    levelNext.textContent = (level.next - state.xp) + ' XP til neste nivå';
+  }
+
+  const missionAnswerProgress = Math.min(state.mission.answered / 5, 1);
+  const missionCorrectProgress = Math.min(state.mission.correct / 3, 1);
+  document.getElementById('missionFill').style.width =
+    Math.min(missionAnswerProgress, missionCorrectProgress) * 100 + '%';
+  document.getElementById('missionStatus').textContent = state.mission.rewarded
+    ? 'Fullført · 30 bonus-XP tjent'
+    : Math.min(state.mission.answered, 5) + '/5 besvart · ' +
+      Math.min(state.mission.correct, 3) + '/3 riktige';
+
+  document.getElementById('skillList').innerHTML = Object.entries(SKILLS).map(([key, label]) => {
+    const correct = state.skills[key].correct;
+    const pct = Math.min(correct / 3 * 100, 100);
+    const masteredClass = correct >= 3 ? ' mastered' : '';
+    return `
+      <div class="skill-row">
+        <div class="skill-name">${label}</div>
+        <div class="skill-track"><div class="skill-fill${masteredClass}" style="width:${pct}%"></div></div>
+        <div class="skill-count">${Math.min(correct, 3)}/3</div>
+      </div>
+    `;
+  }).join('');
+
+  const badges = earnedBadges(state);
+  const badgeDefinitions = [
+    ['first', '✓', 'Første riktige'],
+    ['streak', '🔥', 'Fem på rad'],
+    ['explorer', '🧭', 'Utforsker'],
+    ['model', '📈', 'Modellbygger'],
+    ['mission', '⭐', 'Dagens oppdrag'],
+    ['boss', '🏆', 'Prosentmesteren']
+  ];
+  document.getElementById('badgeList').innerHTML = badgeDefinitions.map(([key, icon, label]) =>
+    `<span class="badge${badges[key] ? ' earned' : ''}">${icon} ${label}</span>`
+  ).join('');
+
+  const bossButton = document.getElementById('bossButton');
+  const bossStatus = document.getElementById('bossStatus');
+  if (state.bossCompleted) {
+    bossButton.disabled = false;
+    bossButton.textContent = '🏆 Fullført';
+    bossStatus.textContent = 'Bossoppgaven er beseiret.';
+  } else if (level.level >= 2) {
+    bossButton.disabled = false;
+    bossButton.textContent = 'Start bossoppgave';
+    bossStatus.textContent = 'Ulåst! Løs en sammensatt prosentoppgave.';
+  } else {
+    bossButton.disabled = true;
+    bossButton.textContent = '🔒 Låst';
+    bossStatus.textContent = 'Låses opp på nivå 2.';
+  }
+}
+
+function openBoss() {
+  const state = loadGameState();
+  if (levelForXp(state.xp).level < 2) return;
+  document.getElementById('bossOverlay').classList.add('open');
+  const buttons = document.querySelectorAll('#bossOptions .quiz-option');
+  buttons.forEach(button => {
+    button.disabled = false;
+    button.className = 'quiz-option';
+  });
+  const feedback = document.getElementById('bossFeedback');
+  feedback.className = 'quiz-feedback';
+  feedback.textContent = '';
+}
+
+function closeBoss() {
+  document.getElementById('bossOverlay').classList.remove('open');
+}
+
+function pickBossAnswer(index) {
+  const state = loadGameState();
+  const buttons = document.querySelectorAll('#bossOptions .quiz-option');
+  buttons.forEach(button => button.disabled = true);
+  const feedback = document.getElementById('bossFeedback');
+
+  if (index === 0) {
+    buttons[0].classList.add('correct');
+    feedback.className = 'quiz-feedback show is-correct';
+    feedback.textContent = 'Riktig! 1,12 · 0,92 = 1,0304. Dermed er gammel pris 1236,48 / 1,0304 = 1200 kr, og samlet økning er 3,04 %.';
+    if (!state.bossCompleted) {
+      state.bossCompleted = true;
+      state.xp += 50;
+      saveGameState(state);
+      showGameToast('Boss beseiret! +50 XP');
+      renderGame();
+    }
+  } else {
+    buttons[index].classList.add('wrong');
+    buttons[0].classList.add('correct');
+    feedback.className = 'quiz-feedback show is-wrong';
+    feedback.textContent = 'Ikke helt. Gang vekstfaktorene først: 1,12 · 0,92 = 1,0304. Del deretter 1236,48 på 1,0304.';
+  }
+}
+
+function resetGame() {
+  if (!confirm('Vil du nullstille XP, nivå, merker og dagens oppdrag for denne prototypen?')) return;
+  localStorage.removeItem(GAME_STORAGE_KEY);
+  renderGame();
+  showGameToast('Spillprogresjonen er nullstilt');
+}
+
+renderGame();
 </script>
 </body>
 </html>
